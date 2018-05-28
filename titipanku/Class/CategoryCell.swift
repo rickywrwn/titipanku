@@ -142,7 +142,7 @@ class AppCell: UICollectionViewCell {
             categoryLabel.text = app?.country
             
             if let price = app?.price {
-                priceLabel.text = "Rp. \(price)"
+                priceLabel.text = "Rp \(price)"
             } else {
                 priceLabel.text = ""
             }

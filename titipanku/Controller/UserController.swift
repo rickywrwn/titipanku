@@ -18,6 +18,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     struct userDetail: Decodable {
         let name: String
         let email: String
+        let tanggalDaftar: String
         
     }
     var isiUser  : userDetail?
@@ -84,6 +85,8 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! UserDetailCell
         cell.labelEmail.text = isiUser?.email
+        cell.LabelNama.text = isiUser?.name
+        cell.LabelTanggal.text = isiUser?.tanggalDaftar
         cell.logoutButton.addTarget(self, action: #selector(handleLogout), for: UIControlEvents.touchDown)
         return cell
     }
@@ -102,13 +105,41 @@ class UserDetailCell: BaseCell {
     
     let labelA : UILabel = {
         let label = UILabel()
+        label.sizeToFit()
         label.text = "Email : "
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
+    
+    let labelB : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Nama : "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let labelC : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Bergabung Sejak : "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.backgroundColor = UIColor.green
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
     let labelEmail : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
+        label.sizeToFit()
 //        label.layer.borderWidth = 1
 //        label.layer.borderColor = UIColor.green.cgColor
         return label
@@ -116,6 +147,14 @@ class UserDetailCell: BaseCell {
     
     let LabelNama : UILabel = {
         let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let LabelTanggal : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
@@ -140,20 +179,30 @@ class UserDetailCell: BaseCell {
         return view
     }()
     
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
+        addSubview(labelB)
+        addSubview(labelC)
+        addSubview(imageView)
         addSubview(labelEmail)
+        addSubview(LabelNama)
+        addSubview(LabelTanggal)
         addSubview(logoutButton)
         addSubview(dividerLineView)
         
-        addConstraintsWithFormat("H:|-10-[v1(50)]-1-[v0(300)]", views: labelEmail,labelA) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v1]-1-[v0]", views: labelEmail,labelA,imageView) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v0]-1-[v1]", views: labelB,LabelNama,imageView) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v0]-1-[v1]", views: labelC,LabelTanggal,imageView) //pipline terakhir dihilangkan
         addConstraintsWithFormat("H:|-4-[v0(100)]|", views: logoutButton)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|[v0(20)]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(20)]-4-[v1(50)]-4-[v2(1)]|", views: labelEmail,logoutButton,dividerLineView )
+        addConstraintsWithFormat("V:|-25-[v0(100)]", views: imageView)
+        addConstraintsWithFormat("V:|-30-[v0]-4-[v1]-4-[v2]", views: labelA,labelB,labelC)
+        addConstraintsWithFormat("V:|-30-[v0]-4-[v1]-4-[v2]", views: labelEmail,LabelNama,LabelTanggal )
+        addConstraintsWithFormat("V:|-155-[v0(50)][v1(1)]", views: logoutButton,dividerLineView )
         
     }
     

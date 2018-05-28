@@ -19,11 +19,13 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.window?.rootViewController?.dismiss(animated: true, completion: nil)
             (appDelegate.window?.rootViewController as? UINavigationController)?.popToRootViewController(animated: true)
             
             print("logout")
+            
         }
         // Do any additional setup after loading the view, typically from a nib.
         GIDSignIn.sharedInstance().uiDelegate = self
@@ -187,7 +189,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     
     //tampilan
     let usernameTextField : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 500, height: 80))
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.borderStyle = .roundedRect
         textField.placeholder = "Email"
         textField.textAlignment = .center
@@ -196,7 +198,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     }()
     
     let passwordTextField : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 500, height: 80))
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.placeholder = "Password"
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
@@ -206,7 +208,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     }()
     
     let loginButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("Login", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
@@ -220,7 +222,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     
     
     let registerButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitleColor(.black, for: .normal)
         button.setTitle("Register", for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
@@ -263,13 +265,17 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         //usernameTextField
         view.addSubview(usernameTextField)
         usernameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        usernameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        usernameTextField.font = UIFont.systemFont(ofSize: 25)
         usernameTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         usernameTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        usernameTextField.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
+        usernameTextField.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 200).isActive = true
         
         //passwordTextField
         view.addSubview(passwordTextField)
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        passwordTextField.font = UIFont.systemFont(ofSize: 25)
         passwordTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         passwordTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         passwordTextField.topAnchor.constraint(greaterThanOrEqualTo: usernameTextField.bottomAnchor, constant: 30).isActive = true
@@ -277,6 +283,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         //loginButton
         view.addSubview(loginButton)
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         loginButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
         loginButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
         loginButton.topAnchor.constraint(greaterThanOrEqualTo: passwordTextField.bottomAnchor, constant: 30).isActive = true
@@ -284,6 +291,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         //registerButton
         view.addSubview(registerButton)
         registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        registerButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         registerButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
         registerButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
         registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 15).isActive = true
@@ -291,12 +299,18 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         //googleSignInButton
         view.addSubview(googleSignInButton)
         googleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        googleSignInButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 30).isActive = true
+        googleSignInButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        googleSignInButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
+        googleSignInButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
+        googleSignInButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 15).isActive = true
  
         //fbSignInButton
         view.addSubview(facebookSignInButton)
         facebookSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        facebookSignInButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 30).isActive = true
+        facebookSignInButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        facebookSignInButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
+        facebookSignInButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
+        facebookSignInButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 15).isActive = true
         
         //googleSignOutButton
         view.addSubview(googleSignOutButton)
@@ -307,4 +321,16 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
 
     }
     
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

@@ -31,7 +31,7 @@ class registerController: UIViewController {
     }()
     
     let emailTextField : UITextField = {
-        let textField = UITextField()
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
@@ -48,7 +48,7 @@ class registerController: UIViewController {
     }()
     
     let passwordTextField : UITextField = {
-        let textField = UITextField()
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
@@ -66,7 +66,7 @@ class registerController: UIViewController {
     }()
     
     let confPasswordTextField : UITextField = {
-        let textField = UITextField()
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
@@ -84,7 +84,7 @@ class registerController: UIViewController {
     }()
     
     let fullNameTextField : UITextField = {
-        let textField = UITextField()
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
@@ -166,15 +166,17 @@ class registerController: UIViewController {
     func setupView(){
         //LabelEmail
         view.addSubview(labelEmail)
-        labelEmail.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
+        labelEmail.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         labelEmail.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         //EmailTextField
         view.addSubview(emailTextField)
         emailTextField.topAnchor.constraint(equalTo: labelEmail.bottomAnchor, constant: 10).isActive = true
+        emailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        emailTextField.font = UIFont.systemFont(ofSize: 25)
         emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emailTextField.heightAnchor.constraint(equalToConstant: TEXTFIELD_HEIGHT).isActive = true
-        emailTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        emailTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        emailTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
  
         //PasswordLabel
         view.addSubview(passwordLabel)
@@ -184,9 +186,11 @@ class registerController: UIViewController {
         //PasswordTextField
         view.addSubview(passwordTextField)
         passwordTextField.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 10).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        passwordTextField.font = UIFont.systemFont(ofSize: 25)
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        passwordTextField.heightAnchor.constraint(equalToConstant: TEXTFIELD_HEIGHT).isActive = true
-        passwordTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        passwordTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        passwordTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         //ConfPasswordLabel
         view.addSubview(confPasswordLabel)
@@ -196,9 +200,11 @@ class registerController: UIViewController {
         //PasswordTextField
         view.addSubview(confPasswordTextField)
         confPasswordTextField.topAnchor.constraint(equalTo: confPasswordLabel.bottomAnchor, constant: 10).isActive = true
+        confPasswordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        confPasswordTextField.font = UIFont.systemFont(ofSize: 25)
         confPasswordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        confPasswordTextField.heightAnchor.constraint(equalToConstant: TEXTFIELD_HEIGHT).isActive = true
-        confPasswordTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        confPasswordTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        confPasswordTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         //FUllNameLabel
         view.addSubview(fullNameLabel)
@@ -208,15 +214,18 @@ class registerController: UIViewController {
         //FullNameTextField
         view.addSubview(fullNameTextField)
         fullNameTextField.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 10).isActive = true
+        fullNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        fullNameTextField.font = UIFont.systemFont(ofSize: 25)
         fullNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        fullNameTextField.heightAnchor.constraint(equalToConstant: TEXTFIELD_HEIGHT).isActive = true
-        fullNameTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        fullNameTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        fullNameTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         //registerButton
         view.addSubview(registerButton)
         registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         registerButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
         registerButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
+        registerButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         registerButton.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor, constant: 50).isActive = true
         
         //backButton
@@ -224,7 +233,7 @@ class registerController: UIViewController {
         backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         //backButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         //backButton.centerYAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
 
         
         
