@@ -20,4 +20,5 @@ target 'titipanku' do
   pod 'SwiftyJSON'
   pod 'Alamofire-SwiftyJSON'
 
+
 end

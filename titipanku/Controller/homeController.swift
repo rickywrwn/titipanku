@@ -21,6 +21,15 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     
+    @objc func someFunc() {
+        
+        print("It Works")
+        let tambahCont = TambahViewController()
+        present(tambahCont, animated: true, completion: {
+            
+        })
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         if  cekLogged == true{
@@ -30,7 +39,9 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             handleBack()
         }
         navigationItem.title = "Home"
+        let rightButton = UIBarButtonItem(title: "Tambah", style: .plain, target: self, action: #selector(self.someFunc))
         
+        self.navigationItem.rightBarButtonItem = rightButton
         AppCategory.fetchFeaturedApps { (featuredApps) -> () in
             self.featuredApps = featuredApps
             self.appCategories = featuredApps.categories
@@ -113,8 +124,11 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
   
 }
+
+
 
 class Header: CategoryCell {
     

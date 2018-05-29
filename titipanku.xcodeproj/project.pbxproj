@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4935CB4543CCEC46EC37BB63 /* Pods_titipanku.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; };
 		9C0BDF80207C7E4F004B2BCF /* registerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BDF7F207C7E4F004B2BCF /* registerController.swift */; };
+		9C502E9020BCE3B000FBCD91 /* PostBarang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */; };
+		9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C502E9120BCE3BB00FBCD91 /* PostNegara.swift */; };
 		9C54771D20ACB41100B3797E /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C54771C20ACB41100B3797E /* CategoryCell.swift */; };
 		9C54771F20ACBFB200B3797E /* barangDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C54771E20ACBFB200B3797E /* barangDetailController.swift */; };
 		9C588854207E09CA00F6F23A /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C588853207E09CA00F6F23A /* TabController.swift */; };
@@ -33,6 +35,8 @@
 		338CD8F21B5FE3B8B159CDA6 /* Pods-titipanku.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-titipanku.debug.xcconfig"; path = "Pods/Target Support Files/Pods-titipanku/Pods-titipanku.debug.xcconfig"; sourceTree = "<group>"; };
 		9C0BDF7D207C6FFB004B2BCF /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0BDF7F207C7E4F004B2BCF /* registerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registerController.swift; sourceTree = "<group>"; };
+		9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBarang.swift; sourceTree = "<group>"; };
+		9C502E9120BCE3BB00FBCD91 /* PostNegara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNegara.swift; sourceTree = "<group>"; };
 		9C54771C20ACB41100B3797E /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		9C54771E20ACBFB200B3797E /* barangDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = barangDetailController.swift; sourceTree = "<group>"; };
 		9C588851207CEB4200F6F23A /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +107,8 @@
 				9C54771E20ACBFB200B3797E /* barangDetailController.swift */,
 				9CEF6B5320ADDC1900ABB81E /* TambahViewController.swift */,
 				9CE6C2BA20B4CE8100D1B966 /* KomentarBarangController.swift */,
+				9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */,
+				9C502E9120BCE3BB00FBCD91 /* PostNegara.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -325,11 +331,13 @@
 				9CE5B8672074BF170053861D /* DB.swift in Sources */,
 				9CE2AC9B20850601005C1D49 /* InboxController.swift in Sources */,
 				9CC8A6E2206A252000242A87 /* AppDelegate.swift in Sources */,
+				9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */,
 				9CE2AC9D20850639005C1D49 /* ExploreController.swift in Sources */,
 				9C6346E22096EA4700CFD274 /* Model.swift in Sources */,
 				9C0BDF80207C7E4F004B2BCF /* registerController.swift in Sources */,
 				9CE6C2BB20B4CE8100D1B966 /* KomentarBarangController.swift in Sources */,
 				9C54771F20ACBFB200B3797E /* barangDetailController.swift in Sources */,
+				9C502E9020BCE3B000FBCD91 /* PostBarang.swift in Sources */,
 				9CEF6B5420ADDC1900ABB81E /* TambahViewController.swift in Sources */,
 				9C7177B4206BCCB70082E417 /* homeController.swift in Sources */,
 				9C54771D20ACB41100B3797E /* CategoryCell.swift in Sources */,
