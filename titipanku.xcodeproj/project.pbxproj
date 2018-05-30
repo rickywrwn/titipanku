@@ -16,8 +16,9 @@
 		9C588854207E09CA00F6F23A /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C588853207E09CA00F6F23A /* TabController.swift */; };
 		9C6346E22096EA4700CFD274 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6346E12096EA4700CFD274 /* Model.swift */; };
 		9C7177AF206A31B20082E417 /* loginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7177AE206A31B20082E417 /* loginController.swift */; };
-		9C7177B1206A38A40082E417 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C7177B0206A38A40082E417 /* GoogleService-Info.plist */; };
 		9C7177B4206BCCB70082E417 /* homeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7177B3206BCCB70082E417 /* homeController.swift */; };
+		9C82E69220BF222200B21F21 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C82E69120BF222200B21F21 /* GoogleService-Info.plist */; };
+		9C82E69620BF231600B21F21 /* PostPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C82E69520BF231600B21F21 /* PostPreorder.swift */; };
 		9CC8A6E2206A252000242A87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC8A6E1206A252000242A87 /* AppDelegate.swift */; };
 		9CC8A6E7206A252000242A87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC8A6E5206A252000242A87 /* Main.storyboard */; };
 		9CC8A6E9206A252000242A87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CC8A6E8206A252000242A87 /* Assets.xcassets */; };
@@ -25,7 +26,6 @@
 		9CE2AC9B20850601005C1D49 /* InboxController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2AC9A20850601005C1D49 /* InboxController.swift */; };
 		9CE2AC9D20850639005C1D49 /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2AC9C20850639005C1D49 /* ExploreController.swift */; };
 		9CE2AC9F20850658005C1D49 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2AC9E20850658005C1D49 /* UserController.swift */; };
-		9CE5B8672074BF170053861D /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE5B8662074BF170053861D /* DB.swift */; };
 		9CE6C2BB20B4CE8100D1B966 /* KomentarBarangController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6C2BA20B4CE8100D1B966 /* KomentarBarangController.swift */; };
 		9CEF6B5420ADDC1900ABB81E /* TambahViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF6B5320ADDC1900ABB81E /* TambahViewController.swift */; };
 		9CEF6B5620ADE0BB00ABB81E /* ScreenshotsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF6B5520ADE0BB00ABB81E /* ScreenshotsCell.swift */; };
@@ -43,9 +43,10 @@
 		9C588853207E09CA00F6F23A /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		9C6346E12096EA4700CFD274 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		9C7177AE206A31B20082E417 /* loginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginController.swift; sourceTree = "<group>"; };
-		9C7177B0206A38A40082E417 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9C7177B2206B901A0082E417 /* titipanku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = titipanku.entitlements; sourceTree = "<group>"; };
 		9C7177B3206BCCB70082E417 /* homeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeController.swift; sourceTree = "<group>"; };
+		9C82E69120BF222200B21F21 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9C82E69520BF231600B21F21 /* PostPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreorder.swift; sourceTree = "<group>"; };
 		9CC8A6DE206A252000242A87 /* titipanku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = titipanku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC8A6E1206A252000242A87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CC8A6E6206A252000242A87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -55,7 +56,6 @@
 		9CE2AC9A20850601005C1D49 /* InboxController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxController.swift; sourceTree = "<group>"; };
 		9CE2AC9C20850639005C1D49 /* ExploreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
 		9CE2AC9E20850658005C1D49 /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
-		9CE5B8662074BF170053861D /* DB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		9CE6C2BA20B4CE8100D1B966 /* KomentarBarangController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KomentarBarangController.swift; sourceTree = "<group>"; };
 		9CEF6B5320ADDC1900ABB81E /* TambahViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TambahViewController.swift; sourceTree = "<group>"; };
 		9CEF6B5520ADE0BB00ABB81E /* ScreenshotsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotsCell.swift; sourceTree = "<group>"; };
@@ -109,6 +109,7 @@
 				9CE6C2BA20B4CE8100D1B966 /* KomentarBarangController.swift */,
 				9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */,
 				9C502E9120BCE3BB00FBCD91 /* PostNegara.swift */,
+				9C82E69520BF231600B21F21 /* PostPreorder.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -116,7 +117,6 @@
 		9CC8A6D5206A251F00242A87 = {
 			isa = PBXGroup;
 			children = (
-				9CE5B8652074BEF40053861D /* Class */,
 				9CC8A6E0206A252000242A87 /* titipanku */,
 				9CC8A6DF206A252000242A87 /* Products */,
 				34FB25669A398D8D4DB8458D /* Pods */,
@@ -137,7 +137,7 @@
 			children = (
 				9CE2ACA020850774005C1D49 /* Class */,
 				9C7177B2206B901A0082E417 /* titipanku.entitlements */,
-				9C7177B0206A38A40082E417 /* GoogleService-Info.plist */,
+				9C82E69120BF222200B21F21 /* GoogleService-Info.plist */,
 				9CC8A6E1206A252000242A87 /* AppDelegate.swift */,
 				9C7177AD206A31990082E417 /* Controller */,
 				9CC8A6E5206A252000242A87 /* Main.storyboard */,
@@ -154,14 +154,6 @@
 				9CEF6B5520ADE0BB00ABB81E /* ScreenshotsCell.swift */,
 				9C54771C20ACB41100B3797E /* CategoryCell.swift */,
 				9C6346E12096EA4700CFD274 /* Model.swift */,
-			);
-			path = Class;
-			sourceTree = "<group>";
-		};
-		9CE5B8652074BEF40053861D /* Class */ = {
-			isa = PBXGroup;
-			children = (
-				9CE5B8662074BF170053861D /* DB.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -234,7 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CC8A6EC206A252000242A87 /* LaunchScreen.storyboard in Resources */,
-				9C7177B1206A38A40082E417 /* GoogleService-Info.plist in Resources */,
+				9C82E69220BF222200B21F21 /* GoogleService-Info.plist in Resources */,
 				9CC8A6E9206A252000242A87 /* Assets.xcassets in Resources */,
 				9CC8A6E7206A252000242A87 /* Main.storyboard in Resources */,
 			);
@@ -271,6 +263,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-SwiftyJSON/Alamofire_SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -278,6 +271,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyPickerPopover/SwiftyPickerPopover.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -285,6 +279,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -292,6 +287,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyPickerPopover.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,7 +324,6 @@
 				9CEF6B5620ADE0BB00ABB81E /* ScreenshotsCell.swift in Sources */,
 				9C7177AF206A31B20082E417 /* loginController.swift in Sources */,
 				9C588854207E09CA00F6F23A /* TabController.swift in Sources */,
-				9CE5B8672074BF170053861D /* DB.swift in Sources */,
 				9CE2AC9B20850601005C1D49 /* InboxController.swift in Sources */,
 				9CC8A6E2206A252000242A87 /* AppDelegate.swift in Sources */,
 				9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */,
@@ -340,6 +335,7 @@
 				9C502E9020BCE3B000FBCD91 /* PostBarang.swift in Sources */,
 				9CEF6B5420ADDC1900ABB81E /* TambahViewController.swift in Sources */,
 				9C7177B4206BCCB70082E417 /* homeController.swift in Sources */,
+				9C82E69620BF231600B21F21 /* PostPreorder.swift in Sources */,
 				9C54771D20ACB41100B3797E /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

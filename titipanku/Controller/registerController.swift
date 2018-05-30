@@ -14,6 +14,7 @@ class registerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
@@ -275,5 +276,7 @@ class registerController: UIViewController {
         }
         return (arrNama,arrHarga)
     }
+    
+    
     
 }

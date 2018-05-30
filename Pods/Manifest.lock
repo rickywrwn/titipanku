@@ -9,6 +9,7 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - Eureka (4.1.1)
   - FBSDKCoreKit (4.31.1):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.31.1):
@@ -62,10 +63,12 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - SwiftyJSON (4.0.0)
+  - SwiftyPickerPopover (6.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
   - Alamofire-SwiftyJSON
+  - Eureka
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -73,11 +76,13 @@ DEPENDENCIES:
   - Firebase/Core
   - GoogleSignIn
   - SwiftyJSON
+  - SwiftyPickerPopover
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   Alamofire-SwiftyJSON: 2b3649d57dc7bb2880fb8b86f8bb969397666916
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   FBSDKCoreKit: e08ccfcefa7bc1347a07c276dac9bf6c7fe57024
   FBSDKLoginKit: 99797ac39252fef6f72600b886f6ee60b4b29cab
   FBSDKShareKit: e640c41c9fcd61929eeb3d0c21ad335103e7cb62
@@ -92,7 +97,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 390ea358e5a0d0133153806f744662dad933d06b
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  SwiftyPickerPopover: f1bb928efd60e4c754aa957c1bb67372465e9ccb
 
-PODFILE CHECKSUM: 9dd68e499d483d354e01c6501b674e369b004651
+PODFILE CHECKSUM: ed9ca4cbb1cac8cc7270c1c78ea4957afbe68445
 
 COCOAPODS: 1.4.0

@@ -7,13 +7,190 @@
 //
 
 import UIKit
+import SwiftyPickerPopover
 
-class PostNegara: UIViewController {
+class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
     
+    var dateBack : String = ""
+    var countries = [country]()
+    var filtered:[String] = []
+    struct country: Decodable {
+        let name: String
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
-        print("hii")
+        view.backgroundColor = .white
+        print("Post Trip")
+        setupView()
+        
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Num: \(indexPath.row)")
+        print("Value: \(countries[indexPath.row])")
+        CountryTextField.text = countries[indexPath.row].name
+        myTableView.isHidden = true
+        self.hideKeyboardWhenTappedAround()
+    }
+    
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return countries.count
+    }
+    
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+        let country = countries[indexPath.row]
+        cell.textLabel?.text = country.name
+        return cell
+    }
+    
+    func fetchNegara(nama:String) -> Void {
+        myTableView.isHidden = false
+        
+        let urlString = "https://restcountries.eu/rest/v2/name/\(String(describing: nama))"
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data, _, err) in
+            DispatchQueue.main.async {
+                if let err = err {
+                    print("Failed to get data from url:", err)
+                    return
+                }
+                
+                guard let data = data else { return }
+                do {
+                    let decoder = JSONDecoder()
+                    self.countries = try decoder.decode([country].self, from: data)
+                    self.myTableView.reloadData()
+                    print(self.countries)
+                } catch let jsonErr {
+                    print("Failed to decode:", jsonErr)
+                }
+            }
+            }.resume()
+       
+        
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        
+        fetchNegara(nama: textField.text!)
+        
+        //init tableview
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        myTableView.dataSource = self
+        myTableView.delegate = self
+        self.view.addSubview(myTableView)
+        myTableView.topAnchor.constraint(equalTo: CountryTextField.bottomAnchor, constant: 12).isActive = true
+        myTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        myTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
+        myTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 300).isActive = true
+        
+    }
+    
+    @objc func textFieldTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        /// DatePickerPopover appears:
+        DatePickerPopover(title: "Tanggal Kembali")
+            .setDateMode(.date)
+            .setSelectedDate(Date())
+            .setDoneButton(action: { popover, selectedDate in
+                let formatter = DateFormatter()
+                let formatterValue = DateFormatter()
+                // initially set the format based on your datepicker date / server String
+                //formatter.dateFormat = "yyyy-MM-dd"
+                formatter.dateFormat = "dd MMM yyyy"
+                formatterValue.dateFormat = "yyyy-MM-dd"
+                // again convert your date to string
+                let stringDate = formatter.string(from: selectedDate)
+                let dateBack = formatterValue.string(from: selectedDate)
+                
+                self.dateTextField.text = stringDate
+                print(dateBack)
+                print("selectedDate \(stringDate)")})
+            .setCancelButton(action: { _, _ in print("cancel")})
+            .appear(originView: textField, baseViewController: self)
+        
+    }
+    
+    //tampilan
+    let myTableView : UITableView = {
+        let t = UITableView()
+        t.translatesAutoresizingMaskIntoConstraints = false
+        return t
+    }()
+    
+    let LabelNegara : UILabel = {
+        let label = UILabel()
+        label.text = "Negara Tujuan"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let CountryTextField : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)),
+                            for: UIControlEvents.editingChanged)
+        return textField
+    }()
+    
+    let LabelTanggal : UILabel = {
+        let label = UILabel()
+        label.text = "Tanggal Kembali"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let dateTextField : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textFieldTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        return textField
+    }()
+    
+    private func setupView(){
+        view.backgroundColor = .white
+        let screenWidth = UIScreen.main.bounds.width
+        //Label Negara
+        view.addSubview(LabelNegara)
+        LabelNegara.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200).isActive = true
+        LabelNegara.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
+        
+        //CountryTextField
+        view.addSubview(CountryTextField)
+        CountryTextField.topAnchor.constraint(equalTo: LabelNegara.bottomAnchor, constant: 10).isActive = true
+        CountryTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        //CountryTextField.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        CountryTextField.font = UIFont.systemFont(ofSize: 17)
+        CountryTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
+        CountryTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
+        CountryTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
+        
+        //Label Tanggal
+        view.addSubview(LabelTanggal)
+        LabelTanggal.topAnchor.constraint(equalTo: CountryTextField.bottomAnchor, constant: 50).isActive = true
+        LabelTanggal.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
+        
+        //CountryTextField
+        view.addSubview(dateTextField)
+        dateTextField.topAnchor.constraint(equalTo: LabelTanggal.bottomAnchor, constant: 10).isActive = true
+        dateTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        dateTextField.font = UIFont.systemFont(ofSize: 17)
+        dateTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
+        dateTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
+        dateTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
+        
+
+    }
 }

@@ -20,5 +20,7 @@ target 'titipanku' do
   pod 'SwiftyJSON'
   pod 'Alamofire-SwiftyJSON'
 
+  pod 'Eureka'
+  pod 'SwiftyPickerPopover'
 
 end
