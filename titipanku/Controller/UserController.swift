@@ -14,7 +14,6 @@ import Alamofire_SwiftyJSON
 class UserController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
-    var users = [userDetail]()
     struct userDetail: Decodable {
         let name: String
         let email: String
@@ -54,6 +53,8 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     fileprivate let userCellId = "userCellId"
+    fileprivate let buttonCellId = "btnCellId"
+    fileprivate let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +69,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
 
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(UserDetailCell.self, forCellWithReuseIdentifier: userCellId)
+        collectionView?.register(UserButton.self, forCellWithReuseIdentifier: buttonCellId)
     }
     
     //logout
@@ -82,17 +84,39 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         })
     }
     
+    @objc func handleTrip(){
+        print("diskusi")
+        let layout = UICollectionViewFlowLayout()
+        let komentarController = UserTripList(collectionViewLayout: layout)
+        navigationController?.pushViewController(komentarController, animated: true)
+        
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! UserDetailCell
-        cell.labelEmail.text = isiUser?.email
-        cell.LabelNama.text = isiUser?.name
-        cell.LabelTanggal.text = isiUser?.tanggalDaftar
-        cell.logoutButton.addTarget(self, action: #selector(handleLogout), for: UIControlEvents.touchDown)
+        
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! UserDetailCell
+           
+            
+            cell.labelEmail.text = isiUser?.email
+            cell.LabelNama.text = isiUser?.name
+             cell.LabelTanggal.text = isiUser?.tanggalDaftar
+            return cell
+        }else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonCellId, for: indexPath) as! UserButton
+            cell.diskusiButton.addTarget(self, action: #selector(handleLogout), for: UIControlEvents.touchDown)
+            cell.diskusiButton1.addTarget(self, action: #selector(handleTrip), for: UIControlEvents.touchDown)
+            
+            return cell
+        }
+        //untuk screenshot
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ScreenshotsCell
+        
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
@@ -159,19 +183,6 @@ class UserDetailCell: BaseCell {
         return label
     }()
     
-    let logoutButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-        button.setTitle("Logout", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
-        button.clipsToBounds = true
-       // button.addTarget(self, action: #selector(handleLogout), for: UIControlEvents.touchDown)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     
     let dividerLineView: UIView = {
         let view = UIView()
@@ -190,19 +201,68 @@ class UserDetailCell: BaseCell {
         addSubview(labelEmail)
         addSubview(LabelNama)
         addSubview(LabelTanggal)
-        addSubview(logoutButton)
         addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v1]-1-[v0]", views: labelEmail,labelA,imageView) //pipline terakhir dihilangkan
         addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v0]-1-[v1]", views: labelB,LabelNama,imageView) //pipline terakhir dihilangkan
         addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v0]-1-[v1]", views: labelC,LabelTanggal,imageView) //pipline terakhir dihilangkan
-        addConstraintsWithFormat("H:|-4-[v0(100)]|", views: logoutButton)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
         addConstraintsWithFormat("V:|-25-[v0(100)]", views: imageView)
         addConstraintsWithFormat("V:|-30-[v0]-4-[v1]-4-[v2]", views: labelA,labelB,labelC)
         addConstraintsWithFormat("V:|-30-[v0]-4-[v1]-4-[v2]", views: labelEmail,LabelNama,LabelTanggal )
-        addConstraintsWithFormat("V:|-155-[v0(50)][v1(1)]", views: logoutButton,dividerLineView )
+        addConstraintsWithFormat("V:|-155-[v0(1)]", views:dividerLineView )
+        
+    }
+    
+}
+
+
+class UserButton: BaseCell {
+    
+    let diskusiButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("Logout", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let diskusiButton1 : UIButton = {
+        let button = UIButton()
+        button.setTitle("Trip", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(diskusiButton)
+        addSubview(diskusiButton1)
+        addSubview(dividerLineView)
+        
+        addConstraintsWithFormat("H:|-30-[v0(150)]-4-[v1(150)]-30-|", views: diskusiButton, diskusiButton1)
+        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        
+        addConstraintsWithFormat("V:|[v0(50)]", views: diskusiButton )
+        addConstraintsWithFormat("V:|[v0(50)][v1(1)]|", views: diskusiButton1,dividerLineView )
         
     }
     

@@ -15,6 +15,7 @@
 		9C54771F20ACBFB200B3797E /* barangDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C54771E20ACBFB200B3797E /* barangDetailController.swift */; };
 		9C588854207E09CA00F6F23A /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C588853207E09CA00F6F23A /* TabController.swift */; };
 		9C6346E22096EA4700CFD274 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6346E12096EA4700CFD274 /* Model.swift */; };
+		9C6463BC20BF696A001E681A /* UserTripList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6463BB20BF696A001E681A /* UserTripList.swift */; };
 		9C7177AF206A31B20082E417 /* loginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7177AE206A31B20082E417 /* loginController.swift */; };
 		9C7177B4206BCCB70082E417 /* homeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7177B3206BCCB70082E417 /* homeController.swift */; };
 		9C82E69220BF222200B21F21 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C82E69120BF222200B21F21 /* GoogleService-Info.plist */; };
@@ -42,6 +43,7 @@
 		9C588851207CEB4200F6F23A /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C588853207E09CA00F6F23A /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		9C6346E12096EA4700CFD274 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		9C6463BB20BF696A001E681A /* UserTripList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTripList.swift; sourceTree = "<group>"; };
 		9C7177AE206A31B20082E417 /* loginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginController.swift; sourceTree = "<group>"; };
 		9C7177B2206B901A0082E417 /* titipanku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = titipanku.entitlements; sourceTree = "<group>"; };
 		9C7177B3206BCCB70082E417 /* homeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				9CE2AC9A20850601005C1D49 /* InboxController.swift */,
 				9CE2AC9C20850639005C1D49 /* ExploreController.swift */,
 				9CE2AC9E20850658005C1D49 /* UserController.swift */,
+				9C6463BB20BF696A001E681A /* UserTripList.swift */,
 				9C54771E20ACBFB200B3797E /* barangDetailController.swift */,
 				9CEF6B5320ADDC1900ABB81E /* TambahViewController.swift */,
 				9CE6C2BA20B4CE8100D1B966 /* KomentarBarangController.swift */,
@@ -323,6 +326,7 @@
 				9CE2AC9F20850658005C1D49 /* UserController.swift in Sources */,
 				9CEF6B5620ADE0BB00ABB81E /* ScreenshotsCell.swift in Sources */,
 				9C7177AF206A31B20082E417 /* loginController.swift in Sources */,
+				9C6463BC20BF696A001E681A /* UserTripList.swift in Sources */,
 				9C588854207E09CA00F6F23A /* TabController.swift in Sources */,
 				9CE2AC9B20850601005C1D49 /* InboxController.swift in Sources */,
 				9CC8A6E2206A252000242A87 /* AppDelegate.swift in Sources */,

@@ -8,12 +8,13 @@
 
 import UIKit
 import SwiftyPickerPopover
+import Alamofire
+import SwiftyJSON
 
 class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
     
     var dateBack : String = ""
     var countries = [country]()
-    var filtered:[String] = []
     struct country: Decodable {
         let name: String
         
@@ -91,10 +92,12 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
     @objc func textFieldTapped(_ textField: UITextField) {
         
         print("tapped")
+        let date = Date() //ambil date hari ini
         /// DatePickerPopover appears:
         DatePickerPopover(title: "Tanggal Kembali")
             .setDateMode(.date)
             .setSelectedDate(Date())
+            .setMinimumDate(date)
             .setDoneButton(action: { popover, selectedDate in
                 let formatter = DateFormatter()
                 let formatterValue = DateFormatter()
@@ -104,15 +107,57 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
                 formatterValue.dateFormat = "yyyy-MM-dd"
                 // again convert your date to string
                 let stringDate = formatter.string(from: selectedDate)
-                let dateBack = formatterValue.string(from: selectedDate)
+                self.dateBack = formatterValue.string(from: selectedDate)
                 
                 self.dateTextField.text = stringDate
-                print(dateBack)
+                print(self.dateBack)
                 print("selectedDate \(stringDate)")})
             .setCancelButton(action: { _, _ in print("cancel")})
             .appear(originView: textField, baseViewController: self)
         
     }
+    @objc func handlePostTrip(){
+        
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            let parameters: Parameters = ["email": emailNow,"country": CountryTextField.text!, "tgl" : dateBack ,"action" : "insert"]
+            Alamofire.request("http://45.76.178.35//titipanku/PostTrip.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mencetak JSON response
+                if let json = response.result.value {
+                    print("JSON: \(json)")
+                }
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+                let cekSukses = json["success"].intValue
+                
+                if cekSukses != 1 {
+                    let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                    
+                    self.present(alert, animated: true)
+                }else{
+                    let alert = UIAlertController(title: "Message", message: "Post Trip Berhasil", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                       self.handleBack()
+                    }))
+                    
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+        
+    }
+    
+    @objc private func handleBack(){
+        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     //tampilan
     let myTableView : UITableView = {
@@ -159,6 +204,19 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         return textField
     }()
     
+    let postButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Post Trip", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handlePostTrip), for: UIControlEvents.touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private func setupView(){
         view.backgroundColor = .white
         let screenWidth = UIScreen.main.bounds.width
@@ -182,7 +240,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         LabelTanggal.topAnchor.constraint(equalTo: CountryTextField.bottomAnchor, constant: 50).isActive = true
         LabelTanggal.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
         
-        //CountryTextField
+        //Date
         view.addSubview(dateTextField)
         dateTextField.topAnchor.constraint(equalTo: LabelTanggal.bottomAnchor, constant: 10).isActive = true
         dateTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -191,6 +249,12 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         dateTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
         dateTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
         
-
+        //PostButton
+        view.addSubview(postButton)
+        postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
+        postButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
+        postButton.topAnchor.constraint(greaterThanOrEqualTo: dateTextField.bottomAnchor, constant: 70).isActive = true
     }
 }
