@@ -123,7 +123,7 @@ class registerController: UIViewController {
         //cekOngkir(origin: "501",destination: "114",weight: "1000")
         
         let parameters: Parameters = ["email": emailTextField.text!,"password": passwordTextField.text!, "name" : fullNameTextField.text! ,"action" : "register"]
-        Alamofire.request("http://45.76.178.35/titipanku/Login.php",method: .get, parameters: parameters).responseJSON {
+        Alamofire.request("http://localhost/titipanku/Login.php",method: .get, parameters: parameters).responseJSON {
             response in
 
             //mencetak JSON response
@@ -136,7 +136,8 @@ class registerController: UIViewController {
             print(json)
             let cekSukses = json["success"].intValue
             let pesan = json["message"].stringValue
-
+            
+            print(pesan)
             if cekSukses != 1 {
                 let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
 

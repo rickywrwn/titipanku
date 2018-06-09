@@ -13,7 +13,6 @@ import FBSDKLoginKit
 import Alamofire
 import SwiftyJSON
 
-
 class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButtonDelegate, GIDSignInDelegate {
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     
@@ -146,8 +145,8 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     
     //login
     @objc func handleLogin(){
-        let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login_biasa"]
-        Alamofire.request("http://45.76.178.35/titipanku/Login.php",method: .get, parameters: parameters).responseJSON {
+        let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]
+        Alamofire.request("http://localhost/titipanku/Login.php",method: .get, parameters: parameters).responseJSON {
             response in
             
             //mencetak JSON response

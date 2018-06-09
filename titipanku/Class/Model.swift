@@ -20,12 +20,12 @@ struct FeaturedApps: Decodable {
 struct AppCategory: Decodable {
     
     let name: String?
-    let barang: [App]?
+    let apps: [App]?
     let type: String?
     
     static func fetchFeaturedApps(_ completionHandler: @escaping (FeaturedApps) -> ()) {
         
-        let urlString = "http://45.76.178.35/titipanku/NewestList.php"
+        let urlString = "http://localhost/titipanku/NewestList.php"
         
         URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
             
@@ -39,7 +39,7 @@ struct AppCategory: Decodable {
             do {
                 let decoder = JSONDecoder()
                 let featuredApps = try decoder.decode(FeaturedApps.self, from: data)
-                //print(featuredApps)
+                print(featuredApps)
                 
                 DispatchQueue.main.async(execute: { () -> Void in
                     completionHandler(featuredApps)

@@ -84,7 +84,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = appCategory?.barang?.count {
+        if let count = appCategory?.apps?.count {
             return count
         }
         return 0
@@ -92,7 +92,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppCell
-        cell.app = appCategory?.barang?[indexPath.item]
+        cell.app = appCategory?.apps?[indexPath.item]
         return cell
     }
     
@@ -108,7 +108,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         
         if reuseIdentifier != "headerId"{
             
-            if let app = appCategory?.barang?[indexPath.item] {
+            if let app = appCategory?.apps?[indexPath.item] {
                 homeController!.showAppDetailForApp(app)
             }
         }

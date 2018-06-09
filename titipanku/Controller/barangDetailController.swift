@@ -18,7 +18,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             }
             
             if let id = app?.id {
-                let urlString = "http://45.76.178.35/titipanku/DetailBarang.php?id=\(id)"
+                let urlString = "http://localhost/titipanku/DetailBarang.php?id=\(id)"
                 
                 URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
                     
