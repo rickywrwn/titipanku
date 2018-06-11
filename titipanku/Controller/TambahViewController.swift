@@ -10,13 +10,14 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class TambahViewController: UIViewController {
+class TambahViewController: UINavigationController {
     
     let navSegmentControl = UISegmentedControl()
     let containerView = UIView()
     
+    let layout = UICollectionViewFlowLayout()
     lazy var BarangVC: PostBarang = {
-        let vc = PostBarang()
+        let vc = PostBarang(collectionViewLayout: layout)
         self.addAsChildVC(childVC: vc)
         return vc
     }()
@@ -39,6 +40,8 @@ class TambahViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         setupView()
+        
+        navigationItem.title = "Home"
         
         TripVC.view.isHidden = false
     }
@@ -87,6 +90,12 @@ class TambahViewController: UIViewController {
         return button
     }()
     
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black
+        return view
+    }()
+    
     func setupView(){
         let screenHeight = UIScreen.main.bounds.height
         view.backgroundColor = .white
@@ -110,14 +119,21 @@ class TambahViewController: UIViewController {
         navSegmentControl.translatesAutoresizingMaskIntoConstraints = false
         navSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         navSegmentControl.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        navSegmentControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
+        navSegmentControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
         navSegmentControl.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
         navSegmentControl.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
         
         //backButton
         view.addSubview(backButton)
         backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
+        
+//        view.addSubview(dividerLineView)
+//        dividerLineView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
+//        dividerLineView.heightAnchor.constraint(equalToConstant: 5).isActive = true
+//        dividerLineView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        
     }
     
     

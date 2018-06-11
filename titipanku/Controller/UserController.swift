@@ -87,8 +87,8 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     @objc func handleTrip(){
         print("diskusi")
         let layout = UICollectionViewFlowLayout()
-        let komentarController = UserTripList(collectionViewLayout: layout)
-        navigationController?.pushViewController(komentarController, animated: true)
+        let tripListCont = UserTripList(collectionViewLayout: layout)
+        navigationController?.pushViewController(tripListCont, animated: true)
         
     }
     

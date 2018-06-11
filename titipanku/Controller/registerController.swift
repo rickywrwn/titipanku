@@ -19,6 +19,7 @@ class registerController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         setupView()
+        cekOngkir()
     }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
@@ -237,8 +238,6 @@ class registerController: UIViewController {
         //backButton.centerYAnchor.constraint(equalTo: view.topAnchor).isActive = true
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
 
-        
-        
     }
     
     
@@ -247,13 +246,13 @@ class registerController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func cekOngkir(origin:String,destination:String,weight:String) -> (paket: Array<String>,harga: Array<String>) {
+    func cekOngkir() {
         //kalau post dengan header encoding harus URLencoding
         let headers = [
             "key": "590ad699c8c798373e2053a28c7edd1e",
             "content-type": "application/x-www-form-urlencoded"
         ]
-        let parameters: Parameters = ["origin": origin,"destination": destination, "weight" : weight, "courier" : "jne"]
+        let parameters: Parameters = ["origin": "115","destination": "118", "weight" : "1", "courier" : "jne"]
         
         var arrNama = [String]()
         var arrHarga = [String]()
@@ -262,6 +261,7 @@ class registerController: UIViewController {
                 
                 
                 if let json = dataResponse.value {
+                    //print(json)
                     let hasil = json["rajaongkir"]["results"][0]["costs"]
                     for i in 0 ..< hasil.count {
                         let servis = hasil[i]["service"]
@@ -271,11 +271,10 @@ class registerController: UIViewController {
                         arrNama.append(servis.stringValue)
                         arrHarga.append(harga.stringValue)
                     }
-                    // print(hasil.count)
-                    
+                     print(hasil.count)
                 }
         }
-        return (arrNama,arrHarga)
+        //return (arrNama,arrHarga)
     }
     
     

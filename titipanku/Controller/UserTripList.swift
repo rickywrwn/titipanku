@@ -49,6 +49,16 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
         return CGSize(width: view.frame.width, height: 170)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Num: \(indexPath.row)")
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.backgroundColor = UIColor.gray.cgColor
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // change 2 to desired number of seconds
+            cell?.layer.backgroundColor = UIColor.white.cgColor
+        }
+    }
+
+    
     fileprivate func fetchUserTrip() {
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             let urlString = "http://localhost/titipanku/GetTrip.php?email=\(String(describing: emailNow))"

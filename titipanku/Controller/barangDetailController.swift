@@ -33,7 +33,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         
                         let decoder = JSONDecoder()
                         let appDetail = try decoder.decode(App.self, from: data)
-                        
+                        //print(appDetail)
                         self.app = appDetail
                         
                         DispatchQueue.main.async(execute: { () -> Void in
@@ -73,7 +73,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         print("diskusi")
         let layout = UICollectionViewFlowLayout()
         let komentarController = KomentarBarangController(collectionViewLayout: layout)
-        komentarController.app = app
+        //komentarController.app = app
         navigationController?.pushViewController(komentarController, animated: true)
     }
     

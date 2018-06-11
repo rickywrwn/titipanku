@@ -12,7 +12,7 @@ import Alamofire
 import SwiftyJSON
 
 class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
-    
+     
     var dateBack : String = ""
     var countries = [country]()
     struct country: Decodable {
@@ -40,7 +40,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
         let country = countries[indexPath.row]
         cell.textLabel?.text = country.name
         return cell
@@ -218,6 +218,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         button.addTarget(self, action: #selector(handlePostTrip), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+        
     }()
     
     private func setupView(){
@@ -225,7 +226,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         let screenWidth = UIScreen.main.bounds.width
         //Label Negara
         view.addSubview(LabelNegara)
-        LabelNegara.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200).isActive = true
+        LabelNegara.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
         LabelNegara.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
         
         //CountryTextField
