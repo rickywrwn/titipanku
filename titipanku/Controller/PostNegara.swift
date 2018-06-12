@@ -120,8 +120,6 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
-            print(CountryTextField.text)
-            print(dateBack)
             let parameters: Parameters = ["email": emailNow,"country": CountryTextField.text!, "tgl" : dateBack ,"action" : "insert"]
             Alamofire.request("http://localhost/titipanku/PostTrip.php",method: .get, parameters: parameters).responseJSON {
                 response in

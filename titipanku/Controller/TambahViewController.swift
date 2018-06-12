@@ -47,6 +47,23 @@ class TambahViewController: UINavigationController {
     }
     
     @objc private func handleBack(){
+        PostBarang.varDetail.namaBarang = ""
+        PostBarang.varDetail.desc = ""
+        PostBarang.varDetail.qty = ""
+        PostBarang.varDetail.kategori = ""
+        PostBarang.varDetail.status = 0
+        
+        PostBarang.varKarateristik.ukuran = ""
+        PostBarang.varKarateristik.berat = ""
+        PostBarang.varKarateristik.status = 0
+        
+        PostBarang.varNegara.negara = ""
+        PostBarang.varNegara.kota = ""
+        PostBarang.varNegara.status = 0
+        
+        PostBarang.varHarga.harga = ""
+        PostBarang.varHarga.status = 0
+        
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
