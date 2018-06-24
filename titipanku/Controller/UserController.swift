@@ -25,7 +25,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     fileprivate func fetchJSON() {
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
-            let urlString = "http://localhost/titipanku/DetailUser.php?email=\(String(describing: emailNow))"
+            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
             guard let url = URL(string: urlString) else { return }
             URLSession.shared.dataTask(with: url) { (data, _, err) in
                 DispatchQueue.main.async {

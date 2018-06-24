@@ -1,14 +1,13 @@
 //
-//  barangDetailController.swift
+//  PreorderDetail.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 17/05/18.
+//  Created by Ricky Wirawan on 24/06/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
-
 import UIKit
 
-class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var app: App? {
         didSet {
@@ -37,7 +36,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         self.app = appDetail
                         
                         DispatchQueue.main.async(execute: { () -> Void in
-                           self.collectionView?.reloadData()
+                            self.collectionView?.reloadData()
                         })
                         
                     } catch let err {
@@ -88,7 +87,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: descriptionCellId, for: indexPath) as! AppDetailDescriptionCell
             
             cell.nameLabel.text = app?.name
-           
+            
             let intHarga: Int? = app?.price
             cell.priceLabel.text = "Harga : Rp. " +  intHarga.map(String.init)!
             
@@ -103,7 +102,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             
             return cell
         }else if indexPath.item == 2 {
-           
+            
         }
         
         //untuk screenshot
@@ -154,7 +153,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     
 }
 
-class AppDetailDescriptionCell: BaseCell {
+class AppDetailDescriptionCell1: BaseCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -202,7 +201,7 @@ class AppDetailDescriptionCell: BaseCell {
     
 }
 
-class AppDetailButtons: BaseCell {
+class AppDetailButtons1: BaseCell {
     
     let diskusiButton : UIButton = {
         let button = UIButton()
@@ -251,74 +250,5 @@ class AppDetailButtons: BaseCell {
     }
     
 }
-
-class AppDetailHeader: BaseCell {
-    
-    var app: App? {
-        didSet {
-            if let imageName = app?.ImageName {
-                imageView.image = UIImage(named: imageName)
-            }
-            
-        }
-    }
-    
-    let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.layer.masksToBounds = true
-        return iv
-    }()
-    
-    let dividerLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
-        return view
-    }()
-    
-    override func setupViews() {
-        super.setupViews()
-        
-        addSubview(imageView)
-        addSubview(dividerLineView)
-        addConstraintsWithFormat("H:|[v0]|", views: imageView)
-        addConstraintsWithFormat("V:|[v0]|", views: imageView)
-        
-        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
-        addConstraintsWithFormat("V:[v0(1)]|", views: dividerLineView)
-    }
-    
-}
-
-extension UIView {
-    
-    func addConstraintsWithFormat(_ format: String, views: UIView...) {
-        var viewsDictionary = [String: UIView]()
-        for (index, view) in views.enumerated() {
-            let key = "v\(index)"
-            viewsDictionary[key] = view
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
-    }
-    
-}
-
-class BaseCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupViews() {
-        
-    }
-}
-
 
 

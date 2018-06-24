@@ -11,17 +11,31 @@ import Alamofire
 import SwiftyJSON
 import Alamofire_SwiftyJSON
 
+//struct postPreorder: Decodable {
+//    let id: Int
+//    let name: String
+//    let category: String
+//    let country: String
+//    let price: Int
+//    let imageName: String
+//    let status : String
+//
+//}
+
 class homeController: UICollectionViewController,UICollectionViewDelegateFlowLayout{
     
     fileprivate let cellId = "cellId"
+    fileprivate let preorderCellId = "preorderCellId"
     fileprivate let headerId = "headerId"
+    
+//    var postPreorders = [postPreorder]()
     
     var featuredApps: FeaturedApps?
     var appCategories: [AppCategory]?
     
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     
-    @objc func someFunc() {
+    @objc func tambahBtn() {
         
         print("It Works")
         let tambahCont = TambahViewController()
@@ -30,6 +44,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         })
 
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if  cekLogged == true{
@@ -39,7 +55,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             handleBack()
         }
         navigationItem.title = "Home"
-        let rightButton = UIBarButtonItem(title: "Tambah", style: .plain, target: self, action: #selector(self.someFunc))
+        let rightButton = UIBarButtonItem(title: "Tambah", style: .plain, target: self, action: #selector(self.tambahBtn))
         
         self.navigationItem.rightBarButtonItem = rightButton
         AppCategory.fetchFeaturedApps { (featuredApps) -> () in
@@ -47,10 +63,10 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             self.appCategories = featuredApps.categories
             self.collectionView?.reloadData()
         }
-        
         collectionView?.backgroundColor = UIColor.white
         
         collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: preorderCellId)
         collectionView?.register(Header.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         setupView()
     }
@@ -63,15 +79,39 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         navigationController?.pushViewController(appDetailController, animated: true)
     }
     
+    func showPreorderDetailForApp(_ app: App) {
+        print("pencet")
+        let layout = UICollectionViewFlowLayout()
+        let appDetailController = PreorderDetail(collectionViewLayout: layout)
+        appDetailController.app = app
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        
+        if indexPath.item == 0 {
+            let cell: CategoryCell
+            
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryCell
+            cell.appCategory = appCategories?[indexPath.item]
+            cell.homeController = self
+            
+            return cell
+        }else if indexPath.item == 1 {
+            let cell: CategoryCell
+            
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: preorderCellId, for: indexPath) as! CategoryCell
+            cell.appCategory = appCategories?[indexPath.item]
+            cell.homeController = self
+            
+            return cell
+        }
+        
         let cell: CategoryCell
-
+        
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryCell
-        
-        
-        cell.appCategory = appCategories?[indexPath.item]
-        cell.homeController = self
+       
         
         return cell
     }
@@ -129,7 +169,6 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
 }
 
 
-
 class Header: CategoryCell {
     
     let cellId = "bannerCellId"
@@ -172,6 +211,8 @@ class Header: CategoryCell {
     }
     
 }
+
+
 
 
 

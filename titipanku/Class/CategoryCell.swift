@@ -107,9 +107,17 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if reuseIdentifier != "headerId"{
-            
-            if let app = appCategory?.apps?[indexPath.item] {
-                homeController!.showAppDetailForApp(app)
+            if reuseIdentifier == "preorderCellId"{
+                
+                print("preorder")
+                if let app = appCategory?.apps?[indexPath.item] {
+                    homeController!.showAppDetailForApp(app)
+                }
+            }else {
+                print("barang")
+                if let app = appCategory?.apps?[indexPath.item] {
+                    homeController!.showAppDetailForApp(app)
+                }
             }
         }
         

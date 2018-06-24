@@ -75,7 +75,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
             let userfb = Auth.auth().currentUser
             print("firebase FB sukses", userfb?.email)
             let parameters: Parameters = ["email": userfb?.email, "action" : "facebook"]
-            Alamofire.request("http://localhost/titipankuu/Login.php",method: .post, parameters: parameters)
+            Alamofire.request("http://titipanku.xyz/api/Login.php",method: .post, parameters: parameters)
             self.handleSegueFacebook()
         }
     }
@@ -103,7 +103,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
             guard let uid = user?.email else {return}
             print("Firebase sukses", uid)
             let parameters: Parameters = ["email": uid, "action" : "google"]
-            Alamofire.request("http://localhost/titipankuu/Login.php", method: .post, parameters: parameters)
+            Alamofire.request("http://titipanku.xyz/api/Login.php", method: .post, parameters: parameters)
             //Alamofire.request("http://localhost/titipankuu/Login.php", method: .post, parameters: parameters)
             self.handleSegueFacebook()
         }
@@ -146,7 +146,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     //login
     @objc func handleLogin(){
         let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]
-        Alamofire.request("http://localhost/titipanku/Login.php",method: .get, parameters: parameters).responseJSON {
+        Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
             response in
             
             //mencetak JSON response

@@ -23,6 +23,7 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
         super.viewDidLoad()
         view.backgroundColor = .white
         print("Post Trip")
+        
         fetchUserTrip()
         //init tableview
        
@@ -61,7 +62,8 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     fileprivate func fetchUserTrip() {
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
-            let urlString = "http://localhost/titipanku/GetTrip.php?email=\(String(describing: emailNow))"
+            
+            let urlString = "http://titipanku.xyz/api/GetTrip.php?email=\(String(describing: emailNow))"
             guard let url = URL(string: urlString) else { return }
             URLSession.shared.dataTask(with: url) { (data, _, err) in
                 DispatchQueue.main.async {

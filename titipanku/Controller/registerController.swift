@@ -124,7 +124,7 @@ class registerController: UIViewController {
         //cekOngkir(origin: "501",destination: "114",weight: "1000")
         
         let parameters: Parameters = ["email": emailTextField.text!,"password": passwordTextField.text!, "name" : fullNameTextField.text! ,"action" : "register"]
-        Alamofire.request("http://localhost/titipanku/Login.php",method: .get, parameters: parameters).responseJSON {
+        Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
             response in
 
             //mencetak JSON response
