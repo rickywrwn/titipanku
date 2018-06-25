@@ -14,6 +14,10 @@
 		3C12439F20DFE78600852D2D /* PreorderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C12439E20DFE78600852D2D /* PreorderDetail.swift */; };
 		3C8E38B220C5FB06009AD99D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */; };
 		4935CB4543CCEC46EC37BB63 /* Pods_titipanku.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; };
+		7EE8D0B020E0CCF600BB03A1 /* AddNegaraPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */; };
+		7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */; };
+		7EE8D0B420E0CE0600BB03A1 /* AddKarateristikPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */; };
+		7EE8D0B620E0CE1800BB03A1 /* AddHargaPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B520E0CE1800BB03A1 /* AddHargaPreorder.swift */; };
 		9C0BDF80207C7E4F004B2BCF /* registerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BDF7F207C7E4F004B2BCF /* registerController.swift */; };
 		9C502E9020BCE3B000FBCD91 /* PostBarang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */; };
 		9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C502E9120BCE3BB00FBCD91 /* PostNegara.swift */; };
@@ -45,6 +49,10 @@
 		3C07FAFC20CE6777008FF049 /* AddHargaBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaBarang.swift; sourceTree = "<group>"; };
 		3C12439E20DFE78600852D2D /* PreorderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreorderDetail.swift; sourceTree = "<group>"; };
 		3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "titipanku/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraPreorder.swift; sourceTree = "<group>"; };
+		7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailPreorder.swift; sourceTree = "<group>"; };
+		7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikPreorder.swift; sourceTree = "<group>"; };
+		7EE8D0B520E0CE1800BB03A1 /* AddHargaPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaPreorder.swift; sourceTree = "<group>"; };
 		9C0BDF7D207C6FFB004B2BCF /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0BDF7F207C7E4F004B2BCF /* registerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registerController.swift; sourceTree = "<group>"; };
 		9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBarang.swift; sourceTree = "<group>"; };
@@ -128,6 +136,10 @@
 				3C07FAFA20CE675F008FF049 /* AddNegaraBarang.swift */,
 				3C07FAFC20CE6777008FF049 /* AddHargaBarang.swift */,
 				3C12439E20DFE78600852D2D /* PreorderDetail.swift */,
+				7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */,
+				7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */,
+				7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */,
+				7EE8D0B520E0CE1800BB03A1 /* AddHargaPreorder.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -342,12 +354,14 @@
 				9CEF6B5620ADE0BB00ABB81E /* ScreenshotsCell.swift in Sources */,
 				9C7177AF206A31B20082E417 /* loginController.swift in Sources */,
 				9C6463BC20BF696A001E681A /* UserTripList.swift in Sources */,
+				7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */,
 				9C588854207E09CA00F6F23A /* TabController.swift in Sources */,
 				9CE2AC9B20850601005C1D49 /* InboxController.swift in Sources */,
 				9CC8A6E2206A252000242A87 /* AppDelegate.swift in Sources */,
 				9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */,
 				3C07FAF920CE6734008FF049 /* AddKarateristikBarang.swift in Sources */,
 				9CE2AC9D20850639005C1D49 /* ExploreController.swift in Sources */,
+				7EE8D0B620E0CE1800BB03A1 /* AddHargaPreorder.swift in Sources */,
 				9C6346E22096EA4700CFD274 /* Model.swift in Sources */,
 				9C0BDF80207C7E4F004B2BCF /* registerController.swift in Sources */,
 				3C07FAFD20CE6777008FF049 /* AddHargaBarang.swift in Sources */,
@@ -358,6 +372,8 @@
 				9CEF6B5420ADDC1900ABB81E /* TambahViewController.swift in Sources */,
 				9C7177B4206BCCB70082E417 /* homeController.swift in Sources */,
 				9C82E69620BF231600B21F21 /* PostPreorder.swift in Sources */,
+				7EE8D0B020E0CCF600BB03A1 /* AddNegaraPreorder.swift in Sources */,
+				7EE8D0B420E0CE0600BB03A1 /* AddKarateristikPreorder.swift in Sources */,
 				3C12439F20DFE78600852D2D /* PreorderDetail.swift in Sources */,
 				9C54771D20ACB41100B3797E /* CategoryCell.swift in Sources */,
 				3C07FAFB20CE675F008FF049 /* AddNegaraBarang.swift in Sources */,

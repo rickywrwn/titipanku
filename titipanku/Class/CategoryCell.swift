@@ -111,7 +111,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
                 
                 print("preorder")
                 if let app = appCategory?.apps?[indexPath.item] {
-                    homeController!.showAppDetailForApp(app)
+                    homeController!.showPreorderDetailForApp(app)
                 }
             }else {
                 print("barang")

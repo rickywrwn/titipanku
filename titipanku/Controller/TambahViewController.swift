@@ -29,7 +29,7 @@ class TambahViewController: UINavigationController {
     }()
     
     lazy var PreorderVC: PostPreorder = {
-        let vc = PostPreorder()
+        let vc = PostPreorder(collectionViewLayout: layout)
         self.addAsChildVC(childVC: vc)
         return vc
     }()
@@ -63,6 +63,23 @@ class TambahViewController: UINavigationController {
         
         PostBarang.varHarga.harga = ""
         PostBarang.varHarga.status = 0
+        
+        PostPreorder.varDetail.namaBarang = ""
+        PostPreorder.varDetail.desc = ""
+        PostPreorder.varDetail.qty = ""
+        PostPreorder.varDetail.kategori = ""
+        PostPreorder.varDetail.status = 0
+        
+        PostPreorder.varKarateristik.ukuran = ""
+        PostPreorder.varKarateristik.berat = ""
+        PostPreorder.varKarateristik.status = 0
+        
+        PostPreorder.varNegara.negara = ""
+        PostPreorder.varNegara.kota = ""
+        PostPreorder.varNegara.status = 0
+        
+        PostPreorder.varHarga.harga = ""
+        PostPreorder.varHarga.status = 0
         
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)

@@ -17,7 +17,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
             }
             
             if let id = app?.id {
-                let urlString = "http://titipanku.xyz/api/DetailBarang.php?id=\(id)"
+                let urlString = "http://localhost/titipanku/DetailPreorder.php?id=\(id)"
                 
                 URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
                     
