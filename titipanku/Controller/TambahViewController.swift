@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class TambahViewController: UINavigationController {
+class TambahViewController: UIViewController {
     
     let navSegmentControl = UISegmentedControl()
     let containerView = UIView()
@@ -46,7 +46,7 @@ class TambahViewController: UINavigationController {
         TripVC.view.isHidden = false
     }
     
-    @objc private func handleBack(){
+    @objc public func handleBack(){
         PostBarang.varDetail.namaBarang = ""
         PostBarang.varDetail.desc = ""
         PostBarang.varDetail.qty = ""
@@ -70,12 +70,11 @@ class TambahViewController: UINavigationController {
         PostPreorder.varDetail.kategori = ""
         PostPreorder.varDetail.status = 0
         
-        PostPreorder.varKarateristik.ukuran = ""
         PostPreorder.varKarateristik.berat = ""
         PostPreorder.varKarateristik.status = 0
         
         PostPreorder.varNegara.negara = ""
-        PostPreorder.varNegara.kota = ""
+        PostPreorder.varNegara.deadline = ""
         PostPreorder.varNegara.status = 0
         
         PostPreorder.varHarga.harga = ""

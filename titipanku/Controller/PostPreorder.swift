@@ -22,14 +22,13 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     struct varKarateristik {
-        static var ukuran = ""
         static var berat = ""
         static var status = 0
     }
     
     struct varNegara {
         static var negara = ""
-        static var kota = ""
+        static var deadline = ""
         static var status = 0
     }
     
@@ -53,8 +52,6 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         collectionView?.register(InputCell2Pre.self, forCellWithReuseIdentifier: inputCellId2)
         collectionView?.register(InputCell3Pre.self, forCellWithReuseIdentifier: inputCellId3)
         collectionView?.register(InputCell4Pre.self, forCellWithReuseIdentifier: inputCellId4)
-        
-        print(varDetail.namaBarang.self)
         
     }
     
@@ -123,7 +120,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
+        //print("Num: \(indexPath.row)")
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.backgroundColor = UIColor.gray.cgColor
         
@@ -161,7 +158,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
             
-            let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota ,"action" : "insert"]
+            let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"action" : "insert"]
             
             Alamofire.request("http://localhost/titipanku/PostPreorder.php",method: .get, parameters: parameters).responseSwiftyJSON { dataResponse in
                 
@@ -172,12 +169,12 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 
                 //mengambil json
                 let json = JSON(dataResponse.value)
-                print(json)
+                
                 let cekSukses = json["success"].intValue
                 let pesan = json["message"].stringValue
                 
                 if cekSukses != 1 {
-                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                     
@@ -186,6 +183,8 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                     let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                        let appDetailController = TambahViewController()
+                        appDetailController.handleBack()
                         self.handleBack()
                     }))
                     
@@ -203,7 +202,6 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     private func setupView(){
         view.backgroundColor = .white
-        let screenWidth = UIScreen.main.bounds.width
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)

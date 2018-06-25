@@ -162,7 +162,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             
             let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota ,"action" : "insert"]
             
-            Alamofire.request("http://titipanku.xyz/api/PostBarang.php",method: .get, parameters: parameters).responseSwiftyJSON { dataResponse in
+            Alamofire.request("http://localhost/titipanku/PostBarang.php",method: .get, parameters: parameters).responseSwiftyJSON { dataResponse in
                 
                 //mencetak JSON response
                 if let json = dataResponse.value {

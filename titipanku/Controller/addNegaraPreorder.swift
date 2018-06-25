@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import SwiftyPickerPopover
 
 class AddNegaraPreorder :  UIViewController{
+    var dateBack : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
         if PostPreorder.varNegara.status != 0 {
             negaraText.text = PostPreorder.varNegara.negara
-            kotaText.text = PostPreorder.varNegara.kota
-            
+            dateTextField.text =  PostPreorder.varNegara.deadline
         }
         
         setupView()
@@ -28,11 +30,39 @@ class AddNegaraPreorder :  UIViewController{
     
     @objc func handleSubmit(){
         PostPreorder.varNegara.negara = negaraText.text!
-        PostPreorder.varNegara.kota = kotaText.text!
+        PostPreorder.varNegara.deadline = dateBack
         PostPreorder.varNegara.status = 1
         
         print(PostPreorder.varNegara.negara.self)
         self.dismiss(animated: true)
+    }
+    
+    @objc func textFieldTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        let date = Date() //ambil date hari ini
+        /// DatePickerPopover appears:
+        DatePickerPopover(title: "Tanggal Kembali")
+            .setDateMode(.date)
+            .setSelectedDate(Date())
+            .setMinimumDate(date)
+            .setDoneButton(action: { popover, selectedDate in
+                let formatter = DateFormatter()
+                let formatterValue = DateFormatter()
+                // initially set the format based on your datepicker date / server String
+                //formatter.dateFormat = "yyyy-MM-dd"
+                formatter.dateFormat = "dd MMM yyyy"
+                formatterValue.dateFormat = "yyyy-MM-dd"
+                // again convert your date to string
+                let stringDate = formatter.string(from: selectedDate)
+                self.dateBack = formatterValue.string(from: selectedDate)
+                
+                self.dateTextField.text = stringDate
+                print(self.dateBack)
+                print("selectedDate \(stringDate)")})
+            .setCancelButton(action: { _, _ in print("cancel")})
+            .appear(originView: textField, baseViewController: self)
+        
     }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
@@ -54,20 +84,22 @@ class AddNegaraPreorder :  UIViewController{
         return textField
     }()
     
-    let label2 : UILabel = {
-        let label = UILabel()
-        label.text = "Dikirim ke Kota"
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let LabelTanggal : UILabel = {
+    let label = UILabel()
+    label.text = "Tanggal Kembali"
+    label.textAlignment = .center
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
     }()
     
-    let kotaText : UITextField = {
+    let dateTextField : UITextField = {
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textFieldTapped(_:)),
+                            for: UIControlEvents.touchDown)
         return textField
     }()
     
@@ -81,7 +113,7 @@ class AddNegaraPreorder :  UIViewController{
     }()
     
     func setupView(){
-        
+        let screenWidth = UIScreen.main.bounds.width
         // Create the navigation bar
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
@@ -127,17 +159,19 @@ class AddNegaraPreorder :  UIViewController{
         negaraText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         negaraText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
-        scrollView.addSubview(label2)
-        label2.topAnchor.constraint(equalTo: negaraText.bottomAnchor, constant: 30).isActive = true
-        label2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        //Label Tanggal
+        scrollView.addSubview(LabelTanggal)
+        LabelTanggal.topAnchor.constraint(equalTo: negaraText.bottomAnchor, constant: 50).isActive = true
+        LabelTanggal.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
-        scrollView.addSubview(kotaText)
-        kotaText.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10).isActive = true
-        kotaText.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        kotaText.font = UIFont.systemFont(ofSize: 25)
-        kotaText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        kotaText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
-        kotaText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        //Date
+        view.addSubview(dateTextField)
+        dateTextField.topAnchor.constraint(equalTo: LabelTanggal.bottomAnchor, constant: 10).isActive = true
+        dateTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        dateTextField.font = UIFont.systemFont(ofSize: 17)
+        dateTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        dateTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
+        dateTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
         
     }
     

@@ -14,7 +14,7 @@ class AddKarateristikPreorder :  UIViewController{
         view.backgroundColor = UIColor.white
         
         if PostPreorder.varKarateristik.status != 0 {
-            ukuranText.text = PostPreorder.varKarateristik.ukuran
+            
             beratText.text = PostPreorder.varKarateristik.berat
         }
         
@@ -26,32 +26,13 @@ class AddKarateristikPreorder :  UIViewController{
     }
     
     @objc func handleSubmit(){
-        PostPreorder.varKarateristik.ukuran = ukuranText.text!
         PostPreorder.varKarateristik.berat = beratText.text!
         PostPreorder.varKarateristik.status = 1
         
-        print(PostPreorder.varKarateristik.ukuran.self)
         self.dismiss(animated: true)
     }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
-    
-    let label1 : UILabel = {
-        let label = UILabel()
-        label.text = "Ukuran Barang"
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let ukuranText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .center
-        textField.borderStyle = .roundedRect
-        textField.textAlignment = .center
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
     
     let label2 : UILabel = {
         let label = UILabel()
@@ -113,21 +94,8 @@ class AddKarateristikPreorder :  UIViewController{
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0).isActive = true
         
-        
-        scrollView.addSubview(label1)
-        label1.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true //anchor ke scrollview
-        label1.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        
-        scrollView.addSubview(ukuranText)
-        ukuranText.topAnchor.constraint(equalTo: label1.bottomAnchor, constant: 10).isActive = true
-        ukuranText.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        ukuranText.font = UIFont.systemFont(ofSize: 25)
-        ukuranText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        ukuranText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
-        ukuranText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        
         scrollView.addSubview(label2)
-        label2.topAnchor.constraint(equalTo: ukuranText.bottomAnchor, constant: 30).isActive = true
+        label2.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30).isActive = true
         label2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         scrollView.addSubview(beratText)
