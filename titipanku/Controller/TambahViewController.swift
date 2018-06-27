@@ -74,6 +74,7 @@ class TambahViewController: UIViewController {
         PostPreorder.varKarateristik.status = 0
         
         PostPreorder.varNegara.negara = ""
+        PostPreorder.varNegara.kota = ""
         PostPreorder.varNegara.deadline = ""
         PostPreorder.varNegara.status = 0
         

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyPickerPopover
 
 class AddKarateristikBarang :  UIViewController{
     override func viewDidLoad() {
@@ -19,6 +20,7 @@ class AddKarateristikBarang :  UIViewController{
         }
         
         setupView()
+        self.hideKeyboardWhenTappedAround()
     }
     
     @objc func handleCancle(){
@@ -32,6 +34,36 @@ class AddKarateristikBarang :  UIViewController{
         
         print(PostBarang.varKarateristik.ukuran.self)
         self.dismiss(animated: true)
+    }
+    
+    @objc func ukuranTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        StringPickerPopover(title: "Ukuran Barang", choices: ["Kecil (20x20x20 CM)", "Sedang ( 30x25x20 CM)","Besar (35x22x55 CM)"])
+            .setSelectedRow(0)
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+                print("done row \(selectedRow) \(selectedString)")
+                self.ukuranText.text = selectedString
+            })
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            )
+            .appear(originView: textField, baseViewController: self)
+        
+    }
+    
+    @objc func beratTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        StringPickerPopover(title: "Berat Barang", choices: ["1 Kg","2 Kg","3 Kg","4 Kg","5 Kg"])
+            .setSelectedRow(0)
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+                print("done row \(selectedRow) \(selectedString)")
+                self.beratText.text = selectedString
+            })
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            )
+            .appear(originView: textField, baseViewController: self)
+        
     }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
@@ -50,6 +82,9 @@ class AddKarateristikBarang :  UIViewController{
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(ukuranTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
         return textField
     }()
     
@@ -67,6 +102,9 @@ class AddKarateristikBarang :  UIViewController{
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(beratTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
         return textField
     }()
     

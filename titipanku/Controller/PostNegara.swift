@@ -25,6 +25,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         print("Post Trip")
         setupView()
         
+        self.hideKeyboardWhenTappedAround()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -47,7 +48,6 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
     }
     
     func fetchNegara(nama:String) -> Void {
-        myTableView.isHidden = false
         
         let urlString = "https://restcountries.eu/rest/v2/name/\(String(describing: nama))"
         guard let url = URL(string: urlString) else { return }
@@ -76,16 +76,20 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
     @objc func textFieldDidChange(_ textField: UITextField) {
         
         fetchNegara(nama: textField.text!)
-        
+         myTableView.isHidden = false
         //init tableview
+        //bug untuk pemilihan negara kedua
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
         self.view.addSubview(myTableView)
         myTableView.topAnchor.constraint(equalTo: CountryTextField.bottomAnchor, constant: 12).isActive = true
-        myTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        myTableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
-        myTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 300).isActive = true
+        myTableView.leftAnchor.constraint( equalTo: CountryTextField.leftAnchor).isActive = true
+        myTableView.rightAnchor.constraint(equalTo: CountryTextField.rightAnchor).isActive = true
+        myTableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        myTableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        myTableView.layer.borderWidth = 1
+        myTableView.layer.borderColor = UIColor.black.cgColor
         
     }
     
@@ -162,7 +166,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
     
     //tampilan
     let myTableView : UITableView = {
-        let t = UITableView()
+        let t = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         t.translatesAutoresizingMaskIntoConstraints = false
         return t
     }()

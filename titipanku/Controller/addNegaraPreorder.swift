@@ -9,19 +9,25 @@
 import UIKit
 import SwiftyPickerPopover
 
-class AddNegaraPreorder :  UIViewController{
+class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource{
     var dateBack : String = ""
-    
+    var countries = [country]()
+    struct country: Decodable {
+        let name: String
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
         if PostPreorder.varNegara.status != 0 {
             negaraText.text = PostPreorder.varNegara.negara
+            kotaText.text = PostPreorder.varNegara.kota
             dateTextField.text =  PostPreorder.varNegara.deadline
         }
         
         setupView()
+        self.hideKeyboardWhenTappedAround()
     }
     
     @objc func handleCancle(){
@@ -30,6 +36,7 @@ class AddNegaraPreorder :  UIViewController{
     
     @objc func handleSubmit(){
         PostPreorder.varNegara.negara = negaraText.text!
+        PostPreorder.varNegara.kota = kotaText.text!
         PostPreorder.varNegara.deadline = dateBack
         PostPreorder.varNegara.status = 1
         
@@ -37,12 +44,77 @@ class AddNegaraPreorder :  UIViewController{
         self.dismiss(animated: true)
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Num: \(indexPath.row)")
+        print("Value: \(countries[indexPath.row])")
+        negaraText.text = countries[indexPath.row].name
+        myTableView.isHidden = true
+        self.hideKeyboardWhenTappedAround()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return countries.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
+        let country = countries[indexPath.row]
+        cell.textLabel?.text = country.name
+        return cell
+    }
+    
+    func fetchNegara(nama:String) -> Void {
+        
+        let urlString = "https://restcountries.eu/rest/v2/name/\(String(describing: nama))"
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data, _, err) in
+            DispatchQueue.main.async {
+                if let err = err {
+                    print("Failed to get data from url:", err)
+                    return
+                }
+                
+                guard let data = data else { return }
+                do {
+                    let decoder = JSONDecoder()
+                    self.countries = try decoder.decode([country].self, from: data)
+                    self.myTableView.reloadData()
+                    print(self.countries)
+                } catch let jsonErr {
+                    print("Failed to decode:", jsonErr)
+                }
+            }
+            }.resume()
+        
+        
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        
+        fetchNegara(nama: textField.text!)
+        myTableView.isHidden = false
+        //init tableview
+        //bug untuk pemilihan negara kedua
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        myTableView.dataSource = self
+        myTableView.delegate = self
+        self.view.addSubview(myTableView)
+        myTableView.topAnchor.constraint(equalTo: negaraText.bottomAnchor, constant: 12).isActive = true
+        myTableView.leftAnchor.constraint( equalTo: negaraText.leftAnchor).isActive = true
+        myTableView.rightAnchor.constraint(equalTo: negaraText.rightAnchor).isActive = true
+        myTableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        myTableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        myTableView.layer.borderWidth = 1
+        myTableView.layer.borderColor = UIColor.black.cgColor
+        
+    }
+    
     @objc func textFieldTapped(_ textField: UITextField) {
         
         print("tapped")
         let date = Date() //ambil date hari ini
         /// DatePickerPopover appears:
-        DatePickerPopover(title: "Tanggal Kembali")
+        DatePickerPopover(title: "Tanggal Estimasi Pengiriman")
             .setDateMode(.date)
             .setSelectedDate(Date())
             .setMinimumDate(date)
@@ -67,6 +139,12 @@ class AddNegaraPreorder :  UIViewController{
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     
+    let myTableView : UITableView = {
+        let t = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        t.translatesAutoresizingMaskIntoConstraints = false
+        return t
+    }()
+    
     let label1 : UILabel = {
         let label = UILabel()
         label.text = "Negara Pembelian"
@@ -81,12 +159,31 @@ class AddNegaraPreorder :  UIViewController{
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)),
+                            for: UIControlEvents.editingChanged)
+        return textField
+    }()
+    
+    let label2 : UILabel = {
+        let label = UILabel()
+        label.text = "Dikirim Dari Kota"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let kotaText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
     let LabelTanggal : UILabel = {
     let label = UILabel()
-    label.text = "Tanggal Kembali"
+    label.text = "Tanggal Estimasi Pengiriman"
     label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
@@ -159,9 +256,21 @@ class AddNegaraPreorder :  UIViewController{
         negaraText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         negaraText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
+        scrollView.addSubview(label2)
+        label2.topAnchor.constraint(equalTo: negaraText.bottomAnchor, constant: 30).isActive = true
+        label2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        
+        scrollView.addSubview(kotaText)
+        kotaText.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10).isActive = true
+        kotaText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        kotaText.font = UIFont.systemFont(ofSize: 25)
+        kotaText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        kotaText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        kotaText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
         //Label Tanggal
         scrollView.addSubview(LabelTanggal)
-        LabelTanggal.topAnchor.constraint(equalTo: negaraText.bottomAnchor, constant: 50).isActive = true
+        LabelTanggal.topAnchor.constraint(equalTo: kotaText.bottomAnchor, constant: 50).isActive = true
         LabelTanggal.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         //Date

@@ -6,18 +6,23 @@
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 import UIKit
+import SwiftyPickerPopover
 
 class AddHargaPreorder :  UIViewController{
+    
+    var detik : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
         if PostPreorder.varHarga.status != 0 {
             hargaText.text = PostPreorder.varHarga.harga
-            
+            countdownText.text = PostPreorder.varHarga.countdownText
         }
         
         setupView()
+        self.hideKeyboardWhenTappedAround()
     }
     
     @objc func handleCancle(){
@@ -26,12 +31,41 @@ class AddHargaPreorder :  UIViewController{
     
     @objc func handleSubmit(){
         PostPreorder.varHarga.harga = hargaText.text!
+        PostPreorder.varHarga.countdownText = countdownText.text!
+        PostPreorder.varHarga.countdownValue = detik
         PostPreorder.varHarga.status = 1
         
         print(PostPreorder.varHarga.harga.self)
         self.dismiss(animated: true)
     }
     
+    @objc func countdownTapped(_ textField: UITextField) {
+        
+        CountdownPickerPopover(title: "Lama Waktu Penjualan")
+            .setSelectedTimeInterval(TimeInterval())
+            .setDoneButton(action: { popover, timeInterval in print("timeInterval \(timeInterval)")
+                self.detik = String(timeInterval)
+                let (h, m, s) = self.secondsToHoursMinutesSeconds (seconds: Int(timeInterval))
+                if(m > 0){
+                    print ("\(h) Jam, \(m) Menit")
+                    self.countdownText.text = "\(h) Jam, \(m) Menit"
+                }else {
+                    print ("\(h) Jam")
+                    self.countdownText.text = "\(h) Jam"
+                }
+                
+            } )
+            .setCancelButton(action: { _, _ in print("cancel")})
+            .setClearButton(action: { popover, timeInterval in print("Clear")
+                popover.setSelectedTimeInterval(TimeInterval()).reload()
+            })
+            .appear(originView: textField, baseViewController: self)
+        
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     
     let label1 : UILabel = {
@@ -48,6 +82,26 @@ class AddHargaPreorder :  UIViewController{
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    let label2 : UILabel = {
+        let label = UILabel()
+        label.text = "Lama Penjualan"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let countdownText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(countdownTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
         return textField
     }()
     
@@ -106,6 +160,18 @@ class AddHargaPreorder :  UIViewController{
         hargaText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         hargaText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         hargaText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
+        scrollView.addSubview(label2)
+        label2.topAnchor.constraint(equalTo: hargaText.bottomAnchor, constant: 10).isActive = true
+        label2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        
+        scrollView.addSubview(countdownText)
+        countdownText.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10).isActive = true
+        countdownText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        countdownText.font = UIFont.systemFont(ofSize: 25)
+        countdownText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        countdownText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        countdownText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         
     }

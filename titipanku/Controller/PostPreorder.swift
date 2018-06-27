@@ -28,12 +28,15 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     struct varNegara {
         static var negara = ""
+        static var kota = ""
         static var deadline = ""
         static var status = 0
     }
     
     struct varHarga {
         static var harga = ""
+        static var countdownText = ""
+        static var countdownValue = ""
         static var status = 0
     }
     
@@ -141,7 +144,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Post Barang", for: .normal)
+        button.setTitle("Post Titipan Berdurasi", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
@@ -158,7 +161,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
             
-            let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"action" : "insert"]
+            let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"action" : "insert"]
             
             Alamofire.request("http://localhost/titipanku/PostPreorder.php",method: .get, parameters: parameters).responseSwiftyJSON { dataResponse in
                 
@@ -275,22 +278,44 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
 class InputCell1Pre: BaseCell {
     
+    let angkaImg: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "satu")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
     let labelA : UILabel = {
         let label = UILabel()
         label.sizeToFit()
         label.text = "Detail Barang  "
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 17)
         return label
+    }()
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "next")
+        iv.layer.masksToBounds = true
+        return iv
     }()
     
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
+        addSubview(imageView)
+        addSubview(angkaImg)
         
-        addConstraintsWithFormat("H:|-50-[v0]-5-|", views: labelA) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         
         addConstraintsWithFormat("V:|[v0]|", views: labelA)
+        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
+        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
         
     }
     
@@ -298,22 +323,44 @@ class InputCell1Pre: BaseCell {
 
 class InputCell2Pre: BaseCell {
     
+    let angkaImg: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "dua")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
     let labelA : UILabel = {
         let label = UILabel()
         label.sizeToFit()
         label.text = "Karateristik Barang  "
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 17)
         return label
+    }()
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "next")
+        iv.layer.masksToBounds = true
+        return iv
     }()
     
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
+        addSubview(imageView)
+        addSubview(angkaImg)
         
-        addConstraintsWithFormat("H:|-50-[v0]-5-|", views: labelA) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         
         addConstraintsWithFormat("V:|[v0]|", views: labelA)
+        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
+        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
         
     }
     
@@ -321,22 +368,44 @@ class InputCell2Pre: BaseCell {
 
 class InputCell3Pre: BaseCell {
     
+    let angkaImg: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "tiga")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
     let labelA : UILabel = {
         let label = UILabel()
         label.sizeToFit()
         label.text = "Negara Pembelian"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 17)
         return label
+    }()
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "next")
+        iv.layer.masksToBounds = true
+        return iv
     }()
     
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
+        addSubview(imageView)
+        addSubview(angkaImg)
         
-        addConstraintsWithFormat("H:|-50-[v0]-5-|", views: labelA) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         
         addConstraintsWithFormat("V:|[v0]|", views: labelA)
+        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
+        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
         
     }
     
@@ -344,22 +413,44 @@ class InputCell3Pre: BaseCell {
 
 class InputCell4Pre: BaseCell {
     
+    let angkaImg: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "empat")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
     let labelA : UILabel = {
         let label = UILabel()
         label.sizeToFit()
         label.text = "Harga "
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 17)
         return label
+    }()
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "next")
+        iv.layer.masksToBounds = true
+        return iv
     }()
     
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
+        addSubview(imageView)
+        addSubview(angkaImg)
         
-        addConstraintsWithFormat("H:|-50-[v0]-5-|", views: labelA) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         
         addConstraintsWithFormat("V:|[v0]|", views: labelA)
+        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
+        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
         
     }
     

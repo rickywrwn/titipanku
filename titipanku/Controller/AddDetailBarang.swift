@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyPickerPopover
 
 class AddDetailBarang :  UIViewController{
     override func viewDidLoad() {
@@ -21,6 +22,7 @@ class AddDetailBarang :  UIViewController{
         }
         
         setupView()
+        self.hideKeyboardWhenTappedAround()
         
     }
     
@@ -37,6 +39,36 @@ class AddDetailBarang :  UIViewController{
         
         print(PostBarang.varDetail.namaBarang.self)
         self.dismiss(animated: true)
+    }
+    
+    @objc func textFieldTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        StringPickerPopover(title: "Kategori Barang", choices: ["Elektronik","Makanan dan Minuman","Fashion Pria","Fashion Wanita","Produk Kecantikan","Peralatan Rumah Tangga","Barang Koleksi","Lainnya"])
+            .setSelectedRow(0)
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+                print("done row \(selectedRow) \(selectedString)")
+                self.categoryText.text = selectedString
+            })
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            )
+            .appear(originView: textField, baseViewController: self)
+        
+    }
+    
+    @objc func qtyTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        StringPickerPopover(title: "Jumlah Barang", choices: ["1","2","3","4","5","6","7","8","9","10"])
+            .setSelectedRow(0)
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+                print("done row \(selectedRow) \(selectedString)")
+                self.qtyText.text = selectedString
+            })
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            )
+            .appear(originView: textField, baseViewController: self)
+        
     }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
@@ -72,6 +104,9 @@ class AddDetailBarang :  UIViewController{
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(qtyTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
         return textField
     }()
     
@@ -108,6 +143,9 @@ class AddDetailBarang :  UIViewController{
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textFieldTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
         return textField
     }()
     

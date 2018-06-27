@@ -19,6 +19,7 @@ class AddHargaBarang :  UIViewController{
         }
         
         setupView()
+        self.hideKeyboardWhenTappedAround()
     }
     
     @objc func handleCancle(){
