@@ -144,10 +144,9 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("Post Barang", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        button.backgroundColor = UIColor.blue
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handlePostBarang), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -162,7 +161,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             
             let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota ,"action" : "insert"]
             
-            Alamofire.request("http://localhost/titipanku/PostBarang.php",method: .get, parameters: parameters).responseSwiftyJSON { dataResponse in
+            Alamofire.request("http://titipanku.xyz/api/PostBarang.php",method: .get, parameters: parameters).responseSwiftyJSON { dataResponse in
                 
                 //mencetak JSON response
                 if let json = dataResponse.value {
@@ -214,10 +213,14 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         //PostButton
         view.addSubview(postButton)
-        postButton.centerXAnchor.constraint(equalTo: (collectionView?.centerXAnchor)! ).isActive = true
+        postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor ).isActive = true
         postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        //postButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        postButton.topAnchor.constraint(greaterThanOrEqualTo: (collectionView?.bottomAnchor)!, constant: 50).isActive = true
+        
     }
     
     @objc func showAddDetail(){

@@ -9,17 +9,36 @@
 
 import UIKit
 
+var itung : Int = 0
+
+
+
 class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    @objc func handleMoreBarang() {
+       
+        print("Barang")
+    }
+   
+    @objc func handleMorePreoder() {
+        
+        print("Preorder")
+    }
     
     var homeController: homeController?
-    
     var appCategory: AppCategory? {
         didSet {
-            
             if let name = appCategory?.name {
                 nameLabel.text = name
             }
-            
+            if itung == 1 {
+                btnMore.addTarget(self, action: #selector(handleMoreBarang), for: UIControlEvents.touchDown)
+                
+            }else if itung == 2 {
+                btnMore.addTarget(self, action: #selector(handleMorePreoder), for: UIControlEvents.touchDown)
+                
+            }
+            btnMore.setTitle(String("More >> "), for: .normal)
+            itung += 1
             appsCollectionView.reloadData()
         }
     }
@@ -35,12 +54,26 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Best New Apps"
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let btnMore : UIButton = {
+        
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("a", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
+        button.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 16)
+        button.setTitleColor(.cyan, for: .selected)
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+        
     }()
     
     let appsCollectionView: UICollectionView = {
@@ -67,19 +100,20 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         addSubview(appsCollectionView)
         addSubview(dividerLineView)
         addSubview(nameLabel)
+        addSubview(btnMore)
         
         appsCollectionView.dataSource = self
         appsCollectionView.delegate = self
         
         appsCollectionView.register(AppCell.self, forCellWithReuseIdentifier: cellId)
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0][v1]-5-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel,"v1": btnMore]))
         
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": dividerLineView]))
         
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel(30)][v0][v1(0.5)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": appsCollectionView, "v1": dividerLineView, "nameLabel": nameLabel]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel(30)][v0][v1(0.5)]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": appsCollectionView, "v1": dividerLineView, "nameLabel": nameLabel, "v2": btnMore]))
         
     }
     

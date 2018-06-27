@@ -23,9 +23,14 @@ struct AppCategory: Decodable {
     let apps: [App]?
     let type: String?
     
+    func handleMore(angka : Int) {
+        
+        print(angka)
+    }
+    
     static func fetchFeaturedApps(_ completionHandler: @escaping (FeaturedApps) -> ()) {
         
-        let urlString = "http://localhost/titipanku/NewestList.php"
+        let urlString = "http://titipanku.xyz/api/NewestList.php"
         
         URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
             

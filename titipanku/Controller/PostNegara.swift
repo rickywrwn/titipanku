@@ -125,7 +125,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
             let parameters: Parameters = ["email": emailNow,"country": CountryTextField.text!, "tgl" : dateBack ,"action" : "insert"]
-            Alamofire.request("http://localhost/titipanku/PostTrip.php",method: .get, parameters: parameters).responseJSON {
+            Alamofire.request("http://titipanku.xyz/api/PostTrip.php",method: .get, parameters: parameters).responseJSON {
                 response in
                 
                 //mencetak JSON response
@@ -212,10 +212,12 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("Post Trip", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        //button.layer.borderColor = UIColor.black.cgColor
+        //button.layer.borderWidth = 2
+        //button.layer.cornerRadius = 5
+        button.backgroundColor = UIColor.blue
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handlePostTrip), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -258,9 +260,10 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         //PostButton
         view.addSubview(postButton)
         postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
-        postButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
-        postButton.topAnchor.constraint(greaterThanOrEqualTo: dateTextField.bottomAnchor, constant: 70).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        postButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        postButton.topAnchor.constraint(greaterThanOrEqualTo: dateTextField.bottomAnchor, constant: 300).isActive = true
+        
     }
 }
