@@ -70,43 +70,36 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         if indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId1, for: indexPath) as! InputCell1
             
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.gray.cgColor
-            border.frame = CGRect(x: 40, y: cell.frame.size.height - width, width:  cell.frame.size.width , height: cell.frame.size.height)
-            
-            border.borderWidth = width
-            cell.layer.addSublayer(border)
-            cell.layer.masksToBounds = true
-            
             if varDetail.status != 0 {
                 cell.labelNama.isHidden = false
                 cell.labelQty.isHidden = false
                 cell.descText.isHidden = false
                 cell.labelKategori.isHidden = false
+                
+                cell.labelNama.text = varDetail.namaBarang
+                cell.labelQty.text = varDetail.qty
+                cell.descText.text = varDetail.desc
+                cell.labelKategori.text = varDetail.kategori
+                
             }else{
                 cell.labelNama.isHidden = true
                 cell.labelQty.isHidden = true
                 cell.descText.isHidden = true
                 cell.labelKategori.isHidden = true
+                
             }
             
             return cell
             
         }else if indexPath.row == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId2, for: indexPath) as! InputCell2
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.gray.cgColor
-            border.frame = CGRect(x: 40, y: cell.frame.size.height - width, width:  cell.frame.size.width , height: cell.frame.size.height)
-            
-            border.borderWidth = width
-            cell.layer.addSublayer(border)
-            cell.layer.masksToBounds = true
-            
+
             if varKarateristik.status != 0 {
                 cell.labelUkuran.isHidden = false
                 cell.labelBerat.isHidden = false
+                
+                cell.labelUkuran.text = varKarateristik.ukuran
+                cell.labelBerat.text = varKarateristik.berat
             }else{
                 cell.labelUkuran.isHidden = true
                 cell.labelBerat.isHidden = true
@@ -116,18 +109,13 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             
         }else if indexPath.row == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId3, for: indexPath) as! InputCell3
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.gray.cgColor
-            border.frame = CGRect(x: 40, y: cell.frame.size.height - width, width:  cell.frame.size.width , height: cell.frame.size.height)
-            
-            border.borderWidth = width
-            cell.layer.addSublayer(border)
-            cell.layer.masksToBounds = true
-            
+       
             if varNegara.status != 0 {
                 cell.labelNegara.isHidden = false
                 cell.LabelKota.isHidden = false
+                
+                cell.labelNegara.text = varNegara.negara
+                cell.LabelKota.text = varNegara.kota
             }else{
                 cell.labelNegara.isHidden = true
                 cell.LabelKota.isHidden = true
@@ -137,17 +125,11 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             
         }else if indexPath.row == 3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId4, for: indexPath) as! InputCell4
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.gray.cgColor
-            border.frame = CGRect(x: 40, y: cell.frame.size.height - width, width:  cell.frame.size.width , height: cell.frame.size.height)
-            
-            border.borderWidth = width
-            cell.layer.addSublayer(border)
-            cell.layer.masksToBounds = true
-            
+           
             if varHarga.status != 0 {
                 cell.labelHarga.isHidden = false
+                
+                cell.labelHarga.text = varHarga.harga
             }else{
                 cell.labelHarga.isHidden = true
             }
@@ -454,6 +436,12 @@ class InputCell2: BaseCell {
         return label
     }()
     
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
@@ -462,14 +450,17 @@ class InputCell2: BaseCell {
         addSubview(angkaImg)
         addSubview(labelUkuran)
         addSubview(labelBerat)
+        addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         addConstraintsWithFormat("H:|-30-[v0]|", views: labelUkuran)
         addConstraintsWithFormat("H:|-30-[v0]|", views: labelBerat)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
-        addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]-5-[v2]|", views: imageView,labelUkuran,labelBerat)
+        addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-25-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]-5-[v2]|", views: imageView,labelUkuran,labelBerat)
+        addConstraintsWithFormat("V:|[v0(1)]|", views: dividerLineView)
         
     }
     
@@ -519,6 +510,12 @@ class InputCell3: BaseCell {
         return label
     }()
     
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
@@ -527,14 +524,17 @@ class InputCell3: BaseCell {
         addSubview(angkaImg)
         addSubview(labelNegara)
         addSubview(LabelKota)
+        addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         addConstraintsWithFormat("H:|-30-[v0]|", views: labelNegara)
         addConstraintsWithFormat("H:|-30-[v0]|", views: LabelKota)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
-        addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]-5-[v2]|", views: imageView,labelNegara,LabelKota)
+        addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-25-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]-5-[v2]|", views: imageView,labelNegara,LabelKota)
+        addConstraintsWithFormat("V:|[v0(1)]|", views: dividerLineView)
         
     }
     
@@ -576,6 +576,12 @@ class InputCell4: BaseCell {
         return label
     }()
     
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
@@ -583,13 +589,16 @@ class InputCell4: BaseCell {
         addSubview(imageView)
         addSubview(angkaImg)
         addSubview(labelHarga)
+        addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         addConstraintsWithFormat("H:|-30-[v0]|", views: labelHarga)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
-        addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]|", views: imageView,labelHarga)
+        addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-25-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]|", views: imageView,labelHarga)
+        addConstraintsWithFormat("V:|[v0(1)]|", views: dividerLineView)
         
     }
     
