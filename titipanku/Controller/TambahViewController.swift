@@ -11,7 +11,10 @@ import Alamofire
 import SwiftyJSON
 
 class TambahViewController: UIViewController {
-    
+    struct varTambah {
+        static var statusTambah = ""
+        
+    }
     let navSegmentControl = UISegmentedControl()
     let containerView = UIView()
     
@@ -107,10 +110,16 @@ class TambahViewController: UIViewController {
             BarangVC.view.isHidden = false
             TripVC.view.isHidden = true
             PreorderVC.view.isHidden = true
+            varTambah.statusTambah = "barang"
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
         }else {
             BarangVC.view.isHidden = true
             TripVC.view.isHidden = true
             PreorderVC.view.isHidden = false
+            varTambah.statusTambah = "preorder"
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
         }
     }
     

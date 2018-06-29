@@ -31,6 +31,7 @@ class AddHargaBarang :  UIViewController{
         PostBarang.varHarga.status = 1
         
         print(PostBarang.varHarga.harga.self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         self.dismiss(animated: true)
     }
     

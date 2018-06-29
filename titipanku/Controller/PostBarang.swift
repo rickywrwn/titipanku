@@ -45,22 +45,31 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         super.viewDidLoad()
         view.backgroundColor = .white
         print("Post Barang")
-        setupView()
-        
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(InputCell1.self, forCellWithReuseIdentifier: inputCellId1)
         collectionView?.register(InputCell2.self, forCellWithReuseIdentifier: inputCellId2)
         collectionView?.register(InputCell3.self, forCellWithReuseIdentifier: inputCellId3)
         collectionView?.register(InputCell4.self, forCellWithReuseIdentifier: inputCellId4)
         
+
         print(varDetail.namaBarang.self)
         
+        setupView()
+        //untuk melakukan reload collectionview di controller lain
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+        
+    }
+    
+    @objc func loadList(){
+        //load data here
+        self.collectionView?.reloadData()
     }
    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId1, for: indexPath) as! InputCell1
+            
             let border = CALayer()
             let width = CGFloat(1.0)
             border.borderColor = UIColor.gray.cgColor
@@ -69,6 +78,19 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             border.borderWidth = width
             cell.layer.addSublayer(border)
             cell.layer.masksToBounds = true
+            
+            if varDetail.status != 0 {
+                cell.labelNama.isHidden = false
+                cell.labelQty.isHidden = false
+                cell.descText.isHidden = false
+                cell.labelKategori.isHidden = false
+            }else{
+                cell.labelNama.isHidden = true
+                cell.labelQty.isHidden = true
+                cell.descText.isHidden = true
+                cell.labelKategori.isHidden = true
+            }
+            
             return cell
             
         }else if indexPath.row == 1 {
@@ -82,6 +104,14 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             cell.layer.addSublayer(border)
             cell.layer.masksToBounds = true
             
+            if varKarateristik.status != 0 {
+                cell.labelUkuran.isHidden = false
+                cell.labelBerat.isHidden = false
+            }else{
+                cell.labelUkuran.isHidden = true
+                cell.labelBerat.isHidden = true
+            }
+            
             return cell
             
         }else if indexPath.row == 2 {
@@ -94,6 +124,15 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             border.borderWidth = width
             cell.layer.addSublayer(border)
             cell.layer.masksToBounds = true
+            
+            if varNegara.status != 0 {
+                cell.labelNegara.isHidden = false
+                cell.LabelKota.isHidden = false
+            }else{
+                cell.labelNegara.isHidden = true
+                cell.LabelKota.isHidden = true
+            }
+            
             return cell
             
         }else if indexPath.row == 3 {
@@ -106,6 +145,13 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             border.borderWidth = width
             cell.layer.addSublayer(border)
             cell.layer.masksToBounds = true
+            
+            if varHarga.status != 0 {
+                cell.labelHarga.isHidden = false
+            }else{
+                cell.labelHarga.isHidden = true
+            }
+            
             return cell
             
         }
@@ -116,8 +162,9 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         return CGSize(width: view.frame.width, height: 100)
     }
     
@@ -205,7 +252,6 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)
-        collectionView?.heightAnchor.constraint(equalToConstant: 200).isActive = true
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
         collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
         collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -155).isActive = true
@@ -305,18 +351,60 @@ class InputCell1: BaseCell {
         return iv
     }()
     
+    let labelNama : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Nama barang "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    let labelQty : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "qty barang "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    let descText : UITextView = {
+        let textField = UITextView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.layer.borderWidth = 1
+        textField.layer.cornerRadius = 3
+        textField.text = "desc"
+        textField.layer.borderColor =  UIColor.gray.cgColor
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    let labelKategori : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "kategori barang "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(labelNama)
+        addSubview(labelQty)
+        addSubview(descText)
+        addSubview(labelKategori)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: labelNama)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: labelQty)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: descText)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: labelKategori)
         
-        addConstraintsWithFormat("V:|[v0]|", views: labelA)
-        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
-        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
+        addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]-5-[v2]-5-[v3]-5-[v4]|", views: imageView,labelNama,labelQty,descText,labelKategori)
         
     }
     
@@ -350,18 +438,38 @@ class InputCell2: BaseCell {
         return iv
     }()
     
+    let labelUkuran : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Ukuran Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let labelBerat : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Berat Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(labelUkuran)
+        addSubview(labelBerat)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: labelUkuran)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: labelBerat)
         
-        addConstraintsWithFormat("V:|[v0]|", views: labelA)
-        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
-        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
+        addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]-5-[v2]|", views: imageView,labelUkuran,labelBerat)
         
     }
     
@@ -395,18 +503,38 @@ class InputCell3: BaseCell {
         return iv
     }()
     
+    let labelNegara : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Negara Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let LabelKota : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Kota Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(labelNegara)
+        addSubview(LabelKota)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: labelNegara)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: LabelKota)
         
-        addConstraintsWithFormat("V:|[v0]|", views: labelA)
-        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
-        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
+        addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]-5-[v2]|", views: imageView,labelNegara,LabelKota)
         
     }
     
@@ -440,18 +568,28 @@ class InputCell4: BaseCell {
         return iv
     }()
     
+    let labelHarga : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Harga Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(labelHarga)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: labelHarga)
         
-        addConstraintsWithFormat("V:|[v0]|", views: labelA)
-        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
-        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
+        addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]|", views: imageView,labelHarga)
         
     }
     

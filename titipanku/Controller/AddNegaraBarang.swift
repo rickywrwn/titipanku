@@ -40,6 +40,7 @@ class AddNegaraBarang :  UIViewController, UITableViewDelegate, UITableViewDataS
         PostBarang.varNegara.status = 1
         
         print(PostBarang.varNegara.negara.self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         self.dismiss(animated: true)
     }
     

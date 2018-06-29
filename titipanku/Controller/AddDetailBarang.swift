@@ -38,6 +38,9 @@ class AddDetailBarang :  UIViewController{
         PostBarang.varDetail.status = 1
         
         print(PostBarang.varDetail.namaBarang.self)
+        
+        // untuk melakukan reload Collectionview di Post Barang
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         self.dismiss(animated: true)
     }
     

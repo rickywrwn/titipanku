@@ -33,6 +33,7 @@ class AddKarateristikBarang :  UIViewController{
         PostBarang.varKarateristik.status = 1
         
         print(PostBarang.varKarateristik.ukuran.self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         self.dismiss(animated: true)
     }
     

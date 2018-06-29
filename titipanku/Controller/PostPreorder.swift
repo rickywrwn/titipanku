@@ -48,7 +48,6 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         super.viewDidLoad()
         view.backgroundColor = .white
         print("Post Barang")
-        setupView()
         
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(InputCell1Pre.self, forCellWithReuseIdentifier: inputCellId1)
@@ -56,6 +55,13 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         collectionView?.register(InputCell3Pre.self, forCellWithReuseIdentifier: inputCellId3)
         collectionView?.register(InputCell4Pre.self, forCellWithReuseIdentifier: inputCellId4)
         
+        setupView()
+         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
+    }
+    
+    @objc func loadList(){
+        //load data here
+        self.collectionView?.reloadData()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -119,6 +125,34 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        //mengatur height postbarang dan preorder karena salah
+        
+        if TambahViewController.varTambah.statusTambah == "preorder"{
+            print("height preorer")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
+            return CGSize(width: view.frame.width, height: 100)
+        }else if TambahViewController.varTambah.statusTambah == "barang"{
+            print("height barang")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
+            
+            if indexPath.row == 0 && PostBarang.varDetail.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 300)
+            }else if indexPath.row == 1 && PostBarang.varKarateristik.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 200)
+            }else if indexPath.row == 2 && PostBarang.varNegara.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 200)
+            }else if indexPath.row == 3 && PostBarang.varHarga.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 100)
+            }
+            
+        }
+        print("atur height")
         return CGSize(width: view.frame.width, height: 100)
     }
     
