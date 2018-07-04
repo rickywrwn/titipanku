@@ -196,7 +196,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
             
             let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"action" : "insert"]
             
-            Alamofire.request("http://titipanku.xyz/api/PostPreorder.php",method: .get, parameters: parameters).responseSwiftyJSON { dataResponse in
+            Alamofire.request("http://localhost/titipanku/PostPreorder.php",method: .post, parameters: parameters).responseSwiftyJSON { dataResponse in
                 
                 //mencetak JSON response
                 if let json = dataResponse.value {
