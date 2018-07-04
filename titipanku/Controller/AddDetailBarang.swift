@@ -9,12 +9,15 @@
 import UIKit
 import SwiftyPickerPopover
 
-class AddDetailBarang :  UIViewController{
+class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+     var imgBarang: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
         if PostBarang.varDetail.status != 0 {
+            BarangImageView.image = PostBarang.varDetail.gambarBarang
             nameText.text = PostBarang.varDetail.namaBarang
             qtyText.text = PostBarang.varDetail.qty
             descText.text = PostBarang.varDetail.desc
@@ -31,6 +34,8 @@ class AddDetailBarang :  UIViewController{
     }
     
     @objc func handleSubmit(){
+        
+        PostBarang.varDetail.gambarBarang = imgBarang
         PostBarang.varDetail.namaBarang = nameText.text!
         PostBarang.varDetail.qty = qtyText.text!
         PostBarang.varDetail.desc = descText.text!
@@ -74,7 +79,66 @@ class AddDetailBarang :  UIViewController{
         
     }
     
+    @objc func imgTapped(_ imageView: UIImageView) {
+        print("tapped gambar")
+        let alert = UIAlertController(title: "Choose one of the following:", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.allowsEditing = true
+            self.present(picker, animated: true, completion: nil)
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+            
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        //print(info)
+        
+        var selectedImageFromPicker: UIImage?
+        
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage{
+            
+            selectedImageFromPicker = editedImage
+            
+        }else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage{
+            
+            selectedImageFromPicker = originalImage
+        }
+        
+        if let selectedImage = selectedImageFromPicker{
+            BarangImageView.image = selectedImage
+            imgBarang = selectedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("cancel")
+        dismiss(animated: true, completion: nil)
+    }
+   
+    
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
+    
+    //lazy var supaya mau akses self
+    lazy var BarangImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imgTapped(_:))))
+        iv.isUserInteractionEnabled = true
+        return iv
+    }()
     
     let label1 : UILabel = {
         let label = UILabel()
@@ -185,7 +249,7 @@ class AddDetailBarang :  UIViewController{
         
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
+        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1150)
         
         
         // constrain the scroll view to 8-pts on each side
@@ -195,8 +259,14 @@ class AddDetailBarang :  UIViewController{
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0).isActive = true
 
         
+        scrollView.addSubview(BarangImageView)
+        BarangImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true //anchor ke scrollview
+        BarangImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        BarangImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        BarangImageView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
         scrollView.addSubview(label1)
-        label1.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true //anchor ke scrollview
+        label1.topAnchor.constraint(equalTo: BarangImageView.bottomAnchor, constant: 30).isActive = true
         label1.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         scrollView.addSubview(nameText)

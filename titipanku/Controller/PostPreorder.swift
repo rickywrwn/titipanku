@@ -245,7 +245,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         collectionView?.heightAnchor.constraint(equalToConstant: 200).isActive = true
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
         collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
-        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -155).isActive = true
+        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -110).isActive = true
         
         
         view.addSubview(postButton)

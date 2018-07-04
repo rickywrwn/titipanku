@@ -13,6 +13,7 @@ import SwiftyJSON
 class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
     struct varDetail {
+        static var gambarBarang: UIImage?
         static var namaBarang = ""
         static var qty = ""
         static var desc = ""
@@ -188,35 +189,63 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
             
-            let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota ,"action" : "insert"]
-            
-            Alamofire.request("http://titipanku.xyz/api/PostBarang.php",method: .get, parameters: parameters).responseSwiftyJSON { dataResponse in
-                
+            let parameter: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota ,"action" : "insert","action2" : "tidak"]
+
+            Alamofire.request("http://localhost/titipanku/PostBarang.php",method: .post, parameters: parameter).responseSwiftyJSON { dataResponse in
+
                 //mencetak JSON response
                 if let json = dataResponse.value {
-                    print("JSON: \(json)")
                 }
-                
+
                 //mengambil json
                 let json = JSON(dataResponse.value)
                 print(json)
                 let cekSukses = json["success"].intValue
                 let pesan = json["message"].stringValue
-                
+
                 if cekSukses != 1 {
-                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                    
+                    let alert = UIAlertController(title: "gagal", message: pesan, preferredStyle: .alert)
+
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+
                     self.present(alert, animated: true)
                 }else{
                     let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                    
+
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                         self.handleBack()
                     }))
-                    
+
                     self.present(alert, animated: true)
+                }
+            }
+            
+            
+            let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
+            
+            let parameters = ["email": emailNow,"name": "Frank","action" : "insert","action2" : "upload"]
+            //userfile adalah parameter post untuk file yg ingin di upload
+            Alamofire.upload(multipartFormData: { multipartFormData in
+                multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
+                for (key, value) in parameters {
+                    multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                }
+            },
+                             to:"http://localhost/titipanku/PostBarang.php")
+            { (result) in
+                switch result {
+                case .success(let upload, _, _):
+                    
+                    upload.uploadProgress(closure: { (progress) in
+                        print("Upload Progress: \(progress.fractionCompleted)")
+                    })
+                    
+                    upload.responseJSON { response in
+                        print(response.result.value)
+                    }
+                    
+                case .failure(let encodingError):
+                    print(encodingError)
                 }
             }
         }
@@ -236,7 +265,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         view.addSubview(collectionView!)
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
         collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
-        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -155).isActive = true
+        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -110).isActive = true
         
         
         //PostButton
