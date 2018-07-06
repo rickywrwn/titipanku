@@ -27,12 +27,23 @@ class AddHargaBarang :  UIViewController{
     }
     
     @objc func handleSubmit(){
-        PostBarang.varHarga.harga = hargaText.text!
-        PostBarang.varHarga.status = 1
         
-        print(PostBarang.varHarga.harga.self)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
-        self.dismiss(animated: true)
+        if hargaText.text != ""{
+            PostBarang.varHarga.harga = hargaText.text!
+            PostBarang.varHarga.status = 1
+            
+            print(PostBarang.varHarga.harga.self)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            self.dismiss(animated: true)
+        }else{
+            let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
     }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)

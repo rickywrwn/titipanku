@@ -11,7 +11,7 @@ import SwiftyPickerPopover
 
 class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
      var imgBarang: UIImage?
-    
+    var cekGambar : Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -35,18 +35,28 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
     
     @objc func handleSubmit(){
         
-        PostBarang.varDetail.gambarBarang = imgBarang
-        PostBarang.varDetail.namaBarang = nameText.text!
-        PostBarang.varDetail.qty = qtyText.text!
-        PostBarang.varDetail.desc = descText.text!
-        PostBarang.varDetail.kategori = categoryText.text!
-        PostBarang.varDetail.status = 1
+        if cekGambar != 0 && nameText.text != "" && qtyText.text != "" && descText.text != "" && categoryText.text != "" {
+            PostBarang.varDetail.gambarBarang = imgBarang
+            PostBarang.varDetail.namaBarang = nameText.text!
+            PostBarang.varDetail.qty = qtyText.text!
+            PostBarang.varDetail.desc = descText.text!
+            PostBarang.varDetail.kategori = categoryText.text!
+            PostBarang.varDetail.status = 1
+            
+            // untuk melakukan reload Collectionview di Post Barang
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            self.dismiss(animated: true)
+        }else{
+            let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
         
         print(PostBarang.varDetail.namaBarang.self)
-        
-        // untuk melakukan reload Collectionview di Post Barang
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
-        self.dismiss(animated: true)
     }
     
     @objc func textFieldTapped(_ textField: UITextField) {
@@ -113,6 +123,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         if let selectedImage = selectedImageFromPicker{
             BarangImageView.image = selectedImage
             imgBarang = selectedImage
+            cekGambar = 1
         }
         
         dismiss(animated: true, completion: nil)

@@ -35,13 +35,24 @@ class AddNegaraBarang :  UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     @objc func handleSubmit(){
-        PostBarang.varNegara.negara = negaraText.text!
-        PostBarang.varNegara.kota = kotaText.text!
-        PostBarang.varNegara.status = 1
         
-        print(PostBarang.varNegara.negara.self)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
-        self.dismiss(animated: true)
+        if negaraText.text != "" && kotaText.text != ""{
+            PostBarang.varNegara.negara = negaraText.text!
+            PostBarang.varNegara.kota = kotaText.text!
+            PostBarang.varNegara.status = 1
+            
+            print(PostBarang.varNegara.negara.self)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            self.dismiss(animated: true)
+        }else{
+            let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

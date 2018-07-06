@@ -8,6 +8,8 @@
 
 
 import UIKit
+import AlamofireImage
+import Alamofire
 
 var itung : Int = 0
 
@@ -165,7 +167,7 @@ class AppCell: UICollectionViewCell {
         didSet {
             if let name = app?.name {
                 nameLabel.text = name
-                
+                print(name)
                 let rect = NSString(string: name).boundingRect(with: CGSize(width: frame.width, height: 1000), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)], context: nil)
                 
                 if rect.height > 20 {
@@ -182,15 +184,22 @@ class AppCell: UICollectionViewCell {
             }
             
             categoryLabel.text = app?.country
-            
             if let price = app?.price {
                 priceLabel.text = "Rp \(price)"
             } else {
                 priceLabel.text = ""
             }
             
+            //async get image dari web
             if let imageName = app?.ImageName {
-                imageView.image = UIImage(named: imageName)
+                Alamofire.request("http://titipanku.xyz/uploads/"+imageName).responseImage { response in
+                    //debugPrint(response)
+                    
+                    if let image = response.result.value {
+                        print("image downloaded: \(image)")
+                        self.imageView.image = image
+                    }
+                }
             }
             
         }

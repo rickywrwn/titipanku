@@ -23,4 +23,6 @@ target 'titipanku' do
   pod 'Eureka'
   pod 'SwiftyPickerPopover'
 
+  pod 'AlamofireImage', '~> 3.3'
+
 end

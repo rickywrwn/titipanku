@@ -3,6 +3,8 @@ PODS:
   - Alamofire-SwiftyJSON (3.0.0):
     - Alamofire (~> 4.5)
     - SwiftyJSON (~> 4.0.0)
+  - AlamofireImage (3.3.1):
+    - Alamofire (~> 4.5)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -25,31 +27,31 @@ PODS:
   - FirebaseAnalytics (4.1.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
   - FirebaseAuth (4.5.0):
     - FirebaseAnalytics (~> 4.1)
-    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseCore (4.0.18):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
   - GoogleSignIn (4.1.2):
-    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
-    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
     - GTMOAuth2 (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/DebugUtils (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3)":
     - GoogleToolboxForMac/DebugUtils (= 2.1.3)
     - GoogleToolboxForMac/Defines (= 2.1.3)
-    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
-  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.1.3)"
   - GTMOAuth2 (1.1.6):
     - GTMSessionFetcher (~> 1.1)
   - GTMSessionFetcher (1.1.14):
@@ -68,6 +70,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.7)
   - Alamofire-SwiftyJSON
+  - AlamofireImage (~> 3.3)
   - Eureka
   - FBSDKCoreKit
   - FBSDKLoginKit
@@ -78,9 +81,33 @@ DEPENDENCIES:
   - SwiftyJSON
   - SwiftyPickerPopover
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Alamofire-SwiftyJSON
+    - AlamofireImage
+    - Bolts
+    - Eureka
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseAuth
+    - FirebaseCore
+    - FirebaseInstanceID
+    - GoogleSignIn
+    - GoogleToolboxForMac
+    - GTMOAuth2
+    - GTMSessionFetcher
+    - nanopb
+    - SwiftyJSON
+    - SwiftyPickerPopover
+
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   Alamofire-SwiftyJSON: 2b3649d57dc7bb2880fb8b86f8bb969397666916
+  AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   FBSDKCoreKit: e08ccfcefa7bc1347a07c276dac9bf6c7fe57024
@@ -99,6 +126,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwiftyPickerPopover: f1bb928efd60e4c754aa957c1bb67372465e9ccb
 
-PODFILE CHECKSUM: ed9ca4cbb1cac8cc7270c1c78ea4957afbe68445
+PODFILE CHECKSUM: 88e3a6395eac497801b7ad5001ec64c2bf87d670
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

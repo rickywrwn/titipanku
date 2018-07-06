@@ -77,10 +77,10 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
                 cell.descText.isHidden = false
                 cell.labelKategori.isHidden = false
                 
-                cell.labelNama.text = varDetail.namaBarang
-                cell.labelQty.text = varDetail.qty
+                cell.labelNama.text = "Nama : " + varDetail.namaBarang
+                cell.labelQty.text = "Jumlah : " + varDetail.qty
                 cell.descText.text = varDetail.desc
-                cell.labelKategori.text = varDetail.kategori
+                cell.labelKategori.text = "Kategori : " + varDetail.kategori
                 
             }else{
                 cell.labelNama.isHidden = true
@@ -99,8 +99,8 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
                 cell.labelUkuran.isHidden = false
                 cell.labelBerat.isHidden = false
                 
-                cell.labelUkuran.text = varKarateristik.ukuran
-                cell.labelBerat.text = varKarateristik.berat
+                cell.labelUkuran.text = "Ukuran : " + varKarateristik.ukuran
+                cell.labelBerat.text = "Berat : " + varKarateristik.berat
             }else{
                 cell.labelUkuran.isHidden = true
                 cell.labelBerat.isHidden = true
@@ -115,8 +115,8 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
                 cell.labelNegara.isHidden = false
                 cell.LabelKota.isHidden = false
                 
-                cell.labelNegara.text = varNegara.negara
-                cell.LabelKota.text = varNegara.kota
+                cell.labelNegara.text = "Negara Pembelian : " + varNegara.negara
+                cell.LabelKota.text = "Kota Pengiriman : " + varNegara.kota
             }else{
                 cell.labelNegara.isHidden = true
                 cell.LabelKota.isHidden = true
@@ -195,57 +195,57 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
 
                 //mencetak JON response
                 if let json = dataResponse.value {
-                }
-
-                //mengambil json
-                let json = JSON(dataResponse.value)
-                print(json)
-                let cekSukses = json["success"].intValue
-                let pesan = json["message"].stringValue
-                
-                if cekSukses != 1 {
-                    let alert = UIAlertController(title: "gagal", message: pesan, preferredStyle: .alert)
-
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-
-                    self.present(alert, animated: true)
-                }else{
-                    let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
                     
-                    let parameters = ["email": emailNow,"name": "Frank","action" : "insert","action2" : "upload"]
-                    //userfile adalah parameter post untuk file yg ingin di upload
-                    Alamofire.upload(multipartFormData: { multipartFormData in
-                        multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
-                        for (key, value) in parameters {
-                            multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
-                        }
-                    },
-                                     to:"http://titipanku.xyz/api/PostBarang.php")
-                    { (result) in
-                        switch result {
-                        case .success(let upload, _, _):
-                            
-                            upload.uploadProgress(closure: { (progress) in
-                                print("Upload Progress: \(progress.fractionCompleted)")
-                            })
-                            
-                            upload.responseJSON { response in
-                                print(response.result.value)
+                    //mengambil json
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "gagal", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
+                        
+                        let parameters = ["email": emailNow,"name": "Frank","action" : "insert","action2" : "upload"]
+                        //userfile adalah parameter post untuk file yg ingin di upload
+                        Alamofire.upload(multipartFormData: { multipartFormData in
+                            multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
+                            for (key, value) in parameters {
+                                multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
                             }
-                            
-                        case .failure(let encodingError):
-                            print(encodingError)
+                        },
+                                         to:"http://titipanku.xyz/api/PostBarang.php")
+                        { (result) in
+                            switch result {
+                            case .success(let upload, _, _):
+                                
+                                upload.uploadProgress(closure: { (progress) in
+                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                })
+                                
+                                upload.responseJSON { response in
+                                    print(response.result.value)
+                                }
+                                
+                            case .failure(let encodingError):
+                                print(encodingError)
+                            }
                         }
+                        
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            self.handleBack()
+                        }))
+                        
+                        self.present(alert, animated: true)
                     }
-                    
-                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                        self.handleBack()
-                    }))
-
-                    self.present(alert, animated: true)
                 }
+                
             }
             
         }
@@ -384,6 +384,7 @@ class InputCell1: BaseCell {
         textField.text = "desc"
         textField.layer.borderColor =  UIColor.gray.cgColor
         textField.textAlignment = .center
+        textField.font = UIFont.systemFont(ofSize: 15)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -408,14 +409,14 @@ class InputCell1: BaseCell {
         addSubview(labelKategori)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: labelNama)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: labelQty)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: descText)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: labelKategori)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelNama)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelKategori)
+        addConstraintsWithFormat("H:|-80-[v0]-30-|", views: descText)
         
         addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
         addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]-5-[v2]-5-[v3]-5-[v4]|", views: imageView,labelNama,labelQty,descText,labelKategori)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]-5-[v2]-5-[v3]-5-[v4]|", views: imageView,labelNama,labelQty,labelKategori,descText)
         
     }
     
@@ -482,8 +483,8 @@ class InputCell2: BaseCell {
         addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: labelUkuran)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: labelBerat)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelUkuran)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelBerat)
         addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
         addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
@@ -556,8 +557,8 @@ class InputCell3: BaseCell {
         addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: labelNegara)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: LabelKota)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelNegara)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: LabelKota)
         addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
         addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
@@ -621,7 +622,7 @@ class InputCell4: BaseCell {
         addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
-        addConstraintsWithFormat("H:|-30-[v0]|", views: labelHarga)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelHarga)
         addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
         addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
