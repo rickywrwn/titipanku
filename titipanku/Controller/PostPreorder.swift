@@ -145,7 +145,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 return CGSize(width: view.frame.width, height: 120)
             }else if indexPath.row == 2 && PostBarang.varNegara.status != 0 {
                 
-                return CGSize(width: view.frame.width, height: 120)
+                return CGSize(width: view.frame.width, height: 140)
             }else if indexPath.row == 3 && PostBarang.varHarga.status != 0 {
             
                 return CGSize(width: view.frame.width, height: 100)

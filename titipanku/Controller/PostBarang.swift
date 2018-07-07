@@ -18,6 +18,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         static var qty = ""
         static var desc = ""
         static var kategori = ""
+        static var url = ""
         static var status = 0
     }
     
@@ -31,6 +32,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         static var negara = ""
         static var provinsi = ""
         static var kota = ""
+        static var idKota = ""
         static var status = 0
     }
     
@@ -78,12 +80,14 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
                 cell.labelQty.isHidden = false
                 cell.descText.isHidden = false
                 cell.labelKategori.isHidden = false
+                cell.labelUrl.isHidden = false
                 
                 cell.BarangImageView.image = varDetail.gambarBarang
                 cell.labelNama.text = "Nama : " + varDetail.namaBarang
                 cell.labelQty.text = "Jumlah : " + varDetail.qty
                 cell.descText.text = varDetail.desc
                 cell.labelKategori.text = "Kategori : " + varDetail.kategori
+                cell.labelUrl.text = "URL Referensi : " + varDetail.url
                 
             }else{
                 cell.BarangImageView.isHidden = true
@@ -91,6 +95,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
                 cell.labelQty.isHidden = true
                 cell.descText.isHidden = true
                 cell.labelKategori.isHidden = true
+                cell.labelUrl.isHidden = true
                 
             }
             
@@ -117,13 +122,16 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
        
             if varNegara.status != 0 {
                 cell.labelNegara.isHidden = false
+                cell.LabelProvinsi.isHidden = false
                 cell.LabelKota.isHidden = false
                 
                 cell.labelNegara.text = "Negara Pembelian : " + varNegara.negara
+                cell.LabelProvinsi.text = "Provinsi Pengiriman : " + varNegara.provinsi
                 cell.LabelKota.text = "Kota Pengiriman : " + varNegara.kota
             }else{
                 cell.labelNegara.isHidden = true
-                cell.LabelKota.isHidden = true
+                cell.LabelProvinsi.isHidden = true
+                cell.LabelKota.isHidden = false
             }
             
             return cell
@@ -257,6 +265,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         PostBarang.varDetail.desc = ""
         PostBarang.varDetail.qty = ""
         PostBarang.varDetail.kategori = ""
+        PostBarang.varDetail.url = ""
         PostBarang.varDetail.status = 0
         
         PostBarang.varKarateristik.ukuran = ""
@@ -265,6 +274,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         PostBarang.varNegara.negara = ""
         PostBarang.varNegara.kota = ""
+        PostBarang.varNegara.idKota = ""
         PostBarang.varNegara.provinsi = ""
         PostBarang.varNegara.status = 0
         
@@ -442,6 +452,13 @@ class InputCell1: BaseCell {
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
+    let labelUrl : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Url Barang"
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
     
     override func setupViews() {
         super.setupViews()
@@ -454,17 +471,19 @@ class InputCell1: BaseCell {
         addSubview(labelQty)
         addSubview(descText)
         addSubview(labelKategori)
+        addSubview(labelUrl)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         addConstraintsWithFormat("H:|-80-[v0(100)]|", views: BarangImageView)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelNama)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelKategori)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelUrl)
         addConstraintsWithFormat("H:|-80-[v0]-30-|", views: descText)
         
         addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
         addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v5(100)]-5-[v1]-5-[v2]-5-[v3]-5-[v4]|", views: imageView,labelNama,labelQty,labelKategori,descText,BarangImageView)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v5(100)]-5-[v1]-5-[v2]-5-[v3]-5-[v6]-5-[v4]|", views: imageView,labelNama,labelQty,labelKategori,descText,BarangImageView,labelUrl)
         
     }
     
@@ -580,6 +599,13 @@ class InputCell3: BaseCell {
         return label
     }()
     
+    let LabelProvinsi : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Provinsi Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
     let LabelKota : UILabel = {
         let label = UILabel()
         label.sizeToFit()
@@ -601,17 +627,19 @@ class InputCell3: BaseCell {
         addSubview(imageView)
         addSubview(angkaImg)
         addSubview(labelNegara)
+        addSubview(LabelProvinsi)
         addSubview(LabelKota)
         addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelNegara)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: LabelProvinsi)
         addConstraintsWithFormat("H:|-80-[v0]|", views: LabelKota)
         addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
         addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
         addConstraintsWithFormat("V:|-25-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]-5-[v2]|", views: imageView,labelNegara,LabelKota)
+        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]-5-[v3]-5-[v2]|", views: imageView,labelNegara,LabelKota,LabelProvinsi)
         addConstraintsWithFormat("V:|[v0(1)]|", views: dividerLineView)
         
     }

@@ -22,6 +22,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
             qtyText.text = PostBarang.varDetail.qty
             descText.text = PostBarang.varDetail.desc
             categoryText.text = PostBarang.varDetail.kategori
+            urlText.text = PostBarang.varDetail.url
         }
         
         setupView()
@@ -41,6 +42,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
             PostBarang.varDetail.qty = qtyText.text!
             PostBarang.varDetail.desc = descText.text!
             PostBarang.varDetail.kategori = categoryText.text!
+            PostBarang.varDetail.url = urlText.text!
             PostBarang.varDetail.status = 1
             
             // untuk melakukan reload Collectionview di Post Barang
@@ -100,10 +102,29 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
             
         }))
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
-            
-            
+            self.openCamera()
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func openCamera()
+    {
+        let imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
+        {
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        else
+        {
+            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -227,6 +248,23 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         return textField
     }()
     
+    let label5 : UILabel = {
+        let label = UILabel()
+        label.text = "URL Referensi (Optional)"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let urlText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
     let scrollView: UIScrollView = {
         let v = UIScrollView()
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -325,6 +363,18 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         categoryText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         categoryText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         categoryText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
+        scrollView.addSubview(label5)
+        label5.topAnchor.constraint(equalTo: categoryText.bottomAnchor, constant: 30).isActive = true
+        label5.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        
+        scrollView.addSubview(urlText)
+        urlText.topAnchor.constraint(equalTo: label5.bottomAnchor, constant: 10).isActive = true
+        urlText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        urlText.font = UIFont.systemFont(ofSize: 25)
+        urlText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        urlText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        urlText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
     }
     
 }

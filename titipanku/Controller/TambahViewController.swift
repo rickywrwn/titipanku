@@ -54,6 +54,7 @@ class TambahViewController: UIViewController {
         PostBarang.varDetail.desc = ""
         PostBarang.varDetail.qty = ""
         PostBarang.varDetail.kategori = ""
+        PostBarang.varDetail.url = ""
         PostBarang.varDetail.status = 0
         
         PostBarang.varKarateristik.ukuran = ""
@@ -63,6 +64,7 @@ class TambahViewController: UIViewController {
         PostBarang.varNegara.negara = ""
         PostBarang.varNegara.kota = ""
         PostBarang.varNegara.provinsi = ""
+        PostBarang.varNegara.idKota = ""
         PostBarang.varNegara.status = 0
         
         PostBarang.varHarga.harga = ""

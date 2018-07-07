@@ -72,7 +72,7 @@ class AddNegaraBarang :  UIViewController, UITableViewDelegate, UITableViewDataS
             PostBarang.varNegara.negara = negaraText.text!
             PostBarang.varNegara.kota = kotaText.text!
             PostBarang.varNegara.provinsi = provinsiText.text!
-            
+            PostBarang.varNegara.idKota = selectedCity
             PostBarang.varNegara.status = 1
             
             print(PostBarang.varNegara.negara.self)
@@ -209,8 +209,6 @@ class AddNegaraBarang :  UIViewController, UITableViewDelegate, UITableViewDataS
         }
         
     }
-    
-    
     
     func fetchKota(prov:String) {
         DispatchQueue.main.async {
