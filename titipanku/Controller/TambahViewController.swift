@@ -62,6 +62,7 @@ class TambahViewController: UIViewController {
         
         PostBarang.varNegara.negara = ""
         PostBarang.varNegara.kota = ""
+        PostBarang.varNegara.provinsi = ""
         PostBarang.varNegara.status = 0
         
         PostBarang.varHarga.harga = ""

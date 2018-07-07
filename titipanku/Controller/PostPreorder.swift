@@ -147,8 +147,8 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 
                 return CGSize(width: view.frame.width, height: 120)
             }else if indexPath.row == 3 && PostBarang.varHarga.status != 0 {
-                
-                return CGSize(width: view.frame.width, height: 120)
+            
+                return CGSize(width: view.frame.width, height: 100)
             }
             
         }
@@ -251,11 +251,10 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         view.addSubview(postButton)
         postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor ).isActive = true
         postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        //postButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        postButton.topAnchor.constraint(greaterThanOrEqualTo: (collectionView?.bottomAnchor)!, constant: 50).isActive = true
+        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
     }
     

@@ -47,7 +47,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
             self.dismiss(animated: true)
         }else{
-            let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Peringatan", message: "Data Harus Terisi Semua", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                 
                 
@@ -232,6 +232,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = .white
         v.keyboardDismissMode = .interactive
+        v.delaysContentTouches = false
         return v
     }()
     

@@ -29,6 +29,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
     
     struct varNegara {
         static var negara = ""
+        static var provinsi = ""
         static var kota = ""
         static var status = 0
     }
@@ -72,17 +73,20 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId1, for: indexPath) as! InputCell1
             
             if varDetail.status != 0 {
+                cell.BarangImageView.isHidden = false
                 cell.labelNama.isHidden = false
                 cell.labelQty.isHidden = false
                 cell.descText.isHidden = false
                 cell.labelKategori.isHidden = false
                 
+                cell.BarangImageView.image = varDetail.gambarBarang
                 cell.labelNama.text = "Nama : " + varDetail.namaBarang
                 cell.labelQty.text = "Jumlah : " + varDetail.qty
                 cell.descText.text = varDetail.desc
                 cell.labelKategori.text = "Kategori : " + varDetail.kategori
                 
             }else{
+                cell.BarangImageView.isHidden = true
                 cell.labelNama.isHidden = true
                 cell.labelQty.isHidden = true
                 cell.descText.isHidden = true
@@ -249,7 +253,40 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             }
             
         }
+        PostBarang.varDetail.namaBarang = ""
+        PostBarang.varDetail.desc = ""
+        PostBarang.varDetail.qty = ""
+        PostBarang.varDetail.kategori = ""
+        PostBarang.varDetail.status = 0
         
+        PostBarang.varKarateristik.ukuran = ""
+        PostBarang.varKarateristik.berat = ""
+        PostBarang.varKarateristik.status = 0
+        
+        PostBarang.varNegara.negara = ""
+        PostBarang.varNegara.kota = ""
+        PostBarang.varNegara.provinsi = ""
+        PostBarang.varNegara.status = 0
+        
+        PostBarang.varHarga.harga = ""
+        PostBarang.varHarga.status = 0
+        
+        PostPreorder.varDetail.namaBarang = ""
+        PostPreorder.varDetail.desc = ""
+        PostPreorder.varDetail.qty = ""
+        PostPreorder.varDetail.kategori = ""
+        PostPreorder.varDetail.status = 0
+        
+        PostPreorder.varKarateristik.berat = ""
+        PostPreorder.varKarateristik.status = 0
+        
+        PostPreorder.varNegara.negara = ""
+        PostPreorder.varNegara.kota = ""
+        PostPreorder.varNegara.deadline = ""
+        PostPreorder.varNegara.status = 0
+        
+        PostPreorder.varHarga.harga = ""
+        PostPreorder.varHarga.status = 0
     }
     
     @objc private func handleBack(){
@@ -272,11 +309,10 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         view.addSubview(postButton)
         postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor ).isActive = true
         postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        //postButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        postButton.topAnchor.constraint(greaterThanOrEqualTo: (collectionView?.bottomAnchor)!, constant: 50).isActive = true
+        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
     }
     
@@ -362,6 +398,16 @@ class InputCell1: BaseCell {
         return iv
     }()
     
+    //lazy var supaya mau akses self
+    lazy var BarangImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
     let labelNama : UILabel = {
         let label = UILabel()
         label.sizeToFit()
@@ -403,12 +449,14 @@ class InputCell1: BaseCell {
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(BarangImageView)
         addSubview(labelNama)
         addSubview(labelQty)
         addSubview(descText)
         addSubview(labelKategori)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-80-[v0(100)]|", views: BarangImageView)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelNama)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelKategori)
@@ -416,7 +464,7 @@ class InputCell1: BaseCell {
         
         addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
         addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v1]-5-[v2]-5-[v3]-5-[v4]|", views: imageView,labelNama,labelQty,labelKategori,descText)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v5(100)]-5-[v1]-5-[v2]-5-[v3]-5-[v4]|", views: imageView,labelNama,labelQty,labelKategori,descText,BarangImageView)
         
     }
     

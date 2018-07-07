@@ -206,6 +206,7 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
         v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = .white
         v.keyboardDismissMode = .interactive
+        v.delaysContentTouches = false
         return v
     }()
     
