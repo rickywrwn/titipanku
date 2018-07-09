@@ -14,10 +14,12 @@ import SwiftyJSON
 class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
     struct varDetail {
+        static var gambarBarang: UIImage?
         static var namaBarang = ""
         static var qty = ""
         static var desc = ""
         static var kategori = ""
+        static var url = ""
         static var status = 0
     }
     
@@ -30,6 +32,8 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         static var negara = ""
         static var kota = ""
         static var deadline = ""
+        static var provinsi = ""
+        static var idKota = ""
         static var status = 0
     }
     
@@ -37,23 +41,25 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         static var harga = ""
         static var countdownText = ""
         static var countdownValue = ""
+        static var batasWaktu = ""
+        static var statusBatas = 0
         static var status = 0
     }
     
-    fileprivate let inputCellId1 = "inputCellId1"
-    fileprivate let inputCellId2 = "inputCellId2"
-    fileprivate let inputCellId3 = "inputCellId3"
-    fileprivate let inputCellId4 = "inputCellId4"
+    fileprivate let inputCellId1Pre = "inputCellId1Pre"
+    fileprivate let inputCellId2Pre = "inputCellId2Pre"
+    fileprivate let inputCellId3Pre = "inputCellId3Pre"
+    fileprivate let inputCellId4Pre = "inputCellId4Pre"
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         print("Post Barang")
         
         collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(InputCell1Pre.self, forCellWithReuseIdentifier: inputCellId1)
-        collectionView?.register(InputCell2Pre.self, forCellWithReuseIdentifier: inputCellId2)
-        collectionView?.register(InputCell3Pre.self, forCellWithReuseIdentifier: inputCellId3)
-        collectionView?.register(InputCell4Pre.self, forCellWithReuseIdentifier: inputCellId4)
+        collectionView?.register(InputCell1Pre.self, forCellWithReuseIdentifier: inputCellId1Pre)
+        collectionView?.register(InputCell2Pre.self, forCellWithReuseIdentifier: inputCellId2Pre)
+        collectionView?.register(InputCell3Pre.self, forCellWithReuseIdentifier: inputCellId3Pre)
+        collectionView?.register(InputCell4Pre.self, forCellWithReuseIdentifier: inputCellId4Pre)
         
         setupView()
          NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
@@ -67,56 +73,93 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.row == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId1, for: indexPath) as! InputCell1Pre
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.gray.cgColor
-            border.frame = CGRect(x: 40, y: cell.frame.size.height - width, width:  cell.frame.size.width , height: cell.frame.size.height)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId1Pre, for: indexPath) as! InputCell1Pre
             
-            border.borderWidth = width
-            cell.layer.addSublayer(border)
-            cell.layer.masksToBounds = true
+            if varDetail.status != 0 {
+                cell.BarangImageView.isHidden = false
+                cell.labelNama.isHidden = false
+                cell.labelQty.isHidden = false
+                cell.descText.isHidden = false
+                cell.labelKategori.isHidden = false
+                cell.labelUrl.isHidden = false
+                
+                cell.BarangImageView.image = varDetail.gambarBarang
+                cell.labelNama.text = "Nama : " + varDetail.namaBarang
+                cell.labelQty.text = "Jumlah : " + varDetail.qty
+                cell.descText.text = varDetail.desc
+                cell.labelKategori.text = "Kategori : " + varDetail.kategori
+                cell.labelUrl.text = "URL Referensi : " + varDetail.url
+                
+            }else{
+                cell.BarangImageView.isHidden = true
+                cell.labelNama.isHidden = true
+                cell.labelQty.isHidden = true
+                cell.descText.isHidden = true
+                cell.labelKategori.isHidden = true
+                cell.labelUrl.isHidden = true
+                
+            }
+            
             return cell
             
         }else if indexPath.row == 1 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId2, for: indexPath) as! InputCell2Pre
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.gray.cgColor
-            border.frame = CGRect(x: 40, y: cell.frame.size.height - width, width:  cell.frame.size.width , height: cell.frame.size.height)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId2Pre, for: indexPath) as! InputCell2Pre
             
-            border.borderWidth = width
-            cell.layer.addSublayer(border)
-            cell.layer.masksToBounds = true
+            if varKarateristik.status != 0 {
+                cell.labelBerat.isHidden = false
+                
+                cell.labelBerat.text = "Berat : " + varKarateristik.berat
+            }else{
+                cell.labelBerat.isHidden = true
+            }
             
             return cell
             
         }else if indexPath.row == 2 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId3, for: indexPath) as! InputCell3Pre
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.gray.cgColor
-            border.frame = CGRect(x: 40, y: cell.frame.size.height - width, width:  cell.frame.size.width , height: cell.frame.size.height)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId3Pre, for: indexPath) as! InputCell3Pre
             
-            border.borderWidth = width
-            cell.layer.addSublayer(border)
-            cell.layer.masksToBounds = true
+            if varNegara.status != 0 {
+                cell.labelNegara.isHidden = false
+                cell.LabelProvinsi.isHidden = false
+                cell.LabelKota.isHidden = false
+                cell.LabelDeadline.isHidden = false
+                
+                cell.labelNegara.text = "Negara Pembelian : " + varNegara.negara
+                cell.LabelProvinsi.text = "Provinsi Pengiriman : " + varNegara.provinsi
+                cell.LabelKota.text = "Kota Pengiriman : " + varNegara.kota
+                cell.LabelDeadline.text = "Tanggal Pengiriman : " + varNegara.deadline
+            }else{
+                cell.labelNegara.isHidden = true
+                cell.LabelProvinsi.isHidden = true
+                cell.LabelKota.isHidden = true
+                cell.LabelDeadline.isHidden = true
+            }
+            
             return cell
             
         }else if indexPath.row == 3 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId4, for: indexPath) as! InputCell4Pre
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.gray.cgColor
-            border.frame = CGRect(x: 40, y: cell.frame.size.height - width, width:  cell.frame.size.width , height: cell.frame.size.height)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId4Pre, for: indexPath) as! InputCell4Pre
             
-            border.borderWidth = width
-            cell.layer.addSublayer(border)
-            cell.layer.masksToBounds = true
+            if varHarga.status != 0 {
+                cell.labelHarga.isHidden = false
+                
+                cell.labelHarga.text = "Harga Barang : " + varHarga.harga
+                if varHarga.statusBatas != 0{
+                    cell.labelCountdown.isHidden = false
+                    cell.labelCountdown.text = "Batas Waktu : " + varHarga.countdownText
+                }else{
+                    
+                    cell.labelCountdown.isHidden = true
+                }
+            }else{
+                cell.labelHarga.isHidden = true
+                cell.labelCountdown.isHidden = true
+            }
+            
             return cell
             
         }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId1, for: indexPath) as! InputCell1Pre
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId1Pre, for: indexPath) as! InputCell1Pre
         return cell
     }
     
@@ -129,13 +172,23 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         
         if TambahViewController.varTambah.statusTambah == "preorder"{
             print("height preorer")
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
-            return CGSize(width: view.frame.width, height: 100)
+            if indexPath.row == 0 && PostPreorder.varDetail.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 310)
+            }else if indexPath.row == 1 && PostPreorder.varKarateristik.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 120)
+            }else if indexPath.row == 2 && PostPreorder.varNegara.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 160)
+            }else if indexPath.row == 3 && PostPreorder.varHarga.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 120)
+            }
         }else if TambahViewController.varTambah.statusTambah == "barang"{
             print("height barang")
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
             
             if indexPath.row == 0 && PostBarang.varDetail.status != 0 {
                 
@@ -192,38 +245,70 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     @objc func handlePostBarang(){
         
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            
             print(emailNow)
             
-            let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"action" : "insert"]
-            
-            Alamofire.request("http://localhost/titipanku/PostPreorder.php",method: .post, parameters: parameters).responseSwiftyJSON { dataResponse in
-                
+            let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"url": varDetail.url,"action" : "insert","action2" : "tidak"]
+
+            Alamofire.request("http://titipanku.xyz/api/PostPreorder.php",method: .post, parameters: parameters).responseSwiftyJSON { dataResponse in
+
                 //mencetak JSON response
                 if let json = dataResponse.value {
-                    print("JSON: \(json)")
+                   // print("JSON: \(json)")
                 }
-                
+
                 //mengambil json
                 let json = JSON(dataResponse.value)
-                
+
                 let cekSukses = json["success"].intValue
                 let pesan = json["message"].stringValue
-                
+
                 if cekSukses != 1 {
                     let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
-                    
+
                     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                    
+
                     self.present(alert, animated: true)
                 }else{
-                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+
+                    let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
                     
+                    let parameters = ["email": emailNow,"name": "Frank","action" : "insert","action2" : "upload"]
+                    //userfile adalah parameter post untuk file yg ingin di upload
+                    Alamofire.upload(multipartFormData: { multipartFormData in
+                        multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
+                        for (key, value) in parameters {
+                            multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                        }
+                    },
+                                     to:"http://titipanku.xyz/api/PostPreorder.php")
+                    { (result) in
+                        switch result {
+                        case .success(let upload, _, _):
+                            
+                            upload.uploadProgress(closure: { (progress) in
+                                print("Upload Progress: \(progress.fractionCompleted)")
+                            })
+                            
+                            upload.responseJSON { response in
+                                print(response.result.value)
+                            }
+                            
+                        case .failure(let encodingError):
+                            print(encodingError)
+                        }
+                    }
+
+
+                    // alert
+                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                         let appDetailController = TambahViewController()
                         appDetailController.handleBack()
                         self.handleBack()
                     }))
-                    
+
                     self.present(alert, animated: true)
                 }
             }
@@ -340,18 +425,82 @@ class InputCell1Pre: BaseCell {
         return iv
     }()
     
+    //lazy var supaya mau akses self
+    lazy var BarangImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    let labelNama : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Nama barang "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    let labelQty : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "qty barang "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    let descText : UITextView = {
+        let textField = UITextView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.layer.borderWidth = 1
+        textField.layer.cornerRadius = 3
+        textField.text = "desc"
+        textField.layer.borderColor =  UIColor.gray.cgColor
+        textField.textAlignment = .center
+        textField.font = UIFont.systemFont(ofSize: 15)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    let labelKategori : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "kategori barang "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    let labelUrl : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Url Barang"
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(BarangImageView)
+        addSubview(labelNama)
+        addSubview(labelQty)
+        addSubview(descText)
+        addSubview(labelKategori)
+        addSubview(labelUrl)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-80-[v0(100)]|", views: BarangImageView)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelNama)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelKategori)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelUrl)
+        addConstraintsWithFormat("H:|-80-[v0]-30-|", views: descText)
         
-        addConstraintsWithFormat("V:|[v0]|", views: labelA)
-        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
-        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
+        addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v5(100)]-5-[v1]-5-[v2]-5-[v3]-5-[v6]-5-[v4]|", views: imageView,labelNama,labelQty,labelKategori,descText,BarangImageView,labelUrl)
         
     }
     
@@ -385,18 +534,37 @@ class InputCell2Pre: BaseCell {
         return iv
     }()
     
+    let labelBerat : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Berat Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(labelBerat)
+        addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelBerat)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|[v0]|", views: labelA)
-        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
-        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
+        addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-25-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]|", views: imageView,labelBerat)
+        addConstraintsWithFormat("V:|[v0(1)]|", views: dividerLineView)
         
     }
     
@@ -430,18 +598,65 @@ class InputCell3Pre: BaseCell {
         return iv
     }()
     
+    let labelNegara : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Negara Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let LabelProvinsi : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Provinsi Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    let LabelKota : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Kota Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    let LabelDeadline : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Tanggal Kembali"
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(labelNegara)
+        addSubview(LabelProvinsi)
+        addSubview(LabelKota)
+        addSubview(LabelDeadline)
+        addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelNegara)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: LabelProvinsi)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: LabelKota)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: LabelDeadline)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|[v0]|", views: labelA)
-        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
-        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
+        addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-25-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]-5-[v3]-5-[v2]-5-[v4]|", views: imageView,labelNegara,LabelKota,LabelProvinsi,LabelDeadline)
+        addConstraintsWithFormat("V:|[v0(1)]|", views: dividerLineView)
         
     }
     
@@ -475,18 +690,48 @@ class InputCell4Pre: BaseCell {
         return iv
     }()
     
+    let labelHarga : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Harga Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    
+    let labelCountdown : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "countdown Barang  "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
     override func setupViews() {
         super.setupViews()
         
         addSubview(labelA)
         addSubview(imageView)
         addSubview(angkaImg)
+        addSubview(labelHarga)
+        addSubview(labelCountdown)
+        addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelHarga)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelCountdown)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|[v0]|", views: labelA)
-        addConstraintsWithFormat("V:|-30-[v0(50)]|", views: imageView)
-        addConstraintsWithFormat("V:|-25-[v0(50)]|", views: angkaImg)
+        addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-25-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]-5-[v2]|", views: imageView,labelHarga,labelCountdown)
+        addConstraintsWithFormat("V:|[v0(1)]|", views: dividerLineView)
         
     }
     

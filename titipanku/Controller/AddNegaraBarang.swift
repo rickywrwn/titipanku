@@ -55,11 +55,17 @@ class AddNegaraBarang :  UIViewController, UITableViewDelegate, UITableViewDataS
             negaraText.text = PostBarang.varNegara.negara
             provinsiText.text = PostBarang.varNegara.provinsi
             kotaText.text = PostBarang.varNegara.kota
+            
+            
+            label3.isHidden = false
+            kotaText.isHidden = false
+        }else{
+            
+            label3.isHidden = true
+            kotaText.isHidden = true
         }
         
         setupView()
-        label3.isHidden = true
-        kotaText.isHidden = true
     }
     
     @objc func handleCancle(){

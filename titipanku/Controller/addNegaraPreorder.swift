@@ -8,14 +8,46 @@
 
 import UIKit
 import SwiftyPickerPopover
+import Alamofire
 
 class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource{
+    var selectedProv : String = ""
+    var selectedCity : String = ""
     var dateBack : String = ""
     var countries = [country]()
+    var provinces = [province]()
+    var cities = [city]()
+    var prvv : raja?
+    var kota : rajaKota?
+    
     struct country: Decodable {
         let name: String
         
     }
+    
+    struct raja: Decodable {
+        let rajaongkir: prov
+    }
+    struct prov: Decodable {
+        let results: [province]
+    }
+    struct province: Decodable {
+        let province_id: String
+        let province: String
+    }
+    
+    struct rajaKota: Decodable {
+        let rajaongkir: hasilKota
+    }
+    struct hasilKota: Decodable {
+        let results: [city]
+    }
+    struct city: Decodable {
+        let city_id: String
+        let city_name: String
+        let province_id: String
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -23,11 +55,19 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
         if PostPreorder.varNegara.status != 0 {
             negaraText.text = PostPreorder.varNegara.negara
             kotaText.text = PostPreorder.varNegara.kota
+            provinsiText.text = PostPreorder.varNegara.provinsi
             dateTextField.text =  PostPreorder.varNegara.deadline
+            
+            label3.isHidden = false
+            kotaText.isHidden = false
+        }else{
+            
+            label3.isHidden = true
+            kotaText.isHidden = true
         }
         
         setupView()
-        self.hideKeyboardWhenTappedAround()
+        
     }
     
     @objc func handleCancle(){
@@ -35,31 +75,89 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @objc func handleSubmit(){
+        if negaraText.text != "" && provinsiText.text != "" && kotaText.text != "" && dateTextField.text != ""{
         PostPreorder.varNegara.negara = negaraText.text!
         PostPreorder.varNegara.kota = kotaText.text!
+        PostPreorder.varNegara.provinsi = provinsiText.text!
+        PostPreorder.varNegara.idKota = selectedCity
         PostPreorder.varNegara.deadline = dateBack
+       
         PostPreorder.varNegara.status = 1
         
         print(PostPreorder.varNegara.negara.self)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
         self.dismiss(animated: true)
+        }else{
+            let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        print("Value: \(countries[indexPath.row])")
-        negaraText.text = countries[indexPath.row].name
-        myTableView.isHidden = true
-        self.hideKeyboardWhenTappedAround()
+        if tableView.tag == 0{
+            print("Num: \(indexPath.row)")
+            print("Value: \(countries[indexPath.row])")
+            negaraText.text = countries[indexPath.row].name
+            myTableView.isHidden = true
+        }else if tableView.tag == 1{
+            print("Num: \(indexPath.row)")
+            print("Value: \(provinces[indexPath.row])")
+            provinsiText.text = provinces[indexPath.row].province
+            selectedProv = provinces[indexPath.row].province_id
+            provTableView.isHidden = true
+            label3.isHidden = false
+            kotaText.isHidden = false
+        }else if tableView.tag == 2{
+            print("Num: \(cities[indexPath.row].city_id)")
+            print("Value: \(cities[indexPath.row])")
+            kotaText.text = cities[indexPath.row].city_name
+            selectedCity = cities[indexPath.row].city_id
+            kotaTableView.isHidden = true
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView.tag == 0{
+            
+            return countries.count
+        }else if tableView.tag == 1{
+            
+            return provinces.count
+        }else if tableView.tag == 2{
+            
+            return cities.count
+        }
         return countries.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView.tag == 0{
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
+            let country = countries[indexPath.row]
+            cell.textLabel?.text = country.name
+            cell.selectionStyle = UITableViewCellSelectionStyle.default
+            return cell
+        }else if tableView.tag == 1{
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
+            let province = provinces[indexPath.row]
+            cell.textLabel?.text = province.province
+            cell.selectionStyle = UITableViewCellSelectionStyle.default
+            return cell
+        }else if tableView.tag == 2{
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
+            let city = cities[indexPath.row]
+            cell.textLabel?.text = city.city_name
+            cell.selectionStyle = UITableViewCellSelectionStyle.default
+            return cell
+        }
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
         let country = countries[indexPath.row]
         cell.textLabel?.text = country.name
+        cell.selectionStyle = UITableViewCellSelectionStyle.default
         return cell
     }
     
@@ -79,20 +177,77 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
                     let decoder = JSONDecoder()
                     self.countries = try decoder.decode([country].self, from: data)
                     self.myTableView.reloadData()
-                    print(self.countries)
+                    //print(self.countries)
                 } catch let jsonErr {
                     print("Failed to decode:", jsonErr)
                 }
             }
             }.resume()
+    }
+    
+    
+    func fetchProv() {
+        //kalau post dengan header encoding harus URLencoding
+        DispatchQueue.main.async {
+            let headers = [
+                "key": "590ad699c8c798373e2053a28c7edd1e",
+                "content-type": "application/x-www-form-urlencoded"
+            ]
+            Alamofire.request("https://api.rajaongkir.com/starter/province",method: .get,encoding: URLEncoding.default, headers: headers)
+                .responseSwiftyJSON { dataResponse in
+                    if let json = dataResponse.data {
+                        //print(json)
+                        //let hasil = json["rajaongkir"]["results"]
+                        do {
+                            let decoder = JSONDecoder()
+                            self.prvv = try decoder.decode(raja.self, from: json)
+                            self.provinces = (self.prvv?.rajaongkir.results)!
+                            print(self.provinces)
+                            self.provTableView.reloadData()
+                            //print(self.provinces.count)
+                        } catch let jsonErr {
+                            print("Failed to decode:", jsonErr)
+                        }
+                    }
+            }
+            
+        }
         
+    }
+    
+    func fetchKota(prov:String) {
+        DispatchQueue.main.async {
+            //kalau post dengan header encoding harus URLencoding
+            let parameters: Parameters = ["province": prov]
+            let headers = [
+                "key": "590ad699c8c798373e2053a28c7edd1e",
+                "content-type": "application/x-www-form-urlencoded"
+            ]
+            Alamofire.request("https://api.rajaongkir.com/starter/city",method: .get,parameters : parameters,encoding: URLEncoding.default, headers: headers)
+                .responseSwiftyJSON { dataResponse in
+                    
+                    if let json = dataResponse.data {
+                        //print(json)
+                        //let hasil = json["rajaongkir"]["results"]
+                        do {
+                            let decoder = JSONDecoder()
+                            self.kota = try decoder.decode(rajaKota.self, from: json)
+                            self.cities = (self.kota?.rajaongkir.results)!
+                            self.kotaTableView.reloadData()
+                            print(self.cities)
+                            print(self.cities.count)
+                        } catch let jsonErr {
+                            print("Failed to decode:", jsonErr)
+                        }
+                    }
+            }
+        }
         
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         
         fetchNegara(nama: textField.text!)
-        myTableView.isHidden = false
         //init tableview
         //bug untuk pemilihan negara kedua
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
@@ -107,6 +262,54 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
         myTableView.layer.borderWidth = 1
         myTableView.layer.borderColor = UIColor.black.cgColor
         
+        myTableView.isHidden = false
+        kotaTableView.isHidden = true
+        provTableView.isHidden = true
+    }
+    
+    @objc func textProvDidChange(_ textField: UITextField) {
+        
+        fetchProv()
+        //init tableview
+        //bug untuk pemilihan negara kedua
+        provTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        provTableView.dataSource = self
+        provTableView.delegate = self
+        provTableView.tag = 1
+        self.view.addSubview(provTableView)
+        provTableView.topAnchor.constraint(equalTo: provinsiText.bottomAnchor, constant: 12).isActive = true
+        provTableView.leftAnchor.constraint( equalTo: provinsiText.leftAnchor).isActive = true
+        provTableView.rightAnchor.constraint(equalTo: provinsiText.rightAnchor).isActive = true
+        provTableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        provTableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        provTableView.layer.borderWidth = 1
+        provTableView.layer.borderColor = UIColor.black.cgColor
+        
+        provTableView.isHidden = false
+        kotaTableView.isHidden = true
+        myTableView.isHidden = true
+    }
+    
+    @objc func textKotaTapped(_ textField: UITextField) {
+        
+        fetchKota(prov: selectedProv)
+        //init tableview
+        //bug untuk pemilihan negara kedua
+        kotaTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        kotaTableView.dataSource = self
+        kotaTableView.delegate = self
+        kotaTableView.tag = 2
+        self.view.addSubview(kotaTableView)
+        kotaTableView.topAnchor.constraint(equalTo: kotaText.bottomAnchor, constant: 12).isActive = true
+        kotaTableView.leftAnchor.constraint( equalTo: kotaText.leftAnchor).isActive = true
+        kotaTableView.rightAnchor.constraint(equalTo: kotaText.rightAnchor).isActive = true
+        kotaTableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        kotaTableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        kotaTableView.layer.borderWidth = 1
+        kotaTableView.layer.borderColor = UIColor.black.cgColor
+        provTableView.isHidden = true
+        kotaTableView.isHidden = false
+        myTableView.isHidden = true
     }
     
     @objc func textFieldTapped(_ textField: UITextField) {
@@ -145,6 +348,18 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
         return t
     }()
     
+    let provTableView : UITableView = {
+        let t = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        t.translatesAutoresizingMaskIntoConstraints = false
+        return t
+    }()
+    
+    let kotaTableView : UITableView = {
+        let t = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        t.translatesAutoresizingMaskIntoConstraints = false
+        return t
+    }()
+    
     let label1 : UILabel = {
         let label = UILabel()
         label.text = "Negara Pembelian"
@@ -166,7 +381,27 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
     
     let label2 : UILabel = {
         let label = UILabel()
-        label.text = "Dikirim Dari Kota"
+        label.text = "Dikirim ke Provinsi"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let provinsiText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textProvDidChange(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
+        return textField
+    }()
+    
+    let label3 : UILabel = {
+        let label = UILabel()
+        label.text = "Dikirim ke Kota"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -178,6 +413,9 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(textKotaTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
         return textField
     }()
     
@@ -261,8 +499,20 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
         label2.topAnchor.constraint(equalTo: negaraText.bottomAnchor, constant: 30).isActive = true
         label2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
+        scrollView.addSubview(provinsiText)
+        provinsiText.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10).isActive = true
+        provinsiText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        provinsiText.font = UIFont.systemFont(ofSize: 25)
+        provinsiText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        provinsiText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        provinsiText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
+        scrollView.addSubview(label3)
+        label3.topAnchor.constraint(equalTo: provinsiText.bottomAnchor, constant: 30).isActive = true
+        label3.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        
         scrollView.addSubview(kotaText)
-        kotaText.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10).isActive = true
+        kotaText.topAnchor.constraint(equalTo: label3.bottomAnchor, constant: 10).isActive = true
         kotaText.heightAnchor.constraint(equalToConstant: 50).isActive = true
         kotaText.font = UIFont.systemFont(ofSize: 25)
         kotaText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

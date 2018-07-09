@@ -191,11 +191,11 @@ class AppCell: UICollectionViewCell {
             
             //async get image dari web
             DispatchQueue.main.async{
-                
+
                 if let imageName = self.app?.ImageName {
                     Alamofire.request("http://titipanku.xyz/uploads/"+imageName).responseImage { response in
                         //debugPrint(response)
-                        let nama = self.app?.name
+                        //let nama = self.app?.name
                         //print("gambar : "+imageName)
                         if let image = response.result.value {
                             //print("image downloaded: \(image)")
@@ -203,6 +203,8 @@ class AppCell: UICollectionViewCell {
                         }
                     }
                 }
+                
+                
             }
             
         }

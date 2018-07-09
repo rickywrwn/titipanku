@@ -10,16 +10,21 @@
 import UIKit
 import SwiftyPickerPopover
 
-class AddDetailPreorder :  UIViewController{
+class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    var imgBarang: UIImage?
+    var cekGambar : Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
         if PostPreorder.varDetail.status != 0 {
+            BarangImageView.image = PostPreorder.varDetail.gambarBarang
             nameText.text = PostPreorder.varDetail.namaBarang
             qtyText.text = PostPreorder.varDetail.qty
             descText.text = PostPreorder.varDetail.desc
             categoryText.text = PostPreorder.varDetail.kategori
+            urlText.text = PostPreorder.varDetail.url
         }
         
         setupView()
@@ -31,14 +36,28 @@ class AddDetailPreorder :  UIViewController{
     }
     
     @objc func handleSubmit(){
-        PostPreorder.varDetail.namaBarang = nameText.text!
-        PostPreorder.varDetail.qty = qtyText.text!
-        PostPreorder.varDetail.desc = descText.text!
-        PostPreorder.varDetail.kategori = categoryText.text!
-        PostPreorder.varDetail.status = 1
-        
-        print(PostPreorder.varDetail.namaBarang.self)
-        self.dismiss(animated: true)
+        if cekGambar != 0 && nameText.text != "" && qtyText.text != "" && descText.text != "" && categoryText.text != "" {
+
+            PostPreorder.varDetail.gambarBarang = BarangImageView.image
+            PostPreorder.varDetail.namaBarang = nameText.text!
+            PostPreorder.varDetail.qty = qtyText.text!
+            PostPreorder.varDetail.desc = descText.text!
+            PostPreorder.varDetail.kategori = categoryText.text!
+            PostPreorder.varDetail.url = urlText.text!
+            PostPreorder.varDetail.status = 1
+            
+            // untuk melakukan reload Collectionview di Post Barang
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
+            print(PostPreorder.varDetail.namaBarang.self)
+            self.dismiss(animated: true)
+        }else{
+            let alert = UIAlertController(title: "Peringatan", message: "Data Harus Terisi Semua", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     @objc func textFieldTapped(_ textField: UITextField) {
@@ -71,8 +90,86 @@ class AddDetailPreorder :  UIViewController{
         
     }
     
+    @objc func imgTapped(_ imageView: UIImageView) {
+        print("tapped gambar")
+        let alert = UIAlertController(title: "Choose one of the following:", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.allowsEditing = true
+            self.present(picker, animated: true, completion: nil)
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+            self.openCamera()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func openCamera()
+    {
+        let imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
+        {
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        else
+        {
+            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        //print(info)
+        
+        var selectedImageFromPicker: UIImage?
+        
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage{
+            
+            selectedImageFromPicker = editedImage
+            
+        }else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage{
+            
+            selectedImageFromPicker = originalImage
+        }
+        
+        if let selectedImage = selectedImageFromPicker{
+            BarangImageView.image = selectedImage
+            imgBarang = selectedImage
+            cekGambar = 1
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("cancel")
+        dismiss(animated: true, completion: nil)
+    }
+    
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     
+    //lazy var supaya mau akses self
+    lazy var BarangImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imgTapped(_:))))
+        iv.isUserInteractionEnabled = true
+        return iv
+    }()
+        
     let label1 : UILabel = {
         let label = UILabel()
         label.text = "Nama Barang"
@@ -148,6 +245,23 @@ class AddDetailPreorder :  UIViewController{
         textField.inputView = UIView();
         return textField
     }()
+        
+    let label5 : UILabel = {
+        let label = UILabel()
+        label.text = "URL Referensi (Optional)"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let urlText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
     
     let scrollView: UIScrollView = {
         let v = UIScrollView()
@@ -183,7 +297,7 @@ class AddDetailPreorder :  UIViewController{
         
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
+        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1150)
         
         
         // constrain the scroll view to 8-pts on each side
@@ -192,9 +306,15 @@ class AddDetailPreorder :  UIViewController{
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0).isActive = true
         
+        scrollView.addSubview(BarangImageView)
+        BarangImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true //anchor ke scrollview
+        BarangImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        BarangImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        BarangImageView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
         
         scrollView.addSubview(label1)
-        label1.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true //anchor ke scrollview
+        label1.topAnchor.constraint(equalTo: BarangImageView.bottomAnchor, constant: 30).isActive = true
         label1.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         scrollView.addSubview(nameText)
@@ -241,6 +361,19 @@ class AddDetailPreorder :  UIViewController{
         categoryText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         categoryText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         categoryText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
+        scrollView.addSubview(label5)
+        label5.topAnchor.constraint(equalTo: categoryText.bottomAnchor, constant: 30).isActive = true
+        label5.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        
+        
+        scrollView.addSubview(urlText)
+        urlText.topAnchor.constraint(equalTo: label5.bottomAnchor, constant: 10).isActive = true
+        urlText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        urlText.font = UIFont.systemFont(ofSize: 25)
+        urlText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        urlText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        urlText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
     }
     
 }

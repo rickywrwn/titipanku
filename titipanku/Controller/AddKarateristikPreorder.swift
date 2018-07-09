@@ -28,10 +28,20 @@ class AddKarateristikPreorder :  UIViewController{
     }
     
     @objc func handleSubmit(){
+        if beratText.text != "" {
         PostPreorder.varKarateristik.berat = beratText.text!
         PostPreorder.varKarateristik.status = 1
-        
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
+            self.dismiss(animated: true)
         self.dismiss(animated: true)
+        }else{
+            let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     

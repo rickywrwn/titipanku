@@ -14,6 +14,7 @@
 		3C12439F20DFE78600852D2D /* PreorderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C12439E20DFE78600852D2D /* PreorderDetail.swift */; };
 		3C8E38B220C5FB06009AD99D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */; };
 		4935CB4543CCEC46EC37BB63 /* Pods_titipanku.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; };
+		7EA9CCCB20F3422A003C8D8D /* Pods_titipanku.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EE8D0B020E0CCF600BB03A1 /* AddNegaraPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */; };
 		7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */; };
 		7EE8D0B420E0CE0600BB03A1 /* AddKarateristikPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */; };
@@ -41,6 +42,20 @@
 		9CEF6B5620ADE0BB00ABB81E /* ScreenshotsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEF6B5520ADE0BB00ABB81E /* ScreenshotsCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7EA9CCCC20F3422A003C8D8D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7EA9CCCB20F3422A003C8D8D /* Pods_titipanku.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		338CD8F21B5FE3B8B159CDA6 /* Pods-titipanku.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-titipanku.debug.xcconfig"; path = "Pods/Target Support Files/Pods-titipanku/Pods-titipanku.debug.xcconfig"; sourceTree = "<group>"; };
 		3C07FAF620CE5939008FF049 /* AddDetailBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailBarang.swift; sourceTree = "<group>"; };
@@ -49,6 +64,7 @@
 		3C07FAFC20CE6777008FF049 /* AddHargaBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaBarang.swift; sourceTree = "<group>"; };
 		3C12439E20DFE78600852D2D /* PreorderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreorderDetail.swift; sourceTree = "<group>"; };
 		3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "titipanku/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		7E8DA56220F33FB7003C9D1F /* titipanku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = titipanku.entitlements; sourceTree = "<group>"; };
 		7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikPreorder.swift; sourceTree = "<group>"; };
@@ -64,7 +80,6 @@
 		9C6346E12096EA4700CFD274 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		9C6463BB20BF696A001E681A /* UserTripList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTripList.swift; sourceTree = "<group>"; };
 		9C7177AE206A31B20082E417 /* loginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginController.swift; sourceTree = "<group>"; };
-		9C7177B2206B901A0082E417 /* titipanku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = titipanku.entitlements; sourceTree = "<group>"; };
 		9C7177B3206BCCB70082E417 /* homeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeController.swift; sourceTree = "<group>"; };
 		9C82E69520BF231600B21F21 /* PostPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPreorder.swift; sourceTree = "<group>"; };
 		9CC8A6DE206A252000242A87 /* titipanku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = titipanku.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,8 +181,8 @@
 			isa = PBXGroup;
 			children = (
 				9CE2ACA020850774005C1D49 /* Class */,
-				9C7177B2206B901A0082E417 /* titipanku.entitlements */,
 				3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */,
+				7E8DA56220F33FB7003C9D1F /* titipanku.entitlements */,
 				9CC8A6E1206A252000242A87 /* AppDelegate.swift */,
 				9C7177AD206A31990082E417 /* Controller */,
 				9CC8A6E5206A252000242A87 /* Main.storyboard */,
@@ -201,6 +216,7 @@
 				9CC8A6DC206A252000242A87 /* Resources */,
 				BD4BB1B999B3D37C50868BBA /* [CP] Embed Pods Frameworks */,
 				E2AA15BC5C56EDC9BA58897C /* [CP] Copy Pods Resources */,
+				7EA9CCCC20F3422A003C8D8D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -407,6 +423,7 @@
 		9CC8A6EE206A252000242A87 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -454,7 +471,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -466,6 +483,7 @@
 		9CC8A6EF206A252000242A87 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -507,7 +525,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -521,6 +539,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = titipanku/titipanku.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MY7H65WNWV;
 				INFOPLIST_FILE = titipanku/Info.plist;
@@ -528,6 +547,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = rkw.titipanku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -539,6 +559,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = titipanku/titipanku.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MY7H65WNWV;
 				INFOPLIST_FILE = titipanku/Info.plist;
@@ -546,6 +567,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = rkw.titipanku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

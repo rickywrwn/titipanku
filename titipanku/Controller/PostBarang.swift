@@ -201,7 +201,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
             
-            let parameter: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota ,"action" : "insert","action2" : "tidak"]
+            let parameter: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "url": varDetail.url,"qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota , "idKota": varNegara.idKota ,"provinsi":varNegara.provinsi ,"action" : "insert","action2" : "tidak"]
 
             Alamofire.request("http://titipanku.xyz/api/PostBarang.php",method: .post, parameters: parameter).responseSwiftyJSON { dataResponse in
 
@@ -222,7 +222,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
                     }else{
                         let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
                         
-                        let parameters = ["email": emailNow,"name": "Frank","action" : "insert","action2" : "upload"]
+                        let parameters = ["name": "Frank","action" : "insert","action2" : "upload"]
                         //userfile adalah parameter post untuk file yg ingin di upload
                         Alamofire.upload(multipartFormData: { multipartFormData in
                             multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
