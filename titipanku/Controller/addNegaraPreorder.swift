@@ -381,7 +381,7 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
     
     let label2 : UILabel = {
         let label = UILabel()
-        label.text = "Dikirim ke Provinsi"
+        label.text = "Dikirim Dari Provinsi"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -401,7 +401,7 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
     
     let label3 : UILabel = {
         let label = UILabel()
-        label.text = "Dikirim ke Kota"
+        label.text = "Dikirim Dari Kota"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

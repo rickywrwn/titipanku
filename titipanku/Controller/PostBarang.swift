@@ -142,7 +142,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             if varHarga.status != 0 {
                 cell.labelHarga.isHidden = false
                 
-                cell.labelHarga.text = varHarga.harga
+                cell.labelHarga.text = "Harga Barang : " + varHarga.harga
             }else{
                 cell.labelHarga.isHidden = true
             }
@@ -197,7 +197,13 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
     }()
     
     @objc func handlePostBarang(){
-        
+        if(varDetail.status != 1 && varKarateristik.status != 1 && varNegara.status != 1 && varHarga.status != 1){
+            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }else{
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
             
@@ -257,10 +263,10 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
                         self.present(alert, animated: true)
                     }
                 }
-                
             }
-            
         }
+    }
+        
         PostBarang.varDetail.namaBarang = ""
         PostBarang.varDetail.desc = ""
         PostBarang.varDetail.qty = ""
@@ -280,23 +286,6 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         PostBarang.varHarga.harga = ""
         PostBarang.varHarga.status = 0
-        
-        PostPreorder.varDetail.namaBarang = ""
-        PostPreorder.varDetail.desc = ""
-        PostPreorder.varDetail.qty = ""
-        PostPreorder.varDetail.kategori = ""
-        PostPreorder.varDetail.status = 0
-        
-        PostPreorder.varKarateristik.berat = ""
-        PostPreorder.varKarateristik.status = 0
-        
-        PostPreorder.varNegara.negara = ""
-        PostPreorder.varNegara.kota = ""
-        PostPreorder.varNegara.deadline = ""
-        PostPreorder.varNegara.status = 0
-        
-        PostPreorder.varHarga.harga = ""
-        PostPreorder.varHarga.status = 0
     }
     
     @objc private func handleBack(){

@@ -95,6 +95,7 @@ class AddHargaPreorder :  UIViewController, UITableViewDelegate, UITableViewData
                 PostPreorder.varHarga.harga = hargaText.text!
                 PostPreorder.varHarga.countdownText = countdownText.text!
                 PostPreorder.varHarga.countdownValue = detik
+                PostPreorder.varHarga.batasWaktu = "1"
                 PostPreorder.varHarga.statusBatas = 1
                 PostPreorder.varHarga.status = 1
                 
@@ -113,6 +114,7 @@ class AddHargaPreorder :  UIViewController, UITableViewDelegate, UITableViewData
             if hargaText.text != "" && batasText.text != "" {
                 PostPreorder.varHarga.harga = hargaText.text!
                 PostPreorder.varHarga.statusBatas = 0
+                PostPreorder.varHarga.batasWaktu = "0"
                 PostPreorder.varHarga.status = 1
                 
                 print(PostPreorder.varHarga.harga.self)

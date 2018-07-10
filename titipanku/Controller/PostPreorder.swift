@@ -244,76 +244,109 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     @objc func handlePostBarang(){
         
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+        if(varDetail.status != 1 && varKarateristik.status != 1 && varNegara.status != 1 && varHarga.status != 1){
+            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
             
-            print(emailNow)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
-            let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"url": varDetail.url,"action" : "insert","action2" : "tidak"]
-
-            Alamofire.request("http://titipanku.xyz/api/PostPreorder.php",method: .post, parameters: parameters).responseSwiftyJSON { dataResponse in
-
-                //mencetak JSON response
-                if let json = dataResponse.value {
-                   // print("JSON: \(json)")
-                }
-
-                //mengambil json
-                let json = JSON(dataResponse.value)
-
-                let cekSukses = json["success"].intValue
-                let pesan = json["message"].stringValue
-
-                if cekSukses != 1 {
-                    let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
-
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-
-                    self.present(alert, animated: true)
-                }else{
-
-                    let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
+            self.present(alert, animated: true)
+        }else{
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+                
+                print(emailNow)
+                
+                let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"url": varDetail.url,"idKota":varNegara.idKota, "provinsi":varNegara.provinsi, "batasWaktu":varHarga.batasWaktu, "countdownText":varHarga.countdownText,"countdownValue":varHarga.countdownValue ,"action" : "insert","action2" : "tidak"]
+                
+                Alamofire.request("http://titipanku.xyz/api/PostPreorder.php",method: .post, parameters: parameters).responseSwiftyJSON { dataResponse in
                     
-                    let parameters = ["email": emailNow,"name": "Frank","action" : "insert","action2" : "upload"]
-                    //userfile adalah parameter post untuk file yg ingin di upload
-                    Alamofire.upload(multipartFormData: { multipartFormData in
-                        multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
-                        for (key, value) in parameters {
-                            multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
-                        }
-                    },
-                                     to:"http://titipanku.xyz/api/PostPreorder.php")
-                    { (result) in
-                        switch result {
-                        case .success(let upload, _, _):
-                            
-                            upload.uploadProgress(closure: { (progress) in
-                                print("Upload Progress: \(progress.fractionCompleted)")
-                            })
-                            
-                            upload.responseJSON { response in
-                                print(response.result.value)
-                            }
-                            
-                        case .failure(let encodingError):
-                            print(encodingError)
-                        }
+                    //mencetak JSON response
+                    if let json = dataResponse.value {
+                        // print("JSON: \(json)")
                     }
-
-
-                    // alert
-                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                        let appDetailController = TambahViewController()
-                        appDetailController.handleBack()
-                        self.handleBack()
-                    }))
-
-                    self.present(alert, animated: true)
+                    
+                    //mengambil json
+                    let json = JSON(dataResponse.value)
+                    
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    print(varHarga.countdownText)
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        
+                        let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
+                        
+                        let parameters = ["email": emailNow,"name": "Frank","action" : "insert","action2" : "upload"]
+                        //userfile adalah parameter post untuk file yg ingin di upload
+                        Alamofire.upload(multipartFormData: { multipartFormData in
+                            multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
+                            for (key, value) in parameters {
+                                multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                            }
+                        },
+                                         to:"http://titipanku.xyz/api/PostPreorder.php")
+                        { (result) in
+                            switch result {
+                            case .success(let upload, _, _):
+                                
+                                upload.uploadProgress(closure: { (progress) in
+                                    print("Upload Progress: \(progress.fractionCompleted)")
+                                })
+                                
+                                upload.responseJSON { response in
+                                    print(response.result.value)
+                                }
+                                
+                            case .failure(let encodingError):
+                                print(encodingError)
+                            }
+                        }
+                        
+                        
+                        // alert
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            let appDetailController = TambahViewController()
+                            appDetailController.handleBack()
+                            self.handleBack()
+                        }))
+                        
+                        self.present(alert, animated: true)
+                        
+                        
+                        PostPreorder.varDetail.gambarBarang = nil
+                        PostPreorder.varDetail.namaBarang = ""
+                        PostPreorder.varDetail.desc = ""
+                        PostPreorder.varDetail.qty = ""
+                        PostPreorder.varDetail.kategori = ""
+                        PostPreorder.varDetail.url = ""
+                        PostPreorder.varDetail.status = 0
+                        
+                        PostPreorder.varKarateristik.berat = ""
+                        PostPreorder.varKarateristik.status = 0
+                        
+                        PostPreorder.varNegara.negara = ""
+                        PostPreorder.varNegara.kota = ""
+                        PostPreorder.varNegara.idKota = ""
+                        PostPreorder.varNegara.provinsi = ""
+                        PostPreorder.varNegara.deadline = ""
+                        PostPreorder.varNegara.status = 0
+                        
+                        PostPreorder.varHarga.harga = ""
+                        PostPreorder.varHarga.batasWaktu = ""
+                        PostPreorder.varHarga.countdownText = ""
+                        PostPreorder.varHarga.countdownValue = ""
+                        PostPreorder.varHarga.status = 0
+                    }
                 }
             }
         }
-        
+
     }
     
     @objc private func handleBack(){

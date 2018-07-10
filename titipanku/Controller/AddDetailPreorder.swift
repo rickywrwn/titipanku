@@ -25,6 +25,7 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
             descText.text = PostPreorder.varDetail.desc
             categoryText.text = PostPreorder.varDetail.kategori
             urlText.text = PostPreorder.varDetail.url
+            cekGambar = 1
         }
         
         setupView()
