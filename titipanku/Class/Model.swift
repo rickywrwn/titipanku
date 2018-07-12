@@ -44,7 +44,7 @@ struct AppCategory: Decodable {
             do {
                 let decoder = JSONDecoder()
                 let featuredApps = try decoder.decode(FeaturedApps.self, from: data)
-                print(featuredApps)
+               // print(featuredApps)
                 
                 DispatchQueue.main.async(execute: { () -> Void in
                     completionHandler(featuredApps)
@@ -63,13 +63,22 @@ struct App: Decodable {
     
     let id: String?
     var name: String?
+    var description: String?
     var category: String?
     var country: String?
     var price: Int?
     var ImageName: String?
+    var url: String?
+    var qty: String?
+    var ukuran: String?
+    var berat: String?
+    var kotaKirim: String?
+    var idKota: String?
+    var provinsi: String?
+    var tglPost: String?
+    var status: String?
     
     var Screenshots: [String]?
-    var description: String?
     var appInformation: [AppInformation]?
 }
 

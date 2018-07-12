@@ -252,3 +252,4 @@ class AppDetailButtons1: BaseCell {
 }
 
 
+
