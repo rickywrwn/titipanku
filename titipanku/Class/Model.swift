@@ -62,6 +62,7 @@ struct AppCategory: Decodable {
 struct App: Decodable {
     
     let id: String?
+    var email : String?
     var name: String?
     var description: String?
     var category: String?

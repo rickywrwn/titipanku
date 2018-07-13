@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 import SwiftyPickerPopover
+import SwiftyJSON
+import Alamofire_SwiftyJSON
+
 
 class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -50,6 +53,13 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         let city_id: String
         let city_name: String
         let province_id: String
+    }
+    
+    struct varOffer {
+        var provinsi : String
+        var kota : String
+        var tglKembali : String
+        var hargaPenawaran : String
     }
     
     var app: App? {
@@ -95,7 +105,8 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         view.backgroundColor = UIColor.white
         navigationItem.title = "Bantu Belikan"
         print("Bantu belikan Barang Loaded")
-        
+        ongkirText.isHidden = true
+        labelOngkir.isHidden = true
         setupView()
         
     }
@@ -365,6 +376,52 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         ongkirTableView.isHidden = false
     }
     
+    @objc func handlePostBarang(){
+        if(provinsiText.text == "" && kotaText.text == "" && dateTextField.text == "" && hargaText.text == ""){
+            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }else{
+            print(dateTextField.text)
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglKembali : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
+                print(tglKembali)
+                
+                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglKembali": tglKembali, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
+                print (parameter)
+                Alamofire.request("http://titipanku.xyz/api/PostOffer.php",method: .get, parameters: parameter).responseJSON {
+                    response in
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["pesan"].stringValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        let alert = UIAlertController(title: "Message", message: "Post Offer Berhasil", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            self.handleBack()
+                        }))
+                        
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        }
+    }
+    @objc private func handleBack(){
+        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     //tampilan
@@ -468,6 +525,38 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         return textField
     }()
     
+    let label4 : UILabel = {
+        let label = UILabel()
+        label.text = "Harga Penawaran (Belum Termasuk Ongkir)"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let hargaText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    
+    
+    let postButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Post Barang", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        button.backgroundColor = UIColor.blue
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handlePostBarang), for: UIControlEvents.touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+        
+    }()
+    
     
     let scrollView: UIScrollView = {
         let v = UIScrollView()
@@ -483,6 +572,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
          // add the scroll view to self.view
         self.view.addSubview(scrollView)
         scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
+        let screenWidth = UIScreen.main.bounds.width+10
         
         
         // constrain the scroll view to 8-pts on each side
@@ -529,7 +619,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         
         
         scrollView.addSubview(LabelTanggal)
-        LabelTanggal.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
+        LabelTanggal.topAnchor.constraint(equalTo: kotaText.bottomAnchor, constant: 30).isActive = true
         LabelTanggal.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         scrollView.addSubview(dateTextField)
@@ -539,6 +629,26 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         dateTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         dateTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         dateTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
+        scrollView.addSubview(label4)
+        label4.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 30).isActive = true
+        label4.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        
+        scrollView.addSubview(hargaText)
+        hargaText.topAnchor.constraint(equalTo: label4.bottomAnchor, constant: 10).isActive = true
+        hargaText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        hargaText.font = UIFont.systemFont(ofSize: 25)
+        hargaText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        hargaText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        hargaText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
+        scrollView.addSubview(postButton)
+        postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor ).isActive = true
+        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
         
     }
