@@ -121,7 +121,6 @@ class registerController: UIViewController {
     //klik register
     @objc private func handleRegister(){
         
-        //cekOngkir(origin: "501",destination: "114",weight: "1000")
         
         let parameters: Parameters = ["email": emailTextField.text!,"password": passwordTextField.text!, "name" : fullNameTextField.text! ,"action" : "register"]
         Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
@@ -140,7 +139,7 @@ class registerController: UIViewController {
             
             print(pesan)
             if cekSukses != 1 {
-                let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
 
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
 
@@ -155,9 +154,6 @@ class registerController: UIViewController {
                 self.present(alert, animated: true)
             }
 
-//            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-//                print("Data: \(utf8Text)") // original server data as UTF8 string
-//            }
         }
     }
     

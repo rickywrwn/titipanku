@@ -18,6 +18,8 @@
 		7EDED74920F7329D005BCA76 /* OfferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74820F7329D005BCA76 /* OfferController.swift */; };
 		7EDED74B20F7470C005BCA76 /* OfferController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74A20F7470C005BCA76 /* OfferController2.swift */; };
 		7EDED74D20F7471E005BCA76 /* OfferController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74C20F7471E005BCA76 /* OfferController3.swift */; };
+		7EDED74F20F8EE2F005BCA76 /* AcceptOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */; };
+		7EDED75120FE47FF005BCA76 /* AddDurasiPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED75020FE47FF005BCA76 /* AddDurasiPreorder.swift */; };
 		7EE8D0B020E0CCF600BB03A1 /* AddNegaraPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */; };
 		7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */; };
 		7EE8D0B420E0CE0600BB03A1 /* AddKarateristikPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */; };
@@ -71,6 +73,8 @@
 		7EDED74820F7329D005BCA76 /* OfferController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController.swift; sourceTree = "<group>"; };
 		7EDED74A20F7470C005BCA76 /* OfferController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController2.swift; sourceTree = "<group>"; };
 		7EDED74C20F7471E005BCA76 /* OfferController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController3.swift; sourceTree = "<group>"; };
+		7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptOffer.swift; sourceTree = "<group>"; };
+		7EDED75020FE47FF005BCA76 /* AddDurasiPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDurasiPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikPreorder.swift; sourceTree = "<group>"; };
@@ -150,6 +154,7 @@
 				3C12439E20DFE78600852D2D /* PreorderDetail.swift */,
 				9CE6C2BA20B4CE8100D1B966 /* KomentarBarangController.swift */,
 				7EDED74820F7329D005BCA76 /* OfferController.swift */,
+				7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */,
 				7EDED74A20F7470C005BCA76 /* OfferController2.swift */,
 				7EDED74C20F7471E005BCA76 /* OfferController3.swift */,
 				9CEF6B5320ADDC1900ABB81E /* TambahViewController.swift */,
@@ -164,6 +169,7 @@
 				7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */,
 				7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */,
 				7EE8D0B520E0CE1800BB03A1 /* AddHargaPreorder.swift */,
+				7EDED75020FE47FF005BCA76 /* AddDurasiPreorder.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -383,7 +389,9 @@
 				9C6463BC20BF696A001E681A /* UserTripList.swift in Sources */,
 				7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */,
 				9C588854207E09CA00F6F23A /* TabController.swift in Sources */,
+				7EDED75120FE47FF005BCA76 /* AddDurasiPreorder.swift in Sources */,
 				9CE2AC9B20850601005C1D49 /* InboxController.swift in Sources */,
+				7EDED74F20F8EE2F005BCA76 /* AcceptOffer.swift in Sources */,
 				7EDED74B20F7470C005BCA76 /* OfferController2.swift in Sources */,
 				9CC8A6E2206A252000242A87 /* AppDelegate.swift in Sources */,
 				9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */,

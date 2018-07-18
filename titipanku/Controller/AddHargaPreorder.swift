@@ -8,184 +8,47 @@
 import UIKit
 import SwiftyPickerPopover
 
-class AddHargaPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource{
+class AddHargaPreorder :  UIViewController{
     
-    var detik : String = ""
-    let pilihanBatas : [String] = ["Ya","Tidak"]
-    var selectedBatas : Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
         if PostPreorder.varHarga.status != 0 {
             hargaText.text = PostPreorder.varHarga.harga
-            countdownText.text = PostPreorder.varHarga.countdownText
-            
-            if PostPreorder.varHarga.statusBatas != 0 {
-                label2.isHidden = false
-                countdownText.isHidden = false
-                batasText.text = "Ya"
-            }else{
-                label2.isHidden = true
-                countdownText.isHidden = true
-                batasText.text = "Tidak"
-            }
-        }else{
-            label2.isHidden = true
-            countdownText.isHidden = true
         }
+        
         
         setupView()
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.tag == 4{
-            if indexPath.row == 0{
-                print("Num: \(indexPath.row)")
-                print("Value: \(pilihanBatas[indexPath.row])")
-                batasText.text = pilihanBatas[indexPath.row]
-                batasTableView.isHidden = true
-                selectedBatas = 1
-                label2.isHidden = false
-                countdownText.isHidden = false
-            }else{
-                print("Num: \(indexPath.row)")
-                print("Value: \(pilihanBatas[indexPath.row])")
-                batasText.text = pilihanBatas[indexPath.row]
-                batasTableView.isHidden = true
-                selectedBatas = 0
-                label2.isHidden = true
-                countdownText.isHidden = true
-            }
-           
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView.tag == 4{
-            
-            return pilihanBatas.count
-        }
-        return pilihanBatas.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView.tag == 4{
-            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
-            let pilihan = pilihanBatas[indexPath.row]
-            cell.textLabel?.text = pilihan
-            cell.selectionStyle = UITableViewCellSelectionStyle.default
-            return cell
-        }
-        
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
-        let pilihan = pilihanBatas[indexPath.row]
-        cell.textLabel?.text = pilihan
-        cell.selectionStyle = UITableViewCellSelectionStyle.default
-        return cell
-    }
     
     @objc func handleCancle(){
         self.dismiss(animated: true)
     }
     
     @objc func handleSubmit(){
-        if selectedBatas == 1{
-            if hargaText.text != "" && countdownText.text != "" {
-                PostPreorder.varHarga.harga = hargaText.text!
-                PostPreorder.varHarga.countdownText = countdownText.text!
-                PostPreorder.varHarga.countdownValue = detik
-                PostPreorder.varHarga.batasWaktu = "1"
-                PostPreorder.varHarga.statusBatas = 1
-                PostPreorder.varHarga.status = 1
-                
-                print(PostPreorder.varHarga.harga.self)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
-                self.dismiss(animated: true)
-            }else{
-                let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                    
-                    
-                }))
-                self.present(alert, animated: true, completion: nil)
-            }
+       
+        if hargaText.text != ""{
+            PostPreorder.varHarga.harga = hargaText.text!
+            PostPreorder.varHarga.status = 1
+            
+            print(PostPreorder.varHarga.harga.self)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
+            self.dismiss(animated: true)
         }else{
-            if hargaText.text != "" && batasText.text != "" {
-                PostPreorder.varHarga.harga = hargaText.text!
-                PostPreorder.varHarga.statusBatas = 0
-                PostPreorder.varHarga.batasWaktu = "0"
-                PostPreorder.varHarga.status = 1
+            let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                 
-                print(PostPreorder.varHarga.harga.self)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
-                self.dismiss(animated: true)
-            }else{
-                let alert = UIAlertController(title: "Peringatan", message: "Data Tidak Boleh Kosong", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                    
-                    
-                }))
-                self.present(alert, animated: true, completion: nil)
-            }
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
-        
     }
     
-    @objc func countdownTapped(_ textField: UITextField) {
-        
-        CountdownPickerPopover(title: "Lama Waktu Penjualan")
-            .setSelectedTimeInterval(TimeInterval())
-            .setDoneButton(action: { popover, timeInterval in print("timeInterval \(timeInterval)")
-                self.detik = String(timeInterval)
-                let (h, m, s) = self.secondsToHoursMinutesSeconds (seconds: Int(timeInterval))
-                if(m > 0){
-                    print ("\(h) Jam, \(m) Menit")
-                    self.countdownText.text = "\(h) Jam, \(m) Menit"
-                }else {
-                    print ("\(h) Jam")
-                    self.countdownText.text = "\(h) Jam"
-                }
-                
-            } )
-            .setCancelButton(action: { _, _ in print("cancel")})
-            .setClearButton(action: { popover, timeInterval in print("Clear")
-                popover.setSelectedTimeInterval(TimeInterval()).reload()
-            })
-            .appear(originView: textField, baseViewController: self)
-        
-    }
-    
-    @objc func textBatasTapped(_ textField: UITextField) {
-        
-        //init tableview
-        //bug untuk pemilihan negara kedua
-        batasTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
-        batasTableView.dataSource = self
-        batasTableView.delegate = self
-        batasTableView.tag = 4
-        self.view.addSubview(batasTableView)
-        batasTableView.topAnchor.constraint(equalTo: batasText.bottomAnchor, constant: 12).isActive = true
-        batasTableView.leftAnchor.constraint( equalTo: batasText.leftAnchor).isActive = true
-        batasTableView.rightAnchor.constraint(equalTo: batasText.rightAnchor).isActive = true
-        batasTableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        batasTableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        batasTableView.layer.borderWidth = 1
-        batasTableView.layer.borderColor = UIColor.black.cgColor
-        batasTableView.isHidden = false
-    }
-    
-    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     
-    
-    let batasTableView : UITableView = {
-        let t = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        t.translatesAutoresizingMaskIntoConstraints = false
-        return t
-    }()
     let label1 : UILabel = {
         let label = UILabel()
         label.text = "Harga (Belum Termasuk Ongkir)"
@@ -202,49 +65,6 @@ class AddHargaPreorder :  UIViewController, UITableViewDelegate, UITableViewData
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
-    let label3 : UILabel = {
-        let label = UILabel()
-        label.text = "Batas Waktu"
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let batasText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .center
-        textField.borderStyle = .roundedRect
-        textField.textAlignment = .center
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(textBatasTapped(_:)),
-                            for: UIControlEvents.touchDown)
-        textField.inputView = UIView();
-        return textField
-    }()
-    
-    let label2 : UILabel = {
-        let label = UILabel()
-        label.text = "Lama Penjualan"
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let countdownText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .center
-        textField.borderStyle = .roundedRect
-        textField.textAlignment = .center
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(countdownTapped(_:)),
-                            for: UIControlEvents.touchDown)
-        textField.inputView = UIView();
-        return textField
-    }()
-    
-    
-    
     
     let scrollView: UIScrollView = {
         let v = UIScrollView()
@@ -301,30 +121,6 @@ class AddHargaPreorder :  UIViewController, UITableViewDelegate, UITableViewData
         hargaText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         hargaText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         hargaText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        
-        scrollView.addSubview(label3)
-        label3.topAnchor.constraint(equalTo: hargaText.bottomAnchor, constant: 30).isActive = true
-        label3.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        
-        scrollView.addSubview(batasText)
-        batasText.topAnchor.constraint(equalTo: label3.bottomAnchor, constant: 10).isActive = true
-        batasText.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        batasText.font = UIFont.systemFont(ofSize: 25)
-        batasText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        batasText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
-        batasText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        
-        scrollView.addSubview(label2)
-        label2.topAnchor.constraint(equalTo: batasText.bottomAnchor, constant: 10).isActive = true
-        label2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        
-        scrollView.addSubview(countdownText)
-        countdownText.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10).isActive = true
-        countdownText.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        countdownText.font = UIFont.systemFont(ofSize: 25)
-        countdownText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        countdownText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
-        countdownText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         
     }

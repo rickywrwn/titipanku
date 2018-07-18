@@ -317,7 +317,7 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
         print("tapped")
         let date = Date() //ambil date hari ini
         /// DatePickerPopover appears:
-        DatePickerPopover(title: "Tanggal Estimasi Pengiriman")
+        DatePickerPopover(title: "Tanggal Estimasi Pulang")
             .setDateMode(.date)
             .setSelectedDate(Date())
             .setMinimumDate(date)
@@ -421,7 +421,7 @@ class AddNegaraPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
     
     let LabelTanggal : UILabel = {
     let label = UILabel()
-    label.text = "Tanggal Estimasi Pengiriman"
+    label.text = "Tanggal Estimasi Pulang"
     label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     return label

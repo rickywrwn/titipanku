@@ -77,6 +77,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         let appDetailController = barangDetailController(collectionViewLayout: layout)
         appDetailController.app = app
         navigationController?.pushViewController(appDetailController, animated: true)
+        
     }
     
     func showPreorderDetailForApp(_ app: App) {

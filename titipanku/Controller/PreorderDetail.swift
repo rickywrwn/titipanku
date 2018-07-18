@@ -9,6 +9,7 @@ import UIKit
 
 class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    var tinggiText : Float = 0
     var app: App? {
         didSet {
             
@@ -93,7 +94,10 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
             
             //cell.textView.text = app?.description
             cell.textView.attributedText = descriptionAttributedText()
-            
+            let sizeThatFitsTextView = cell.textView.sizeThatFits(CGSize(width: cell.textView.frame.size.width, height: CGFloat(MAXFLOAT)))
+            let heightOfText = sizeThatFitsTextView.height
+            tinggiText = Float(heightOfText)
+            //print(tinggiText)
             return cell
         }else if indexPath.item == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonCellId, for: indexPath) as! AppDetailButtons
@@ -119,8 +123,9 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //ukuran selain header
-        if indexPath.item == 1 {
-            return CGSize(width: view.frame.width, height: 70)
+        if indexPath.item == 0 {
+            
+            return CGSize(width: view.frame.width, height: CGFloat(270 + tinggiText))
         }
         return CGSize(width: view.frame.width, height: 170)
     }
@@ -136,7 +141,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     fileprivate func descriptionAttributedText() -> NSAttributedString {
-        let attributedText = NSMutableAttributedString(string: "Description\n", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)])
+        let attributedText = NSMutableAttributedString(string: "Description\n", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
         
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 10
@@ -145,7 +150,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         attributedText.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: range)
         
         if let desc = app?.description {
-            attributedText.append(NSAttributedString(string: desc, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11), NSAttributedStringKey.foregroundColor: UIColor.darkGray]))
+            attributedText.append(NSAttributedString(string: desc, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.darkGray]))
         }
         
         return attributedText
@@ -158,14 +163,21 @@ class AppDetailDescriptionCell1: BaseCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "harga"
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 21)
         return label
     }()
     
     let priceLabel: UILabel = {
         let label = UILabel()
         label.text = "harga"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 17)
+        return label
+    }()
+    
+    let tglLabel: UILabel = {
+        let label = UILabel()
+        label.text = "tgl"
+        label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()
     
@@ -173,7 +185,29 @@ class AppDetailDescriptionCell1: BaseCell {
         let tv = UITextView()
         tv.text = "SAMPLE DESCRIPTION"
         tv.font = UIFont.systemFont(ofSize: 14)
+        tv.isScrollEnabled = false
         return tv
+    }()
+    
+    let qtyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "qty"
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let countryLabel: UILabel = {
+        let label = UILabel()
+        label.text = "count"
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let kotaLabel: UILabel = {
+        let label = UILabel()
+        label.text = "kota"
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
     }()
     
     let dividerLineView: UIView = {
@@ -187,15 +221,23 @@ class AppDetailDescriptionCell1: BaseCell {
         
         addSubview(nameLabel)
         addSubview(priceLabel)
+        addSubview(tglLabel)
         addSubview(textView)
+        addSubview(qtyLabel)
+        addSubview(countryLabel)
+        addSubview(kotaLabel)
         addSubview(dividerLineView)
         
-        addConstraintsWithFormat("H:|-4-[v0]-4-|", views: nameLabel)
-        addConstraintsWithFormat("H:|-4-[v0]-4-|", views: priceLabel)
-        addConstraintsWithFormat("H:|-4-[v0]-4-|", views: textView)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: nameLabel)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: priceLabel)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: tglLabel)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: textView)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: qtyLabel)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: countryLabel)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: kotaLabel)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|-5-[v0]-4-[v3]-4-[v1]-20-[v2(1)]-4-[v2(1)]-4-|", views: nameLabel, textView, dividerLineView, priceLabel )
+        addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v7]-15-[v1]-1-[v4]-5-[v5]-5-[v6]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabel,countryLabel,kotaLabel,tglLabel )
         
     }
     

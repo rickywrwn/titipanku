@@ -23,6 +23,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
             descText.text = PostBarang.varDetail.desc
             categoryText.text = PostBarang.varDetail.kategori
             urlText.text = PostBarang.varDetail.url
+            cekGambar = 1
         }
         
         setupView()
@@ -37,7 +38,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
     @objc func handleSubmit(){
         
         if cekGambar != 0 && nameText.text != "" && qtyText.text != "" && descText.text != "" && categoryText.text != "" {
-            PostBarang.varDetail.gambarBarang = imgBarang
+            PostBarang.varDetail.gambarBarang = BarangImageView.image
             PostBarang.varDetail.namaBarang = nameText.text!
             PostBarang.varDetail.qty = qtyText.text!
             PostBarang.varDetail.desc = descText.text!
@@ -93,6 +94,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
     
     @objc func imgTapped(_ imageView: UIImageView) {
         print("tapped gambar")
+        
         let alert = UIAlertController(title: "Choose one of the following:", message: "", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
             let picker = UIImagePickerController()

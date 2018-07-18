@@ -39,6 +39,10 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     struct varHarga {
         static var harga = ""
+        static var status = 0
+    }
+    
+    struct varDurasi {
         static var countdownText = ""
         static var countdownValue = ""
         static var batasWaktu = ""
@@ -50,6 +54,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     fileprivate let inputCellId2Pre = "inputCellId2Pre"
     fileprivate let inputCellId3Pre = "inputCellId3Pre"
     fileprivate let inputCellId4Pre = "inputCellId4Pre"
+    fileprivate let inputCellId5Pre = "inputCellId5Pre"
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -60,6 +65,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         collectionView?.register(InputCell2Pre.self, forCellWithReuseIdentifier: inputCellId2Pre)
         collectionView?.register(InputCell3Pre.self, forCellWithReuseIdentifier: inputCellId3Pre)
         collectionView?.register(InputCell4Pre.self, forCellWithReuseIdentifier: inputCellId4Pre)
+        collectionView?.register(InputCell5Pre.self, forCellWithReuseIdentifier: inputCellId5Pre)
         
         setupView()
          NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
@@ -81,14 +87,17 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 cell.labelQty.isHidden = false
                 cell.descText.isHidden = false
                 cell.labelKategori.isHidden = false
-                cell.labelUrl.isHidden = false
+                cell.deskripsi.isHidden = false
                 
                 cell.BarangImageView.image = varDetail.gambarBarang
                 cell.labelNama.text = "Nama : " + varDetail.namaBarang
                 cell.labelQty.text = "Jumlah : " + varDetail.qty
                 cell.descText.text = varDetail.desc
                 cell.labelKategori.text = "Kategori : " + varDetail.kategori
-                cell.labelUrl.text = "URL Referensi : " + varDetail.url
+                if varDetail.url != "" {
+                    cell.labelUrl.isHidden = false
+                    cell.labelUrl.text = "URL Referensi : " + varDetail.url
+                }
                 
             }else{
                 cell.BarangImageView.isHidden = true
@@ -97,6 +106,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 cell.descText.isHidden = true
                 cell.labelKategori.isHidden = true
                 cell.labelUrl.isHidden = true
+                cell.deskripsi.isHidden = true
                 
             }
             
@@ -127,7 +137,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 cell.labelNegara.text = "Negara Pembelian : " + varNegara.negara
                 cell.LabelProvinsi.text = "Provinsi Pengiriman : " + varNegara.provinsi
                 cell.LabelKota.text = "Kota Pengiriman : " + varNegara.kota
-                cell.LabelDeadline.text = "Tanggal Pengiriman : " + varNegara.deadline
+                cell.LabelDeadline.text = "Tanggal Pulang : " + varNegara.deadline
             }else{
                 cell.labelNegara.isHidden = true
                 cell.LabelProvinsi.isHidden = true
@@ -142,18 +152,33 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
             
             if varHarga.status != 0 {
                 cell.labelHarga.isHidden = false
-                
                 cell.labelHarga.text = "Harga Barang : " + varHarga.harga
-                if varHarga.statusBatas != 0{
+
+            }else{
+                cell.labelHarga.isHidden = true
+                
+            }
+            
+            return cell
+            
+        }else if indexPath.row == 4 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: inputCellId5Pre, for: indexPath) as! InputCell5Pre
+            
+            if varDurasi.status != 0 {
+                if varDurasi.statusBatas != 0{
+                    cell.labelHarga.isHidden = false
                     cell.labelCountdown.isHidden = false
-                    cell.labelCountdown.text = "Batas Waktu : " + varHarga.countdownText
+                    cell.labelHarga.text = "Durasi : Ya"
+                    cell.labelCountdown.text = "Batas Waktu : " + varDurasi.countdownText
                 }else{
                     
                     cell.labelCountdown.isHidden = true
+                    cell.labelHarga.isHidden = false
+                    cell.labelHarga.text = "Durasi : Tidak" 
                 }
             }else{
-                cell.labelHarga.isHidden = true
                 cell.labelCountdown.isHidden = true
+                cell.labelHarga.isHidden = true
             }
             
             return cell
@@ -164,7 +189,8 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+
+        return 5
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -175,7 +201,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
             if indexPath.row == 0 && PostPreorder.varDetail.status != 0 {
                 
-                return CGSize(width: view.frame.width, height: 310)
+                return CGSize(width: view.frame.width, height: 350)
             }else if indexPath.row == 1 && PostPreorder.varKarateristik.status != 0 {
                 
                 return CGSize(width: view.frame.width, height: 120)
@@ -185,6 +211,9 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
             }else if indexPath.row == 3 && PostPreorder.varHarga.status != 0 {
                 
                 return CGSize(width: view.frame.width, height: 120)
+            }else if indexPath.row == 4 && PostPreorder.varHarga.status != 0 {
+                
+                return CGSize(width: view.frame.width, height: 120)
             }
         }else if TambahViewController.varTambah.statusTambah == "barang"{
             print("height barang")
@@ -192,7 +221,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
             
             if indexPath.row == 0 && PostBarang.varDetail.status != 0 {
                 
-                return CGSize(width: view.frame.width, height: 310)
+                return CGSize(width: view.frame.width, height: 350)
             }else if indexPath.row == 1 && PostBarang.varKarateristik.status != 0 {
                 
                 return CGSize(width: view.frame.width, height: 120)
@@ -202,6 +231,9 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
             }else if indexPath.row == 3 && PostBarang.varHarga.status != 0 {
             
                 return CGSize(width: view.frame.width, height: 100)
+            }else if indexPath.row == 4{
+                
+                return CGSize(width: view.frame.width, height: 0)
             }
             
         }
@@ -224,6 +256,8 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 self.showNegaraBarang()
             }else if indexPath.row == 3{
                 self.showHargaBarang()
+            }else if indexPath.row == 4{
+                self.showDurasiBarang()
             }
         }
         
@@ -255,7 +289,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 
                 print(emailNow)
                 
-                let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"url": varDetail.url,"idKota":varNegara.idKota, "provinsi":varNegara.provinsi, "batasWaktu":varHarga.batasWaktu, "countdownText":varHarga.countdownText,"countdownValue":varHarga.countdownValue ,"action" : "insert","action2" : "tidak"]
+                let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"url": varDetail.url,"idKota":varNegara.idKota, "provinsi":varNegara.provinsi, "batasWaktu":varDurasi.batasWaktu, "countdownText":varDurasi.countdownText,"countdownValue":varDurasi.countdownValue ,"action" : "insert","action2" : "tidak"]
                 
                 Alamofire.request("http://titipanku.xyz/api/PostPreorder.php",method: .post, parameters: parameters).responseSwiftyJSON { dataResponse in
                     
@@ -269,9 +303,9 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                     
                     let cekSukses = json["success"].intValue
                     let pesan = json["message"].stringValue
-                    print(varHarga.countdownText)
+                    print(varDurasi.countdownText)
                     if cekSukses != 1 {
-                        let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                         
@@ -338,10 +372,12 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                         PostPreorder.varNegara.status = 0
                         
                         PostPreorder.varHarga.harga = ""
-                        PostPreorder.varHarga.batasWaktu = ""
-                        PostPreorder.varHarga.countdownText = ""
-                        PostPreorder.varHarga.countdownValue = ""
                         PostPreorder.varHarga.status = 0
+                        
+                        PostPreorder.varDurasi.batasWaktu = ""
+                        PostPreorder.varDurasi.countdownText = ""
+                        PostPreorder.varDurasi.countdownValue = ""
+                        PostPreorder.varDurasi.status = 0
                     }
                 }
             }
@@ -427,6 +463,19 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         present(addDetail, animated: false, completion: nil)
         
     }
+    
+    @objc func showDurasiBarang(){
+        let addDetail = AddDurasiPreorder()
+        
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        present(addDetail, animated: false, completion: nil)
+        
+    }
 }
 
 
@@ -482,16 +531,23 @@ class InputCell1Pre: BaseCell {
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
+    let deskripsi : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Deskripsi : "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
     let descText : UITextView = {
         let textField = UITextView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .center
-        textField.layer.borderWidth = 1
-        textField.layer.cornerRadius = 3
+        textField.textAlignment = .left
         textField.text = "desc"
-        textField.layer.borderColor =  UIColor.gray.cgColor
-        textField.textAlignment = .center
+        //textField.layer.borderWidth = 1
+        //textField.layer.cornerRadius = 3
+        //textField.layer.borderColor =  UIColor.gray.cgColor
         textField.font = UIFont.systemFont(ofSize: 15)
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.inputView = UIView();
         return textField
     }()
     
@@ -519,6 +575,7 @@ class InputCell1Pre: BaseCell {
         addSubview(BarangImageView)
         addSubview(labelNama)
         addSubview(labelQty)
+        addSubview(deskripsi)
         addSubview(descText)
         addSubview(labelKategori)
         addSubview(labelUrl)
@@ -529,11 +586,12 @@ class InputCell1Pre: BaseCell {
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelKategori)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelUrl)
-        addConstraintsWithFormat("H:|-80-[v0]-30-|", views: descText)
+        addConstraintsWithFormat("H:|-80-[v0]-5-[v1]-30-|", views: deskripsi,descText)
         
         addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
         addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v5(100)]-5-[v1]-5-[v2]-5-[v3]-5-[v6]-5-[v4]|", views: imageView,labelNama,labelQty,labelKategori,descText,BarangImageView,labelUrl)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v4(100)]-5-[v1]-5-[v2]-5-[v3]-5-[v5]-5-[v6]", views: imageView,labelNama,labelQty,labelKategori,BarangImageView,labelUrl,deskripsi)
+        addConstraintsWithFormat("V:|-243-[v0]|", views: descText)
         
     }
     
@@ -731,6 +789,69 @@ class InputCell4Pre: BaseCell {
         return label
     }()
     
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(labelA)
+        addSubview(imageView)
+        addSubview(angkaImg)
+        addSubview(labelHarga)
+        addSubview(dividerLineView)
+        
+        addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelHarga)
+        addConstraintsWithFormat("H:|-30-[v0]|", views: dividerLineView)
+        
+        addConstraintsWithFormat("V:|-10-[v0(50)]", views: angkaImg)
+        addConstraintsWithFormat("V:|-25-[v0]", views: labelA)
+        addConstraintsWithFormat("V:|-10-[v0(50)]-5-[v1]|", views: imageView,labelHarga)
+        addConstraintsWithFormat("V:|[v0(1)]|", views: dividerLineView)
+        
+    }
+    
+}
+
+
+class InputCell5Pre: BaseCell {
+    
+    let angkaImg: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "empat")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let labelA : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Durasi "
+        label.font = UIFont.systemFont(ofSize: 17)
+        return label
+    }()
+    let labelHarga : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Durasi :   "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "next")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
     
     let labelCountdown : UILabel = {
         let label = UILabel()
@@ -751,8 +872,8 @@ class InputCell4Pre: BaseCell {
         
         addSubview(labelA)
         addSubview(imageView)
-        addSubview(angkaImg)
         addSubview(labelHarga)
+        addSubview(angkaImg)
         addSubview(labelCountdown)
         addSubview(dividerLineView)
         

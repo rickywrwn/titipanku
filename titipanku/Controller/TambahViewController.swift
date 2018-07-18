@@ -84,8 +84,14 @@ class TambahViewController: UIViewController {
         PostPreorder.varNegara.deadline = ""
         PostPreorder.varNegara.status = 0
         
+        
         PostPreorder.varHarga.harga = ""
         PostPreorder.varHarga.status = 0
+        
+        PostPreorder.varDurasi.batasWaktu = ""
+        PostPreorder.varDurasi.countdownText = ""
+        PostPreorder.varDurasi.countdownValue = ""
+        PostPreorder.varDurasi.status = 0
         
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
@@ -109,19 +115,18 @@ class TambahViewController: UIViewController {
             BarangVC.view.isHidden = true
             PreorderVC.view.isHidden = true
             TripVC.view.isHidden = false
+            varTambah.statusTambah = "preorder"
         }else if sender.selectedSegmentIndex == 1{
             BarangVC.view.isHidden = false
             TripVC.view.isHidden = true
             PreorderVC.view.isHidden = true
             varTambah.statusTambah = "barang"
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
         }else {
             BarangVC.view.isHidden = true
             TripVC.view.isHidden = true
             PreorderVC.view.isHidden = false
             varTambah.statusTambah = "preorder"
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
         }
     }

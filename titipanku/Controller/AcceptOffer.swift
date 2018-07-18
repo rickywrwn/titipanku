@@ -1,10 +1,11 @@
 //
-//  OfferController.swift
+//  AcceptOffer.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 12/07/18.
+//  Created by Ricky Wirawan on 13/07/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
+
 
 import UIKit
 import Alamofire
@@ -13,8 +14,9 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 
 
-class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var idOffer : String = ""
     var arrNama = [String]()
     var arrHarga = [String]()
     var kotaKirim : String = ""
@@ -55,11 +57,44 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         let province_id: String
     }
     
-    struct varOffer {
-        var provinsi : String
-        var kota : String
-        var tglPulang : String
-        var hargaPenawaran : String
+    struct offerDetail: Decodable {
+        let id: String
+        let idPenawar: String
+        let tglOffer: String
+        let hargaPenawaran: String
+        let tglPulang: String
+        let kota: String
+        let status: String
+        
+    }
+    var isiTawaran  : offerDetail?
+    
+    func fetchOffer() {
+        DispatchQueue.main.async {
+            let urlString = "http://titipanku.xyz/api/ShowOfferDetail.php?idOffer=\(self.idOffer)"
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    do {
+                        let decoder = JSONDecoder()
+                        self.isiTawaran = try decoder.decode(offerDetail.self, from: data)
+                        //self.collectionView?.reloadData()
+                        print(self.isiTawaran)
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                    }
+                }
+                }.resume()
+            
+            
+        }
+        
     }
     
     var app: App? {
@@ -103,12 +138,13 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Bantu Belikan"
+        navigationItem.title = "Tawaran"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = true
         labelOngkir.isHidden = true
+        fetchOffer()
         setupView()
-        
+        print(idOffer)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -192,7 +228,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
             let city = cities[indexPath.row]
             cell.textLabel?.text = city.city_name
             cell.selectionStyle = UITableViewCellSelectionStyle.default
-        
+            
             return cell
         }else if tableView.tag == 3{
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
@@ -330,7 +366,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         print("tapped")
         let date = Date() //ambil date hari ini
         /// DatePickerPopover appears:
-        DatePickerPopover(title: "Tanggal Estimasi Pengiriman")
+        DatePickerPopover(title: "Tanggal Kembali")
             .setDateMode(.date)
             .setSelectedDate(Date())
             .setMinimumDate(date)
@@ -385,11 +421,10 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
             self.present(alert, animated: true)
         }else{
             print(dateTextField.text)
-            print(dateBack)
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglPulang : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
-                print(tglPulang)
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglKembali : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
+                print(tglKembali)
                 
-                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglPulang": tglPulang, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
+                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglKembali": tglKembali, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/PostOffer.php",method: .get, parameters: parameter).responseJSON {
                     response in
@@ -419,6 +454,50 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
             }
         }
     }
+    
+    @objc func handleTolak(){
+        if(provinsiText.text == "" && kotaText.text == "" && dateTextField.text == "" && hargaText.text == ""){
+            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }else{
+            print(dateTextField.text)
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglKembali : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
+                print(tglKembali)
+                
+                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglKembali": tglKembali, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
+                print (parameter)
+                Alamofire.request("http://titipanku.xyz/api/PostOffer.php",method: .get, parameters: parameter).responseJSON {
+                    response in
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["pesan"].stringValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        let alert = UIAlertController(title: "Message", message: "Post Offer Berhasil", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            self.handleBack()
+                        }))
+                        
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        }
+    }
+    
     @objc private func handleBack(){
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
@@ -488,7 +567,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
     
     let LabelTanggal : UILabel = {
         let label = UILabel()
-        label.text = "Tanggal Pulang"
+        label.text = "Tanggal Kembali"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -547,12 +626,25 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
     
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Post Barang", for: .normal)
+        button.setTitle("Terima", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor.blue
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handlePostBarang), for: UIControlEvents.touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+        
+    }()
+    
+    let declineButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Tolak", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        button.backgroundColor = UIColor.red
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
         
@@ -570,7 +662,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
     
     func setupView(){
         
-         // add the scroll view to self.view
+        // add the scroll view to self.view
         self.view.addSubview(scrollView)
         scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
         let screenWidth = UIScreen.main.bounds.width+10
@@ -581,7 +673,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0).isActive = true
-
+        
         scrollView.addSubview(label2)
         label2.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30).isActive = true
         label2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
@@ -644,16 +736,24 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         hargaText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         scrollView.addSubview(postButton)
-        postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor ).isActive = true
+        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
+        scrollView.addSubview(declineButton)
+        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
+        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        
         
     }
-   
-}
     
+}
+
 

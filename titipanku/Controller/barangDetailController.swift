@@ -9,8 +9,51 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+struct varOffer: Decodable {
+    let id: String
+    let idPenawar: String
+    let tglOffer: String
+    let hargaPenawaran: String
+    let tglPulang: String
+    let kota: String
+    let status: String
+    
+}
 
+var offers = [varOffer]()
 class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
+    
+    var tinggiTextView : Float = 0
+    
+    func fetchOffer() {
+        DispatchQueue.main.async {
+            if let id = self.app?.id {
+                let urlString = "http://titipanku.xyz/api/GetOffer.php?idRequest=\(id)"
+                guard let url = URL(string: urlString) else { return }
+                URLSession.shared.dataTask(with: url) { (data, _, err) in
+                    DispatchQueue.main.async {
+                        if let err = err {
+                            print("Failed to get data from url:", err)
+                            return
+                        }
+                        
+                        guard let data = data else { return }
+                        do {
+                            let decoder = JSONDecoder()
+                            offers = try decoder.decode([varOffer].self, from: data)
+                            
+                            //print(offers)
+                        } catch let jsonErr {
+                            print("Failed to decode:", jsonErr)
+                        }
+                    }
+                    }.resume()
+            }
+            
+        }
+        
+    }
     
     var app: App? {
         didSet {
@@ -39,7 +82,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         self.app = appDetail
                         
                         DispatchQueue.main.async(execute: { () -> Void in
-                           self.collectionView?.reloadData()
+                           
                         })
                         
                     } catch let err {
@@ -57,9 +100,15 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     fileprivate let descriptionCellId = "descriptionCellId"
     fileprivate let buttonCellId = "buttonCellId"
     fileprivate let offerCellId = "offerCellId"
+    fileprivate let userCellId = "userCellId"
+    fileprivate let offerListCellId = "offerListCellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //di async agar bisa reload sekali setelah 2 detik
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.collectionView?.reloadData()
+        }
         
         collectionView?.alwaysBounceVertical = true
         
@@ -70,8 +119,19 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         collectionView?.register(AppDetailDescriptionCell.self, forCellWithReuseIdentifier: descriptionCellId)
         collectionView?.register(AppDetailButtons.self, forCellWithReuseIdentifier: buttonCellId)
         collectionView?.register(AppDetailOffer.self, forCellWithReuseIdentifier: offerCellId)
+        collectionView?.register(AppDetailUser.self, forCellWithReuseIdentifier: userCellId)
+        collectionView?.register(AppOfferList.self, forCellWithReuseIdentifier: offerListCellId)
         collectionView?.register(ScreenshotsCell.self, forCellWithReuseIdentifier: cellId)
+        
+        
+        if let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String  {
+            print(emailNow + " dan " + email )
+            if email == emailNow {
+                fetchOffer()
+            }
+        }
     }
+    
     
     @objc func handleDiskusi(){
         print("diskusi")
@@ -85,6 +145,15 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         //perform(#selector(showHome), with: nil, afterDelay: 0.01)
         print(app?.id)
     }
+    
+    @objc func showAcceptOffer(){
+        print("pencet")
+        //let layout = UICollectionViewFlowLayout()
+        let appDetailController = AcceptOffer()
+        appDetailController.app = app
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    
     func showOffer() {
         print("pencet")
         //let layout = UICollectionViewFlowLayout()
@@ -92,6 +161,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         appDetailController.app = app
         navigationController?.pushViewController(appDetailController, animated: true)
     }
+    
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -102,10 +172,12 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
            
             let intHarga: Int? = app?.price
             cell.priceLabel.text = "Rp. " +  intHarga.map(String.init)!
-            
+            cell.tglLabel.text = "Tanggal Posting : " + (app?.tglPost)!
             //cell.textView.text = app?.description
             cell.textView.attributedText = descriptionAttributedText()
-            
+            let sizeThatFitsTextView = cell.textView.sizeThatFits(CGSize(width: cell.textView.frame.size.width, height: CGFloat(MAXFLOAT)))
+            let heightOfText = sizeThatFitsTextView.height
+            tinggiTextView = Float(heightOfText)
             cell.qtyLabel.text = "Jumlah Barang : " + (app?.qty)!
             cell.countryLabel.text = "Negara Pembelian : " + (app?.country)!
             cell.kotaLabel.text = "Kota Pengiriman : " + (app?.kotaKirim)!
@@ -118,10 +190,60 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             
             return cell
         }else if indexPath.item == 2 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
+            
+            if self.app?.status == "1"{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser
+                //cell.diskusiButton.setTitle(app?.email, for: .normal)
+                cell.user = (app?.email)!
+                return cell
+            }else {
+                
+            }
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser
             
             
             return cell
+        }else if indexPath.item == 3 {
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+                
+                if let status = self.app?.status {
+                   
+                    if status == "1"{
+                        
+                        if self.app?.email != emailNow{
+                            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
+                            return cell
+                        }else{
+                            //jika request milik sendiri
+                            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
+                            cell.nameLabel.text = "List Penawar"
+                            return cell
+                        }
+                        
+                    }
+                    
+                }
+            
+            }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
+            
+            return cell
+        }
+        
+        if let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String  {
+            if email == emailNow && offers.count > 0 {
+                
+                for i in 0 ..< offers.count {
+                    if indexPath.item == 4 + i {
+                        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListCellId, for: indexPath) as! AppOfferList
+//                        cell.diskusiButton.setTitle(offers[i].idPenawar, for: .normal)
+//                        cell.diskusiButton1.setTitle(offers[i].tglPulang, for: .normal)
+                        cell.varOffer = offers[i]
+                        return cell
+                    }
+                }
+            }
         }
         
         //untuk screenshot
@@ -133,18 +255,48 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        
+        return 4 + offers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //ukuran selain header
         if indexPath.item == 0 {
-            return CGSize(width: view.frame.width, height: 270)
+            return CGSize(width: view.frame.width, height: CGFloat(270 + tinggiTextView))
         }else if indexPath.item == 1{
             return CGSize(width: view.frame.width, height: 70)
         }else if indexPath.item == 2{
-            return CGSize(width: view.frame.width, height: 70)
+            return CGSize(width: view.frame.width, height: 220)
+        }else if indexPath.item == 3{
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let email = app?.email {
+                if email != emailNow {
+                    //jika request orang lain
+                    return CGSize(width: view.frame.width, height: 70)
+                }else{
+                    //jika user sendiri
+                    for i in 0 ..< offers.count {
+                        if indexPath.item == 3 + i {
+                            return CGSize(width: view.frame.width, height: 70)
+                        }
+                    }
+                    
+                }
+            }
         }
+        
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let email = app?.email {
+            
+            if email == emailNow  && offers.count > 0{
+                //jika user sendiri
+                for i in 0 ..< offers.count {
+                    if indexPath.item == 4 + i {
+                        return CGSize(width: view.frame.width, height: 110)
+                    }
+                }
+            }
+            
+        }
+        
         return CGSize(width: view.frame.width, height: 170)
     }
     
@@ -161,20 +313,38 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Num: \(indexPath.row)")
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.backgroundColor = UIColor.gray.cgColor
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            if indexPath.row == 2{
-                cell?.layer.backgroundColor = UIColor.white.cgColor
-                print("bantu")
-                self.showOffer()
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let status = app?.status , let email = app?.email {
+            
+            if email != emailNow{
+                if indexPath.row == 3  {
+                    cell?.layer.backgroundColor = UIColor.gray.cgColor
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        cell?.layer.backgroundColor = UIColor.white.cgColor
+                        print("bantu")
+                        self.showOffer()
+                    }
+                }
+            }else{
+                for i in 0 ..< offers.count {
+                    if indexPath.item == 4 + i {
+                        //print("penawar" + offers[i].id)
+                        // lihat penawaran yang masuk
+                        
+                        
+                        let appDetailController = AcceptOffer()
+                        appDetailController.app = app
+                        appDetailController.idOffer = offers[i].id
+                        navigationController?.pushViewController(appDetailController, animated: true)
+                    }
+                }
             }
         }
         
     }
     
     fileprivate func descriptionAttributedText() -> NSAttributedString {
-        let attributedText = NSMutableAttributedString(string: "Description\n", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)])
+        let attributedText = NSMutableAttributedString(string: "Deskripsi Barang\n", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
         
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 10
@@ -183,7 +353,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         attributedText.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: range)
         
         if let desc = app?.description {
-            attributedText.append(NSAttributedString(string: desc, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11), NSAttributedStringKey.foregroundColor: UIColor.darkGray]))
+            attributedText.append(NSAttributedString(string: desc, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.darkGray]))
         }
         
         return attributedText
@@ -207,10 +377,18 @@ class AppDetailDescriptionCell: BaseCell {
         return label
     }()
     
+    let tglLabel: UILabel = {
+        let label = UILabel()
+        label.text = "tgl"
+        label.font = UIFont.systemFont(ofSize: 10)
+        return label
+    }()
+    
     let textView: UITextView = {
         let tv = UITextView()
         tv.text = "SAMPLE DESCRIPTION"
         tv.font = UIFont.systemFont(ofSize: 14)
+        tv.isScrollEnabled = false
         return tv
     }()
     
@@ -246,6 +424,7 @@ class AppDetailDescriptionCell: BaseCell {
         
         addSubview(nameLabel)
         addSubview(priceLabel)
+        addSubview(tglLabel)
         addSubview(textView)
         addSubview(qtyLabel)
         addSubview(countryLabel)
@@ -254,13 +433,14 @@ class AppDetailDescriptionCell: BaseCell {
         
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: nameLabel)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: priceLabel)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: tglLabel)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: textView)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: qtyLabel)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: countryLabel)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: kotaLabel)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v1]-20-[v4]-5-[v5]-5-[v6]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabel,countryLabel,kotaLabel )
+        addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v7]-15-[v1]-1-[v4]-5-[v5]-5-[v6]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabel,countryLabel,kotaLabel,tglLabel )
         
     }
     
@@ -282,7 +462,7 @@ class AppDetailButtons: BaseCell {
     
     let diskusiButton1 : UIButton = {
         let button = UIButton()
-        button.setTitle("Diskusi 1", for: .normal)
+        button.setTitle("Titip Juga", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
@@ -312,6 +492,333 @@ class AppDetailButtons: BaseCell {
         addConstraintsWithFormat("V:|[v0(50)]", views: diskusiButton )
         addConstraintsWithFormat("V:|[v0(50)][v1(1)]|", views: diskusiButton1,dividerLineView )
         
+    }
+    
+}
+
+class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+ 
+    fileprivate let userTawarBarangCellId = "userTawarBarangCellId"
+    
+    var user : String = ""
+    
+    let userCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collectionView
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(userCollectionView)
+        addSubview(dividerLineView)
+        
+        userCollectionView.dataSource = self
+        userCollectionView.delegate = self
+        
+        userCollectionView.register(userTawarBarangCell.self, forCellWithReuseIdentifier: userTawarBarangCellId)
+        
+        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        addConstraintsWithFormat("H:|[v0]|", views: userCollectionView)
+        
+        addConstraintsWithFormat("V:|[v0][v1(1)]|", views: userCollectionView,dividerLineView )
+        
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userTawarBarangCellId, for: indexPath) as! userTawarBarangCell
+        //cell.app = appCategory?.apps?[indexPath.item]
+        cell.backgroundColor = UIColor.clear
+        
+        if indexPath.item == 0{
+            cell.nameLabel.text = user
+            cell.LabelA.text = "Requester"
+            DispatchQueue.main.async{
+                
+                Alamofire.request("http://titipanku.xyz/uploads/"+self.user+".jpg").responseImage { response in
+                    //debugPrint(response)
+                    //let nama = self.app?.name
+                    //print("gambar : "+imageName)
+                    if let image = response.result.value {
+                        //print("image downloaded: \(image)")
+                        cell.imageView.image = image
+                    }
+                }
+            }
+            
+            return cell
+        }else{
+            cell.LabelA.text = "Traveller"
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: frame.width/2-5, height: frame.height - 32)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.item == 0{
+            
+            print("request")
+        }else{
+            print("penawar")
+        }
+        
+    }
+    
+}
+
+
+class userTawarBarangCell: BaseCell {
+    
+    let LabelA: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Belum Ada"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(imageView)
+        addSubview(nameLabel)
+        addSubview(LabelA)
+        
+        addConstraintsWithFormat("H:|-5-[v0]-5-|", views: LabelA)
+        addConstraintsWithFormat("H:|-25-[v0]-25-|", views: imageView)
+        addConstraintsWithFormat("H:|-5-[v0]-5-|", views: nameLabel)
+        
+        addConstraintsWithFormat("V:|[v2]-5-[v0(150)]-5-[v1]", views: imageView,nameLabel,LabelA)
+        
+    }
+    
+}
+
+
+class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+    
+    
+    fileprivate let offerListKiriCellId = "offerListKiriCellId"
+    fileprivate let offerListKananCellId = "offerListKananCellId"
+    
+    var varOffer: varOffer? {
+        didSet {
+            
+        }
+        
+    }
+    
+    
+    let offerCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.alwaysBounceHorizontal = false
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collectionView
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(offerCollectionView)
+        addSubview(dividerLineView)
+        
+        offerCollectionView.dataSource = self
+        offerCollectionView.delegate = self
+        
+        offerCollectionView.register(OfferListKiri.self, forCellWithReuseIdentifier: offerListKiriCellId)
+        offerCollectionView.register(OfferListKanan.self, forCellWithReuseIdentifier: offerListKananCellId)
+        
+        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        addConstraintsWithFormat("H:|[v0]|", views: offerCollectionView)
+        
+        addConstraintsWithFormat("V:|[v0][v1(1)]|", views: offerCollectionView,dividerLineView )
+        
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        
+        if indexPath.item == 0{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListKiriCellId, for: indexPath) as! OfferListKiri
+            //cell.app = appCategory?.apps?[indexPath.item]
+            //cell.backgroundColor = UIColor.red
+            cell.nameLabel.text = varOffer?.idPenawar
+            return cell
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListKananCellId, for: indexPath) as! OfferListKanan
+            //cell.app = appCategory?.apps?[indexPath.item]
+            //cell.backgroundColor = UIColor.blue
+            cell.priceLabel.text = "Harga Penawaran : " + (varOffer?.hargaPenawaran)!
+            cell.kotaLabel.text = "Kota Pengiriman : " + (varOffer?.kota)!
+            cell.tglLabel.text = "Estimasi Pulang : " + (varOffer?.tglPulang)!
+            return cell
+        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListKiriCellId, for: indexPath) as! OfferListKiri
+        //cell.app = appCategory?.apps?[indexPath.item]
+        cell.backgroundColor = UIColor.brown
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.item == 0{
+            return CGSize(width: frame.width/3-5, height: frame.height)
+        }else{
+            let ukuran = frame.width/3+26
+            return CGSize(width: frame.width-ukuran, height: frame.height)
+        }
+        
+        return CGSize(width: frame.width/2-5, height: frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.row == 0{
+            print(varOffer?.idPenawar)
+        }else{
+            print("penawar")
+        }
+        
+    }
+    
+    
+}
+
+class OfferListKiri: BaseCell {
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "User"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(imageView)
+        addSubview(nameLabel)
+        
+        addConstraintsWithFormat("H:|-25-[v0(85)]|", views: imageView)
+        addConstraintsWithFormat("H:|[v0]|", views: nameLabel)
+        
+        addConstraintsWithFormat("V:|[v0(85)]-5-[v1]", views: imageView,nameLabel)
+        
+    }
+    
+}
+
+
+class OfferListKanan: BaseCell {
+    
+    let priceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "harga"
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 1
+        return label
+    }()
+
+    let kotaLabel: UILabel = {
+        let label = UILabel()
+        label.text = "kota"
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    let tglLabel: UILabel = {
+        let label = UILabel()
+        label.text = "tgl"
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 1
+        return label
+    }()
+
+    override func setupViews() {
+        super.setupViews()
+
+        addSubview(priceLabel)
+        addSubview(kotaLabel)
+        addSubview(tglLabel)
+
+        addConstraintsWithFormat("H:|-5-[v0]|", views: priceLabel)
+        addConstraintsWithFormat("H:|-5-[v0]|", views: kotaLabel)
+        addConstraintsWithFormat("H:|-5-[v0]|", views: tglLabel)
+
+        addConstraintsWithFormat("V:|-20-[v0]-5-[v1]-5-[v2]", views: priceLabel,kotaLabel,tglLabel)
+
     }
     
 }
