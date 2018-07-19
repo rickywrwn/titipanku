@@ -11,24 +11,11 @@ import Alamofire
 import SwiftyJSON
 import Alamofire_SwiftyJSON
 
-//struct postPreorder: Decodable {
-//    let id: Int
-//    let name: String
-//    let category: String
-//    let country: String
-//    let price: Int
-//    let imageName: String
-//    let status : String
-//
-//}
-
 class homeController: UICollectionViewController,UICollectionViewDelegateFlowLayout{
     
     fileprivate let cellId = "cellId"
     fileprivate let preorderCellId = "preorderCellId"
     fileprivate let headerId = "headerId"
-    
-//    var postPreorders = [postPreorder]()
     
     var featuredApps: FeaturedApps?
     var appCategories: [AppCategory]?
@@ -36,13 +23,10 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     
     @objc func tambahBtn() {
-        
         print("It Works")
         let tambahCont = TambahViewController()
         present(tambahCont, animated: true, completion: {
-            
         })
-
     }
     
     

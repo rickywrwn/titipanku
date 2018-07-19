@@ -9,7 +9,8 @@
 import UIKit
 import Alamofire
 import AlamofireImage
-struct varOffer: Decodable {
+
+struct VarOffer: Decodable {
     let id: String
     let idPenawar: String
     let tglOffer: String
@@ -20,7 +21,7 @@ struct varOffer: Decodable {
     
 }
 
-var offers = [varOffer]()
+var offers = [VarOffer]()
 class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     
@@ -41,7 +42,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         guard let data = data else { return }
                         do {
                             let decoder = JSONDecoder()
-                            offers = try decoder.decode([varOffer].self, from: data)
+                            offers = try decoder.decode([VarOffer].self, from: data)
                             
                             //print(offers)
                         } catch let jsonErr {
@@ -130,6 +131,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                 fetchOffer()
             }
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showAcceptOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil)
     }
     
     
@@ -146,22 +149,20 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         print(app?.id)
     }
     
-    @objc func showAcceptOffer(){
-        print("pencet")
-        //let layout = UICollectionViewFlowLayout()
-        let appDetailController = AcceptOffer()
-        appDetailController.app = app
-        navigationController?.pushViewController(appDetailController, animated: true)
-    }
-    
     func showOffer() {
-        print("pencet")
-        //let layout = UICollectionViewFlowLayout()
         let appDetailController = OfferController()
         appDetailController.app = app
         navigationController?.pushViewController(appDetailController, animated: true)
     }
     
+    @objc func showAcceptOffer(_ notification: NSNotification) {
+        let appDetailController = AcceptOffer()
+        appDetailController.app = app
+        if let idOffer = notification.userInfo?["idOffer"] as? String {
+            appDetailController.idOffer = idOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -218,11 +219,10 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                             //jika request milik sendiri
                             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
                             cell.nameLabel.text = "List Penawar"
+                            
                             return cell
                         }
-                        
                     }
-                    
                 }
             
             }
@@ -240,6 +240,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
 //                        cell.diskusiButton.setTitle(offers[i].idPenawar, for: .normal)
 //                        cell.diskusiButton1.setTitle(offers[i].tglPulang, for: .normal)
                         cell.varOffer = offers[i]
+                        cell.app = app
                         return cell
                     }
                 }
@@ -255,7 +256,6 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return 4 + offers.count
     }
     
@@ -643,11 +643,47 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
     fileprivate let offerListKiriCellId = "offerListKiriCellId"
     fileprivate let offerListKananCellId = "offerListKananCellId"
     
-    var varOffer: varOffer? {
+    var varOffer: VarOffer? {
         didSet {
             
         }
         
+    }
+    
+    var app: App? {
+        didSet {
+            
+            if app?.Screenshots != nil {
+                return
+            }
+            
+            if let id = app?.id {
+                let urlString = "http://titipanku.xyz/api/DetailBarang.php?id=\(id)"
+                
+                URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                    
+                    guard let data = data else { return }
+                    
+                    if let error = error {
+                        print(error)
+                        return
+                    }
+                    
+                    do {
+                        
+                        let decoder = JSONDecoder()
+                        let appDetail = try decoder.decode(App.self, from: data)
+                        self.app = appDetail
+                        
+                        
+                    } catch let err {
+                        print(err)
+                    }
+                    
+                    
+                }).resume()
+            }
+        }
     }
     
     
@@ -727,18 +763,17 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
         
         return CGSize(width: frame.width/2-5, height: frame.height)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.row == 0{
             print(varOffer?.idPenawar)
         }else{
-            print("penawar")
+            let appDetailController = AcceptOffer()
+            let dataIdOffer:[String: String] = ["idOffer": (varOffer?.id)!]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil, userInfo: dataIdOffer)
         }
-        
     }
-    
-    
 }
 
 class OfferListKiri: BaseCell {

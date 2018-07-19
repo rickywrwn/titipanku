@@ -20,7 +20,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     var arrNama = [String]()
     var arrHarga = [String]()
     var kotaKirim : String = ""
-    var dateBack : String = ""
     var selectedProv : String = ""
     var selectedCity : String = ""
     var statusTable : Int = 0
@@ -57,43 +56,28 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         let province_id: String
     }
     
-    struct offerDetail: Decodable {
-        let id: String
-        let idPenawar: String
-        let tglOffer: String
-        let hargaPenawaran: String
-        let tglPulang: String
-        let kota: String
-        let status: String
-        
-    }
-    var isiTawaran  : offerDetail?
+    var detailOffer : VarOffer?
     
     func fetchOffer() {
-        DispatchQueue.main.async {
-            let urlString = "http://titipanku.xyz/api/ShowOfferDetail.php?idOffer=\(self.idOffer)"
-            guard let url = URL(string: urlString) else { return }
-            URLSession.shared.dataTask(with: url) { (data, _, err) in
-                DispatchQueue.main.async {
-                    if let err = err {
-                        print("Failed to get data from url:", err)
-                        return
-                    }
-                    
-                    guard let data = data else { return }
-                    do {
-                        let decoder = JSONDecoder()
-                        self.isiTawaran = try decoder.decode(offerDetail.self, from: data)
-                        //self.collectionView?.reloadData()
-                        print(self.isiTawaran)
-                    } catch let jsonErr {
-                        print("Failed to decode:", jsonErr)
-                    }
+        let urlString = "http://titipanku.xyz/api/ShowOfferDetail.php?idOffer=\(self.idOffer)"
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data, _, err) in
+            DispatchQueue.main.async {
+                if let err = err {
+                    print("Failed to get data from url:", err)
+                    return
                 }
-                }.resume()
-            
-            
-        }
+                
+                guard let data = data else { return }
+                do {
+                    let decoder = JSONDecoder()
+                    self.detailOffer = try decoder.decode(VarOffer.self, from: data)
+                    print(self.detailOffer)
+                } catch let jsonErr {
+                    print("Failed to decode:", jsonErr)
+                }
+            }
+            }.resume()
         
     }
     
@@ -140,11 +124,12 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         view.backgroundColor = UIColor.white
         navigationItem.title = "Tawaran"
         print("Bantu belikan Barang Loaded")
-        ongkirText.isHidden = true
-        labelOngkir.isHidden = true
-        fetchOffer()
+        ongkirText.isHidden = false
+        labelOngkir.isHidden = false
         setupView()
-        print(idOffer)
+        print(app)
+        fetchOffer()
+        //print(detailOffer)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -361,34 +346,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         ongkirTableView.isHidden = true
     }
     
-    @objc func textFieldTapped(_ textField: UITextField) {
-        
-        print("tapped")
-        let date = Date() //ambil date hari ini
-        /// DatePickerPopover appears:
-        DatePickerPopover(title: "Tanggal Kembali")
-            .setDateMode(.date)
-            .setSelectedDate(Date())
-            .setMinimumDate(date)
-            .setDoneButton(action: { popover, selectedDate in
-                let formatter = DateFormatter()
-                let formatterValue = DateFormatter()
-                // initially set the format based on your datepicker date / server String
-                //formatter.dateFormat = "yyyy-MM-dd"
-                formatter.dateFormat = "dd MMM yyyy"
-                formatterValue.dateFormat = "yyyy-MM-dd"
-                // again convert your date to string
-                let stringDate = formatter.string(from: selectedDate)
-                self.dateBack = formatterValue.string(from: selectedDate)
-                
-                self.dateTextField.text = stringDate
-                print(self.dateBack)
-                print("selectedDate \(stringDate)")})
-            .setCancelButton(action: { _, _ in print("cancel")})
-            .appear(originView: textField, baseViewController: self)
-        
-    }
-    
     
     @objc func ongkirTapped(_ textField: UITextField) {
         
@@ -412,19 +369,17 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         ongkirTableView.isHidden = false
     }
     
-    @objc func handlePostBarang(){
-        if(provinsiText.text == "" && kotaText.text == "" && dateTextField.text == "" && hargaText.text == ""){
+    @objc func handleTerimaOffer(){
+        if(provinsiText.text == "" && kotaText.text == "" && hargaText.text == ""){
             let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
             self.present(alert, animated: true)
         }else{
-            print(dateTextField.text)
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglKembali : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
-                print(tglKembali)
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
                 
-                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglKembali": tglKembali, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
+                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/PostOffer.php",method: .get, parameters: parameter).responseJSON {
                     response in
@@ -456,18 +411,18 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @objc func handleTolak(){
-        if(provinsiText.text == "" && kotaText.text == "" && dateTextField.text == "" && hargaText.text == ""){
+        if(provinsiText.text == "" && kotaText.text == "" && hargaText.text == ""){
             let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
             self.present(alert, animated: true)
         }else{
-            print(dateTextField.text)
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglKembali : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
-                print(tglKembali)
+           
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
+               
                 
-                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglKembali": tglKembali, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
+                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/PostOffer.php",method: .get, parameters: parameter).responseJSON {
                     response in
@@ -564,27 +519,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         return textField
     }()
     
-    
-    let LabelTanggal : UILabel = {
-        let label = UILabel()
-        label.text = "Tanggal Kembali"
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let dateTextField : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .center
-        textField.borderStyle = .roundedRect
-        textField.textAlignment = .center
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(textFieldTapped(_:)),
-                            for: UIControlEvents.touchDown)
-        return textField
-    }()
-    
-    
     let labelOngkir : UILabel = {
         let label = UILabel()
         label.text = "Jasa Pengiriman"
@@ -631,7 +565,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor.blue
         button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handlePostBarang), for: UIControlEvents.touchDown)
+        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
         
@@ -660,14 +594,24 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         return v
     }()
     
+    
+    let backButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        //backButton.setImage(UIImage(named: "BackButton.png"), for: .normal) // Image can be downloaded from here below link
+        button.setTitle("Cancel", for: .normal)
+        button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
+        button.addTarget(self, action: #selector(handleBack), for: UIControlEvents.touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     func setupView(){
         
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
         scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
         let screenWidth = UIScreen.main.bounds.width+10
-        
-        
+
         // constrain the scroll view to 8-pts on each side
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8.0).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8.0).isActive = true
@@ -710,21 +654,8 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         ongkirText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         ongkirText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
-        
-        scrollView.addSubview(LabelTanggal)
-        LabelTanggal.topAnchor.constraint(equalTo: kotaText.bottomAnchor, constant: 30).isActive = true
-        LabelTanggal.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        
-        scrollView.addSubview(dateTextField)
-        dateTextField.topAnchor.constraint(equalTo: LabelTanggal.bottomAnchor, constant: 10).isActive = true
-        dateTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        dateTextField.font = UIFont.systemFont(ofSize: 25)
-        dateTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        dateTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
-        dateTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        
         scrollView.addSubview(label4)
-        label4.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 30).isActive = true
+        label4.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
         label4.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         scrollView.addSubview(hargaText)
