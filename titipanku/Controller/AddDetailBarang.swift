@@ -221,11 +221,10 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
     
     let descText : UITextView = {
         let textField = UITextView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .center
+        textField.textAlignment = .left
         textField.layer.borderWidth = 1
         textField.layer.cornerRadius = 3
         textField.layer.borderColor =  UIColor.gray.cgColor
-        textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -262,7 +261,6 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
-        textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()

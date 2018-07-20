@@ -16,44 +16,45 @@ struct VarOffer: Decodable {
     let tglOffer: String
     let hargaPenawaran: String
     let tglPulang: String
+    let idKota : String
     let kota: String
     let status: String
     
 }
 
-var offers = [VarOffer]()
 class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    
+
+    var offers = [VarOffer]()
     
     var tinggiTextView : Float = 0
     
-    func fetchOffer() {
-        DispatchQueue.main.async {
-            if let id = self.app?.id {
-                let urlString = "http://titipanku.xyz/api/GetOffer.php?idRequest=\(id)"
-                guard let url = URL(string: urlString) else { return }
-                URLSession.shared.dataTask(with: url) { (data, _, err) in
-                    DispatchQueue.main.async {
-                        if let err = err {
-                            print("Failed to get data from url:", err)
-                            return
-                        }
-                        
-                        guard let data = data else { return }
-                        do {
-                            let decoder = JSONDecoder()
-                            offers = try decoder.decode([VarOffer].self, from: data)
-                            
-                            //print(offers)
-                        } catch let jsonErr {
-                            print("Failed to decode:", jsonErr)
-                        }
-                    }
-                    }.resume()
-            }
-            
+    func fetchOffer(_ completionHandler: @escaping ([VarOffer]) -> ()) {
+        if let id = self.app?.id {
+            let urlString = "http://titipanku.xyz/api/GetOffer.php?idRequest=\(id)"
+           
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.offers = try decoder.decode([VarOffer].self, from: data)
+                    //print(self.offers)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.offers)
+                    })
+                    
+                } catch let err {
+                    print(err)
+                }
+                
+            }) .resume()
         }
-        
     }
     
     var app: App? {
@@ -103,13 +104,21 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     fileprivate let offerCellId = "offerCellId"
     fileprivate let userCellId = "userCellId"
     fileprivate let offerListCellId = "offerListCellId"
+    fileprivate let AppCellKosongCellId = "AppCellKosongCellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //di async agar bisa reload sekali setelah 2 detik
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.collectionView?.reloadData()
+        if let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String  {
+            print(emailNow + " dan " + email )
+            if email == emailNow {
+                self.fetchOffer{(offers) -> ()in
+                    self.offers = offers
+                    print("count" + String(self.offers.count))
+                    self.collectionView?.reloadData()
+                }
+            }
         }
+        
         
         collectionView?.alwaysBounceVertical = true
         
@@ -122,19 +131,22 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         collectionView?.register(AppDetailOffer.self, forCellWithReuseIdentifier: offerCellId)
         collectionView?.register(AppDetailUser.self, forCellWithReuseIdentifier: userCellId)
         collectionView?.register(AppOfferList.self, forCellWithReuseIdentifier: offerListCellId)
+        collectionView?.register(AppCellKosong.self, forCellWithReuseIdentifier: AppCellKosongCellId)
         collectionView?.register(ScreenshotsCell.self, forCellWithReuseIdentifier: cellId)
         
-        
-        if let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String  {
-            print(emailNow + " dan " + email )
-            if email == emailNow {
-                fetchOffer()
-            }
-        }
-        
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
+        
     }
     
+    @objc func reloadBarangDetail(){
+        self.fetchOffer{(offers) -> ()in
+            self.offers = offers
+            print(self.offers)
+            print("count baru" + String(self.offers.count))
+            self.collectionView?.reloadData()
+        }
+    }
     
     @objc func handleDiskusi(){
         print("diskusi")
@@ -143,18 +155,16 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         //komentarController.app = app
         navigationController?.pushViewController(komentarController, animated: true)
     }
-    
-    @objc func handleLain(){
-        //perform(#selector(showHome), with: nil, afterDelay: 0.01)
-        print(app?.id)
-    }
-    
     func showOffer() {
         let appDetailController = OfferController()
         appDetailController.app = app
         navigationController?.pushViewController(appDetailController, animated: true)
     }
-    
+    @objc func handleLain(){
+        //perform(#selector(showHome), with: nil, afterDelay: 0.01)
+        print(app?.id)
+    }
+
     @objc func showAcceptOffer(_ notification: NSNotification) {
         let appDetailController = AcceptOffer()
         appDetailController.app = app
@@ -171,14 +181,14 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             
             cell.nameLabel.text = app?.name
            
-            let intHarga: Int? = app?.price
-            cell.priceLabel.text = "Rp. " +  intHarga.map(String.init)!
+            cell.priceLabel.text = "Rp. " +   (app?.price)!
             cell.tglLabel.text = "Tanggal Posting : " + (app?.tglPost)!
             //cell.textView.text = app?.description
             cell.textView.attributedText = descriptionAttributedText()
+            //menghitung tinggi textview
             let sizeThatFitsTextView = cell.textView.sizeThatFits(CGSize(width: cell.textView.frame.size.width, height: CGFloat(MAXFLOAT)))
             let heightOfText = sizeThatFitsTextView.height
-            tinggiTextView = Float(heightOfText)
+            tinggiTextView = Float(heightOfText-55)
             cell.qtyLabel.text = "Jumlah Barang : " + (app?.qty)!
             cell.countryLabel.text = "Negara Pembelian : " + (app?.country)!
             cell.kotaLabel.text = "Kota Pengiriman : " + (app?.kotaKirim)!
@@ -238,12 +248,18 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     if indexPath.item == 4 + i {
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListCellId, for: indexPath) as! AppOfferList
 //                        cell.diskusiButton.setTitle(offers[i].idPenawar, for: .normal)
-//                        cell.diskusiButton1.setTitle(offers[i].tglPulang, for: .normal)
+//                        cell.diskusiButton1.setTitle(offers[i].tglPulang, for: .normal)cell.collectionview
                         cell.varOffer = offers[i]
                         cell.app = app
                         return cell
                     }
                 }
+            }else if email == emailNow && offers.count == 0{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
+                return cell
+            }else if email != emailNow {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
+                return cell
             }
         }
         
@@ -268,20 +284,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         }else if indexPath.item == 2{
             return CGSize(width: view.frame.width, height: 220)
         }else if indexPath.item == 3{
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let email = app?.email {
-                if email != emailNow {
-                    //jika request orang lain
-                    return CGSize(width: view.frame.width, height: 70)
-                }else{
-                    //jika user sendiri
-                    for i in 0 ..< offers.count {
-                        if indexPath.item == 3 + i {
-                            return CGSize(width: view.frame.width, height: 70)
-                        }
-                    }
-                    
-                }
-            }
+            return CGSize(width: view.frame.width, height: 70)
         }
         
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let email = app?.email {
@@ -293,6 +296,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         return CGSize(width: view.frame.width, height: 110)
                     }
                 }
+            }else if email == emailNow  && offers.count == 0{
+                return CGSize(width: view.frame.width, height: 0)
             }
             
         }
@@ -361,6 +366,16 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     
 }
 
+class AppCellKosong: BaseCell {
+    
+    
+    override func setupViews() {
+        super.setupViews()
+        
+    }
+    
+}
+
 class AppDetailDescriptionCell: BaseCell {
     
     let nameLabel: UILabel = {
@@ -389,6 +404,7 @@ class AppDetailDescriptionCell: BaseCell {
         tv.text = "SAMPLE DESCRIPTION"
         tv.font = UIFont.systemFont(ofSize: 14)
         tv.isScrollEnabled = false
+        tv.inputView = UIView();
         return tv
     }()
     
@@ -742,9 +758,9 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListKananCellId, for: indexPath) as! OfferListKanan
             //cell.app = appCategory?.apps?[indexPath.item]
             //cell.backgroundColor = UIColor.blue
-            cell.priceLabel.text = "Harga Penawaran : " + (varOffer?.hargaPenawaran)!
+            cell.priceLabel.text = "Harga Penawaran : Rp." + (varOffer?.hargaPenawaran)!
             cell.kotaLabel.text = "Kota Pengiriman : " + (varOffer?.kota)!
-            cell.tglLabel.text = "Estimasi Pulang : " + (varOffer?.tglPulang)!
+            cell.tglLabel.text = "Tgl Pulang : " + (varOffer?.tglPulang)!
             return cell
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListKiriCellId, for: indexPath) as! OfferListKiri

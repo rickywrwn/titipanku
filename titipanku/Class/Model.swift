@@ -67,7 +67,7 @@ struct App: Decodable {
     var description: String?
     var category: String?
     var country: String?
-    var price: Int?
+    var price: String?
     var ImageName: String?
     var url: String?
     var qty: String?

@@ -47,6 +47,7 @@ class AddHargaPreorder :  UIViewController{
         }
     }
     
+    
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     
     let label1 : UILabel = {
@@ -62,6 +63,7 @@ class AddHargaPreorder :  UIViewController{
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
         textField.textAlignment = .center
+        textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -124,6 +126,13 @@ class AddHargaPreorder :  UIViewController{
         
         
     }
-    
-    
+}
+
+extension Formatter {
+    static let withSeparator: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = " "
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
 }

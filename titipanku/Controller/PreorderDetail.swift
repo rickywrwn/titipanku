@@ -89,8 +89,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
             
             cell.nameLabel.text = app?.name
             
-            let intHarga: Int? = app?.price
-            cell.priceLabel.text = "Harga : Rp. " +  intHarga.map(String.init)!
+            cell.priceLabel.text = "Harga : Rp. " +   (app?.price)!
             
             //cell.textView.text = app?.description
             cell.textView.attributedText = descriptionAttributedText()
