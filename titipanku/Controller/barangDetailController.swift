@@ -119,7 +119,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             }
         }
         
-        
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
         collectionView?.alwaysBounceVertical = true
         
         collectionView?.backgroundColor = UIColor.white
@@ -140,11 +141,15 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     
     @objc func reloadBarangDetail(){
+        offers = []
+        self.collectionView?.reloadData()
+        print("count baru" + String(self.offers.count))
         self.fetchOffer{(offers) -> ()in
             self.offers = offers
             print(self.offers)
             print("count baru" + String(self.offers.count))
             self.collectionView?.reloadData()
+            self.collectionView?.collectionViewLayout.invalidateLayout()
         }
     }
     
@@ -168,8 +173,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     @objc func showAcceptOffer(_ notification: NSNotification) {
         let appDetailController = AcceptOffer()
         appDetailController.app = app
-        if let idOffer = notification.userInfo?["idOffer"] as? String {
-            appDetailController.idOffer = idOffer
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
+            appDetailController.varOffer = varOffer
         }
         navigationController?.pushViewController(appDetailController, animated: true)
     }
@@ -247,8 +252,6 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                 for i in 0 ..< offers.count {
                     if indexPath.item == 4 + i {
                         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListCellId, for: indexPath) as! AppOfferList
-//                        cell.diskusiButton.setTitle(offers[i].idPenawar, for: .normal)
-//                        cell.diskusiButton1.setTitle(offers[i].tglPulang, for: .normal)cell.collectionview
                         cell.varOffer = offers[i]
                         cell.app = app
                         return cell
@@ -661,9 +664,7 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
     
     var varOffer: VarOffer? {
         didSet {
-            
         }
-        
     }
     
     var app: App? {
@@ -785,8 +786,7 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
         if indexPath.row == 0{
             print(varOffer?.idPenawar)
         }else{
-            let appDetailController = AcceptOffer()
-            let dataIdOffer:[String: String] = ["idOffer": (varOffer?.id)!]
+            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil, userInfo: dataIdOffer)
         }
     }

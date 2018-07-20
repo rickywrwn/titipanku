@@ -50,6 +50,13 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         let province_id: String
     }
     
+    var varOffer: VarOffer? {
+        didSet {
+            
+        }
+        
+    }
+    
     var detailOffer : VarOffer?
     
     func fetchOffer() {
@@ -69,11 +76,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                     let decoder = JSONDecoder()
                     self.detailOffer = try decoder.decode(VarOffer.self, from: data)
                     print(self.detailOffer)
-                    
-                    self.labelTgl.text = self.detailOffer?.tglOffer
-                    self.labelHarga.text = self.detailOffer?.hargaPenawaran
-                    self.labelKota.text = self.detailOffer?.kota
-                    
                 } catch let jsonErr {
                     print("Failed to decode:", jsonErr)
                 }
@@ -128,8 +130,11 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
         //print(app)
-        fetchOffer()
+        //fetchOffer()
         
+        self.labelTgl.text = self.varOffer?.tglPulang
+        self.labelHarga.text = self.varOffer?.hargaPenawaran
+        self.labelKota.text = self.varOffer?.kota
         
         
         setupView()
@@ -167,7 +172,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
             "content-type": "application/x-www-form-urlencoded"
         ]
         
-        if let berat = app?.berat,let myInt = Int(berat) , let origin = detailOffer?.idKota, let destination = app?.idKota{
+        if let berat = app?.berat,let myInt = Int(berat) , let origin = varOffer?.idKota, let destination = app?.idKota{
             print(myInt)
             let parameters: Parameters = ["origin": origin,"destination": destination, "weight" : myInt, "courier" : "jne"]
             print (parameters)
@@ -261,7 +266,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     @objc func handleTolak(){
         print("tolak")
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = detailOffer?.id{
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = varOffer?.id{
             
             let parameter: Parameters = ["idOffer":idOffer,"action":"decline"]
             print (parameter)
