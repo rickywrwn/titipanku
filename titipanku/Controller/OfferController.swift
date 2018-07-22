@@ -210,15 +210,6 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         return cell
     }
     
-    func showOffer() {
-        print("pencet")
-        let layout = UICollectionViewFlowLayout()
-        let appDetailController = OfferController2()
-        appDetailController.app = app
-        navigationController?.pushViewController(appDetailController, animated: true)
-    }
-    
-    
     func fetchProv() {
         //kalau post dengan header encoding harus URLencoding
         DispatchQueue.main.async {

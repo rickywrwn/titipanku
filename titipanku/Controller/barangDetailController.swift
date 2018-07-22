@@ -28,35 +28,6 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     
     var tinggiTextView : Float = 0
     
-    func fetchOffer(_ completionHandler: @escaping ([VarOffer]) -> ()) {
-        if let id = self.app?.id {
-            let urlString = "http://titipanku.xyz/api/GetOffer.php?idRequest=\(id)"
-           
-            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
-                
-                guard let data = data else { return }
-                
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    self.offers = try decoder.decode([VarOffer].self, from: data)
-                    //print(self.offers)
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        completionHandler(self.offers)
-                    })
-                    
-                } catch let err {
-                    print(err)
-                }
-                
-            }) .resume()
-        }
-    }
-    
     var app: App? {
         didSet {
             
@@ -84,7 +55,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         self.app = appDetail
                         
                         DispatchQueue.main.async(execute: { () -> Void in
-                           
+                           //self.collectionView!.reloadData()
                         })
                         
                     } catch let err {
@@ -94,6 +65,36 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     
                 }).resume()
             }
+        }
+    }
+    
+    
+    func fetchOffer(_ completionHandler: @escaping ([VarOffer]) -> ()) {
+        if let id = self.app?.id {
+            let urlString = "http://titipanku.xyz/api/GetOffer.php?idRequest=\(id)"
+            
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.offers = try decoder.decode([VarOffer].self, from: data)
+                    //print(self.offers)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.offers)
+                    })
+                    
+                } catch let err {
+                    print(err)
+                }
+                
+            }) .resume()
         }
     }
     
@@ -108,16 +109,6 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String  {
-            print(emailNow + " dan " + email )
-            if email == emailNow {
-                self.fetchOffer{(offers) -> ()in
-                    self.offers = offers
-                    print("count" + String(self.offers.count))
-                    self.collectionView?.reloadData()
-                }
-            }
-        }
         
         collectionView?.delegate = self
         collectionView?.dataSource = self
@@ -138,19 +129,48 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
         
+        if let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String  {
+            print(emailNow + " dan " + email )
+            if email == emailNow {
+                self.fetchOffer{(offers) -> ()in
+                    self.offers = offers
+                    print("count" + String(self.offers.count))
+                    self.collectionView?.reloadData()
+                }
+            }
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+
     }
     
     @objc func reloadBarangDetail(){
-        offers = []
+        self.offers = []
         self.collectionView?.reloadData()
         print("count baru" + String(self.offers.count))
         self.fetchOffer{(offers) -> ()in
             self.offers = offers
             print(self.offers)
             print("count baru" + String(self.offers.count))
+            self.collectionView!.reloadData()
+            
+            self.offers = []
             self.collectionView?.reloadData()
-            self.collectionView?.collectionViewLayout.invalidateLayout()
+            
+           
         }
+        
+        self.fetchOffer{(offers) -> ()in
+           print("asd")
+            self.offers = offers
+            print("count baru" + String(self.offers.count))
+            print(offers)
+            print(self.offers)
+            self.collectionView!.reloadData()
+        }
+
     }
     
     @objc func handleDiskusi(){
@@ -342,7 +362,6 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         
                         let appDetailController = AcceptOffer()
                         appDetailController.app = app
-                        appDetailController.idOffer = offers[i].id
                         navigationController?.pushViewController(appDetailController, animated: true)
                     }
                 }
@@ -664,7 +683,9 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
     
     var varOffer: VarOffer? {
         didSet {
+            
         }
+        
     }
     
     var app: App? {
@@ -786,6 +807,7 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
         if indexPath.row == 0{
             print(varOffer?.idPenawar)
         }else{
+            print(varOffer)
             let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil, userInfo: dataIdOffer)
         }
