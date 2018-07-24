@@ -1,8 +1,8 @@
 //
-//  InboxController.swift
+//  UserPembelian.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 16/04/18.
+//  Created by Ricky Wirawan on 24/07/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class InboxController: UIViewController {
+class UserPembelian: UIViewController {
     struct varInbox {
         static var statusInbox = ""
         
@@ -20,14 +20,14 @@ class InboxController: UIViewController {
     
     let layout = UICollectionViewFlowLayout()
     
-    lazy var NotifVC: NotifikasiController = {
-        let vc = NotifikasiController(collectionViewLayout: layout)
+    lazy var RequestVC: UserRequest = {
+        let vc = UserRequest(collectionViewLayout: layout)
         self.addAsChildVC(childVC: vc)
         return vc
     }()
     
-    lazy var PesanVC: PesanController = {
-        let vc = PesanController(collectionViewLayout: layout)
+    lazy var PreorderVC: UserPreorder = {
+        let vc = UserPreorder(collectionViewLayout: layout)
         self.addAsChildVC(childVC: vc)
         return vc
     }()
@@ -41,7 +41,7 @@ class InboxController: UIViewController {
         
         navigationItem.title = "Home"
         
-        NotifVC.view.isHidden = false
+        RequestVC.view.isHidden = false
     }
     
     
@@ -60,12 +60,12 @@ class InboxController: UIViewController {
     
     @objc func madeSelection(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0{
-            PesanVC.view.isHidden = true
-            NotifVC.view.isHidden = false
+            PreorderVC.view.isHidden = true
+            RequestVC.view.isHidden = false
             varInbox.statusInbox = "notif"
         }else if sender.selectedSegmentIndex == 1{
-            PesanVC.view.isHidden = false
-            NotifVC.view.isHidden = true
+            RequestVC.view.isHidden = false
+            PreorderVC.view.isHidden = true
             varInbox.statusInbox = "pesan"
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         }
@@ -107,4 +107,5 @@ class InboxController: UIViewController {
     }
     
 }
+
 

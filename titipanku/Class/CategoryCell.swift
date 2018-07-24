@@ -13,8 +13,6 @@ import Alamofire
 
 var itung : Int = 0
 
-
-
 class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     @objc func handleMoreBarang() {
        
@@ -24,6 +22,11 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     @objc func handleMorePreoder() {
         
         print("Preorder")
+    }
+    
+    @objc func handleMoreFlashsale() {
+        
+        print("Flashsale")
     }
     
     var homeController: homeController?
@@ -37,6 +40,9 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
                 
             }else if itung == 2 {
                 btnMore.addTarget(self, action: #selector(handleMorePreoder), for: UIControlEvents.touchDown)
+                
+            }else {
+                btnMore.addTarget(self, action: #selector(handleMoreFlashsale), for: UIControlEvents.touchDown)
                 
             }
             btnMore.setTitle(String("More >> "), for: .normal)
@@ -149,10 +155,15 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
                 if let app = appCategory?.apps?[indexPath.item] {
                     homeController!.showPreorderDetailForApp(app)
                 }
-            }else {
+            }else if reuseIdentifier == "cellId"{
                 print("barang")
                 if let app = appCategory?.apps?[indexPath.item] {
                     homeController!.showAppDetailForApp(app)
+                }
+            }else if reuseIdentifier == "flashCellId"{
+                print("masuk flashcell")
+                if let app = appCategory?.apps?[indexPath.item] {
+                    homeController!.showFlashSaleDetailForApp(app)
                 }
             }
         }

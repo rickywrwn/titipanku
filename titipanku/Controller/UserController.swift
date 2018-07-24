@@ -55,6 +55,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     fileprivate let userCellId = "userCellId"
     fileprivate let buttonCellId = "btnCellId"
     fileprivate let cellId = "cellId"
+    fileprivate let activityCellId = "activityCellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +71,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(UserDetailCell.self, forCellWithReuseIdentifier: userCellId)
         collectionView?.register(UserButton.self, forCellWithReuseIdentifier: buttonCellId)
+        collectionView?.register(UserActivityCell.self, forCellWithReuseIdentifier: activityCellId)
     }
     
     //logout
@@ -85,9 +87,15 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     @objc func handleTrip(){
-        print("diskusi")
+        print("trip")
         let layout = UICollectionViewFlowLayout()
         let tripListCont = UserTripList(collectionViewLayout: layout)
+        navigationController?.pushViewController(tripListCont, animated: true)
+        
+    }
+    @objc func handlePembelian(){
+        print("pembelian")
+        let tripListCont = UserPembelian()
         navigationController?.pushViewController(tripListCont, animated: true)
         
     }
@@ -97,30 +105,72 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! UserDetailCell
            
-            
             cell.labelEmail.text = isiUser?.email
             cell.LabelNama.text = isiUser?.name
-             cell.LabelTanggal.text = isiUser?.tanggalDaftar
+            cell.LabelTanggal.text = isiUser?.tanggalDaftar
+            
             return cell
-        }else {
+        }else if indexPath.item == 1{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonCellId, for: indexPath) as! UserButton
             cell.diskusiButton.addTarget(self, action: #selector(handleLogout), for: UIControlEvents.touchDown)
             cell.diskusiButton1.addTarget(self, action: #selector(handleTrip), for: UIControlEvents.touchDown)
             
             return cell
+        }else if indexPath.item == 2{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
+            cell.labelNama.text = "Review"
+            
+            return cell
+        }else if indexPath.item == 3{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
+            cell.labelNama.text = "Pembelian"
+            
+            return cell
+        }else if indexPath.item == 4{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
+            cell.labelNama.text = "Trip"
+            
+            return cell
         }
-        //untuk screenshot
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ScreenshotsCell
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! UserDetailCell
         
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 5
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: view.frame.width, height: 170)
+        
+        if indexPath.row == 0{
+            
+            return CGSize(width: view.frame.width, height: 170)
+        }else if indexPath.row == 1{
+            
+            return CGSize(width: view.frame.width, height: 80)
+        }
+        return CGSize(width: view.frame.width, height: 40)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Num: \(indexPath.row)")
+        if indexPath.row != 0 && indexPath.row != 1{
+            
+            let cell = collectionView.cellForItem(at: indexPath)
+            cell?.layer.backgroundColor = UIColor.gray.cgColor
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                cell?.layer.backgroundColor = UIColor.white.cgColor
+                if indexPath.row == 2{
+                }else if indexPath.row == 3{
+                    self.handlePembelian()
+                }else if indexPath.row == 4{
+                    self.handleTrip()
+                }
+            }
+        }
+        
     }
     
 }
@@ -234,7 +284,7 @@ class UserButton: BaseCell {
     
     let diskusiButton1 : UIButton = {
         let button = UIButton()
-        button.setTitle("Trip", for: .normal)
+        button.setTitle("Setting", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
@@ -268,6 +318,47 @@ class UserButton: BaseCell {
     
 }
 
+class UserActivityCell: BaseCell {
+    
+    let labelNama : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "next")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(labelNama)
+        addSubview(imageView)
+        addSubview(dividerLineView)
+        
+        addConstraintsWithFormat("H:|-10-[v0]-4-[v1(30)]-15-|", views: labelNama, imageView)
+        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        
+        addConstraintsWithFormat("V:|[v0]", views: labelNama )
+        addConstraintsWithFormat("V:|[v0(30)][v1(1)]|", views: imageView,dividerLineView )
+        
+    }
+    
+}
 
 
 

@@ -15,6 +15,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     fileprivate let cellId = "cellId"
     fileprivate let preorderCellId = "preorderCellId"
+    fileprivate let flashCellId = "flashCellId"
     fileprivate let headerId = "headerId"
     
     var featuredApps: FeaturedApps?
@@ -51,6 +52,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: preorderCellId)
+        collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: flashCellId)
         collectionView?.register(Header.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         setupView()
     }
@@ -65,9 +67,17 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     
     func showPreorderDetailForApp(_ app: App) {
-        print("pencet")
+        print("pencet preorder")
         let layout = UICollectionViewFlowLayout()
         let appDetailController = PreorderDetail(collectionViewLayout: layout)
+        appDetailController.app = app
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    
+    func showFlashSaleDetailForApp(_ app: App) {
+        print("pencet preorder 2 gan")
+        let layout = UICollectionViewFlowLayout()
+        let appDetailController = FlashsaleDetail(collectionViewLayout: layout)
         appDetailController.app = app
         navigationController?.pushViewController(appDetailController, animated: true)
     }
@@ -90,6 +100,13 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             cell.appCategory = appCategories?[indexPath.item]
             cell.homeController = self
             
+            return cell
+        }else if indexPath.item == 2 {
+            let cell: CategoryCell
+            
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: flashCellId, for: indexPath) as! CategoryCell
+            cell.appCategory = appCategories?[indexPath.item]
+            cell.homeController = self
             return cell
         }
         
@@ -135,10 +152,6 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             
         })
     }
-    
-    
-    //tampilan
-    
     
     func setupView(){
         

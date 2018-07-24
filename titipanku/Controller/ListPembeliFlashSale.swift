@@ -1,11 +1,10 @@
 //
-//  AcceptOffer.swift
+//  ListPembeliFlashSale.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 13/07/18.
+//  Created by Ricky Wirawan on 24/07/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
-
 
 import UIKit
 import Alamofire
@@ -14,7 +13,7 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 
 
-class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ListPembeliFlashSale :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var selectedHarga : String = ""
     var idOffer : String = ""
@@ -51,39 +50,12 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         let province_id: String
     }
     
-    var varOffer: VarOffer? {
+    var varOffer: VarOfferFlashsale? {
         didSet {
             
         }
         
     }
-    
-//    var detailOffer : VarOffer?
-//    
-//    func fetchOffer() {
-//        
-//        DispatchQueue.main.async {
-//        let urlString = "http://titipanku.xyz/api/ShowOfferDetail.php?idOffer=\(self.idOffer)"
-//        guard let url = URL(string: urlString) else { return }
-//        URLSession.shared.dataTask(with: url) { (data, _, err) in
-//            DispatchQueue.main.async {
-//                if let err = err {
-//                    print("Failed to get data from url:", err)
-//                    return
-//                }
-//                
-//                guard let data = data else { return }
-//                do {
-//                    let decoder = JSONDecoder()
-//                    self.detailOffer = try decoder.decode(VarOffer.self, from: data)
-//                    print(self.detailOffer)
-//                } catch let jsonErr {
-//                    print("Failed to decode:", jsonErr)
-//                }
-//            }
-//            }.resume()
-//        }
-//    }
     
     var app: App? {
         didSet {
@@ -93,7 +65,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
             }
             
             if let id = app?.id {
-                let urlString = "http://titipanku.xyz/api/DetailBarang.php?id=\(id)"
+                let urlString = "http://titipanku.xyz/api/DetailPreorder.php?id=\(id)"
                 
                 URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
                     
@@ -126,18 +98,22 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Tawaran"
+        navigationItem.title = "Pembeli Preorder"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
-        //print(app)
+        print(app)
+        print(varOffer)
         //fetchOffer()
         
-        labelTgl.text = self.varOffer?.tglPulang
-        labelHarga.text = self.varOffer?.hargaPenawaran
+        labelTgl.text = self.varOffer?.tglBeli
+        let harga = Int((app?.valueHarga)!)
+        let qty = Int((varOffer?.qty)!)
+        let ongkir = Int((varOffer?.valueHarga)!)
+        labelHarga.text = "Rp " + String(harga!*qty!+ongkir!)
         labelKota.text = self.varOffer?.kota
         label4.isHidden = true
-        
+        ongkirText.text = (varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)!
         setupView()
         //print(detailOffer)
     }
@@ -149,7 +125,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
             ongkirTableView.isHidden = true
             selectedHarga = arrHarga[indexPath.row]
             label4.isHidden = false
-            let total = Int(selectedHarga)! + Int((varOffer?.valueHarga)!)!
+            let total = Int(selectedHarga)! + Int((varOffer?.hargaOngkir)!)!
             labelTotal.text = String(total)
         }
         
@@ -332,7 +308,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     @objc private func handleBack(){
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadPreorderDetail"), object: nil)
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
@@ -383,7 +359,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     let labelC : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Dikirim Dari "
+        label.text = "Dikirim Ke Kota "
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -396,7 +372,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     let labelOngkir : UILabel = {
         let label = UILabel()
         label.text = "Metode Pengiriman"
@@ -409,8 +385,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         textField.textAlignment = .left
         textField.borderStyle = .line
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(ongkirTapped(_:)),
-                            for: UIControlEvents.touchDown)
         textField.inputView = UIView();
         return textField
     }()
@@ -429,8 +403,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    
     
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -482,7 +454,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         v.delaysContentTouches = false
         return v
     }()
-
+    
     
     func setupView(){
         
@@ -490,7 +462,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.view.addSubview(scrollView)
         scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
         let screenWidth = UIScreen.main.bounds.width+10
-
+        
         // constrain the scroll view to 8-pts on each side
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8.0).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8.0).isActive = true
@@ -564,5 +536,3 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
 }
-
-

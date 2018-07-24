@@ -141,12 +141,6 @@ class TambahViewController: UIViewController {
         return button
     }()
     
-    let dividerLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.black
-        return view
-    }()
-    
     func setupView(){
         let screenHeight = UIScreen.main.bounds.height
         view.backgroundColor = .white
@@ -178,13 +172,7 @@ class TambahViewController: UIViewController {
         view.addSubview(backButton)
         backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
-        
-//        view.addSubview(dividerLineView)
-//        dividerLineView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30).isActive = true
-//        dividerLineView.heightAnchor.constraint(equalToConstant: 5).isActive = true
-//        dividerLineView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        
+
     }
     
     

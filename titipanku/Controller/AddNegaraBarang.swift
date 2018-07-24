@@ -13,7 +13,6 @@ class AddNegaraBarang :  UIViewController, UITableViewDelegate, UITableViewDataS
    
     var selectedProv : String = ""
     var selectedCity : String = ""
-    var statusTable : Int = 0
     var countries = [country]()
     var provinces = [province]()
     var cities = [city]()
