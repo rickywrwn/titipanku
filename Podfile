@@ -24,5 +24,6 @@ target 'titipanku' do
   pod 'SwiftyPickerPopover'
 
   pod 'AlamofireImage', '~> 3.3'
+  pod 'MidtransKit'
 
 end

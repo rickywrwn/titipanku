@@ -11,9 +11,47 @@ import Alamofire
 import SwiftyPickerPopover
 import SwiftyJSON
 import Alamofire_SwiftyJSON
+import MidtransKit
 
-
-class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource,MidtransUIPaymentViewControllerDelegate {
+    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, save result: MidtransMaskedCreditCard!) {
+        print("save")
+    }
+    
+    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, saveCardFailed error: Error!) {
+        print("save failed")
+    }
+    
+    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentPending result: MidtransTransactionResult!) {
+        print("payment pending")
+        Alamofire.request("http://titipanku.xyz/api/unfinish.php",method: .get).responseJSON {
+            response in
+            //mencetak JSON response
+            if let json = response.result.value {
+                print("JSON: \(json)")
+            }
+        }
+    }
+    
+    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentSuccess result: MidtransTransactionResult!) {
+        print("payment sukses")
+        Alamofire.request("http://titipanku.xyz/api/finish.php",method: .get).responseJSON {
+            response in
+            //mencetak JSON response
+            if let json = response.result.value {
+                print("JSON: \(json)")
+            }
+        }
+    }
+    
+    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentFailed error: Error!) {
+        print("payment gagal")
+    }
+    
+    func paymentViewController_paymentCanceled(_ viewController: MidtransUIPaymentViewController!) {
+        print("paymen cancel")
+    }
+    
     
     var selectedProv : String = ""
     var selectedCity : String = ""
@@ -248,8 +286,8 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
             print (parameters)
             Alamofire.request("https://api.rajaongkir.com/starter/cost",method: .post, parameters: parameters,encoding: URLEncoding.default, headers: headers)
                 .responseSwiftyJSON { dataResponse in
-
-
+                    
+                    
                     if let json = dataResponse.value {
                         print(json)
                         let hasil = json["rajaongkir"]["results"][0]["costs"]
@@ -377,48 +415,80 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
             self.present(alert, animated: true)
         }else{
             
-            // create the alert
-            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Membeli Barang?", preferredStyle: UIAlertControllerStyle.alert)
+            let harga = self.app?.valueHarga
+            let qty = self.app?.qty
             
-            // add the actions (buttons)
-            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
-
-                    let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"action":"insert"]
-                    print (parameter)
-                    Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
-                        response in
-
-                        //mengambil json
-                        let json = JSON(response.result.value)
-                        print(json)
-                        let cekSukses = json["success"].intValue
-                        let pesan = json["message"].stringValue
-
-                        if cekSukses != 1 {
-                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-
-                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-
-                            self.present(alert, animated: true)
-                        }else{
-                            let alert = UIAlertController(title: "Message", message: "Pembelian Berhasil, Segera Lakukan Pembayaran Dalam 1x24 Jam", preferredStyle: .alert)
-
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-
-                                self.handleBack()
-                            }))
-
-                            self.present(alert, animated: true)
+            if let midHarga = Int(harga!),let midQty = Int(qty!) {
+                let total = midQty * midHarga
+                
+                let myHarga = NSNumber(value:midHarga)
+                let myQty = NSNumber(value:midQty)
+                let myTotal = NSNumber(value:total)
+                
+                let itemDetail = MidtransItemDetail.init(itemID: "a1", name: "barang 1", price: myHarga, quantity: myQty)
+                
+                let customerDetail = MidtransCustomerDetails.init(firstName: "ricky", lastName: "wirawan", email: "rickywrwn@gmail.com", phone: "082257576000", shippingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"), billingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"))
+                
+                let transactionDetail = MidtransTransactionDetails.init(orderID: "24", andGrossAmount: myTotal)
+                
+                MidtransMerchantClient.shared().requestTransactionToken(with: transactionDetail!, itemDetails: [itemDetail!], customerDetails: customerDetail) { (response, error) in
+                    
+                    if (response != nil) {
+                        print("asd")
+                        if let json = response {
+                            print(json)
+                            let vc = MidtransUIPaymentViewController.init(token: json)
+                            
+                            //set the delegate
+                            vc?.paymentDelegate = self
+                            
+                            self.present(vc!, animated: true, completion: nil)
                         }
+                        
+                    }
+                    else {
+                        print(error)
+                        print("error")
                     }
                 }
-            }))
+            }
             
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
+            //            // create the alert
+            //            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Membeli Barang?", preferredStyle: UIAlertControllerStyle.alert)
+            //
+            //            // add the actions (buttons)
+            //            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
+            //
+            //            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+            //                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
+            //
+            //                    let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"action":"insert"]
+            //                    print (parameter)
+            //                    Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
+            //                        response in
+            //
+            //                        //mengambil json
+            //                        let json = JSON(response.result.value)
+            //                        print(json)
+            //                        let cekSukses = json["success"].intValue
+            //                        let pesan = json["message"].stringValue
+            //
+            //                        if cekSukses != 1 {
+            //                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+            //
+            //                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            //
+            //                            self.present(alert, animated: true)
+            //                        }else{
+            //
+            //                            self.present(alert, animated: true)
+            //                        }
+            //                    }
+            //                }
+            //            }))
+            //
+            //            // show the alert
+            //            self.present(alert, animated: true, completion: nil)
             
         }
     }
@@ -703,7 +773,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         kotaText.font = UIFont.systemFont(ofSize: 15)
         kotaText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         kotaText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
-       
+        
         scrollView.addSubview(labelOngkir)
         labelOngkir.topAnchor.constraint(equalTo: kotaText.bottomAnchor, constant: 30).isActive = true
         labelOngkir.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
@@ -734,7 +804,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-
+        
         
     }
     
