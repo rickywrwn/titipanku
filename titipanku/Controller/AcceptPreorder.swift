@@ -42,6 +42,31 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
                 print("JSON: \(json)")
             }
         }
+        
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
+            
+            let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"action":"insert"]
+            print (parameter)
+            Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+                let cekSukses = json["success"].intValue
+                let pesan = json["message"].stringValue
+                
+                if cekSukses != 1 {
+                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                    
+                    self.present(alert, animated: true)
+                }else{
+                    self.handleBack()
+                }
+            }
+        }
     }
     
     func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentFailed error: Error!) {
@@ -64,6 +89,11 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
     var cities = [city]()
     var prvv : raja?
     var kota : rajaKota?
+    var midtrans : Midtrans?
+    
+    struct Midtrans: Decodable {
+        let orderId: String
+    }
     
     struct country: Decodable {
         let name: String
@@ -133,6 +163,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        fetchOrderId()
         navigationItem.title = "Beli Preorder"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
@@ -213,6 +244,35 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         return cell
     }
     
+    
+    func fetchOrderId(){
+        let urlString = "http://titipanku.xyz/api/GetMaxBeli.php"
+        
+        URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+            
+            guard let data = data else { return }
+            
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                self.midtrans = try decoder.decode(Midtrans.self, from: data)
+                print("midtrans")
+                print(self.midtrans)
+                DispatchQueue.main.async(execute: { () -> Void in
+                    
+                })
+                
+            } catch let err {
+                print(err)
+            }
+            
+        }) .resume()
+    }
+    
     func fetchProv() {
         //kalau post dengan header encoding harus URLencoding
         DispatchQueue.main.async {
@@ -241,6 +301,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         }
         
     }
+    
     
     func fetchKota(prov:String) {
         DispatchQueue.main.async {
@@ -415,80 +476,63 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
             self.present(alert, animated: true)
         }else{
             
-            let harga = self.app?.valueHarga
-            let qty = self.app?.qty
-            
-            if let midHarga = Int(harga!),let midQty = Int(qty!) {
-                let total = midQty * midHarga
+            // create the alert
+            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Membeli Barang?", preferredStyle: UIAlertControllerStyle.alert)
+
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
+
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                let harga = self.app?.valueHarga
+                let qty = self.qtyText.text
+                let ongkir = self.selectedHarga
                 
-                let myHarga = NSNumber(value:midHarga)
-                let myQty = NSNumber(value:midQty)
-                let myTotal = NSNumber(value:total)
-                
-                let itemDetail = MidtransItemDetail.init(itemID: "a1", name: "barang 1", price: myHarga, quantity: myQty)
-                
-                let customerDetail = MidtransCustomerDetails.init(firstName: "ricky", lastName: "wirawan", email: "rickywrwn@gmail.com", phone: "082257576000", shippingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"), billingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"))
-                
-                let transactionDetail = MidtransTransactionDetails.init(orderID: "24", andGrossAmount: myTotal)
-                
-                MidtransMerchantClient.shared().requestTransactionToken(with: transactionDetail!, itemDetails: [itemDetail!], customerDetails: customerDetail) { (response, error) in
+                if let midHarga = Int(harga!),let midQty = Int(qty!), let midOngkir = Int(ongkir), let orderId = self.midtrans?.orderId {
+                    let total = midQty * midHarga + midOngkir
                     
-                    if (response != nil) {
-                        print("asd")
-                        if let json = response {
-                            print(json)
-                            let vc = MidtransUIPaymentViewController.init(token: json)
-                            
-                            //set the delegate
-                            vc?.paymentDelegate = self
-                            
-                            self.present(vc!, animated: true, completion: nil)
-                        }
+                    let myHarga = NSNumber(value:midHarga)
+                    let myQty = NSNumber(value:midQty)
+                    let myOngkir = NSNumber(value:midOngkir)
+                    let myTotal = NSNumber(value:total)
+                    
+                    var itemDetail = [MidtransItemDetail]()
+                    let itemDetail1 = MidtransItemDetail.init(itemID: "a1", name: self.app?.name, price: myHarga, quantity: myQty)
+                    let itemDetail2 = MidtransItemDetail.init(itemID: "ongkir", name: self.ongkirText.text, price: myOngkir, quantity: 1)
+                    
+                    itemDetail.append(itemDetail1!)
+                    itemDetail.append(itemDetail2!)
+                    
+                    let customerDetail = MidtransCustomerDetails.init(firstName: "ricky", lastName: "wirawan", email: "rickywrwn@gmail.com", phone: "082257576000", shippingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"), billingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"))
+                    
+                    let transactionDetail = MidtransTransactionDetails.init(orderID: orderId, andGrossAmount: myTotal)
+                    
+                    print(itemDetail)
+                    print(transactionDetail)
+                    MidtransMerchantClient.shared().requestTransactionToken(with: transactionDetail!, itemDetails: itemDetail, customerDetails: customerDetail) { (response, error) in
                         
-                    }
-                    else {
-                        print(error)
-                        print("error")
+                        if (response != nil) {
+                            print("asd")
+                            if let json = response {
+                                print(json)
+                                let vc = MidtransUIPaymentViewController.init(token: json)
+                                
+                                //set the delegate
+                                vc?.paymentDelegate = self
+                                
+                                self.present(vc!, animated: true, completion: nil)
+                            }
+                            
+                        }
+                        else {
+                            print(error)
+                            print("error")
+                        }
                     }
                 }
-            }
-            
-            //            // create the alert
-            //            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Membeli Barang?", preferredStyle: UIAlertControllerStyle.alert)
-            //
-            //            // add the actions (buttons)
-            //            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-            //
-            //            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-            //                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
-            //
-            //                    let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"action":"insert"]
-            //                    print (parameter)
-            //                    Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
-            //                        response in
-            //
-            //                        //mengambil json
-            //                        let json = JSON(response.result.value)
-            //                        print(json)
-            //                        let cekSukses = json["success"].intValue
-            //                        let pesan = json["message"].stringValue
-            //
-            //                        if cekSukses != 1 {
-            //                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-            //
-            //                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-            //
-            //                            self.present(alert, animated: true)
-            //                        }else{
-            //
-            //                            self.present(alert, animated: true)
-            //                        }
-            //                    }
-            //                }
-            //            }))
-            //
-            //            // show the alert
-            //            self.present(alert, animated: true, completion: nil)
+            }))
+
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
             
         }
     }

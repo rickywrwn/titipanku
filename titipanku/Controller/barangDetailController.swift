@@ -237,7 +237,21 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     
                     return cell
                 }else{
-                    cell.nameLabel.text = "Cancel Penawaran"
+                    
+                    var cekBeli = false
+                    for i in 0 ..< self.offers.count {
+                        if emailNow == self.offers[i].idPenawar{
+                            print("cancel")
+                            cekBeli = true
+                        }
+                    }
+                    
+                    if cekBeli == false{
+                        cell.nameLabel.text = "Bantu Belikan"
+                    }else{
+                        
+                        cell.nameLabel.text = "Cancel Penawaran"
+                    }
                     
                     return cell
                 }
@@ -325,22 +339,34 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         let cell = collectionView.cellForItem(at: indexPath)
         
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let status = app?.status , let email = app?.email {
-            
+            print("1")
             if email != emailNow{
+                print("2")
                 if indexPath.row == 3  {
+                    
+                    print("6")
                     cell?.layer.backgroundColor = UIColor.gray.cgColor
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         
                         cell?.layer.backgroundColor = UIColor.white.cgColor
-                        for i in 0 ..< self.offers.count {
-                            if emailNow == self.offers[i].idPenawar{
-                                print("cancel")
-                                
-                            }else{
-                                print("bantu")
-                                self.showOffer()
+                        if  self.offers.count > 0 {
+                            for i in 0 ..< self.offers.count {
+                                if emailNow == self.offers[i].idPenawar{
+                                    print("cancel")
+                                    
+                                    print("3")
+                                }else{
+                                    print("bantu")
+                                    print("4")
+                                    self.showOffer()
+                                }
                             }
+                        }else{
+                            self.showOffer()
                         }
+                        
+                        print("5")
+                        
                     }
                 }
             }

@@ -389,7 +389,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
                     let json = JSON(response.result.value)
                     print(json)
                     let cekSukses = json["success"].intValue
-                    let pesan = json["pesan"].stringValue
+                    let pesan = json["message"].stringValue
                     
                     if cekSukses != 1 {
                         let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)

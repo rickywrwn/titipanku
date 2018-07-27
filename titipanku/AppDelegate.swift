@@ -19,15 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var window: UIWindow?
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     
-    
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        MidtransConfig.shared().setClientKey("SB-Mid-client-m1VokawiNyWgq54c", environment: .sandbox,
+        MidtransConfig.shared().setClientKey("SB-Mid-client-P68uFVZDfaVLBPfq", environment: .sandbox,
                                              merchantServerURL: "http://titipanku.xyz/api/charge.php")
         MidtransCreditCardConfig.shared().paymentType = .twoclick
-        MidtransCreditCardConfig.shared().saveCardEnabled = true
         FirebaseApp.configure()
         
         //facebook
