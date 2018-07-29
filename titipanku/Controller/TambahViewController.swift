@@ -71,6 +71,7 @@ class TambahViewController: UIViewController {
         PostBarang.varHarga.status = 0
         
         PostPreorder.varDetail.namaBarang = ""
+        PostPreorder.varDetail.brand = ""
         PostPreorder.varDetail.desc = ""
         PostPreorder.varDetail.qty = ""
         PostPreorder.varDetail.kategori = ""

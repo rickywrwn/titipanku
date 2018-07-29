@@ -410,7 +410,9 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
             }
         }
     }
+    
     @objc private func handleBack(){
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }

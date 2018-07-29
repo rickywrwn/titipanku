@@ -70,6 +70,7 @@ struct App: Decodable {
     var price: String?
     var ImageName: String?
     var url: String?
+    var brand: String?
     var qty: String?
     var ukuran: String?
     var berat: String?

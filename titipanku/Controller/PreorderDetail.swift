@@ -202,6 +202,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
             let sizeThatFitsTextView = cell.textView.sizeThatFits(CGSize(width: cell.textView.frame.size.width, height: CGFloat(MAXFLOAT)))
             let heightOfText = sizeThatFitsTextView.height
             tinggiTextView = Float(heightOfText-55)
+            cell.brandLabel.text = "Brand : " + (app?.brand)!
             cell.qtyLabel.text = "Jumlah Barang : " + (app?.qty)!
             cell.countryLabel.text = "Negara Pembelian : " + (app?.country)!
             cell.kotaLabel.text = "Kota Pengiriman : " + (app?.kotaKirim)!
@@ -286,7 +287,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //ukuran selain header
         if indexPath.item == 0 {
-            return CGSize(width: view.frame.width, height: CGFloat(285 + tinggiTextView))
+            return CGSize(width: view.frame.width, height: CGFloat(315 + tinggiTextView))
         }else if indexPath.item == 1{
             return CGSize(width: view.frame.width, height: 70)
         }else if indexPath.item == 2{
@@ -374,21 +375,21 @@ class AppDetailDescriptionCell1: BaseCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "harga"
-        label.font = UIFont.systemFont(ofSize: 21)
+        label.font = UIFont.systemFont(ofSize: 22)
         return label
     }()
     
     let priceLabel: UILabel = {
         let label = UILabel()
         label.text = "harga"
-        label.font = UIFont.systemFont(ofSize: 17)
+        label.font = UIFont.systemFont(ofSize: 19)
         return label
     }()
     
     let tglLabel: UILabel = {
         let label = UILabel()
         label.text = "tgl"
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
     
@@ -399,6 +400,13 @@ class AppDetailDescriptionCell1: BaseCell {
         tv.isScrollEnabled = false
         tv.inputView = UIView();
         return tv
+    }()
+    
+    let brandLabel: UILabel = {
+        let label = UILabel()
+        label.text = "brand"
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
     }()
     
     let qtyLabel: UILabel = {
@@ -422,7 +430,6 @@ class AppDetailDescriptionCell1: BaseCell {
         return label
     }()
     
-    
     let deadlineLabel: UILabel = {
         let label = UILabel()
         label.text = "tgl"
@@ -443,7 +450,8 @@ class AppDetailDescriptionCell1: BaseCell {
         addSubview(priceLabel)
         addSubview(tglLabel)
         addSubview(textView)
-        addSubview(qtyLabel)
+        addSubview(brandLabel)
+        //addSubview(qtyLabel)
         addSubview(countryLabel)
         addSubview(kotaLabel)
         addSubview(deadlineLabel)
@@ -453,13 +461,14 @@ class AppDetailDescriptionCell1: BaseCell {
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: priceLabel)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: tglLabel)
         addConstraintsWithFormat("H:|-10-[v0]-5-|", views: textView)
-        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: qtyLabel)
+        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: brandLabel)
+        //addConstraintsWithFormat("H:|-15-[v0]-5-|", views: qtyLabel)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: countryLabel)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: kotaLabel)
         addConstraintsWithFormat("H:|-15-[v0]-5-|", views: deadlineLabel)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v7]-15-[v1]-1-[v4]-5-[v5]-5-[v6]-5-[v8]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabel,countryLabel,kotaLabel,tglLabel,deadlineLabel )
+        addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v7]-15-[v1]-1-[v9]-5-[v5]-5-[v6]-5-[v8]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabel,countryLabel,kotaLabel,tglLabel,deadlineLabel,brandLabel )
         
     }
 }

@@ -21,12 +21,16 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
         if PostPreorder.varDetail.status != 0 {
             BarangImageView.image = PostPreorder.varDetail.gambarBarang
             nameText.text = PostPreorder.varDetail.namaBarang
+            brandText.text = PostPreorder.varDetail.brand
             qtyText.text = PostPreorder.varDetail.qty
             descText.text = PostPreorder.varDetail.desc
             categoryText.text = PostPreorder.varDetail.kategori
             urlText.text = PostPreorder.varDetail.url
             cekGambar = 1
         }
+        
+        qtyText.isHidden = true
+        label2.isHidden = true
         
         setupView()
         self.hideKeyboardWhenTappedAround()
@@ -37,11 +41,13 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     @objc func handleSubmit(){
-        if cekGambar != 0 && nameText.text != "" && qtyText.text != "" && descText.text != "" && categoryText.text != "" {
+        if cekGambar != 0 && nameText.text != "" && descText.text != "" && categoryText.text != "" {
 
             PostPreorder.varDetail.gambarBarang = BarangImageView.image
             PostPreorder.varDetail.namaBarang = nameText.text!
-            PostPreorder.varDetail.qty = qtyText.text!
+            PostPreorder.varDetail.brand = brandText.text!
+            //PostPreorder.varDetail.qty = qtyText.text!
+            PostPreorder.varDetail.qty = "0"
             PostPreorder.varDetail.desc = descText.text!
             PostPreorder.varDetail.kategori = categoryText.text!
             PostPreorder.varDetail.url = urlText.text!
@@ -188,6 +194,22 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
         return textField
     }()
     
+    let label6 : UILabel = {
+        let label = UILabel()
+        label.text = "Brand"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let brandText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
     let label2 : UILabel = {
         let label = UILabel()
         label.text = "Kuantitas"
@@ -297,7 +319,7 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
         
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1150)
+        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1400)
         
         
         // constrain the scroll view to 8-pts on each side
@@ -325,8 +347,21 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
         nameText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         nameText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
+        scrollView.addSubview(label6)
+        label6.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 30).isActive = true
+        label6.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        
+        scrollView.addSubview(brandText)
+        brandText.topAnchor.constraint(equalTo: label6.bottomAnchor, constant: 10).isActive = true
+        brandText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        brandText.font = UIFont.systemFont(ofSize: 25)
+        brandText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        brandText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        brandText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
+        
         scrollView.addSubview(label2)
-        label2.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 30).isActive = true
+        label2.topAnchor.constraint(equalTo: brandText.bottomAnchor, constant: 30).isActive = true
         label2.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
         scrollView.addSubview(qtyText)
@@ -338,7 +373,7 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
         qtyText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         scrollView.addSubview(label3)
-        label3.topAnchor.constraint(equalTo: qtyText.bottomAnchor, constant: 30).isActive = true
+        label3.topAnchor.constraint(equalTo: brandText.bottomAnchor, constant: 30).isActive = true
         label3.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         

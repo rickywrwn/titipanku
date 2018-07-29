@@ -14,104 +14,8 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 import MidtransKit
 
-class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource,MidtransUIPaymentViewControllerDelegate {
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, save result: MidtransMaskedCreditCard!) {
-        print("save")
-    }
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, saveCardFailed error: Error!) {
-        print("save failed")
-    }
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentPending result: MidtransTransactionResult!) {
-        print("payment pending")
-        Alamofire.request("http://titipanku.xyz/api/unfinish.php",method: .get).responseJSON {
-            response in
-            //mencetak JSON response
-            if let json = response.result.value {
-                print("JSON: \(json)")
-            }
-        }
-        
-        if let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let orderId : String = self.orderId  {
-            
-            let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"orderId":orderId,"action":"accept"]
-            print (parameter)
-            Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
-                response in
-                
-                //mengambil json
-                let json = JSON(response.result.value)
-                print(json)
-                let cekSukses = json["success"].intValue
-                let pesan = json["pesan"].stringValue
-                
-                if cekSukses != 1 {
-                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                    
-                    self.present(alert, animated: true)
-                }else{
-                    let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                        
-                        self.handleBack()
-                    }))
-                    
-                    self.present(alert, animated: true)
-                }
-            }
-        }
-        
-    }
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentSuccess result: MidtransTransactionResult!) {
-        print("payment sukses")
-        if let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let orderId : String = self.orderId {
-            
-            let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"orderId":orderId,"action":"accept"]
-            print (parameter)
-            Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
-                response in
-                
-                //mengambil json
-                let json = JSON(response.result.value)
-                print(json)
-                let cekSukses = json["success"].intValue
-                let pesan = json["pesan"].stringValue
-                
-                if cekSukses != 1 {
-                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                    
-                    self.present(alert, animated: true)
-                }else{
-                    let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                        
-                        self.handleBack()
-                    }))
-                    
-                    self.present(alert, animated: true)
-                }
-            }
-        }
-        
-    }
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentFailed error: Error!) {
-        print("payment gagal")
-    }
-    
-    func paymentViewController_paymentCanceled(_ viewController: MidtransUIPaymentViewController!) {
-        print("paymen cancel")
-    }
-    
+class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+ 
     var selectedHarga : String = ""
     var idOffer : String = ""
     var arrNama = [String]()
@@ -123,6 +27,43 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     var orderId : String = ""
     struct Midtrans: Decodable {
         let orderId: String
+    }
+    
+    struct userDetail: Decodable {
+        let saldo: String
+        let valueSaldo: String
+    }
+    
+    var isiUser  : userDetail?
+    
+    fileprivate func fetchJSON() {
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            print(emailNow)
+            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    print(data)
+                    do {
+                        // link in description for video on JSONDecoder
+                        let decoder = JSONDecoder()
+                        // Swift 4.1
+                        self.isiUser = try decoder.decode(userDetail.self, from: data)
+                        print(self.isiUser)
+                        //self.labelB.text = "Rp " + (self.isiUser?.saldo)!
+                        
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                    }
+                }
+                }.resume()
+        }
     }
     
     struct country: Decodable {
@@ -233,7 +174,8 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         labelOngkir.isHidden = false
         //print(app)
         //fetchOffer()
-        fetchOrderId()
+        //fetchOrderId()
+        fetchJSON()
         orderId = "r" + (varOffer?.id)!
         labelTgl.text = self.varOffer?.tglPulang
         labelHarga.text = self.varOffer?.hargaPenawaran
@@ -375,53 +317,57 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
             alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
             
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                let harga = self.varOffer?.valueHarga
-                //let qty = self.qtyText.text
-                let ongkir = self.selectedHarga
-//                ,let midQty = Int(qty!)
                 
-                if let midHarga = Int(harga!), let midOngkir = Int(ongkir), let orderId : String = self.orderId {
-                    let total = midHarga + midOngkir
+                let saldo = Int((self.isiUser?.valueSaldo)!)
+                let harga = Int((self.varOffer?.valueHarga)!)
+                let ongkir = Int(self.selectedHarga)
+                
+                let hargaTotal = harga! + ongkir!
+                print(hargaTotal)
+                if saldo! < hargaTotal {
+                    let alert = UIAlertController(title: "Message", message: "Saldo Anda Kurang, Saldo Saat ini adalah Rp " + (self.isiUser?.saldo)!, preferredStyle: .alert)
                     
-                    let myHarga = NSNumber(value:midHarga)
-                    //let myQty = NSNumber(value:midQty)
-                    let myOngkir = NSNumber(value:midOngkir)
-                    let myTotal = NSNumber(value:total)
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                     
-                    var itemDetail = [MidtransItemDetail]()
-                    let itemDetail1 = MidtransItemDetail.init(itemID: "a1", name: self.app?.name, price: myHarga, quantity: 1)
-                    let itemDetail2 = MidtransItemDetail.init(itemID: "ongkir", name: self.ongkirText.text, price: myOngkir, quantity: 1)
+                    self.present(alert, animated: true)
+                }else{
                     
-                    itemDetail.append(itemDetail1!)
-                    itemDetail.append(itemDetail2!)
-                    
-                    let customerDetail = MidtransCustomerDetails.init(firstName: "ricky", lastName: "wirawan", email: "rickywrwn@gmail.com", phone: "082257576000", shippingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"), billingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"))
-                    
-                    let transactionDetail = MidtransTransactionDetails.init(orderID: orderId, andGrossAmount: myTotal)
-                    
-                    print(itemDetail)
-                    print(transactionDetail)
-                    MidtransMerchantClient.shared().requestTransactionToken(with: transactionDetail!, itemDetails: itemDetail, customerDetails: customerDetail) { (response, error) in
+                    let saldoNow : Int = saldo! - hargaTotal
+                    print(saldoNow)
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let orderId : String = self.orderId, let saldo : String = String(saldoNow) {
                         
-                        if (response != nil) {
-                            print("asd")
-                            if let json = response {
-                                print(json)
-                                let vc = MidtransUIPaymentViewController.init(token: json)
-                                
-                                //set the delegate
-                                vc?.paymentDelegate = self
-                                
-                                self.present(vc!, animated: true, completion: nil)
-                            }
+                        let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"orderId":orderId,"saldo":saldoNow,"email":emailNow,"action":"accept"]
+                        print (parameter)
+                        Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
+                            response in
                             
-                        }
-                        else {
-                            print(error)
-                            print("error")
+                            //mengambil json
+                            let json = JSON(response.result.value)
+                            print(json)
+                            let cekSukses = json["success"].intValue
+                            let pesan = json["message"].stringValue
+                            
+                            if cekSukses != 1 {
+                                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                                
+                                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                                
+                                self.present(alert, animated: true)
+                            }else{
+                                let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
+                                
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                    
+                                    self.handleBack()
+                                    
+                                }))
+                                
+                                self.present(alert, animated: true)
+                            }
                         }
                     }
                 }
+                
             }))
             
             // show the alert
@@ -710,5 +656,3 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
 }
-
-

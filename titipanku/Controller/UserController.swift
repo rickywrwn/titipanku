@@ -354,7 +354,7 @@ class UserActivityCell: BaseCell {
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
         addConstraintsWithFormat("V:|[v0]", views: labelNama )
-        addConstraintsWithFormat("V:|[v0(30)][v1(1)]|", views: imageView,dividerLineView )
+        addConstraintsWithFormat("V:|[v0(30)][v1(1)]|", views: imageView,dividerLineView)
         
     }
     

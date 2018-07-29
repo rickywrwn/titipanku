@@ -23,6 +23,8 @@ struct VarOffer: Decodable {
     
 }
 
+var adaNawar = false
+
 class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     var offers = [VarOffer]()
@@ -129,6 +131,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
+        adaNawar = false
         self.fetchOffer{(offers) -> ()in
             self.offers = offers
             print("count" + String(self.offers.count))
@@ -144,7 +147,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        adaNawar = false
     }
     
     @objc func reloadBarangDetail(){
@@ -271,14 +274,35 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     //cell.backgroundColor = UIColor.black
                     cell.offers = offers
                     cell.app = app
+                    print("index 4 ada")
                     cell.offerCollectionView.reloadData()
                     return cell
                     
                 }else if email == emailNow && offers.count == 0{
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
+                    print("index 4 kosong")
                     return cell
-                }else if email != emailNow {
+                }else if email != emailNow && offers.count == 0 {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
+                    print("User Lain ada tapi kosong")
+                    return cell
+                }else if email != emailNow  && offers.count > 0 {
+                    for i in 0 ..< self.offers.count {
+                        if emailNow == self.offers[i].idPenawar{
+                            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListCellId, for: indexPath) as! AppOfferList
+                            print("User ada nawar disini")
+                            //cell.varOffer = offers[i]
+                            //cell.backgroundColor = UIColor.black
+                            cell.offers = [offers[i]]
+                            cell.app = app
+                            cell.offerCollectionView.reloadData()
+                            adaNawar = true
+                            return cell
+                        }
+                    }
+                    
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
+                    print("user tidak ada nawar disini")
                     return cell
                 }
             }
@@ -339,34 +363,30 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         let cell = collectionView.cellForItem(at: indexPath)
         
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let status = app?.status , let email = app?.email {
-            print("1")
             if email != emailNow{
-                print("2")
                 if indexPath.row == 3  {
-                    
-                    print("6")
                     cell?.layer.backgroundColor = UIColor.gray.cgColor
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         
                         cell?.layer.backgroundColor = UIColor.white.cgColor
                         if  self.offers.count > 0 {
-                            for i in 0 ..< self.offers.count {
-                                if emailNow == self.offers[i].idPenawar{
-                                    print("cancel")
-                                    
-                                    print("3")
-                                }else{
-                                    print("bantu")
-                                    print("4")
-                                    self.showOffer()
-                                }
+                            
+                            if adaNawar == false{
+                                print("bantu")
+                                self.showOffer()
+                            }else{
+                                print("cancel")
                             }
+//                            for i in 0 ..< self.offers.count {
+//                                if emailNow == self.offers[i].idPenawar{
+//
+//                                }else{
+//
+//                                }
+//                            }
                         }else{
                             self.showOffer()
                         }
-                        
-                        print("5")
-                        
                     }
                 }
             }
@@ -938,10 +958,16 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
         if indexPath.row == 0{
             print(varOffer?.idPenawar)
         }else{
-            print(varOffer)
-            print(varOffer?.hargaPenawaran)
-            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil, userInfo: dataIdOffer)
+            if adaNawar == false{
+                print(varOffer)
+                print(varOffer?.hargaPenawaran)
+                let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil, userInfo: dataIdOffer)
+            }else{
+                
+                print(varOffer?.hargaPenawaran)
+            }
+            
         }
     }
 }
@@ -1064,17 +1090,17 @@ class AppDetailHeader: BaseCell {
     
     var app: App? {
         didSet {
-                    if let imageName = self.app?.ImageName {
-                        Alamofire.request("http://titipanku.xyz/uploads/"+imageName).responseImage { response in
-                            //debugPrint(response)
-                            //let nama = self.app?.name
-                            //print("gambar : "+imageName)
-                            if let image = response.result.value {
-                                //print("image downloaded: \(image)")
-                                self.imageView.image = image
-                            }
-                        }
+            if let imageName = self.app?.ImageName {
+                Alamofire.request("http://titipanku.xyz/uploads/"+imageName).responseImage { response in
+                    //debugPrint(response)
+                    //let nama = self.app?.name
+                    //print("gambar : "+imageName)
+                    if let image = response.result.value {
+                        //print("image downloaded: \(image)")
+                        self.imageView.image = image
                     }
+                }
+            }
         }
     }
     
@@ -1134,6 +1160,3 @@ class BaseCell: UICollectionViewCell {
         
     }
 }
-
-
-

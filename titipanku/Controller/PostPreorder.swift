@@ -16,6 +16,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     struct varDetail {
         static var gambarBarang: UIImage?
         static var namaBarang = ""
+        static var brand = ""
         static var qty = ""
         static var desc = ""
         static var kategori = ""
@@ -84,13 +85,15 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
             if varDetail.status != 0 {
                 cell.BarangImageView.isHidden = false
                 cell.labelNama.isHidden = false
-                cell.labelQty.isHidden = false
+                cell.labelBrand.isHidden = false
+                cell.labelQty.isHidden = true
                 cell.descText.isHidden = false
                 cell.labelKategori.isHidden = false
                 cell.deskripsi.isHidden = false
                 
                 cell.BarangImageView.image = varDetail.gambarBarang
                 cell.labelNama.text = "Nama : " + varDetail.namaBarang
+                cell.labelBrand.text = "Brand : " + varDetail.brand
                 cell.labelQty.text = "Jumlah : " + varDetail.qty
                 cell.descText.text = varDetail.desc
                 cell.labelKategori.text = "Kategori : " + varDetail.kategori
@@ -102,6 +105,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
             }else{
                 cell.BarangImageView.isHidden = true
                 cell.labelNama.isHidden = true
+                cell.labelBrand.isHidden = true
                 cell.labelQty.isHidden = true
                 cell.descText.isHidden = true
                 cell.labelKategori.isHidden = true
@@ -289,7 +293,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 
                 print(emailNow)
                 
-                let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"url": varDetail.url,"idKota":varNegara.idKota, "provinsi":varNegara.provinsi, "batasWaktu":varDurasi.batasWaktu, "countdownText":varDurasi.countdownText,"countdownValue":varDurasi.countdownValue ,"action" : "insert","action2" : "tidak"]
+                let parameters: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara,"kota": varNegara.kota, "price":varHarga.harga, "qty": varDetail.qty, "berat":varKarateristik.berat, "deadline":varNegara.deadline ,"url": varDetail.url,"idKota":varNegara.idKota, "provinsi":varNegara.provinsi, "batasWaktu":varDurasi.batasWaktu, "countdownText":varDurasi.countdownText,"countdownValue":varDurasi.countdownValue,"brand":varDetail.brand ,"action" : "insert","action2" : "tidak"]
                 
                 Alamofire.request("http://titipanku.xyz/api/PostPreorder.php",method: .post, parameters: parameters).responseSwiftyJSON { dataResponse in
                     
@@ -355,6 +359,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                         
                         PostPreorder.varDetail.gambarBarang = nil
                         PostPreorder.varDetail.namaBarang = ""
+                        PostPreorder.varDetail.brand = ""
                         PostPreorder.varDetail.desc = ""
                         PostPreorder.varDetail.qty = ""
                         PostPreorder.varDetail.kategori = ""
@@ -524,6 +529,13 @@ class InputCell1Pre: BaseCell {
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
+    let labelBrand : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Brand "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
     let labelQty : UILabel = {
         let label = UILabel()
         label.sizeToFit()
@@ -579,18 +591,20 @@ class InputCell1Pre: BaseCell {
         addSubview(descText)
         addSubview(labelKategori)
         addSubview(labelUrl)
+        addSubview(labelBrand)
         
         addConstraintsWithFormat("H:|-30-[v2(50)]-5-[v0][v1(50)]-10-|", views: labelA,imageView,angkaImg)
         addConstraintsWithFormat("H:|-80-[v0(100)]|", views: BarangImageView)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelNama)
-        addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelBrand)
+        //addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelKategori)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelUrl)
         addConstraintsWithFormat("H:|-80-[v0]-5-[v1]-30-|", views: deskripsi,descText)
         
         addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
         addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v4(100)]-5-[v1]-5-[v2]-5-[v3]-5-[v5]-5-[v6]", views: imageView,labelNama,labelQty,labelKategori,BarangImageView,labelUrl,deskripsi)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v3(100)]-5-[v1]-5-[v6]-5-[v2]-5-[v5]-5-[v4]", views: imageView,labelNama,labelKategori,BarangImageView,labelUrl,deskripsi,labelBrand)
         addConstraintsWithFormat("V:|-243-[v0]|", views: descText)
         
     }
