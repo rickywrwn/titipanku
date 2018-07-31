@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import SwiftyJSON
+import Alamofire_SwiftyJSON
+
 
 struct VarOffer: Decodable {
     let id: String
@@ -24,6 +27,8 @@ struct VarOffer: Decodable {
 }
 
 var adaNawar = false
+var idOfferNow : String = ""
+var statusOffer = false
 
 class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
@@ -134,7 +139,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         adaNawar = false
         self.fetchOffer{(offers) -> ()in
             self.offers = offers
-            print("count" + String(self.offers.count))
+            print("count offers" + String(self.offers.count))
             self.collectionView?.reloadData()
         }
 //        if let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String  {
@@ -148,6 +153,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     
     override func viewWillAppear(_ animated: Bool) {
         adaNawar = false
+        statusOffer = false
+        //collectionView?.reloadData()
     }
     
     @objc func reloadBarangDetail(){
@@ -178,6 +185,40 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         //perform(#selector(showHome), with: nil, afterDelay: 0.01)
         print(app?.id)
     }
+    @objc func handleOfferCancel(){
+        if let idOffer : String = idOfferNow {
+            
+            let parameter: Parameters = ["idOffer": idOffer,"action":"cancel"]
+            print (parameter)
+            Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+                let cekSukses = json["success"].intValue
+                let pesan = json["message"].stringValue
+                
+                if cekSukses != 1 {
+                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                    
+                    self.present(alert, animated: true)
+                }else{
+                    let alert = UIAlertController(title: "Message", message: "Cancel Offer Berhasil", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                        
+                        self.reloadBarangDetail()
+                        
+                    }))
+                    
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+    }
 
     @objc func showAcceptOffer(_ notification: NSNotification) {
         let appDetailController = AcceptOffer()
@@ -203,9 +244,9 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             let sizeThatFitsTextView = cell.textView.sizeThatFits(CGSize(width: cell.textView.frame.size.width, height: CGFloat(MAXFLOAT)))
             let heightOfText = sizeThatFitsTextView.height
             tinggiTextView = Float(heightOfText-55)
-            cell.qtyLabel.text = "Jumlah Barang : " + (app?.qty)!
-            cell.countryLabel.text = "Negara Pembelian : " + (app?.country)!
-            cell.kotaLabel.text = "Kota Pengiriman : " + (app?.kotaKirim)!
+            cell.qtyLabel.text = app?.qty
+            cell.countryLabel.text = app?.country
+            cell.kotaLabel.text = app?.kotaKirim
             return cell
             
         }else if indexPath.item == 1 {
@@ -220,6 +261,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser
                 //cell.diskusiButton.setTitle(app?.email, for: .normal)
                 cell.user = (app?.email)!
+                cell.backgroundColor = UIColor.gray
                 return cell
             }else {
                 
@@ -230,15 +272,13 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             
             return cell
         }else if indexPath.item == 3 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
-                
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
-                
+            
                 if self.app?.email == emailNow{
                     //jika request milik sendiri
                     cell.nameLabel.text = "List Penawar"
                     
-                    return cell
                 }else{
                     
                     var cekBeli = false
@@ -251,16 +291,23 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     
                     if cekBeli == false{
                         cell.nameLabel.text = "Bantu Belikan"
+                        cell.backgroundColor = UIColor.blue
                     }else{
+                        print("statusOffer")
+                        print(statusOffer)
+                        if statusOffer != true{
+                            cell.nameLabel.text = "Cancel Penawaran"
+                            cell.backgroundColor = UIColor.red
+                        }else{
+                            cell.nameLabel.text = "Penawaran Anda"
+                            cell.backgroundColor = UIColor.white
+                        }
                         
-                        cell.nameLabel.text = "Cancel Penawaran"
                     }
                     
-                    return cell
                 }
             
             }
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
             
             return cell
         }else if indexPath.item == 4{
@@ -293,10 +340,16 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                             print("User ada nawar disini")
                             //cell.varOffer = offers[i]
                             //cell.backgroundColor = UIColor.black
-                            cell.offers = [offers[i]]
+                            cell.offers = [self.offers[i]]
                             cell.app = app
-                            cell.offerCollectionView.reloadData()
                             adaNawar = true
+                            idOfferNow = self.offers[i].id
+                            if self.offers[i].status != "1"{
+                                statusOffer = true
+                            }
+                            print(offers[i])
+                            self.collectionView?.reloadData()
+                            cell.offerCollectionView.reloadData()
                             return cell
                         }
                     }
@@ -323,11 +376,11 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //ukuran selain header
         if indexPath.item == 0 {
-            return CGSize(width: view.frame.width, height: CGFloat(270 + tinggiTextView))
+            return CGSize(width: view.frame.width, height: CGFloat(230 + tinggiTextView))
         }else if indexPath.item == 1{
-            return CGSize(width: view.frame.width, height: 70)
+            return CGSize(width: view.frame.width, height: 90)
         }else if indexPath.item == 2{
-            return CGSize(width: view.frame.width, height: 220)
+            return CGSize(width: view.frame.width, height: 230)
         }else if indexPath.item == 3{
             return CGSize(width: view.frame.width, height: 70)
         }
@@ -339,8 +392,14 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                 if indexPath.item == 4{
                     return CGSize(width: view.frame.width, height: 350)
                 }
-            }else if email == emailNow  && offers.count == 0{
-                return CGSize(width: view.frame.width, height: 0)
+            }else if email != emailNow  && offers.count != 0{
+                if indexPath.item == 4{
+                    return CGSize(width: view.frame.width, height: 133)
+                }
+            }else if offers.count == 0{
+                if indexPath.item == 4{
+                    return CGSize(width: view.frame.width, height: 0)
+                }
             }
             
         }
@@ -368,14 +427,32 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     cell?.layer.backgroundColor = UIColor.gray.cgColor
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         
-                        cell?.layer.backgroundColor = UIColor.white.cgColor
                         if  self.offers.count > 0 {
                             
                             if adaNawar == false{
                                 print("bantu")
+                                cell?.layer.backgroundColor = UIColor.blue.cgColor
                                 self.showOffer()
                             }else{
                                 print("cancel")
+                                if statusOffer != true{
+                                    
+                                    let alert = UIAlertController(title: "Message", message: "Apakah Anda Ingin Membatalkan Penawaran?", preferredStyle: .alert)
+                                    
+                                    alert.addAction(UIAlertAction(title: "Ya", style: .default, handler: { action in
+                                        
+                                        print("batal")
+                                        self.handleOfferCancel()
+                                        
+                                    }))
+                                    alert.addAction(UIAlertAction(title: "Tidak", style: .default, handler: nil))
+                                    
+                                    self.present(alert, animated: true)
+                                }else{
+                                    print("status offer sdh 2")
+                                }
+                                cell?.layer.backgroundColor = UIColor.red.cgColor
+                                
                             }
 //                            for i in 0 ..< self.offers.count {
 //                                if emailNow == self.offers[i].idPenawar{
@@ -385,6 +462,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
 //                                }
 //                            }
                         }else{
+                            cell?.layer.backgroundColor = UIColor.blue.cgColor
                             self.showOffer()
                         }
                     }
@@ -395,7 +473,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     
     fileprivate func descriptionAttributedText() -> NSAttributedString {
-        let attributedText = NSMutableAttributedString(string: "Deskripsi Barang\n", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15)])
+        let attributedText = NSMutableAttributedString(string: "Deskripsi Barang\n", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 15)])
         
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 10
@@ -404,7 +482,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         attributedText.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: range)
         
         if let desc = app?.description {
-            attributedText.append(NSAttributedString(string: desc, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.darkGray]))
+            attributedText.append(NSAttributedString(string: desc, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 13), NSAttributedStringKey.foregroundColor: UIColor.darkGray]))
         }
         
         return attributedText
@@ -423,7 +501,7 @@ class AppDetailDescriptionCell: BaseCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "harga"
-        label.font = UIFont.systemFont(ofSize: 21)
+        label.font = UIFont.boldSystemFont(ofSize: 21)
         return label
     }()
     
@@ -437,7 +515,7 @@ class AppDetailDescriptionCell: BaseCell {
     let tglLabel: UILabel = {
         let label = UILabel()
         label.text = "tgl"
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 13)
         return label
     }()
     
@@ -450,24 +528,66 @@ class AppDetailDescriptionCell: BaseCell {
         return tv
     }()
     
+    let imageViewQty: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.backgroundColor = UIColor.green
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    let qtyLabelKiri: UILabel = {
+        let label = UILabel()
+        label.text = "Jumlah Barang:"
+        label.textColor = UIColor.gray
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
     let qtyLabel: UILabel = {
         let label = UILabel()
         label.text = "qty"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     
+    let imageViewCountry: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.backgroundColor = UIColor.green
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    let countryLabelKiri: UILabel = {
+        let label = UILabel()
+        label.text = "Negara Pembelian:"
+        label.textColor = UIColor.gray
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
     let countryLabel: UILabel = {
         let label = UILabel()
         label.text = "count"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     
+    let imageViewKota: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.backgroundColor = UIColor.green
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    let kotaLabelKiri: UILabel = {
+        let label = UILabel()
+        label.text = "Kota Pengiriman:"
+        label.textColor = UIColor.gray
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
     let kotaLabel: UILabel = {
         let label = UILabel()
         label.text = "kota"
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     
@@ -484,21 +604,31 @@ class AppDetailDescriptionCell: BaseCell {
         addSubview(priceLabel)
         addSubview(tglLabel)
         addSubview(textView)
+        addSubview(qtyLabelKiri)
         addSubview(qtyLabel)
+        addSubview(imageViewQty)
+        addSubview(countryLabelKiri)
         addSubview(countryLabel)
+        addSubview(imageViewCountry)
+        addSubview(kotaLabelKiri)
         addSubview(kotaLabel)
+        addSubview(imageViewKota)
         addSubview(dividerLineView)
         
-        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: nameLabel)
-        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: priceLabel)
-        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: tglLabel)
-        addConstraintsWithFormat("H:|-10-[v0]-5-|", views: textView)
-        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: qtyLabel)
-        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: countryLabel)
-        addConstraintsWithFormat("H:|-15-[v0]-5-|", views: kotaLabel)
-        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        addConstraintsWithFormat("H:|-15-[v0]", views: nameLabel)
+        addConstraintsWithFormat("H:|-15-[v0]", views: priceLabel)
+        addConstraintsWithFormat("H:|-15-[v0]", views: tglLabel)
+        addConstraintsWithFormat("H:|-10-[v0]", views: textView)
+        addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewQty,qtyLabelKiri,qtyLabel)
+        addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewCountry,countryLabelKiri,countryLabel)
+        addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewKota,kotaLabelKiri,kotaLabel)
+        addConstraintsWithFormat("H:|[v0]", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v7]-15-[v1]-1-[v4]-5-[v5]-5-[v6]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabel,countryLabel,kotaLabel,tglLabel )
+        //addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v7]-15-[v1]-1-[v4]-5-[v5]-5-[v6]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabelKiri,countryLabelKiri,kotaLabelKiri,tglLabel )
+        addConstraintsWithFormat("V:[v0]-5-[v2]-5-[v3]-15-[v1]", views: nameLabel, textView, priceLabel ,tglLabel)
+        addConstraintsWithFormat("V:[v0(17)]-5-[v1(17)]-5-[v2(17)]|", views: imageViewQty,imageViewCountry,imageViewKota)
+        addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]|", views: qtyLabelKiri,countryLabelKiri,kotaLabelKiri)
+        addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]|", views: qtyLabel,countryLabel,kotaLabel)
         
     }
 }
@@ -543,12 +673,12 @@ class AppDetailButtons: BaseCell {
         addSubview(diskusiButton1)
         addSubview(dividerLineView)
         
-        addConstraintsWithFormat("H:|-30-[v0(150)]-4-[v1(150)]-30-|", views: diskusiButton, diskusiButton1)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        addConstraintsWithFormat("H:|-30-[v0(150)]-4-[v1(150)]-30-|", views: diskusiButton, diskusiButton1)
         
-        addConstraintsWithFormat("V:|[v0(50)]", views: diskusiButton )
-        addConstraintsWithFormat("V:|[v0(50)][v1(1)]|", views: diskusiButton1,dividerLineView )
-        
+        addConstraintsWithFormat("V:|-10-[v0(1)]", views: dividerLineView )
+        addConstraintsWithFormat("V:|-25-[v0(50)]", views: diskusiButton )
+        addConstraintsWithFormat("V:|-25-[v0(50)]-20-|", views: diskusiButton1 )
     }
     
 }
@@ -562,6 +692,8 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
     let userCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 27
+        layout.minimumLineSpacing = 27
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         collectionView.backgroundColor = UIColor.clear
@@ -588,7 +720,7 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
         userCollectionView.register(userTawarBarangCell.self, forCellWithReuseIdentifier: userTawarBarangCellId)
         
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
-        addConstraintsWithFormat("H:|[v0]|", views: userCollectionView)
+        addConstraintsWithFormat("H:|-10-[v0]|", views: userCollectionView)
         
         addConstraintsWithFormat("V:|[v0][v1(1)]|", views: userCollectionView,dividerLineView )
         
@@ -603,11 +735,11 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userTawarBarangCellId, for: indexPath) as! userTawarBarangCell
         //cell.app = appCategory?.apps?[indexPath.item]
-        cell.backgroundColor = UIColor.clear
         
         if indexPath.item == 0{
             cell.nameLabel.text = user
             cell.LabelA.text = "Requester"
+            cell.backgroundColor = UIColor.white
             DispatchQueue.main.async{
                 
                 Alamofire.request("http://titipanku.xyz/uploads/"+self.user+".jpg").responseImage { response in
@@ -624,13 +756,15 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
             return cell
         }else{
             cell.LabelA.text = "Traveller"
+            cell.backgroundColor = UIColor.white
+            return cell
         }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width/2-5, height: frame.height - 32)
+        return CGSize(width: frame.width/2-25, height: frame.height - 15)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -778,7 +912,7 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         addConstraintsWithFormat("H:|[v0]|", views: offerCollectionView)
         
-        addConstraintsWithFormat("V:|[v0][v1(1)]|", views: offerCollectionView,dividerLineView )
+        addConstraintsWithFormat("V:|-15-[v0]|", views: offerCollectionView,dividerLineView )
         
     }
     
@@ -791,6 +925,8 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        print("count appofferlist")
+        print(offers.count)
         for i in 0 ..< offers.count {
             if indexPath.row == i{
                 
@@ -798,6 +934,8 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
                 cell.app = app
                 //cell.backgroundColor = UIColor.brown
                 cell.varOffer = offers[i]
+                print("appoferlist")
+                print(offers[i])
                 cell.offerCollectionView.reloadData()
                 return cell
             }
@@ -964,7 +1102,6 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
                 let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil, userInfo: dataIdOffer)
             }else{
-                
                 print(varOffer?.hargaPenawaran)
             }
             

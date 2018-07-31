@@ -176,7 +176,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         //fetchOffer()
         //fetchOrderId()
         fetchJSON()
-        orderId = "r" + (varOffer?.id)!
         labelTgl.text = self.varOffer?.tglPulang
         labelHarga.text = self.varOffer?.hargaPenawaran
         labelKota.text = self.varOffer?.kota
@@ -334,9 +333,9 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                     
                     let saldoNow : Int = saldo! - hargaTotal
                     print(saldoNow)
-                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let orderId : String = self.orderId, let saldo : String = String(saldoNow) {
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let saldo : String = String(saldoNow) {
                         
-                        let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"orderId":orderId,"saldo":saldoNow,"email":emailNow,"action":"accept"]
+                        let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"saldo":saldoNow,"email":emailNow,"action":"accept"]
                         print (parameter)
                         Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
                             response in

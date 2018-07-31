@@ -11,73 +11,9 @@ import Alamofire
 import SwiftyPickerPopover
 import SwiftyJSON
 import Alamofire_SwiftyJSON
-import MidtransKit
 
-class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource,MidtransUIPaymentViewControllerDelegate {
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, save result: MidtransMaskedCreditCard!) {
-        print("save")
-    }
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, saveCardFailed error: Error!) {
-        print("save failed")
-    }
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentPending result: MidtransTransactionResult!) {
-        print("payment pending")
-        Alamofire.request("http://titipanku.xyz/api/unfinish.php",method: .get).responseJSON {
-            response in
-            //mencetak JSON response
-            if let json = response.result.value {
-                print("JSON: \(json)")
-            }
-        }
-    }
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentSuccess result: MidtransTransactionResult!) {
-        print("payment sukses")
-        Alamofire.request("http://titipanku.xyz/api/finish.php",method: .get).responseJSON {
-            response in
-            //mencetak JSON response
-            if let json = response.result.value {
-                print("JSON: \(json)")
-            }
-        }
-        
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
-            
-            let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"action":"insert"]
-            print (parameter)
-            Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
-                response in
-                
-                //mengambil json
-                let json = JSON(response.result.value)
-                print(json)
-                let cekSukses = json["success"].intValue
-                let pesan = json["message"].stringValue
-                
-                if cekSukses != 1 {
-                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                    
-                    self.present(alert, animated: true)
-                }else{
-                    self.handleBack()
-                }
-            }
-        }
-    }
-    
-    func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentFailed error: Error!) {
-        print("payment gagal")
-    }
-    
-    func paymentViewController_paymentCanceled(_ viewController: MidtransUIPaymentViewController!) {
-        print("paymen cancel")
-    }
-    
-    
+class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+ 
     var selectedProv : String = ""
     var selectedCity : String = ""
     var selectedHarga : String = ""
@@ -89,11 +25,13 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
     var cities = [city]()
     var prvv : raja?
     var kota : rajaKota?
-    var midtrans : Midtrans?
     
-    struct Midtrans: Decodable {
-        let orderId: String
+    struct userDetail: Decodable {
+        let saldo: String
+        let valueSaldo: String
     }
+    
+    var isiUser  : userDetail?
     
     struct country: Decodable {
         let name: String
@@ -163,13 +101,12 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        fetchOrderId()
         navigationItem.title = "Beli Preorder"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
-        print(app)
-        
+        //print(app)
+        fetchJSON()
         labelTgl.text = self.app?.deadline
         labelHarga.text = "Rp " + (self.app?.price)!
         labelKota.text = self.app?.kotaKirim
@@ -244,35 +181,36 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         return cell
     }
     
-    
-    func fetchOrderId(){
-        let urlString = "http://titipanku.xyz/api/GetMaxBeli.php"
-        
-        URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
-            
-            guard let data = data else { return }
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                self.midtrans = try decoder.decode(Midtrans.self, from: data)
-                print("midtrans")
-                print(self.midtrans)
-                DispatchQueue.main.async(execute: { () -> Void in
+    fileprivate func fetchJSON() {
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            print(emailNow)
+            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
                     
-                })
-                
-            } catch let err {
-                print(err)
-            }
-            
-        }) .resume()
+                    guard let data = data else { return }
+                    print(data)
+                    do {
+                        // link in description for video on JSONDecoder
+                        let decoder = JSONDecoder()
+                        // Swift 4.1
+                        self.isiUser = try decoder.decode(userDetail.self, from: data)
+                        print(self.isiUser)
+                        //self.labelB.text = "Rp " + (self.isiUser?.saldo)!
+                        
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                    }
+                }
+                }.resume()
+        }
     }
-    
+
     func fetchProv() {
         //kalau post dengan header encoding harus URLencoding
         DispatchQueue.main.async {
@@ -483,51 +421,56 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
             alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
 
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                let harga = self.app?.valueHarga
-                let qty = self.qtyText.text
-                let ongkir = self.selectedHarga
                 
-                if let midHarga = Int(harga!),let midQty = Int(qty!), let midOngkir = Int(ongkir), let orderId = self.midtrans?.orderId {
-                    let total = midQty * midHarga + midOngkir
+                let saldo = Int((self.isiUser?.valueSaldo)!)
+                let harga = Int((self.app?.valueHarga)!)
+                let ongkir = Int(self.selectedHarga)
+                
+                let hargaTotal = harga! + ongkir!
+                print(hargaTotal)
+                if saldo! < hargaTotal {
+                    let alert = UIAlertController(title: "Message", message: "Saldo Anda Kurang, Saldo Saat ini adalah Rp " + (self.isiUser?.saldo)!, preferredStyle: .alert)
                     
-                    let myHarga = NSNumber(value:midHarga)
-                    let myQty = NSNumber(value:midQty)
-                    let myOngkir = NSNumber(value:midOngkir)
-                    let myTotal = NSNumber(value:total)
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                     
-                    var itemDetail = [MidtransItemDetail]()
-                    let itemDetail1 = MidtransItemDetail.init(itemID: "a1", name: self.app?.name, price: myHarga, quantity: myQty)
-                    let itemDetail2 = MidtransItemDetail.init(itemID: "ongkir", name: self.ongkirText.text, price: myOngkir, quantity: 1)
+                    self.present(alert, animated: true)
+                }else{
                     
-                    itemDetail.append(itemDetail1!)
-                    itemDetail.append(itemDetail2!)
+                    let saldoNow : Int = saldo! - hargaTotal
+                    print(saldoNow)
                     
-                    let customerDetail = MidtransCustomerDetails.init(firstName: "ricky", lastName: "wirawan", email: "rickywrwn@gmail.com", phone: "082257576000", shippingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"), billingAddress: MidtransAddress.init(firstName: "ricky", lastName: "wirawan", phone: "082257576000", address: "ambengan", city: "surabaya", postalCode: "60136", countryCode: "IDN"))
-                    
-                    let transactionDetail = MidtransTransactionDetails.init(orderID: orderId, andGrossAmount: myTotal)
-                    
-                    print(itemDetail)
-                    print(transactionDetail)
-                    MidtransMerchantClient.shared().requestTransactionToken(with: transactionDetail!, itemDetails: itemDetail, customerDetails: customerDetail) { (response, error) in
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
                         
-                        if (response != nil) {
-                            print("asd")
-                            if let json = response {
-                                print(json)
-                                let vc = MidtransUIPaymentViewController.init(token: json)
-                                
-                                //set the delegate
-                                vc?.paymentDelegate = self
-                                
-                                self.present(vc!, animated: true, completion: nil)
-                            }
+                        let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"saldo":saldoNow,"action":"insert"]
+                        print (parameter)
+                        Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
+                            response in
                             
-                        }
-                        else {
-                            print(error)
-                            print("error")
+                            //mengambil json
+                            let json = JSON(response.result.value)
+                            print(json)
+                            let cekSukses = json["success"].intValue
+                            let pesan = json["message"].stringValue
+                            
+                            if cekSukses != 1 {
+                                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                                
+                                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                                
+                                self.present(alert, animated: true)
+                            }else{
+                                let alert = UIAlertController(title: "Message", message: "Pembelian Preorder Berhasil", preferredStyle: .alert)
+                                
+                                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                                    
+                                    self.handleBack()
+                                }))
+                                
+                                self.present(alert, animated: true)
+                            }
                         }
                     }
+                    
                 }
             }))
 

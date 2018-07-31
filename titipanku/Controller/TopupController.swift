@@ -11,8 +11,9 @@ import MidtransKit
 import Alamofire
 import SwiftyJSON
 import Alamofire_SwiftyJSON
+import NVActivityIndicatorView
 
-class TopupController :  UIViewController,MidtransUIPaymentViewControllerDelegate {
+class TopupController :  UIViewController,MidtransUIPaymentViewControllerDelegate, NVActivityIndicatorViewable {
     
     func paymentViewController(_ viewController: MidtransUIPaymentViewController!, save result: MidtransMaskedCreditCard!) {
         print("save")
@@ -201,8 +202,14 @@ class TopupController :  UIViewController,MidtransUIPaymentViewControllerDelegat
         let harga = hargaText.text
         print(harga)
         print(self.midtrans?.orderId)
+        let frame = CGRect(x: 50, y: 50, width: 30, height: 30)
+        NVActivityIndicatorView(frame: frame, type: NVActivityIndicatorType(rawValue: NVActivityIndicatorType.circleStrokeSpin.rawValue))
+        
+        let size = CGSize(width: 30, height: 30)
+        
         if let midHarga = Int(harga!),let orderId = self.midtrans?.orderId {
            
+            self.startAnimating(size, message: "Loading...")
             let myHarga = NSNumber(value:midHarga)
             
             let itemDetail = MidtransItemDetail.init(itemID: "Topup", name: "Topup Titipanku", price: myHarga, quantity: 1)
@@ -224,13 +231,14 @@ class TopupController :  UIViewController,MidtransUIPaymentViewControllerDelegat
                         
                         //set the delegate
                         vc?.paymentDelegate = self
-                        
+                        self.stopAnimating()
                         self.present(vc!, animated: true, completion: nil)
                     }
                     
                 }
                 else {
                     print(error)
+                    self.stopAnimating()
                     print("error")
                 }
             }

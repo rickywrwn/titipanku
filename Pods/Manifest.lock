@@ -70,6 +70,10 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - NVActivityIndicatorView (4.2.1):
+    - NVActivityIndicatorView/Presenter (= 4.2.1)
+  - NVActivityIndicatorView/Presenter (4.2.1)
+  - SKActivityIndicatorView (0.1.0)
   - SwiftyJSON (4.0.0)
   - SwiftyPickerPopover (6.1.0)
 
@@ -85,6 +89,8 @@ DEPENDENCIES:
   - Firebase/Core
   - GoogleSignIn
   - MidtransKit
+  - NVActivityIndicatorView
+  - SKActivityIndicatorView (~> 0.1.0)
   - SwiftyJSON
   - SwiftyPickerPopover
 
@@ -110,6 +116,8 @@ SPEC REPOS:
     - MidtransCoreKit
     - MidtransKit
     - nanopb
+    - NVActivityIndicatorView
+    - SKActivityIndicatorView
     - SwiftyJSON
     - SwiftyPickerPopover
 
@@ -134,9 +142,11 @@ SPEC CHECKSUMS:
   MidtransCoreKit: 15404e6aa6b07b5cfbccf6e1da1a8ea49d1a34a8
   MidtransKit: 80d2271ab31a4d2a187fdce7e83c224dd8142231
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
+  SKActivityIndicatorView: f46936f760d33eb8235333242269bf01cc9248ae
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwiftyPickerPopover: f1bb928efd60e4c754aa957c1bb67372465e9ccb
 
-PODFILE CHECKSUM: 1e3bd9b1a63f16986d2e98b8c4e572b63da3649f
+PODFILE CHECKSUM: 6afa507040d37af0d64009e9cba473972327d308
 
 COCOAPODS: 1.5.3

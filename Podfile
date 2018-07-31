@@ -25,5 +25,7 @@ target 'titipanku' do
 
   pod 'AlamofireImage', '~> 3.3'
   pod 'MidtransKit'
+  pod 'NVActivityIndicatorView'
+  pod 'SKActivityIndicatorView', '~> 0.1.0'
 
 end

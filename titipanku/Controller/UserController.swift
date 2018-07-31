@@ -53,7 +53,6 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     fileprivate let userCellId = "userCellId"
-    fileprivate let buttonCellId = "btnCellId"
     fileprivate let cellId = "cellId"
     fileprivate let activityCellId = "activityCellId"
     
@@ -70,7 +69,6 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
 
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(UserDetailCell.self, forCellWithReuseIdentifier: userCellId)
-        collectionView?.register(UserButton.self, forCellWithReuseIdentifier: buttonCellId)
         collectionView?.register(UserActivityCell.self, forCellWithReuseIdentifier: activityCellId)
     }
     
@@ -111,22 +109,16 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
             
             return cell
         }else if indexPath.item == 1{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonCellId, for: indexPath) as! UserButton
-            cell.diskusiButton.addTarget(self, action: #selector(handleLogout), for: UIControlEvents.touchDown)
-            cell.diskusiButton1.addTarget(self, action: #selector(handleTrip), for: UIControlEvents.touchDown)
-            
-            return cell
-        }else if indexPath.item == 2{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
             cell.labelNama.text = "Review"
             
             return cell
-        }else if indexPath.item == 3{
+        }else if indexPath.item == 2{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
             cell.labelNama.text = "Pembelian"
             
             return cell
-        }else if indexPath.item == 4{
+        }else if indexPath.item == 3{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
             cell.labelNama.text = "Trip"
             
@@ -139,16 +131,13 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if indexPath.row == 0{
             
             return CGSize(width: view.frame.width, height: 170)
-        }else if indexPath.row == 1{
-            
-            return CGSize(width: view.frame.width, height: 80)
         }
         return CGSize(width: view.frame.width, height: 40)
     }
@@ -267,56 +256,6 @@ class UserDetailCell: BaseCell {
     
 }
 
-
-class UserButton: BaseCell {
-    
-    let diskusiButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("Logout", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
-        button.clipsToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    let diskusiButton1 : UIButton = {
-        let button = UIButton()
-        button.setTitle("Setting", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
-        button.clipsToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    
-    let dividerLineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
-        return view
-    }()
-    
-    override func setupViews() {
-        super.setupViews()
-        
-        addSubview(diskusiButton)
-        addSubview(diskusiButton1)
-        addSubview(dividerLineView)
-        
-        addConstraintsWithFormat("H:|-30-[v0(150)]-4-[v1(150)]-30-|", views: diskusiButton, diskusiButton1)
-        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
-        
-        addConstraintsWithFormat("V:|[v0(50)]", views: diskusiButton )
-        addConstraintsWithFormat("V:|[v0(50)][v1(1)]|", views: diskusiButton1,dividerLineView )
-        
-    }
-    
-}
 
 class UserActivityCell: BaseCell {
     

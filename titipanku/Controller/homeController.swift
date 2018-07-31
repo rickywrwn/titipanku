@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Alamofire_SwiftyJSON
+import SKActivityIndicatorView
 
 class homeController: UICollectionViewController,UICollectionViewDelegateFlowLayout{
     
@@ -41,11 +42,13 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         }
         navigationItem.title = "Home"
         let rightButton = UIBarButtonItem(title: "Tambah", style: .plain, target: self, action: #selector(self.tambahBtn))
-        
         self.navigationItem.rightBarButtonItem = rightButton
+        
+        SKActivityIndicator.show("Loading...")
         AppCategory.fetchFeaturedApps { (featuredApps) -> () in
             self.featuredApps = featuredApps
             self.appCategories = featuredApps.categories
+            SKActivityIndicator.dismiss()
             self.collectionView?.reloadData()
         }
         collectionView?.backgroundColor = UIColor.white
@@ -60,6 +63,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     func showAppDetailForApp(_ app: App) {
         print("pencet")
         let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         let appDetailController = barangDetailController(collectionViewLayout: layout)
         appDetailController.app = app
         navigationController?.pushViewController(appDetailController, animated: true)
@@ -69,6 +74,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     func showPreorderDetailForApp(_ app: App) {
         print("pencet preorder")
         let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         let appDetailController = PreorderDetail(collectionViewLayout: layout)
         appDetailController.app = app
         navigationController?.pushViewController(appDetailController, animated: true)

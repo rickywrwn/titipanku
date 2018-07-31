@@ -12,8 +12,9 @@ import GoogleSignIn
 import FBSDKLoginKit
 import Alamofire
 import SwiftyJSON
+import NVActivityIndicatorView
 
-class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButtonDelegate, GIDSignInDelegate {
+class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButtonDelegate, GIDSignInDelegate, NVActivityIndicatorViewable {
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     
     override func viewDidLoad() {
@@ -145,6 +146,12 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     
     //login
     @objc func handleLogin(){
+        let frame = CGRect(x: 50, y: 50, width: 30, height: 30)
+        NVActivityIndicatorView(frame: frame, type: NVActivityIndicatorType(rawValue: NVActivityIndicatorType.circleStrokeSpin.rawValue))
+        
+        let size = CGSize(width: 30, height: 30)
+        startAnimating(size, message: "Loading...")
+        
         let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]
         Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
             response in
@@ -173,7 +180,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
                 UserDefaults.standard.set(self.usernameTextField.text!, forKey:"loggedEmail")
                 UserDefaults.standard.synchronize()
                 print(self.usernameTextField.text!)
-                    
+                self.stopAnimating()
                 self.showHome()
             }))
                 
