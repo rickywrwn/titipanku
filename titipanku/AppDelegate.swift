@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         //facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        UINavigationBar.appearance().barTintColor = UIColor(hex: "#3867d6")
+        UINavigationBar.appearance().tintColor = .white
         let layout = UICollectionViewFlowLayout()
         let homeControllers = homeController(collectionViewLayout: layout)
         window = UIWindow(frame: UIScreen.main.bounds)

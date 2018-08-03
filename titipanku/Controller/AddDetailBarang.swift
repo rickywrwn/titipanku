@@ -297,6 +297,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         navigationBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
         
         
+        
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
         scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1150)

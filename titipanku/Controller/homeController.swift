@@ -31,7 +31,6 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         })
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         if  cekLogged == true{
@@ -43,8 +42,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         navigationItem.title = "Home"
         let rightButton = UIBarButtonItem(title: "Tambah", style: .plain, target: self, action: #selector(self.tambahBtn))
         self.navigationItem.rightBarButtonItem = rightButton
-        
-        SKActivityIndicator.show("Loading...")
+       
+        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
         AppCategory.fetchFeaturedApps { (featuredApps) -> () in
             self.featuredApps = featuredApps
             self.appCategories = featuredApps.categories
@@ -57,7 +56,42 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: preorderCellId)
         collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: flashCellId)
         collectionView?.register(Header.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        NotificationCenter.default.addObserver(self, selector: #selector(showMoreRequest), name: NSNotification.Name(rawValue: "showMoreRequest"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showMorePreorder), name: NSNotification.Name(rawValue: "showMorePreorder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showMorePreorderBerdurasi), name: NSNotification.Name(rawValue: "showMorePreorderBerdurasi"), object: nil)
+        
         setupView()
+    }
+    
+    @objc func showMoreRequest() {
+        print("pencet")
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let appDetailController = AllRequest(collectionViewLayout: layout)
+        navigationController?.pushViewController(appDetailController, animated: true)
+        
+    }
+    @objc func showMorePreorder() {
+        print("pencet")
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let appDetailController = AllPreorder(collectionViewLayout: layout)
+        navigationController?.pushViewController(appDetailController, animated: true)
+        
+    }
+    @objc func showMorePreorderBerdurasi() {
+        print("pencet")
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let appDetailController = AllPreorderBerdurasi(collectionViewLayout: layout)
+        navigationController?.pushViewController(appDetailController, animated: true)
+        
     }
     
     func showAppDetailForApp(_ app: App) {

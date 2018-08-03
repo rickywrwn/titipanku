@@ -26,15 +26,15 @@ public class DatePickerPopoverViewController: AbstractPickerPopoverViewControlle
             navigationItem.rightBarButtonItem = nil
         }
         cancelButton.title = popover?.cancelButton.title
-        cancelButton.tintColor = popover?.cancelButton.color ?? popover?.tintColor
+        cancelButton.tintColor = UIColor.white
         navigationItem.setLeftBarButton(cancelButton, animated: false)
         
         doneButton.title = popover?.doneButton.title
-        doneButton.tintColor = popover?.doneButton.color ?? popover?.tintColor
+        doneButton.tintColor = UIColor.white
         navigationItem.setRightBarButton(doneButton, animated: false)
         
         clearButton.setTitle(popover?.clearButton.title, for: .normal)
-        clearButton.tintColor = popover?.clearButton.color ?? popover?.tintColor
+        clearButton.tintColor = UIColor.white
 
         if popover?.clearButton.action == nil {
             clearButton.removeFromSuperview()

@@ -126,7 +126,7 @@ class WalletController :  UIViewController {
     let labelB : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Saldo "
+        label.text = "Rp 0"
         label.font = UIFont.systemFont(ofSize: 25)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false

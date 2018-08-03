@@ -27,5 +27,5 @@ target 'titipanku' do
   pod 'MidtransKit'
   pod 'NVActivityIndicatorView'
   pod 'SKActivityIndicatorView', '~> 0.1.0'
-
+  pod 'Hue'
 end

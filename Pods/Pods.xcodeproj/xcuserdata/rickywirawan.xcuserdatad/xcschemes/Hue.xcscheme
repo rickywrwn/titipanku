@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9C3C8991524C041E702D871DB5DFB1F8"
-               BlueprintName = "SKActivityIndicatorView"
+               BlueprintIdentifier = "B2542602E50EDF091ADB18B4688DF34F"
+               BlueprintName = "Hue"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "SKActivityIndicatorView.framework">
+               BuildableName = "Hue.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

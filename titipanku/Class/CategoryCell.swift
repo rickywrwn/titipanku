@@ -10,6 +10,7 @@
 import UIKit
 import AlamofireImage
 import Alamofire
+import Hue
 
 var itung : Int = 0
 
@@ -17,16 +18,19 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     @objc func handleMoreBarang() {
        
         print("Barang")
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showMoreRequest"), object: nil)
     }
    
     @objc func handleMorePreoder() {
         
         print("Preorder")
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showMorePreorder"), object: nil)
     }
     
     @objc func handleMoreFlashsale() {
         
         print("Flashsale")
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showMorePreorderBerdurasi"), object: nil)
     }
     
     var homeController: homeController?
@@ -45,7 +49,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
                 btnMore.addTarget(self, action: #selector(handleMoreFlashsale), for: UIControlEvents.touchDown)
                 
             }
-            btnMore.setTitle(String("More >> "), for: .normal)
+            btnMore.setTitle(String("More"), for: .normal)
             itung += 1
             appsCollectionView.reloadData()
         }
@@ -66,7 +70,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Best New Apps"
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -75,9 +79,8 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("a", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 16)
-        button.setTitleColor(.cyan, for: .selected)
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -147,6 +150,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         
         if reuseIdentifier != "headerId"{
             if reuseIdentifier == "preorderCellId"{
@@ -240,7 +244,7 @@ class AppCell: UICollectionViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.numberOfLines = 2
         return label
     }()
@@ -255,7 +259,7 @@ class AppCell: UICollectionViewCell {
     let priceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor(hex: "#4b7bec")
         return label
     }()
     
@@ -271,4 +275,22 @@ class AppCell: UICollectionViewCell {
         priceLabel.frame = CGRect(x: 0, y: frame.width + 56, width: frame.width, height: 20)
     }
     
+}
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(rgb: Int) {
+        self.init(
+            red: (rgb >> 16) & 0xFF,
+            green: (rgb >> 8) & 0xFF,
+            blue: rgb & 0xFF
+        )
+    }
 }
