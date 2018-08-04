@@ -10,30 +10,34 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class ExploreNegara: UIViewController {
+import UIKit
+import Alamofire
+import SwiftyJSON
 
-    struct varNegara {
-        static var negara = ""
-        
+class ExploreNegara: UIViewController {
+    struct varTambah {
+        static var statusTambah = ""
     }
+    
+    var isiData : isi?
     let navSegmentControl = UISegmentedControl()
     let containerView = UIView()
     
     let layout = UICollectionViewFlowLayout()
-    lazy var BarangVC: ExploreNegaraRequest = {
-        let vc = ExploreNegaraRequest(collectionViewLayout: layout)
+    lazy var BarangVC: PostBarang = {
+        let vc = PostBarang(collectionViewLayout: layout)
         self.addAsChildVC(childVC: vc)
         return vc
     }()
     
-    lazy var TripVC: ExploreNegaraPreorder = {
-        let vc = ExploreNegaraPreorder(collectionViewLayout: layout)
+    lazy var TripVC: PostNegara = {
+        let vc = PostNegara()
         self.addAsChildVC(childVC: vc)
         return vc
     }()
     
-    lazy var PreorderVC: ExploreNegaraPreorderBerdurasi = {
-        let vc = ExploreNegaraPreorderBerdurasi(collectionViewLayout: layout)
+    lazy var PreorderVC: PostPreorder = {
+        let vc = PostPreorder(collectionViewLayout: layout)
         self.addAsChildVC(childVC: vc)
         return vc
     }()
@@ -44,12 +48,57 @@ class ExploreNegara: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         setupView()
+        
+        navigationItem.title = "Home"
+        
         TripVC.view.isHidden = false
     }
     
     @objc public func handleBack(){
+        PostBarang.varDetail.namaBarang = ""
+        PostBarang.varDetail.desc = ""
+        PostBarang.varDetail.qty = ""
+        PostBarang.varDetail.kategori = ""
+        PostBarang.varDetail.url = ""
+        PostBarang.varDetail.status = 0
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadExplore"), object: nil)
+        PostBarang.varKarateristik.ukuran = ""
+        PostBarang.varKarateristik.berat = ""
+        PostBarang.varKarateristik.status = 0
+        
+        PostBarang.varNegara.negara = ""
+        PostBarang.varNegara.kota = ""
+        PostBarang.varNegara.provinsi = ""
+        PostBarang.varNegara.idKota = ""
+        PostBarang.varNegara.status = 0
+        
+        PostBarang.varHarga.harga = ""
+        PostBarang.varHarga.status = 0
+        
+        PostPreorder.varDetail.namaBarang = ""
+        PostPreorder.varDetail.brand = ""
+        PostPreorder.varDetail.desc = ""
+        PostPreorder.varDetail.qty = ""
+        PostPreorder.varDetail.kategori = ""
+        PostPreorder.varDetail.status = 0
+        
+        PostPreorder.varKarateristik.berat = ""
+        PostPreorder.varKarateristik.status = 0
+        
+        PostPreorder.varNegara.negara = ""
+        PostPreorder.varNegara.kota = ""
+        PostPreorder.varNegara.deadline = ""
+        PostPreorder.varNegara.status = 0
+        
+        
+        PostPreorder.varHarga.harga = ""
+        PostPreorder.varHarga.status = 0
+        
+        PostPreorder.varDurasi.batasWaktu = ""
+        PostPreorder.varDurasi.countdownText = ""
+        PostPreorder.varDurasi.countdownValue = ""
+        PostPreorder.varDurasi.status = 0
+        
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
@@ -72,19 +121,19 @@ class ExploreNegara: UIViewController {
             BarangVC.view.isHidden = true
             PreorderVC.view.isHidden = true
             TripVC.view.isHidden = false
-            varNegara.negara = "Request"
+            varTambah.statusTambah = "preorder"
         }else if sender.selectedSegmentIndex == 1{
             BarangVC.view.isHidden = false
             TripVC.view.isHidden = true
             PreorderVC.view.isHidden = true
-            varNegara.negara = "Preorder"
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            varTambah.statusTambah = "barang"
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         }else {
             BarangVC.view.isHidden = true
             TripVC.view.isHidden = true
             PreorderVC.view.isHidden = false
-            varNegara.negara = "Durasi"
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
+            varTambah.statusTambah = "preorder"
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
         }
     }
     
@@ -104,9 +153,9 @@ class ExploreNegara: UIViewController {
         
         navSegmentControl.addTarget(self, action: #selector(madeSelection), for: .valueChanged)
         
-        navSegmentControl.insertSegment(withTitle: "Request", at: 0, animated: false)
-        navSegmentControl.insertSegment(withTitle: "Preorder", at: 1, animated: false)
-        navSegmentControl.insertSegment(withTitle: "Preorder Berdurasi", at: 2, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Post Trip", at: 0, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Titip Barang", at: 1, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Titipan Durasi", at: 2, animated: false)
         navSegmentControl.selectedSegmentIndex = 0
         
         view.addSubview(containerView)

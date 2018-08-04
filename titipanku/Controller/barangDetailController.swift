@@ -150,6 +150,12 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         self.fetchOffer{(offers) -> ()in
             self.offers = offers
             print("count offers" + String(self.offers.count))
+            for i in 0 ..< self.offers.count {
+                if self.offers[i].status != "1"{
+                    statusOffer = true
+                }
+                
+            }
             self.collectionView?.reloadData()
         }
         
@@ -164,14 +170,13 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     @objc func reloadBarangDetail(){
         SKActivityIndicator.show("Loading...")
         self.offers = []
-        self.collectionView?.reloadData()
         print("count baru" + String(self.offers.count))
         self.fetchOffer{(offers) -> ()in
             self.offers = offers
             print(self.offers)
             print("count baru" + String(self.offers.count))
-            self.collectionView!.reloadData()
             SKActivityIndicator.dismiss()
+            self.collectionView?.reloadData()
         }
     }
     
@@ -180,7 +185,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         let layout = UICollectionViewFlowLayout()
         let komentarController = KomentarBarangController(collectionViewLayout: layout)
         //komentarController.app = app
-        navigationController?.pushViewController(komentarController, animated: true)
+        print(statusOffer)
+        //navigationController?.pushViewController(komentarController, animated: true)
     }
     func showOffer() {
         let appDetailController = OfferController()
@@ -216,6 +222,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                         
+                        adaNawar = false
                         self.reloadBarangDetail()
                         
                     }))
@@ -249,6 +256,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             //menghitung tinggi textview
             let sizeThatFitsTextView = cell.textView.sizeThatFits(CGSize(width: cell.textView.frame.size.width, height: CGFloat(MAXFLOAT)))
             let heightOfText = sizeThatFitsTextView.height
+
             tinggiTextView = Float(heightOfText-55)
             cell.qtyLabel.text = app?.qty
             cell.countryLabel.text = app?.country
@@ -298,9 +306,16 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     }
                     
                     if cekBeli == false{
-                        cell.nameLabel.text = "Bantu Belikan"
-                        cell.backgroundColor = UIColor(hex: "#3867d6")
-                        cell.nameLabel.textColor = UIColor.white
+                        if statusOffer == false{
+                            cell.nameLabel.text = "Bantu Belikan"
+                            cell.backgroundColor = UIColor(hex: "#3867d6")
+                            cell.nameLabel.textColor = UIColor.white
+                        }else{
+                            cell.nameLabel.text = "Request Sudah Diterima Oleh User Lain"
+                            cell.backgroundColor = UIColor(hex: "#20bf6b")
+                            cell.nameLabel.textColor = UIColor.white
+                        }
+                        
                     }else{
                         print("statusOffer")
                         print(statusOffer)
@@ -309,7 +324,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                             cell.backgroundColor = UIColor(hex: "#eb3b5a")
                             cell.nameLabel.textColor = UIColor.white
                         }else{
-                            cell.nameLabel.text = "Penawaran Anda"
+                            cell.nameLabel.text = "Penawaran Anda Sudah Diterima"
                             cell.backgroundColor = UIColor(hex: "#20bf6b")
                             cell.nameLabel.textColor = UIColor.white
                         }
@@ -331,41 +346,47 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     //cell.backgroundColor = UIColor.black
                     cell.offers = offers
                     cell.app = app
-                    print("index 4 ada")
+                    print("Login sebagai requester dan ada penawaran")
                     for i in 0 ..< self.offers.count {
                         if self.offers[i].status != "1"{
                             statusOffer = true
+                            //status offer 2, artinya sudah bayar
                         }
                     }
+                    print("status offer")
+                    print(statusOffer)
                     cell.offerCollectionView.reloadData()
                     return cell
                     
                 }else if email == emailNow && offers.count == 0{
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
-                    print("index 4 kosong")
+                    print("keterangan : login sebagai requester dan tidak ada penawaran")
                     return cell
                 }else if email != emailNow && offers.count == 0 {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
-                    print("User Lain ada tapi kosong")
+                    print("keterangan : login sebagai user lain tetapi penawaran di request tidak ada")
                     return cell
                 }else if email != emailNow  && offers.count > 0 {
                     for i in 0 ..< self.offers.count {
+                        if self.offers[i].status != "1"{
+                            statusOffer = true
+                        }
                         if emailNow == self.offers[i].idPenawar{
                             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListCellId, for: indexPath) as! AppOfferList
-                            print("User ada nawar disini")
+                            print("keterangan : penawaran ada dan user menawar disini")
                             //cell.varOffer = offers[i]
                             //cell.backgroundColor = UIColor.black
                             cell.offers = [self.offers[i]]
                             cell.app = app
                             adaNawar = true
                             idOfferNow = self.offers[i].id
-                            if self.offers[i].status != "1"{
-                                statusOffer = true
-                            }
+                            
                             print(offers[i])
-                            self.collectionView?.reloadData()
                             cell.offerCollectionView.reloadData()
                             return cell
+                        }else{
+                            print("keterangan : penawaran ada tetapi user bukan user yang login")
+                            
                         }
                     }
                     
@@ -446,9 +467,15 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         if  self.offers.count > 0 {
                             
                             if adaNawar == false{
-                                print("bantu")
-                                cell?.layer.backgroundColor = UIColor.blue.cgColor
-                                self.showOffer()
+                                if statusOffer == false{
+                                    print("bantu")
+                                    cell?.layer.backgroundColor = UIColor(hex: "#4b7bec").cgColor
+                                    print(statusOffer)
+                                    self.showOffer()
+                                }else{
+                                    print("request sudah di terima oleh user lain dan sudah dibayar")
+                                    cell?.layer.backgroundColor = UIColor(hex: "#20bf6b").cgColor
+                                }
                             }else{
                                 print("cancel")
                                 if statusOffer != true{
@@ -464,10 +491,11 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                                     alert.addAction(UIAlertAction(title: "Tidak", style: .default, handler: nil))
                                     
                                     self.present(alert, animated: true)
+                                    cell?.layer.backgroundColor = UIColor(hex: "#eb3b5a").cgColor
                                 }else{
                                     print("status offer sdh 2")
+                                    cell?.backgroundColor = UIColor(hex: "#20bf6b")
                                 }
-                                cell?.layer.backgroundColor = UIColor.red.cgColor
                                 
                             }
 //                            for i in 0 ..< self.offers.count {
@@ -478,7 +506,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
 //                                }
 //                            }
                         }else{
-                            cell?.layer.backgroundColor = UIColor.blue.cgColor
+                            cell?.layer.backgroundColor = UIColor(hex: "#4b7bec").cgColor
                             self.showOffer()
                         }
                     }
@@ -763,7 +791,7 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
             cell.LabelA.text = "Requester"
             cell.backgroundColor = UIColor.white
             DispatchQueue.main.async{
-                
+                print(self.user + "user nama")
                 Alamofire.request("http://titipanku.xyz/uploads/"+self.user+".jpg").responseImage { response in
                     //debugPrint(response)
                     //let nama = self.app?.name
@@ -1118,14 +1146,19 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
         if indexPath.row == 0{
             print(varOffer?.idPenawar)
         }else{
-            if adaNawar == false{
-                print(varOffer)
-                print(varOffer?.hargaPenawaran)
-                let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil, userInfo: dataIdOffer)
+            if statusOffer == false{
+                if adaNawar == false{
+                    print(varOffer)
+                    print(varOffer?.hargaPenawaran)
+                    let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil, userInfo: dataIdOffer)
+                }else{
+                    print(varOffer?.hargaPenawaran)
+                }
             }else{
-                print(varOffer?.hargaPenawaran)
+                print("tinggal nunggu dibelikan")
             }
+            
             
         }
     }
@@ -1250,6 +1283,8 @@ class AppDetailHeader: BaseCell {
     var app: App? {
         didSet {
             if let imageName = self.app?.ImageName {
+                print("image name")
+                print(imageName)
                 Alamofire.request("http://titipanku.xyz/uploads/"+imageName).responseImage { response in
                     //debugPrint(response)
                     //let nama = self.app?.name

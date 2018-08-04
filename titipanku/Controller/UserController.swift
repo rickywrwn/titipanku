@@ -152,10 +152,10 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 cell?.layer.backgroundColor = UIColor.white.cgColor
                 if indexPath.row == 2{
-                }else if indexPath.row == 3{
                     self.handlePembelian()
-                }else if indexPath.row == 4{
+                }else if indexPath.row == 3{
                     self.handleTrip()
+                }else if indexPath.row == 4{
                 }
             }
         }

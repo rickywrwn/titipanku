@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 class ExploreKategori: UIViewController {
-    
+    var isiData : isi?
     struct varNegara {
         static var negara = ""
         
@@ -44,6 +44,7 @@ class ExploreKategori: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         setupView()
+        print(isiData)
         TripVC.view.isHidden = false
     }
     
@@ -131,7 +132,7 @@ class ExploreKategori: UIViewController {
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
         
     }
-    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

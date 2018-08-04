@@ -77,7 +77,7 @@ class ExploreController : UINavigationController,UICollectionViewDataSource, UIC
         exploreCollectionView.register(categoryCollectionView.self, forCellWithReuseIdentifier: categoryCellId)
         exploreCollectionView.register(countryCollectionView.self, forCellWithReuseIdentifier: countryCellId)
         NotificationCenter.default.addObserver(self, selector: #selector(showDetailNegara(_:)), name: NSNotification.Name(rawValue: "showDetailNegara"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(showDetailNegara(_:)), name: NSNotification.Name(rawValue: "showDetailKategori"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showDetailKategori(_:)), name: NSNotification.Name(rawValue: "showDetailKategori"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadExplore(_:)), name: NSNotification.Name(rawValue: "reloadExplore"), object: nil)
         setupLayout()
         self.fetchExplore{(isiExplore) -> ()in
@@ -88,15 +88,22 @@ class ExploreController : UINavigationController,UICollectionViewDataSource, UIC
     
     @objc func showDetailNegara(_ notification: NSNotification) {
         print("It Works")
-        let tambahCont = ExploreNegara()
-        present(tambahCont, animated: true, completion: {
-        })
+        let nextCont = ExploreNegara()
+        if let dataNegara = notification.userInfo?["isiNegara"] as? isi {
+            nextCont.isiData = dataNegara
+            present(nextCont, animated: true, completion: {
+            })
+        }
     }
+
     @objc func showDetailKategori(_ notification: NSNotification) {
         print("It Works")
-        let tambahCont = ExploreKategori()
-        present(tambahCont, animated: true, completion: {
-        })
+        let nextCont = ExploreKategori()
+        if let dataKategori = notification.userInfo?["isiKategori"] as? isi {
+            nextCont.isiData = dataKategori
+            present(nextCont, animated: true, completion: {
+            })
+        }
     }
 
     @objc func reloadExplore(_ notification: NSNotification) {
@@ -247,7 +254,8 @@ class categoryCollectionView: BaseCell,UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(reuseIdentifier)
         print(dataExplore?.isi[indexPath.row].nama)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showDetailKategori"), object: nil)
+        let dataKategori:[String: isi] = ["isiKategori": (dataExplore?.isi[indexPath.row])!]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showDetailKategori"), object: nil, userInfo: dataKategori)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -324,7 +332,9 @@ class countryCollectionView: BaseCell,UICollectionViewDataSource, UICollectionVi
         
         print(reuseIdentifier)
         print(dataExplore?.isi[indexPath.row].nama)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showDetailNegara"), object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showDetailNegara"), object: nil)
+        let dataNegara:[String: isi] = ["isiNegara": (dataExplore?.isi[indexPath.row])!]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showDetailNegara"), object: nil, userInfo: dataNegara)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

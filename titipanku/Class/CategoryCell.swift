@@ -39,18 +39,19 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
             if let name = appCategory?.name {
                 nameLabel.text = name
             }
-            if itung == 1 {
-                btnMore.addTarget(self, action: #selector(handleMoreBarang), for: UIControlEvents.touchDown)
-                
-            }else if itung == 2 {
-                btnMore.addTarget(self, action: #selector(handleMorePreoder), for: UIControlEvents.touchDown)
-                
-            }else {
-                btnMore.addTarget(self, action: #selector(handleMoreFlashsale), for: UIControlEvents.touchDown)
-                
-            }
-            btnMore.setTitle(String("More"), for: .normal)
-            itung += 1
+//            if itung == 1 {
+//                btnMore.addTarget(self, action: #selector(handleMoreBarang), for: UIControlEvents.touchDown)
+//                
+//                
+//            }else if itung == 2 {
+//                btnMore.addTarget(self, action: #selector(handleMorePreoder), for: UIControlEvents.touchDown)
+//                
+//            }else {
+//                btnMore.addTarget(self, action: #selector(handleMoreFlashsale), for: UIControlEvents.touchDown)
+//                
+//            }
+            
+//            itung += 1
             appsCollectionView.reloadData()
         }
     }
@@ -138,6 +139,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppCell
         cell.app = appCategory?.apps?[indexPath.item]
+        
         return cell
     }
     

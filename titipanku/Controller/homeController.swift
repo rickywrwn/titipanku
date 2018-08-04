@@ -30,7 +30,9 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         present(tambahCont, animated: true, completion: {
         })
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         if  cekLogged == true{
@@ -64,7 +66,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     
     @objc func showMoreRequest() {
-        print("pencet")
+        print("pencet Request")
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
@@ -74,7 +76,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         
     }
     @objc func showMorePreorder() {
-        print("pencet")
+        print("pencet Preorder ")
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
@@ -84,7 +86,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         
     }
     @objc func showMorePreorderBerdurasi() {
-        print("pencet")
+        print("pencet Durasi")
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
@@ -131,6 +133,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryCell
             cell.appCategory = appCategories?[indexPath.item]
+            cell.btnMore.setTitle(String("More"), for: .normal)
+            cell.btnMore.addTarget(self, action: #selector(showMoreRequest), for: UIControlEvents.touchDown)
             cell.homeController = self
             
             return cell
@@ -139,6 +143,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: preorderCellId, for: indexPath) as! CategoryCell
             cell.appCategory = appCategories?[indexPath.item]
+            cell.btnMore.setTitle(String("More"), for: .normal)
+            cell.btnMore.addTarget(self, action: #selector(showMorePreorder), for: UIControlEvents.touchDown)
             cell.homeController = self
             
             return cell
@@ -148,6 +154,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: flashCellId, for: indexPath) as! CategoryCell
             cell.appCategory = appCategories?[indexPath.item]
             cell.homeController = self
+            cell.btnMore.setTitle(String("More"), for: .normal)
+            cell.btnMore.addTarget(self, action: #selector(showMorePreorderBerdurasi), for: UIControlEvents.touchDown)
             return cell
         }
         

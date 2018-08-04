@@ -94,7 +94,7 @@ class InboxController: UIViewController {
         navSegmentControl.translatesAutoresizingMaskIntoConstraints = false
         navSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         navSegmentControl.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        navSegmentControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
+        navSegmentControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
         navSegmentControl.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
         navSegmentControl.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
         
