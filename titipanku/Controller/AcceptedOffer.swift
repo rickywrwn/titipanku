@@ -1,12 +1,10 @@
 //
-//  AcceptOffer.swift
+//  AcceptedOffer.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 13/07/18.
+//  Created by Ricky Wirawan on 05/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
-
-
 import UIKit
 import Alamofire
 import SwiftyPickerPopover
@@ -14,12 +12,10 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 import MidtransKit
 
-class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
- 
+class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     var selectedHarga : String = ""
-    var selectedJenis : String = ""
     var idOffer : String = ""
-
     var arrNama = [String]()
     var arrHarga = [String]()
     var statusTable : Int = 0
@@ -102,32 +98,32 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         
     }
     
-//    var detailOffer : VarOffer?
-//    
-//    func fetchOffer() {
-//        
-//        DispatchQueue.main.async {
-//        let urlString = "http://titipanku.xyz/api/ShowOfferDetail.php?idOffer=\(self.idOffer)"
-//        guard let url = URL(string: urlString) else { return }
-//        URLSession.shared.dataTask(with: url) { (data, _, err) in
-//            DispatchQueue.main.async {
-//                if let err = err {
-//                    print("Failed to get data from url:", err)
-//                    return
-//                }
-//                
-//                guard let data = data else { return }
-//                do {
-//                    let decoder = JSONDecoder()
-//                    self.detailOffer = try decoder.decode(VarOffer.self, from: data)
-//                    print(self.detailOffer)
-//                } catch let jsonErr {
-//                    print("Failed to decode:", jsonErr)
-//                }
-//            }
-//            }.resume()
-//        }
-//    }
+    //    var detailOffer : VarOffer?
+    //
+    //    func fetchOffer() {
+    //
+    //        DispatchQueue.main.async {
+    //        let urlString = "http://titipanku.xyz/api/ShowOfferDetail.php?idOffer=\(self.idOffer)"
+    //        guard let url = URL(string: urlString) else { return }
+    //        URLSession.shared.dataTask(with: url) { (data, _, err) in
+    //            DispatchQueue.main.async {
+    //                if let err = err {
+    //                    print("Failed to get data from url:", err)
+    //                    return
+    //                }
+    //
+    //                guard let data = data else { return }
+    //                do {
+    //                    let decoder = JSONDecoder()
+    //                    self.detailOffer = try decoder.decode(VarOffer.self, from: data)
+    //                    print(self.detailOffer)
+    //                } catch let jsonErr {
+    //                    print("Failed to decode:", jsonErr)
+    //                }
+    //            }
+    //            }.resume()
+    //        }
+    //    }
     
     var app: App? {
         didSet {
@@ -181,7 +177,11 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         labelTgl.text = self.varOffer?.tglPulang
         labelHarga.text = self.varOffer?.hargaPenawaran
         labelKota.text = self.varOffer?.kota
-        label4.isHidden = true
+        //labelOngkir.text = (self.varOffer?.jenisOngkir)! + "+" + (self.varOffer?.hargaOngkir)!
+        ongkirText.text =  (self.varOffer?.jenisOngkir)! + " - " + (self.varOffer?.hargaOngkir)!
+        let total = Int((self.varOffer?.valueHarga)!)! + Int((self.varOffer?.hargaOngkir)!)!
+        labelTotal.text = "Rp. " + String(total)
+        label4.isHidden = false
         
         setupView()
         //print(detailOffer)
@@ -218,10 +218,9 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.tag == 3{
             print("Num: \(indexPath.row)")
-            ongkirText.text = "JNE " + arrNama[indexPath.row] + " - Rp " + arrHarga[indexPath.row]
+            ongkirText.text = "JNE " + arrNama[indexPath.row] + " - Rp. " + arrHarga[indexPath.row]
             ongkirTableView.isHidden = true
             selectedHarga = arrHarga[indexPath.row]
-            selectedJenis = arrNama[indexPath.row]
             label4.isHidden = false
             let total = Int(selectedHarga)! + Int((varOffer?.valueHarga)!)!
             labelTotal.text = String(total)
@@ -275,10 +274,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                             print(self.arrHarga)
                             self.ongkirTableView.reloadData()
                         }
-                        if hasil.count == 0{
-                            self.arrNama.append("Tidak Ada")
-                            self.arrHarga.append("0")
-                        }
                         self.ongkirTableView.reloadData()
                         print(hasil.count)
                     }
@@ -314,13 +309,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
             self.present(alert, animated: true)
-        }else if(ongkirText.text == "JNE Tidak Ada - Rp 0"){
-            let alert = UIAlertController(title: "Message", message: "JNE Tidak Mendukung Daerah Anda", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
-        } else{
+        }else{
             
             // create the alert
             let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menerima Offer?", preferredStyle: UIAlertControllerStyle.alert)
@@ -346,9 +335,9 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                     
                     let saldoNow : Int = saldo! - hargaTotal
                     print(saldoNow)
-                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let saldo : String = String(saldoNow), let idRequest = self.app?.id , let jne : String = self.selectedJenis, let idPenawar = self.varOffer?.idPenawar{
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let saldo : String = String(saldoNow), let idRequest = self.app?.id {
                         
-                        let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"jenisOngkir":jne,"saldo":saldoNow,"email":emailNow,"idRequest": idRequest,"idPenawar":idPenawar,"action":"accept"]
+                        let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"saldo":saldoNow,"email":emailNow,"idRequest": idRequest,"action":"accept"]
                         print (parameter)
                         Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
                             response in
@@ -500,7 +489,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     let labelOngkir : UILabel = {
         let label = UILabel()
         label.text = "Metode Pengiriman"
@@ -513,8 +502,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         textField.textAlignment = .left
         textField.borderStyle = .line
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(ongkirTapped(_:)),
-                            for: UIControlEvents.touchDown)
+        //textField.addTarget(self, action: #selector(ongkirTapped(_:)),for: UIControlEvents.touchDown)
         textField.inputView = UIView();
         return textField
     }()
@@ -536,31 +524,31 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     
     
-    let postButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Terima", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-        
-    }()
-    
-    let declineButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Tolak", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.red
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-        
-    }()
+//    let postButton : UIButton = {
+//        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//        button.setTitle("Terima", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        button.setTitleColor(.cyan, for: .selected)
+//        button.backgroundColor = UIColor.blue
+//        button.clipsToBounds = true
+//        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//
+//    }()
+//
+//    let declineButton : UIButton = {
+//        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//        button.setTitle("Tolak", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        button.setTitleColor(.cyan, for: .selected)
+//        button.backgroundColor = UIColor.red
+//        button.clipsToBounds = true
+//        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//
+//    }()
     
     let dividerLineView1: UIView = {
         let view = UIView()
@@ -586,7 +574,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         v.delaysContentTouches = false
         return v
     }()
-
+    
     
     func setupView(){
         
@@ -594,7 +582,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.view.addSubview(scrollView)
         scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
         let screenWidth = UIScreen.main.bounds.width+10
-
+        
         // constrain the scroll view to 8-pts on each side
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8.0).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8.0).isActive = true
@@ -644,26 +632,24 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         labelTotal.topAnchor.constraint(equalTo: label4.bottomAnchor, constant: 10).isActive = true
         labelTotal.heightAnchor.constraint(equalToConstant: 50).isActive = true
         labelTotal.font = UIFont.systemFont(ofSize: 25)
-        labelTotal.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
-        labelTotal.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
-        scrollView.addSubview(postButton)
-        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        
-        scrollView.addSubview(declineButton)
-        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        
+//        scrollView.addSubview(postButton)
+//        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+//        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+//        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
+//        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+//
+//        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+//
+//        scrollView.addSubview(declineButton)
+//        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+//        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+//        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
+//        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+//
+//        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+//
         
     }
     

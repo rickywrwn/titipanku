@@ -33,6 +33,7 @@
 		7E5D98652106C95D006690B0 /* UserPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D98642106C95D006690B0 /* UserPembelian.swift */; };
 		7E5D98672106C99E006690B0 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D98662106C99E006690B0 /* UserRequest.swift */; };
 		7E5D98692106C9AA006690B0 /* UserPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D98682106C9AA006690B0 /* UserPreorder.swift */; };
+		7E72A4732116E8E500391FA7 /* AcceptedOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E72A4722116E8E500391FA7 /* AcceptedOffer.swift */; };
 		7E8B5DAD210DB2D000FFBC85 /* MoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B5DAC210DB2D000FFBC85 /* MoreController.swift */; };
 		7E8B5DAF210DFADF00FFBC85 /* WalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B5DAE210DFADF00FFBC85 /* WalletController.swift */; };
 		7E8B5DB1210E06E300FFBC85 /* TopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B5DB0210E06E300FFBC85 /* TopupController.swift */; };
@@ -112,6 +113,7 @@
 		7E5D98642106C95D006690B0 /* UserPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPembelian.swift; sourceTree = "<group>"; };
 		7E5D98662106C99E006690B0 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		7E5D98682106C9AA006690B0 /* UserPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreorder.swift; sourceTree = "<group>"; };
+		7E72A4722116E8E500391FA7 /* AcceptedOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedOffer.swift; sourceTree = "<group>"; };
 		7E8B5DAC210DB2D000FFBC85 /* MoreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreController.swift; sourceTree = "<group>"; };
 		7E8B5DAE210DFADF00FFBC85 /* WalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletController.swift; sourceTree = "<group>"; };
 		7E8B5DB0210E06E300FFBC85 /* TopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopupController.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				9C6463BB20BF696A001E681A /* UserTripList.swift */,
 				9C54771E20ACBFB200B3797E /* barangDetailController.swift */,
 				7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */,
+				7E72A4722116E8E500391FA7 /* AcceptedOffer.swift */,
 				7EDED74820F7329D005BCA76 /* OfferController.swift */,
 				3C12439E20DFE78600852D2D /* PreorderDetail.swift */,
 				7E5D985A210604BB006690B0 /* AcceptPreorder.swift */,
@@ -505,6 +508,7 @@
 				7EEC065E21137FD800B92B21 /* AllPreorder.swift in Sources */,
 				9CEF6B5420ADDC1900ABB81E /* TambahViewController.swift in Sources */,
 				7E58EA852113D2CC00BF7A2E /* ExploreNegaraPreorderBerdurasi.swift in Sources */,
+				7E72A4732116E8E500391FA7 /* AcceptedOffer.swift in Sources */,
 				9C7177B4206BCCB70082E417 /* homeController.swift in Sources */,
 				7E58EA7D2113CDB500BF7A2E /* ExploreNegara.swift in Sources */,
 				7E5D9857210590E3006690B0 /* NotifikasiController.swift in Sources */,

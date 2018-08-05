@@ -24,6 +24,8 @@ struct VarOffer: Decodable {
     let tglPulang: String
     let idKota : String
     let kota: String
+    let hargaOngkir: String
+    let jenisOngkir: String
     let status: String
     
 }
@@ -144,6 +146,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         collectionView?.register(ScreenshotsCell.self, forCellWithReuseIdentifier: cellId)
         
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showAcceptedOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptedOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
         adaNawar = false
         SKActivityIndicator.show("Loading...")
@@ -164,7 +167,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     override func viewWillAppear(_ animated: Bool) {
         adaNawar = false
         statusOffer = false
-        //collectionView?.reloadData()
+        collectionView?.reloadData()
     }
     
     @objc func reloadBarangDetail(){
@@ -186,6 +189,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         let komentarController = KomentarBarangController(collectionViewLayout: layout)
         //komentarController.app = app
         print(statusOffer)
+        print(self.app?.status)
+        print(self.offers[0].id)
         //navigationController?.pushViewController(komentarController, animated: true)
     }
     func showOffer() {
@@ -200,7 +205,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     @objc func handleOfferCancel(){
         if let idOffer : String = idOfferNow {
             
-            let parameter: Parameters = ["idOffer": idOffer,"action":"cancel"]
+            let parameter: Parameters = ["idOffer": idOffer ,"action":"cancel"]
             print (parameter)
             Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
                 response in
@@ -241,6 +246,14 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         }
         navigationController?.pushViewController(appDetailController, animated: true)
     }
+    @objc func showAcceptedOffer(_ notification: NSNotification) {
+        let appDetailController = AcceptedOffer()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -275,25 +288,37 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser
                 //cell.diskusiButton.setTitle(app?.email, for: .normal)
                 cell.user = (app?.email)!
+                cell.statusOffer = statusOffer
                 cell.backgroundColor = UIColor(hex: "#4b6584")
                 return cell
-            }else {
-                
+            }else if self.app?.status == "2"{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser
+                //cell.diskusiButton.setTitle(app?.email, for: .normal)
+                cell.user = (app?.email)!
+                cell.traveller = self.offers[0].idPenawar
+                cell.statusOffer = statusOffer
+                cell.backgroundColor = UIColor(hex: "#4b6584")
+                return cell
             }
-            
+        
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser
-            
-            
+
+
             return cell
         }else if indexPath.item == 3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             
                 if self.app?.email == emailNow{
-                    //jika request milik sendiri
-                    cell.nameLabel.text = "List Penawar"
-                    cell.backgroundColor = UIColor.white
-                    cell.nameLabel.textColor = UIColor.black
+                    if statusOffer != true{
+                        cell.nameLabel.text = "List Penawar"
+                        cell.backgroundColor = UIColor.white
+                        cell.nameLabel.textColor = UIColor.black
+                    }else{
+                        cell.nameLabel.text = "Penawaran Yang Disetujui"
+                        cell.backgroundColor = UIColor(hex: "#20bf6b")
+                        cell.nameLabel.textColor = UIColor.white
+                    }
                     
                 }else{
                     
@@ -738,6 +763,8 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
     fileprivate let userTawarBarangCellId = "userTawarBarangCellId"
     
     var user : String = ""
+    var traveller : String = ""
+    var statusOffer = false
     
     let userCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -786,28 +813,66 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userTawarBarangCellId, for: indexPath) as! userTawarBarangCell
         //cell.app = appCategory?.apps?[indexPath.item]
         
-        if indexPath.item == 0{
-            cell.nameLabel.text = user
-            cell.LabelA.text = "Requester"
-            cell.backgroundColor = UIColor.white
-            DispatchQueue.main.async{
-                print(self.user + "user nama")
-                Alamofire.request("http://titipanku.xyz/uploads/"+self.user+".jpg").responseImage { response in
-                    //debugPrint(response)
-                    //let nama = self.app?.name
-                    //print("gambar : "+imageName)
-                    if let image = response.result.value {
-                        //print("image downloaded: \(image)")
-                        cell.imageView.image = image
+        if statusOffer == false{
+            if indexPath.item == 0{
+                cell.nameLabel.text = user
+                cell.LabelA.text = "Requester"
+                cell.backgroundColor = UIColor.white
+                DispatchQueue.main.async{
+                    Alamofire.request("http://titipanku.xyz/uploads/"+self.user+".jpg").responseImage { response in
+                        //debugPrint(response)
+                        //let nama = self.app?.name
+                        //print("gambar : "+imageName)
+                        if let image = response.result.value {
+                            //print("image downloaded: \(image)")
+                            cell.imageView.image = image
+                            self.userCollectionView.reloadData()
+                        }
+                    }
+                }
+                
+                return cell
+            }else{
+                cell.LabelA.text = "Traveller"
+                cell.backgroundColor = UIColor.white
+                return cell
+            }
+        }else{
+            if indexPath.item == 0{
+                cell.nameLabel.text = user
+                cell.LabelA.text = "Requester"
+                cell.backgroundColor = UIColor.white
+                DispatchQueue.main.async{
+                    Alamofire.request("http://titipanku.xyz/uploads/"+self.user+".jpg").responseImage { response in
+                        //debugPrint(response)
+                        //let nama = self.app?.name
+                        //print("gambar : "+imageName)
+                        if let image = response.result.value {
+                            //print("image downloaded: \(image)")
+                            cell.imageView.image = image
+                            self.userCollectionView.reloadData()
+                        }
+                    }
+                }
+                
+                return cell
+            }else{
+                cell.nameLabel.text = traveller
+                cell.LabelA.text = "Traveller"
+                cell.backgroundColor = UIColor.white
+                DispatchQueue.main.async{
+                    Alamofire.request("http://titipanku.xyz/uploads/"+self.traveller+".jpg").responseImage { response in
+                        //debugPrint(response)
+                        //let nama = self.app?.name
+                        //print("gambar : "+imageName)
+                        if let image = response.result.value {
+                            //print("image downloaded: \(image)")
+                            cell.imageView.image = image
+                            self.userCollectionView.reloadData()
+                        }
                     }
                 }
             }
-            
-            return cell
-        }else{
-            cell.LabelA.text = "Traveller"
-            cell.backgroundColor = UIColor.white
-            return cell
         }
         
         return cell
@@ -820,11 +885,15 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.item == 0{
-            
             print("request")
+            print(self.user + "user nama")
+            print(self.user + ".jpg")
         }else{
             print("penawar")
+            print(self.traveller + "traveler nama")
+            print(self.traveller + ".jpg")
         }
+        userCollectionView.reloadData()
         
     }
     
@@ -1146,6 +1215,8 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
         if indexPath.row == 0{
             print(varOffer?.idPenawar)
         }else{
+            print("statusoffernow")
+            print(statusOffer)
             if statusOffer == false{
                 if adaNawar == false{
                     print(varOffer)
@@ -1156,6 +1227,10 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
                     print(varOffer?.hargaPenawaran)
                 }
             }else{
+                print(statusOffer)
+                let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptedOffer"), object: nil, userInfo: dataIdOffer)
+                
                 print("tinggal nunggu dibelikan")
             }
             
