@@ -1,10 +1,11 @@
 //
-//  AcceptedOffer.swift
+//  ConfirmAcceptedOffer.swift
 //  titipanku
 //
 //  Created by Ricky Wirawan on 05/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
+
 import UIKit
 import Alamofire
 import SwiftyPickerPopover
@@ -12,10 +13,9 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 import MidtransKit
 
-class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var selectedHarga : String = ""
-    var selectedJenis : String = ""
     var idOffer : String = ""
     var arrNama = [String]()
     var arrHarga = [String]()
@@ -167,7 +167,7 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Tawaran"
+        navigationItem.title = "Belikan Barang"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
@@ -177,13 +177,13 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         fetchJSON()
         labelTgl.text = self.varOffer?.tglPulang
         labelHarga.text = self.varOffer?.hargaPenawaran
-        labelKota.text = self.varOffer?.kota
+        labelKota.text = self.app?.qty
         //labelOngkir.text = (self.varOffer?.jenisOngkir)! + "+" + (self.varOffer?.hargaOngkir)!
         ongkirText.text =  (self.varOffer?.jenisOngkir)! + " - " + (self.varOffer?.hargaOngkir)!
         let total = Int((self.varOffer?.valueHarga)!)! + Int((self.varOffer?.hargaOngkir)!)!
         labelTotal.text = "Rp. " + String(total)
         label4.isHidden = false
-        
+        print(varOffer)
         setupView()
         //print(detailOffer)
     }
@@ -301,7 +301,6 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         ongkirTableView.isHidden = false
     }
     
-    
     @objc func handleTerimaOffer(){
         
         if(ongkirText.text == ""){
@@ -310,62 +309,51 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
             self.present(alert, animated: true)
-        }else{
+        }else if(ongkirText.text == "JNE Tidak Ada - Rp 0"){
+            let alert = UIAlertController(title: "Message", message: "JNE Tidak Mendukung Daerah Anda", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        } else{
             
             // create the alert
-            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menerima Offer?", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin ?", preferredStyle: UIAlertControllerStyle.alert)
             
             // add the actions (buttons)
             alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
             
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                
-                let saldo = Int((self.isiUser?.valueSaldo)!)
-                let harga = Int((self.varOffer?.valueHarga)!)
-                let ongkir = Int(self.selectedHarga)
-                
-                let hargaTotal = harga! + ongkir!
-                print(hargaTotal)
-                if saldo! < hargaTotal {
-                    let alert = UIAlertController(title: "Message", message: "Saldo Anda Kurang, Saldo Saat ini adalah Rp " + (self.isiUser?.saldo)!, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
+               
+                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id , let idPenawar = self.varOffer?.idPenawar{
                     
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                    
-                    self.present(alert, animated: true)
-                }else{
-                    
-                    let saldoNow : Int = saldo! - hargaTotal
-                    print(saldoNow)
-                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let saldo : String = String(saldoNow), let idRequest = self.app?.id {
+                    let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"idPenawar":idPenawar,"action":"confirm"]
+                    print (parameter)
+                    Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
+                        response in
                         
-                        let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"saldo":saldoNow,"email":emailNow,"idRequest": idRequest,"action":"accept"]
-                        print (parameter)
-                        Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
-                            response in
+                        //mengambil json
+                        let json = JSON(response.result.value)
+                        print(json)
+                        let cekSukses = json["success"].intValue
+                        let pesan = json["message"].stringValue
+                        
+                        if cekSukses != 1 {
+                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                             
-                            //mengambil json
-                            let json = JSON(response.result.value)
-                            print(json)
-                            let cekSukses = json["success"].intValue
-                            let pesan = json["message"].stringValue
+                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                             
-                            if cekSukses != 1 {
-                                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                            self.present(alert, animated: true)
+                        }else{
+                            let alert = UIAlertController(title: "Message", message: "Belikan Barang Berhasil", preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                                 
-                                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                                self.handleBack()
                                 
-                                self.present(alert, animated: true)
-                            }else{
-                                let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
-                                
-                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                                    
-                                    self.handleBack()
-                                    
-                                }))
-                                
-                                self.present(alert, animated: true)
-                            }
+                            }))
+                            
+                            self.present(alert, animated: true)
                         }
                     }
                 }
@@ -380,15 +368,15 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @objc func handleTolak(){
         // create the alert
-        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menolak Offer?", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin?", preferredStyle: UIAlertControllerStyle.alert)
         
         // add the actions (buttons)
         alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
         
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id{
                 
-                let parameter: Parameters = ["idOffer":idOffer,"action":"decline"]
+                let parameter: Parameters = ["idOffer":idOffer,"action":"confirm"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
                     response in
@@ -460,7 +448,7 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     let labelB : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Harga Penawaran (Belum Termasuk Ongkir) "
+        label.text = "Harga Barang "
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -477,7 +465,7 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     let labelC : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Dikirim Dari "
+        label.text = "Jumlah Barang "
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -523,33 +511,31 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         return label
     }()
     
-    
-    
-//    let postButton : UIButton = {
-//        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-//        button.setTitle("Terima", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.setTitleColor(.cyan, for: .selected)
-//        button.backgroundColor = UIColor.blue
-//        button.clipsToBounds = true
-//        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//
-//    }()
-//
-//    let declineButton : UIButton = {
-//        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-//        button.setTitle("Tolak", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.setTitleColor(.cyan, for: .selected)
-//        button.backgroundColor = UIColor.red
-//        button.clipsToBounds = true
-//        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//
-//    }()
+    let postButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Barang Sudah Dibelikan", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        button.backgroundColor = UIColor.blue
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+
+    }()
+
+    //    let declineButton : UIButton = {
+    //        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    //        button.setTitle("Tolak", for: .normal)
+    //        button.setTitleColor(.white, for: .normal)
+    //        button.setTitleColor(.cyan, for: .selected)
+    //        button.backgroundColor = UIColor.red
+    //        button.clipsToBounds = true
+    //        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
+    //        button.translatesAutoresizingMaskIntoConstraints = false
+    //        return button
+    //
+    //    }()
     
     let dividerLineView1: UIView = {
         let view = UIView()
@@ -635,22 +621,21 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         labelTotal.font = UIFont.systemFont(ofSize: 25)
         labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
-//        scrollView.addSubview(postButton)
-//        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-//        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-//        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-//        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-//
-//        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-//
-//        scrollView.addSubview(declineButton)
-//        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-//        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-//        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-//        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-//
-//        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-//
+        scrollView.addSubview(postButton)
+        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        
+        //        scrollView.addSubview(declineButton)
+        //        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        //        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        //        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
+        //        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        //
+        //        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        //
         
     }
     

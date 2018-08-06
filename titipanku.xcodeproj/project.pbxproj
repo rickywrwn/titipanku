@@ -27,16 +27,20 @@
 		7E5D9859210590F4006690B0 /* PesanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D9858210590F3006690B0 /* PesanController.swift */; };
 		7E5D985B210604BB006690B0 /* AcceptPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D985A210604BB006690B0 /* AcceptPreorder.swift */; };
 		7E5D985D21062159006690B0 /* FlashsaleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D985C21062159006690B0 /* FlashsaleDetail.swift */; };
-		7E5D985F21064A88006690B0 /* ListPembeliPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D985E21064A88006690B0 /* ListPembeliPreorder.swift */; };
+		7E5D985F21064A88006690B0 /* AcceptPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D985E21064A88006690B0 /* AcceptPembelian.swift */; };
 		7E5D98612106C5F0006690B0 /* ListPembeliFlashSale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D98602106C5F0006690B0 /* ListPembeliFlashSale.swift */; };
 		7E5D98632106C630006690B0 /* AcceptFlashsale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D98622106C630006690B0 /* AcceptFlashsale.swift */; };
 		7E5D98652106C95D006690B0 /* UserPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D98642106C95D006690B0 /* UserPembelian.swift */; };
 		7E5D98672106C99E006690B0 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D98662106C99E006690B0 /* UserRequest.swift */; };
 		7E5D98692106C9AA006690B0 /* UserPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D98682106C9AA006690B0 /* UserPreorder.swift */; };
 		7E72A4732116E8E500391FA7 /* AcceptedOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E72A4722116E8E500391FA7 /* AcceptedOffer.swift */; };
+		7E72A475211731DE00391FA7 /* ConfirmAcceptedOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E72A474211731DE00391FA7 /* ConfirmAcceptedOffer.swift */; };
+		7E72A4772117EBAD00391FA7 /* PengirimanOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E72A4762117EBAD00391FA7 /* PengirimanOffer.swift */; };
 		7E8B5DAD210DB2D000FFBC85 /* MoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B5DAC210DB2D000FFBC85 /* MoreController.swift */; };
 		7E8B5DAF210DFADF00FFBC85 /* WalletController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B5DAE210DFADF00FFBC85 /* WalletController.swift */; };
 		7E8B5DB1210E06E300FFBC85 /* TopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B5DB0210E06E300FFBC85 /* TopupController.swift */; };
+		7E977E04211841FE00D65F76 /* PenerimaanOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E03211841FE00D65F76 /* PenerimaanOffer.swift */; };
+		7E977E06211846A000D65F76 /* CompletedOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E05211846A000D65F76 /* CompletedOffer.swift */; };
 		7EA9CCCB20F3422A003C8D8D /* Pods_titipanku.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EDED74920F7329D005BCA76 /* OfferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74820F7329D005BCA76 /* OfferController.swift */; };
 		7EDED74B20F7470C005BCA76 /* OfferController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74A20F7470C005BCA76 /* OfferController2.swift */; };
@@ -107,17 +111,21 @@
 		7E5D9858210590F3006690B0 /* PesanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PesanController.swift; sourceTree = "<group>"; };
 		7E5D985A210604BB006690B0 /* AcceptPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptPreorder.swift; sourceTree = "<group>"; };
 		7E5D985C21062159006690B0 /* FlashsaleDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashsaleDetail.swift; sourceTree = "<group>"; };
-		7E5D985E21064A88006690B0 /* ListPembeliPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPembeliPreorder.swift; sourceTree = "<group>"; };
+		7E5D985E21064A88006690B0 /* AcceptPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptPembelian.swift; sourceTree = "<group>"; };
 		7E5D98602106C5F0006690B0 /* ListPembeliFlashSale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPembeliFlashSale.swift; sourceTree = "<group>"; };
 		7E5D98622106C630006690B0 /* AcceptFlashsale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFlashsale.swift; sourceTree = "<group>"; };
 		7E5D98642106C95D006690B0 /* UserPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPembelian.swift; sourceTree = "<group>"; };
 		7E5D98662106C99E006690B0 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		7E5D98682106C9AA006690B0 /* UserPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreorder.swift; sourceTree = "<group>"; };
 		7E72A4722116E8E500391FA7 /* AcceptedOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedOffer.swift; sourceTree = "<group>"; };
+		7E72A474211731DE00391FA7 /* ConfirmAcceptedOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAcceptedOffer.swift; sourceTree = "<group>"; };
+		7E72A4762117EBAD00391FA7 /* PengirimanOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PengirimanOffer.swift; sourceTree = "<group>"; };
 		7E8B5DAC210DB2D000FFBC85 /* MoreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreController.swift; sourceTree = "<group>"; };
 		7E8B5DAE210DFADF00FFBC85 /* WalletController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletController.swift; sourceTree = "<group>"; };
 		7E8B5DB0210E06E300FFBC85 /* TopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopupController.swift; sourceTree = "<group>"; };
 		7E8DA56220F33FB7003C9D1F /* titipanku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = titipanku.entitlements; sourceTree = "<group>"; };
+		7E977E03211841FE00D65F76 /* PenerimaanOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenerimaanOffer.swift; sourceTree = "<group>"; };
+		7E977E05211846A000D65F76 /* CompletedOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedOffer.swift; sourceTree = "<group>"; };
 		7EDED74820F7329D005BCA76 /* OfferController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController.swift; sourceTree = "<group>"; };
 		7EDED74A20F7470C005BCA76 /* OfferController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController2.swift; sourceTree = "<group>"; };
 		7EDED74C20F7471E005BCA76 /* OfferController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController3.swift; sourceTree = "<group>"; };
@@ -222,10 +230,14 @@
 				9C54771E20ACBFB200B3797E /* barangDetailController.swift */,
 				7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */,
 				7E72A4722116E8E500391FA7 /* AcceptedOffer.swift */,
+				7E977E05211846A000D65F76 /* CompletedOffer.swift */,
+				7E72A474211731DE00391FA7 /* ConfirmAcceptedOffer.swift */,
+				7E72A4762117EBAD00391FA7 /* PengirimanOffer.swift */,
+				7E977E03211841FE00D65F76 /* PenerimaanOffer.swift */,
 				7EDED74820F7329D005BCA76 /* OfferController.swift */,
 				3C12439E20DFE78600852D2D /* PreorderDetail.swift */,
 				7E5D985A210604BB006690B0 /* AcceptPreorder.swift */,
-				7E5D985E21064A88006690B0 /* ListPembeliPreorder.swift */,
+				7E5D985E21064A88006690B0 /* AcceptPembelian.swift */,
 				7E5D985C21062159006690B0 /* FlashsaleDetail.swift */,
 				7E5D98602106C5F0006690B0 /* ListPembeliFlashSale.swift */,
 				7E5D98622106C630006690B0 /* AcceptFlashsale.swift */,
@@ -476,12 +488,14 @@
 				7E5D98632106C630006690B0 /* AcceptFlashsale.swift in Sources */,
 				9C6463BC20BF696A001E681A /* UserTripList.swift in Sources */,
 				7E58EA812113D28A00BF7A2E /* ExploreNegaraRequest.swift in Sources */,
+				7E977E04211841FE00D65F76 /* PenerimaanOffer.swift in Sources */,
+				7E72A4772117EBAD00391FA7 /* PengirimanOffer.swift in Sources */,
 				7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */,
 				9C588854207E09CA00F6F23A /* TabController.swift in Sources */,
 				7EDED75120FE47FF005BCA76 /* AddDurasiPreorder.swift in Sources */,
 				7E4A2EA22113559F003F472A /* AllRequest.swift in Sources */,
 				9CE2AC9B20850601005C1D49 /* InboxController.swift in Sources */,
-				7E5D985F21064A88006690B0 /* ListPembeliPreorder.swift in Sources */,
+				7E5D985F21064A88006690B0 /* AcceptPembelian.swift in Sources */,
 				7EDED74F20F8EE2F005BCA76 /* AcceptOffer.swift in Sources */,
 				7E8B5DAF210DFADF00FFBC85 /* WalletController.swift in Sources */,
 				7EDED74B20F7470C005BCA76 /* OfferController2.swift in Sources */,
@@ -501,6 +515,7 @@
 				7E5D98672106C99E006690B0 /* UserRequest.swift in Sources */,
 				7EDED74920F7329D005BCA76 /* OfferController.swift in Sources */,
 				7EDED74D20F7471E005BCA76 /* OfferController3.swift in Sources */,
+				7E977E06211846A000D65F76 /* CompletedOffer.swift in Sources */,
 				7E8B5DB1210E06E300FFBC85 /* TopupController.swift in Sources */,
 				7E5D9859210590F4006690B0 /* PesanController.swift in Sources */,
 				7E58EA892113F86B00BF7A2E /* ExploreKategoriPreorder.swift in Sources */,
@@ -512,6 +527,7 @@
 				9C7177B4206BCCB70082E417 /* homeController.swift in Sources */,
 				7E58EA7D2113CDB500BF7A2E /* ExploreNegara.swift in Sources */,
 				7E5D9857210590E3006690B0 /* NotifikasiController.swift in Sources */,
+				7E72A475211731DE00391FA7 /* ConfirmAcceptedOffer.swift in Sources */,
 				9C82E69620BF231600B21F21 /* PostPreorder.swift in Sources */,
 				7E58EA7F2113CDC600BF7A2E /* ExploreKategori.swift in Sources */,
 				7E5D985D21062159006690B0 /* FlashsaleDetail.swift in Sources */,

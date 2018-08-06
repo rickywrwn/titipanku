@@ -21,8 +21,9 @@ struct VarOfferPreorder: Decodable {
     let kota: String
     let idKota : String
     let hargaOngkir: String
+    let jenisOngkir: String
     let pengiriman : String
-    let resi : String
+    let nomorResi : String
     let valueHarga : String
     let status: String
 }
@@ -167,7 +168,8 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         let layout = UICollectionViewFlowLayout()
         let komentarController = KomentarBarangController(collectionViewLayout: layout)
         //komentarController.app = app
-        navigationController?.pushViewController(komentarController, animated: true)
+        print(app?.status)
+        //navigationController?.pushViewController(komentarController, animated: true)
     }
     func showOffer() {
         let appDetailController = OfferController()
@@ -181,7 +183,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc func showAcceptPreorder(_ notification: NSNotification) {
-        let appDetailController = ListPembeliPreorder()
+        let appDetailController = AcceptPembelian()
         appDetailController.app = app
         if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
             appDetailController.varOffer = varOffer
@@ -299,7 +301,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         }else if indexPath.item == 1{
             return CGSize(width: view.frame.width, height: 145)
         }else if indexPath.item == 2{
-            return CGSize(width: view.frame.width, height: 220)
+            return CGSize(width: view.frame.width, height: 235)
         }else if indexPath.item == 3{
             return CGSize(width: view.frame.width, height: 70)
         }
@@ -1047,7 +1049,7 @@ class OfferListKiri1: BaseCell {
         addConstraintsWithFormat("H:|-25-[v0(85)]|", views: imageView)
         addConstraintsWithFormat("H:|[v0]|", views: nameLabel)
         
-        addConstraintsWithFormat("V:|[v0(85)]-5-[v1]", views: imageView,nameLabel)
+        addConstraintsWithFormat("V:|-10-[v0(85)]-5-[v1]", views: imageView,nameLabel)
         
     }
     

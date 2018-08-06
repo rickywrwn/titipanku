@@ -217,6 +217,7 @@ class AppCell: UICollectionViewCell {
                         if let image = response.result.value {
                             //print("image downloaded: \(image)")
                             self.imageView.image = image
+                            
                         }
                     }
                 }

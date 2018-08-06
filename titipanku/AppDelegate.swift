@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         UINavigationBar.appearance().barTintColor = UIColor(hex: "#3867d6")
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         UINavigationBar.appearance().tintColor = .white
         let layout = UICollectionViewFlowLayout()
         let homeControllers = homeController(collectionViewLayout: layout)

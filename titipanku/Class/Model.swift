@@ -81,6 +81,7 @@ struct App: Decodable {
     var status: String?
     var deadline: String?
     var valueHarga: String?
+    var nomorResi: String?
     
     var Screenshots: [String]?
     var appInformation: [AppInformation]?

@@ -604,7 +604,7 @@ class InputCell1Pre: BaseCell {
         
         addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
         addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v3(100)]-5-[v1]-5-[v6]-5-[v2]-5-[v5]-5-[v4]", views: imageView,labelNama,labelKategori,BarangImageView,labelUrl,deskripsi,labelBrand)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v3(100)]-5-[v1]-5-[v6]-5-[v2]-5-[v4]-5-[v5]", views: imageView,labelNama,labelKategori,BarangImageView,labelUrl,deskripsi,labelBrand)
         addConstraintsWithFormat("V:|-243-[v0]|", views: descText)
         
     }

@@ -78,8 +78,8 @@ class UserPembelian: UIViewController {
         
         navSegmentControl.addTarget(self, action: #selector(madeSelection), for: .valueChanged)
         
-        navSegmentControl.insertSegment(withTitle: "Notifikasi", at: 0, animated: false)
-        navSegmentControl.insertSegment(withTitle: "Pesan", at: 1, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Request", at: 0, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Preorder", at: 1, animated: false)
         navSegmentControl.selectedSegmentIndex = 0
         
         view.addSubview(containerView)

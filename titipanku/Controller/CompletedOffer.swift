@@ -1,10 +1,11 @@
 //
-//  AcceptedOffer.swift
+//  CompletedOffer.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 05/08/18.
+//  Created by Ricky Wirawan on 06/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
+
 import UIKit
 import Alamofire
 import SwiftyPickerPopover
@@ -12,7 +13,7 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 import MidtransKit
 
-class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CompletedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var selectedHarga : String = ""
     var selectedJenis : String = ""
@@ -167,7 +168,7 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Tawaran"
+        navigationItem.title = "Penawaran Selesai"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
@@ -443,7 +444,7 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     let labelA : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Tanggal Kembali Ke Indonesia "
+        label.text = "Tanggal Penerimaan "
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -525,31 +526,31 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     
     
     
-//    let postButton : UIButton = {
-//        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-//        button.setTitle("Terima", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.setTitleColor(.cyan, for: .selected)
-//        button.backgroundColor = UIColor.blue
-//        button.clipsToBounds = true
-//        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//
-//    }()
-//
-//    let declineButton : UIButton = {
-//        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-//        button.setTitle("Tolak", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.setTitleColor(.cyan, for: .selected)
-//        button.backgroundColor = UIColor.red
-//        button.clipsToBounds = true
-//        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//
-//    }()
+    //    let postButton : UIButton = {
+    //        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    //        button.setTitle("Terima", for: .normal)
+    //        button.setTitleColor(.white, for: .normal)
+    //        button.setTitleColor(.cyan, for: .selected)
+    //        button.backgroundColor = UIColor.blue
+    //        button.clipsToBounds = true
+    //        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
+    //        button.translatesAutoresizingMaskIntoConstraints = false
+    //        return button
+    //
+    //    }()
+    //
+    //    let declineButton : UIButton = {
+    //        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    //        button.setTitle("Tolak", for: .normal)
+    //        button.setTitleColor(.white, for: .normal)
+    //        button.setTitleColor(.cyan, for: .selected)
+    //        button.backgroundColor = UIColor.red
+    //        button.clipsToBounds = true
+    //        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
+    //        button.translatesAutoresizingMaskIntoConstraints = false
+    //        return button
+    //
+    //    }()
     
     let dividerLineView1: UIView = {
         let view = UIView()
@@ -635,23 +636,24 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         labelTotal.font = UIFont.systemFont(ofSize: 25)
         labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
-//        scrollView.addSubview(postButton)
-//        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-//        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-//        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-//        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-//
-//        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-//
-//        scrollView.addSubview(declineButton)
-//        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-//        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-//        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-//        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-//
-//        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-//
+        //        scrollView.addSubview(postButton)
+        //        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        //        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        //        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
+        //        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        //
+        //        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        //
+        //        scrollView.addSubview(declineButton)
+        //        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        //        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        //        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
+        //        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        //
+        //        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        //
         
     }
     
 }
+

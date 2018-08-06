@@ -13,6 +13,7 @@ import SwiftyPickerPopover
 import SwiftyJSON
 import Alamofire_SwiftyJSON
 import MidtransKit
+import SKActivityIndicatorView
 
 class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
  
@@ -22,6 +23,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     var arrNama = [String]()
     var arrHarga = [String]()
+    var arrEtd = [String]()
     var statusTable : Int = 0
     var prvv : raja?
     var kota : rajaKota?
@@ -59,7 +61,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                         self.isiUser = try decoder.decode(userDetail.self, from: data)
                         print(self.isiUser)
                         //self.labelB.text = "Rp " + (self.isiUser?.saldo)!
-                        
+                        SKActivityIndicator.dismiss()
                     } catch let jsonErr {
                         print("Failed to decode:", jsonErr)
                     }
@@ -169,6 +171,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SKActivityIndicator.show("Loading...")
         view.backgroundColor = UIColor.white
         navigationItem.title = "Tawaran"
         print("Bantu belikan Barang Loaded")
@@ -218,7 +221,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.tag == 3{
             print("Num: \(indexPath.row)")
-            ongkirText.text = "JNE " + arrNama[indexPath.row] + " - Rp " + arrHarga[indexPath.row]
+            ongkirText.text = "JNE " + arrNama[indexPath.row] + " - Rp " + arrHarga[indexPath.row] + " (" + arrEtd[indexPath.row] + " Hari)"
             ongkirTableView.isHidden = true
             selectedHarga = arrHarga[indexPath.row]
             selectedJenis = arrNama[indexPath.row]
@@ -238,7 +241,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
         let paket = arrNama[indexPath.row]
         let harga = arrHarga[indexPath.row]
-        cell.textLabel?.text = paket + " - " + harga
+        cell.textLabel?.text = paket + " - " + harga + " (" + arrEtd[indexPath.row] + " Hari)"
         
         return cell
     }
@@ -267,17 +270,21 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                         for i in 0 ..< hasil.count {
                             let servis = hasil[i]["service"]
                             let harga = hasil[i]["cost"][0]["value"]
+                            let etd = hasil[i]["cost"][0]["etd"]
                             print(servis.stringValue)
                             print(harga.stringValue)
                             self.arrNama.append(servis.stringValue)
                             self.arrHarga.append(harga.stringValue)
+                            self.arrEtd.append(etd.stringValue)
                             print(self.arrNama)
                             print(self.arrHarga)
+                            print(self.arrEtd)
                             self.ongkirTableView.reloadData()
                         }
                         if hasil.count == 0{
                             self.arrNama.append("Tidak Ada")
                             self.arrHarga.append("0")
+                            self.arrEtd.append("-")
                         }
                         self.ongkirTableView.reloadData()
                         print(hasil.count)

@@ -97,7 +97,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                 do {
                     let decoder = JSONDecoder()
                     self.offers = try decoder.decode([VarOffer].self, from: data)
-                    //print(self.offers)
+                    print(self.offers)
                     
                     SKActivityIndicator.dismiss()
                     DispatchQueue.main.async(execute: { () -> Void in
@@ -134,9 +134,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         collectionView?.alwaysBounceVertical = true
         
         collectionView?.backgroundColor = UIColor.white
-        
         collectionView?.register(AppDetailHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        
         collectionView?.register(AppDetailDescriptionCell.self, forCellWithReuseIdentifier: descriptionCellId)
         collectionView?.register(AppDetailButtons.self, forCellWithReuseIdentifier: buttonCellId)
         collectionView?.register(AppDetailOffer.self, forCellWithReuseIdentifier: offerCellId)
@@ -147,26 +145,34 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptedOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptedOffer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showConfirmAcceptedOffer(_:)), name: NSNotification.Name(rawValue: "toConfirmAcceptedOffer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPengirimanOffer(_:)), name: NSNotification.Name(rawValue: "toPengirimanOffer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPenerimaanOffer(_:)), name: NSNotification.Name(rawValue: "toPenerimaanOffer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showCompletedOffer(_:)), name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
         adaNawar = false
+        statusOffer = false
         SKActivityIndicator.show("Loading...")
         self.fetchOffer{(offers) -> ()in
             self.offers = offers
             print("count offers" + String(self.offers.count))
             for i in 0 ..< self.offers.count {
+                print(self.offers[i].status)
                 if self.offers[i].status != "1"{
                     statusOffer = true
+                    print("nocok")
+                }else{
+                    print("cok")
                 }
-                
             }
+            
             self.collectionView?.reloadData()
         }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        adaNawar = false
-        statusOffer = false
+        
         collectionView?.reloadData()
     }
     
@@ -178,8 +184,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             self.offers = offers
             print(self.offers)
             print("count baru" + String(self.offers.count))
-            SKActivityIndicator.dismiss()
             self.collectionView?.reloadData()
+            SKActivityIndicator.dismiss()
         }
     }
     
@@ -190,7 +196,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         //komentarController.app = app
         print(statusOffer)
         print(self.app?.status)
-        print(self.offers[0].id)
+        print(self.app?.nomorResi)
+        //print(self.offers[0].id)
         //navigationController?.pushViewController(komentarController, animated: true)
     }
     func showOffer() {
@@ -254,6 +261,38 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         }
         navigationController?.pushViewController(appDetailController, animated: true)
     }
+    @objc func showConfirmAcceptedOffer(_ notification: NSNotification) {
+        let appDetailController = ConfirmAcceptedOffer()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    @objc func showPengirimanOffer(_ notification: NSNotification) {
+        let appDetailController = PengirimanOffer()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    @objc func showPenerimaanOffer(_ notification: NSNotification) {
+        let appDetailController = PenerimaanOffer()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    @objc func showCompletedOffer(_ notification: NSNotification) {
+        let appDetailController = CompletedOffer()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -290,14 +329,21 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                 cell.user = (app?.email)!
                 cell.statusOffer = statusOffer
                 cell.backgroundColor = UIColor(hex: "#4b6584")
+                cell.userCollectionView.reloadData()
+                
                 return cell
-            }else if self.app?.status == "2"{
+            }else{
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser
                 //cell.diskusiButton.setTitle(app?.email, for: .normal)
                 cell.user = (app?.email)!
-                cell.traveller = self.offers[0].idPenawar
+                if self.offers.count > 0 {
+                    cell.traveller = self.offers[0].idPenawar
+                }else{
+                    cell.traveller = ""
+                }
                 cell.statusOffer = statusOffer
                 cell.backgroundColor = UIColor(hex: "#4b6584")
+                cell.userCollectionView.reloadData()
                 return cell
             }
         
@@ -315,9 +361,23 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         cell.backgroundColor = UIColor.white
                         cell.nameLabel.textColor = UIColor.black
                     }else{
-                        cell.nameLabel.text = "Penawaran Yang Disetujui"
-                        cell.backgroundColor = UIColor(hex: "#20bf6b")
-                        cell.nameLabel.textColor = UIColor.white
+                        if self.app?.status == "2" {
+                            cell.nameLabel.text = "Penawaran Yang Disetujui"
+                            cell.backgroundColor = UIColor(hex: "#20bf6b")
+                            cell.nameLabel.textColor = UIColor.white
+                        }else if self.app?.status == "3" {
+                            cell.nameLabel.text = "Request Anda Sudah Dibelikan"
+                            cell.backgroundColor = UIColor(hex: "#20bf6b")
+                            cell.nameLabel.textColor = UIColor.white
+                        }else if self.app?.status == "4" {
+                            cell.nameLabel.text = "Request Anda Sudah Dikirim"
+                            cell.backgroundColor = UIColor(hex: "#20bf6b")
+                            cell.nameLabel.textColor = UIColor.white
+                        }else if self.app?.status == "5" {
+                            cell.nameLabel.text = "Request Selesai"
+                            cell.backgroundColor = UIColor(hex: "#20bf6b")
+                            cell.nameLabel.textColor = UIColor.white
+                        }
                     }
                     
                 }else{
@@ -329,7 +389,6 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                             cekBeli = true
                         }
                     }
-                    
                     if cekBeli == false{
                         if statusOffer == false{
                             cell.nameLabel.text = "Bantu Belikan"
@@ -349,11 +408,12 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                             cell.backgroundColor = UIColor(hex: "#eb3b5a")
                             cell.nameLabel.textColor = UIColor.white
                         }else{
-                            cell.nameLabel.text = "Penawaran Anda Sudah Diterima"
-                            cell.backgroundColor = UIColor(hex: "#20bf6b")
-                            cell.nameLabel.textColor = UIColor.white
+                            if self.app?.status == "2" {
+                                cell.nameLabel.text = "Penawaran Anda Sudah Diterima"
+                                cell.backgroundColor = UIColor(hex: "#20bf6b")
+                                cell.nameLabel.textColor = UIColor.white
+                            }
                         }
-                        
                     }
                     
                 }
@@ -992,8 +1052,6 @@ class AppOfferList: BaseCell , UICollectionViewDataSource, UICollectionViewDeleg
                     } catch let err {
                         print(err)
                     }
-                    
-                    
                 }).resume()
             }
         }
@@ -1214,7 +1272,9 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
         
         if indexPath.row == 0{
             print(varOffer?.idPenawar)
+            print(statusOffer)
         }else{
+            
             print("statusoffernow")
             print(statusOffer)
             if statusOffer == false{
@@ -1227,13 +1287,56 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
                     print(varOffer?.hargaPenawaran)
                 }
             }else{
-                print(statusOffer)
-                let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptedOffer"), object: nil, userInfo: dataIdOffer)
+                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+                    if varOffer?.status == "2"{
+                        if emailNow != varOffer?.idPenawar{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptedOffer"), object: nil, userInfo: dataIdOffer)
+                            print("tinggal nunggu dibelikan")
+                        }else{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toConfirmAcceptedOffer"), object: nil, userInfo: dataIdOffer)
+                        }
+                    }else if varOffer?.status == "3"{
+                        if emailNow != varOffer?.idPenawar{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptedOffer"), object: nil, userInfo: dataIdOffer)
+                            print("tinggal nunggu Dikirim")
+                        }else{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toPengirimanOffer"), object: nil, userInfo: dataIdOffer)
+                        }
+                    }else if varOffer?.status == "4"{
+                        if emailNow != varOffer?.idPenawar{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toPenerimaanOffer"), object: nil, userInfo: dataIdOffer)
+                            print("tinggal nunggu Sampai")
+                        }else{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptedOffer"), object: nil, userInfo: dataIdOffer)
+                        }
+                    }else if varOffer?.status == "5"{
+                        if emailNow != varOffer?.idPenawar{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil, userInfo: dataIdOffer)
+                            print("tinggal nunggu Sampai")
+                        }else{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil, userInfo: dataIdOffer)
+                        }
+                    }
+                    
+                }
                 
-                print("tinggal nunggu dibelikan")
             }
-            
             
         }
     }

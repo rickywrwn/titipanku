@@ -11,6 +11,7 @@ import SKActivityIndicatorView
 import Alamofire
 import AlamofireImage
 import Hue
+import SKActivityIndicatorView
 
 class AllPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -48,10 +49,12 @@ class AllPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
         self.fetchRequests{(requests) -> ()in
             self.requests = requests
             print("count Preorder" + String(self.requests.count))
             self.collectionView?.reloadData()
+            SKActivityIndicator.dismiss()
         }
         collectionView?.backgroundColor = UIColor.white
         navigationItem.title = "Preorder"
@@ -67,7 +70,7 @@ class AllPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! RequestCell
         cell.app = requests[indexPath.row]
         cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor(hex: "#3867d6").cgColor
+        cell.layer.borderColor = UIColor(hex: "#d1d8e0").cgColor
         return cell
     }
     
