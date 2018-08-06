@@ -99,7 +99,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Pembeli Preorder"
+        navigationItem.title = "Lihat Preorder"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false

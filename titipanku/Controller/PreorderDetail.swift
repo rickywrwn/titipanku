@@ -106,6 +106,37 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
     }
     
+    func fetchBeliPembeli(_ completionHandler: @escaping ([VarOfferPreorder]) -> ()) {
+        if let id = self.app?.id, let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            let urlString = "http://titipanku.xyz/api/GetBeliPembeli.php?idPreorder=\(id)&idPembeli=\(emailNow)"
+            
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.offers = try decoder.decode([VarOfferPreorder].self, from: data)
+                    print(self.offers)
+                    print(self.offers.count)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.offers)
+                    })
+                    
+                } catch let err {
+                    print(err)
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
+    }
+    
     fileprivate let headerId = "headerId"
     fileprivate let cellId = "cellId"
     fileprivate let descriptionCellId = "descriptionCellId"
@@ -137,12 +168,24 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptPreorder(_:)), name: NSNotification.Name(rawValue: "toAcceptPreorder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadPreorderDetail"), object: nil)
          SKActivityIndicator.show("Loading...")
-        self.fetchBeli{(offers) -> ()in
-            self.offers = offers
-            print("count" + String(self.offers.count))
-            self.collectionView?.reloadData()
-            SKActivityIndicator.dismiss()
+        if let email = self.app?.email, let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            if email == emailNow {
+                self.fetchBeli{(offers) -> ()in
+                    self.offers = offers
+                    print("count" + String(self.offers.count))
+                    self.collectionView?.reloadData()
+                    SKActivityIndicator.dismiss()
+                }
+            }else{
+                self.fetchBeliPembeli{(offers) -> ()in
+                    self.offers = offers
+                    print("count" + String(self.offers.count))
+                    self.collectionView?.reloadData()
+                    SKActivityIndicator.dismiss()
+                }
+            }
         }
+        
         
     }
     
@@ -154,12 +197,27 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         self.offers = []
         self.collectionView?.reloadData()
         print("count baru" + String(self.offers.count))
-        self.fetchBeli{(offers) -> ()in
-            self.offers = offers
-            print(self.offers)
-            print("count baru" + String(self.offers.count))
-            self.collectionView!.reloadData()
-            SKActivityIndicator.dismiss()
+        if let email = self.app?.email, let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            if email == emailNow {
+                
+                self.fetchBeli{(offers) -> ()in
+                    self.offers = offers
+                    print(self.offers)
+                    print("count baru" + String(self.offers.count))
+                    self.collectionView!.reloadData()
+                    SKActivityIndicator.dismiss()
+                }
+            }else{
+                
+                self.fetchBeliPembeli{(offers) -> ()in
+                    self.offers = offers
+                    print(self.offers)
+                    print("count baru" + String(self.offers.count))
+                    self.collectionView!.reloadData()
+                    SKActivityIndicator.dismiss()
+                }
+            }
+            
         }
     }
     
@@ -169,6 +227,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         let komentarController = KomentarBarangController(collectionViewLayout: layout)
         //komentarController.app = app
         print(app?.status)
+        print(offers)
         //navigationController?.pushViewController(komentarController, animated: true)
     }
     func showOffer() {
@@ -226,20 +285,12 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
             return cell
         }else if indexPath.item == 2 {
             
-            if self.app?.status == "1"{
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser1
-                //cell.diskusiButton.setTitle(app?.email, for: .normal)
-                cell.user = (app?.email)!
-                cell.backgroundColor = UIColor(hex: "#4b6584")
-                return cell
-            }else {
-                
-            }
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! AppDetailUser1
-            
-            
+            //cell.diskusiButton.setTitle(app?.email, for: .normal)
+            cell.user = (app?.email)!
+            cell.backgroundColor = UIColor(hex: "#4b6584")
             return cell
+            
         }else if indexPath.item == 3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer1
             
@@ -252,6 +303,14 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
                             
                         }else{
                             
+                            cell.nameLabel.text = "Beli"
+                        }
+                    }else if status == "2"{
+                        if self.app?.email == emailNow{
+                            //jika request milik sendiri
+                            cell.nameLabel.text = "List Pembeli"
+                            
+                        }else{
                             cell.nameLabel.text = "Beli"
                         }
                     }
@@ -275,7 +334,17 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
                 }else if email == emailNow && offers.count == 0{
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
                     return cell
-                }else if email != emailNow {
+                }else if email != emailNow && offers.count > 0 {
+                    
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListCellId, for: indexPath) as! AppOfferList1
+                    //cell.varOffer = offers[i]
+                    //cell.backgroundColor = UIColor.black
+                    cell.offers = offers
+                    cell.app = app
+                    cell.offerCollectionView.reloadData()
+                    return cell
+                    
+                }else if email != emailNow && offers.count == 0 {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppCellKosongCellId, for: indexPath) as! AppCellKosong
                     return cell
                 }
@@ -314,6 +383,13 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
                     return CGSize(width: view.frame.width, height: 350)
                 }
             }else if email == emailNow  && offers.count == 0{
+                return CGSize(width: view.frame.width, height: 0)
+            }else if email != emailNow  && offers.count > 0{
+                //jika user sendiri
+                if indexPath.item == 4{
+                    return CGSize(width: view.frame.width, height: 350)
+                }
+            }else if email != emailNow  && offers.count == 0{
                 return CGSize(width: view.frame.width, height: 0)
             }
             
@@ -800,7 +876,6 @@ class AppOfferList1: BaseCell , UICollectionViewDataSource, UICollectionViewDele
         }
     }
     
-    
     let offerCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -846,6 +921,7 @@ class AppOfferList1: BaseCell , UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         for i in 0 ..< offers.count {
+            
             if indexPath.row == i{
                 
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListDalamId, for: indexPath) as! AppOfferListDalam1
@@ -974,7 +1050,6 @@ class AppOfferListDalam1: BaseCell , UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
         if indexPath.item == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListKiriCellId, for: indexPath) as! OfferListKiri1
             //cell.app = appCategory?.apps?[indexPath.item]
@@ -997,6 +1072,7 @@ class AppOfferListDalam1: BaseCell , UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         if indexPath.item == 0{
             return CGSize(width: frame.width/3-5, height: frame.height)
         }else{
@@ -1013,6 +1089,7 @@ class AppOfferListDalam1: BaseCell , UICollectionViewDataSource, UICollectionVie
             print(varOffer?.idPembeli)
         }else{
             print(varOffer)
+            
             //print(varOffer?.hargaPenawaran)
             let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptPreorder"), object: nil, userInfo: dataIdOffer)
