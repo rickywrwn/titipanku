@@ -166,6 +166,11 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.register(ScreenshotsCell.self, forCellWithReuseIdentifier: cellId)
         
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptPreorder(_:)), name: NSNotification.Name(rawValue: "toAcceptPreorder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showLihatPreorder(_:)), name: NSNotification.Name(rawValue: "toLihatPreorder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showLihatResiPreorder(_:)), name: NSNotification.Name(rawValue: "toLihatResiPreorder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showAcceptedPreorder(_:)), name: NSNotification.Name(rawValue: "toAcceptedPreorder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPengirimanPreorder(_:)), name: NSNotification.Name(rawValue: "toPengirimanPreorder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPenerimaanPreorder(_:)), name: NSNotification.Name(rawValue: "toPenerimaanPreorder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadPreorderDetail"), object: nil)
          SKActivityIndicator.show("Loading...")
         if let email = self.app?.email, let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
@@ -197,6 +202,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         self.offers = []
         self.collectionView?.reloadData()
         print("count baru" + String(self.offers.count))
+        SKActivityIndicator.show("Loading...")
         if let email = self.app?.email, let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             if email == emailNow {
                 
@@ -240,7 +246,6 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         print(app?.id)
        
     }
-    
     @objc func showAcceptPreorder(_ notification: NSNotification) {
         let appDetailController = AcceptPembelian()
         appDetailController.app = app
@@ -249,7 +254,46 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         }
         navigationController?.pushViewController(appDetailController, animated: true)
     }
-    
+    @objc func showLihatPreorder(_ notification: NSNotification) {
+        let appDetailController = LihatPreorder()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    @objc func showLihatResiPreorder(_ notification: NSNotification) {
+        let appDetailController = LihatResiPreorder()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    @objc func showAcceptedPreorder(_ notification: NSNotification) {
+        let appDetailController = AcceptedPembelian()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    @objc func showPengirimanPreorder(_ notification: NSNotification) {
+        let appDetailController = PengirimanPembelian()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    @objc func showPenerimaanPreorder(_ notification: NSNotification) {
+        let appDetailController = PenerimaanPembelian()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
+            appDetailController.varOffer = varOffer
+        }
+        navigationController?.pushViewController(appDetailController, animated: true)
+    }
     @objc func showBeliPreorder() {
         let appDetailController = AcceptPreorder()
         appDetailController.app = app
@@ -262,7 +306,6 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: descriptionCellId, for: indexPath) as! AppDetailDescriptionCell1
             
             cell.nameLabel.text = app?.name
-            
             cell.priceLabel.text = "Rp. " +   (app?.price)!
             cell.tglLabel.text = "Tanggal Posting : " + (app?.tglPost)!
             //cell.textView.text = app?.description
@@ -295,25 +338,32 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer1
             
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
-                if let status = self.app?.status {
-                    if status == "1"{
-                        if self.app?.email == emailNow{
-                            //jika request milik sendiri
-                            cell.nameLabel.text = "List Pembeli"
-                            
-                        }else{
-                            
-                            cell.nameLabel.text = "Beli"
-                        }
-                    }else if status == "2"{
-                        if self.app?.email == emailNow{
-                            //jika request milik sendiri
-                            cell.nameLabel.text = "List Pembeli"
-                            
-                        }else{
-                            cell.nameLabel.text = "Beli"
-                        }
-                    }
+//                if let status = self.app?.status {
+//                    if status == "1"{
+//                        if self.app?.email == emailNow{
+//                            //jika request milik sendiri
+//                            cell.nameLabel.text = "List Pembeli"
+//
+//                        }else{
+//
+//                            cell.nameLabel.text = "Beli"
+//                        }
+//                    }else if status == "2"{
+//                        if self.app?.email == emailNow{
+//                            //jika request milik sendiri
+//                            cell.nameLabel.text = "List Pembeli"
+//
+//                        }else{
+//                            cell.nameLabel.text = "Beli"
+//                        }
+//                    }
+//                }
+                if self.app?.email == emailNow{
+                    //jika request milik sendiri
+                    cell.nameLabel.text = "List Pembeli"
+                    
+                }else{
+                    cell.nameLabel.text = "Beli"
                 }
             }
 
@@ -415,21 +465,22 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let status = app?.status , let email = app?.email {
             
             if email != emailNow{
+                //pembeli
                 if indexPath.row == 3  {
                     cell?.layer.backgroundColor = UIColor.gray.cgColor
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        var cekBeli = false
-                        cell?.layer.backgroundColor = UIColor.white.cgColor
-                        for i in 0 ..< self.offers.count {
-                            if emailNow == self.offers[i].idPembeli{
-                                print("cancel")
-                                cekBeli = true
-                            }
-                        }
-                        
-                        if cekBeli == false{
-                                self.showBeliPreorder()
-                        }
+//                        var cekBeli = false
+//                        cell?.layer.backgroundColor = UIColor.white.cgColor
+//                        for i in 0 ..< self.offers.count {
+//                            if emailNow == self.offers[i].idPembeli{
+//                                print("cancel")
+//                                cekBeli = true
+//                            }
+//                        }
+                        self.showBeliPreorder()
+//                        if cekBeli == false{
+//                                self.showBeliPreorder()
+//                        }
                     }
                 }
             }
@@ -1061,7 +1112,17 @@ class AppOfferListDalam1: BaseCell , UICollectionViewDataSource, UICollectionVie
             //cell.app = appCategory?.apps?[indexPath.item]
             //cell.backgroundColor = UIColor.blue
             cell.priceLabel.text = "Kuantitas : " + (varOffer?.qty)!
-            cell.kotaLabel.text = "Kota Pengiriman : " + (varOffer?.kota)!
+            if varOffer?.status == "1"{
+                cell.kotaLabel.text = "Status : Belum Disetujui"
+            }else if varOffer?.status == "2"{
+                cell.kotaLabel.text = "Status : Sudah Disetujui"
+            }else if varOffer?.status == "3"{
+                cell.kotaLabel.text = "Status : Barang Sudah Dibelikan"
+            }else if varOffer?.status == "4"{
+                cell.kotaLabel.text = "Status : Barang Sudah Dikirim"
+            }else if varOffer?.status == "5"{
+                cell.kotaLabel.text = "Status : Preorder Selesai"
+            }
             cell.tglLabel.text = "Tgl Pembelian : " + (varOffer?.tglBeli)!
             return cell
         }
@@ -1090,9 +1151,42 @@ class AppOfferListDalam1: BaseCell , UICollectionViewDataSource, UICollectionVie
         }else{
             print(varOffer)
             
-            //print(varOffer?.hargaPenawaran)
-            let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptPreorder"), object: nil, userInfo: dataIdOffer)
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let email = app?.email, let status = varOffer?.status {
+                if emailNow == email{
+                    //print(varOffer?.hargaPenawaran)
+                    if status == "1"{
+                        let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptPreorder"), object: nil, userInfo: dataIdOffer)
+                    }else if status == "2"{
+                        let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toAcceptedPreorder"), object: nil, userInfo: dataIdOffer)
+                    }else if status == "3"{
+                        let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toPengirimanPreorder"), object: nil, userInfo: dataIdOffer)
+                    }else if status == "4"{
+                        let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toLihatResiPreorder"), object: nil, userInfo: dataIdOffer)
+                    }else if status == "5"{
+                        let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toLihatPreorder"), object: nil, userInfo: dataIdOffer)
+                    }
+                }else{
+                    print("pembeli")
+                    //print(varOffer?.hargaPenawaran)
+                    if status == "4"{
+                        let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toPenerimaanPreorder"), object: nil, userInfo: dataIdOffer)
+                    }else if status == "5"{
+                        let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toLihatResiPreorder"), object: nil, userInfo: dataIdOffer)
+                    }else{
+                        
+                        let dataIdOffer:[String: VarOfferPreorder] = ["varOffer": varOffer!]
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toLihatPreorder"), object: nil, userInfo: dataIdOffer)
+                    }
+                }
+            }
+            
         }
     }
 }

@@ -31,7 +31,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         })
     }
     override func viewWillAppear(_ animated: Bool) {
-        
+        //collectionView?.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,7 +120,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     func showFlashSaleDetailForApp(_ app: App) {
         print("pencet preorder 2 gan")
         let layout = UICollectionViewFlowLayout()
-        let appDetailController = FlashsaleDetail(collectionViewLayout: layout)
+        let appDetailController = PreorderDetail(collectionViewLayout: layout)
         appDetailController.app = app
         navigationController?.pushViewController(appDetailController, animated: true)
     }

@@ -7,104 +7,104 @@
 //
 
 import UIKit
-
-import UIKit
-import SKActivityIndicatorView
 import Alamofire
-import AlamofireImage
-import Hue
+import SwiftyJSON
 
-class ExploreNegaraPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class ExploreNegaraPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
-    fileprivate let RequestCellId = "RequestCellId"
-    var requests = [App]()
-    var isiData : isi?
-    
-    func fetchRequests(_ completionHandler: @escaping ([App]) -> ()) {
-        if let negara = isiData?.nama {
-            
-            let urlString = "http://titipanku.xyz/api/GetPreorderNegara.php?negara=\(String(describing: negara ))"
-            
-            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
-                
-                guard let data = data else { return }
-                
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    self.requests = try decoder.decode([App].self, from: data)
-                    print(self.requests)
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        completionHandler(self.requests)
-                    })
-                } catch let err {
-                    print(err)
-                    
-                    SKActivityIndicator.dismiss()
-                }
-                
-            }) .resume()
-        }
+    var trips = [trip]()
+    struct trip: Decodable {
+        let country: String
+        let tanggalPulang: String
         
     }
     
+    fileprivate let tripCellId = "tripCellId"
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchRequests{(requests) -> ()in
-            self.requests = requests
-            print("count Preorder" + String(self.requests.count))
-            self.collectionView?.reloadData()
-        }
+        view.backgroundColor = .white
+        print("Post Trip")
+        
+        fetchUserTrip()
+        //init tableview
+        
         collectionView?.backgroundColor = UIColor.white
-        navigationItem.title = "Preorder"
-        collectionView?.register(RequestCell.self, forCellWithReuseIdentifier: RequestCellId)
+        collectionView?.register(TripsCell.self, forCellWithReuseIdentifier: tripCellId)
+        
         setupView()
     }
-    
     private func setupView(){
         view.backgroundColor = .white
         let screenWidth = UIScreen.main.bounds.width
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)
-        collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
-        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -110).isActive = true
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 58).isActive = true
+        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
+        collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 5).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 700).isActive = true
         
-        return requests.count
+        
+        
+        
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! RequestCell
-        cell.app = requests[indexPath.row]
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor(hex: "#3867d6").cgColor
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tripCellId, for: indexPath) as! TripsCell
+        
+        
+        cell.labelCountry.text = trips[indexPath.row].country
+        cell.LabelTgl.text = trips[indexPath.row].tanggalPulang
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return trips.count
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.size.width/2, height: 265)
+        
+        return CGSize(width: view.frame.width, height: 150)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if let app : App = requests[indexPath.item] {
-            print("pencet preorder")
-            let layout = UICollectionViewFlowLayout()
-            layout.minimumInteritemSpacing = 0
-            layout.minimumLineSpacing = 0
-            let appDetailController = PreorderDetail(collectionViewLayout: layout)
-            appDetailController.app = app
-            navigationController?.pushViewController(appDetailController, animated: true)
+        print("Num: \(indexPath.row)")
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.backgroundColor = UIColor.gray.cgColor
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // change 2 to desired number of seconds
+            cell?.layer.backgroundColor = UIColor.white.cgColor
         }
-        
     }
+    
+    
+    fileprivate func fetchUserTrip() {
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            
+            let urlString = "http://titipanku.xyz/api/GetTrip.php?email=\(String(describing: emailNow))"
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    do {
+                        let decoder = JSONDecoder()
+                        self.trips = try decoder.decode([trip].self, from: data)
+                        self.collectionView?.reloadData()
+                        print(self.trips)
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                    }
+                }
+                }.resume()
+        }
+    }
+    
+    
 }
 

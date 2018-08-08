@@ -41,6 +41,11 @@
 		7E8B5DB1210E06E300FFBC85 /* TopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8B5DB0210E06E300FFBC85 /* TopupController.swift */; };
 		7E977E04211841FE00D65F76 /* PenerimaanOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E03211841FE00D65F76 /* PenerimaanOffer.swift */; };
 		7E977E06211846A000D65F76 /* CompletedOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E05211846A000D65F76 /* CompletedOffer.swift */; };
+		7E977E082119DB2B00D65F76 /* LihatPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E072119DB2B00D65F76 /* LihatPreorder.swift */; };
+		7E977E0C2119DE0B00D65F76 /* AcceptedPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E0B2119DE0B00D65F76 /* AcceptedPembelian.swift */; };
+		7E977E0E2119E16B00D65F76 /* PengirimanPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */; };
+		7E977E102119EB3700D65F76 /* PenerimaanPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */; };
+		7E977E12211A7A5400D65F76 /* LihatResiPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */; };
 		7EA9CCCB20F3422A003C8D8D /* Pods_titipanku.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EDED74920F7329D005BCA76 /* OfferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74820F7329D005BCA76 /* OfferController.swift */; };
 		7EDED74B20F7470C005BCA76 /* OfferController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74A20F7470C005BCA76 /* OfferController2.swift */; };
@@ -126,6 +131,11 @@
 		7E8DA56220F33FB7003C9D1F /* titipanku.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = titipanku.entitlements; sourceTree = "<group>"; };
 		7E977E03211841FE00D65F76 /* PenerimaanOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenerimaanOffer.swift; sourceTree = "<group>"; };
 		7E977E05211846A000D65F76 /* CompletedOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedOffer.swift; sourceTree = "<group>"; };
+		7E977E072119DB2B00D65F76 /* LihatPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LihatPreorder.swift; sourceTree = "<group>"; };
+		7E977E0B2119DE0B00D65F76 /* AcceptedPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedPembelian.swift; sourceTree = "<group>"; };
+		7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PengirimanPembelian.swift; sourceTree = "<group>"; };
+		7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenerimaanPembelian.swift; sourceTree = "<group>"; };
+		7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LihatResiPreorder.swift; sourceTree = "<group>"; };
 		7EDED74820F7329D005BCA76 /* OfferController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController.swift; sourceTree = "<group>"; };
 		7EDED74A20F7470C005BCA76 /* OfferController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController2.swift; sourceTree = "<group>"; };
 		7EDED74C20F7471E005BCA76 /* OfferController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController3.swift; sourceTree = "<group>"; };
@@ -238,6 +248,11 @@
 				3C12439E20DFE78600852D2D /* PreorderDetail.swift */,
 				7E5D985A210604BB006690B0 /* AcceptPreorder.swift */,
 				7E5D985E21064A88006690B0 /* AcceptPembelian.swift */,
+				7E977E0B2119DE0B00D65F76 /* AcceptedPembelian.swift */,
+				7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */,
+				7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */,
+				7E977E072119DB2B00D65F76 /* LihatPreorder.swift */,
+				7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */,
 				7E5D985C21062159006690B0 /* FlashsaleDetail.swift */,
 				7E5D98602106C5F0006690B0 /* ListPembeliFlashSale.swift */,
 				7E5D98622106C630006690B0 /* AcceptFlashsale.swift */,
@@ -484,11 +499,14 @@
 				7E5D98612106C5F0006690B0 /* ListPembeliFlashSale.swift in Sources */,
 				7E5D985B210604BB006690B0 /* AcceptPreorder.swift in Sources */,
 				7E58EA872113F85D00BF7A2E /* ExploreKategoriRequest.swift in Sources */,
+				7E977E12211A7A5400D65F76 /* LihatResiPreorder.swift in Sources */,
 				9C7177AF206A31B20082E417 /* loginController.swift in Sources */,
 				7E5D98632106C630006690B0 /* AcceptFlashsale.swift in Sources */,
 				9C6463BC20BF696A001E681A /* UserTripList.swift in Sources */,
+				7E977E102119EB3700D65F76 /* PenerimaanPembelian.swift in Sources */,
 				7E58EA812113D28A00BF7A2E /* ExploreNegaraRequest.swift in Sources */,
 				7E977E04211841FE00D65F76 /* PenerimaanOffer.swift in Sources */,
+				7E977E0E2119E16B00D65F76 /* PengirimanPembelian.swift in Sources */,
 				7E72A4772117EBAD00391FA7 /* PengirimanOffer.swift in Sources */,
 				7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */,
 				9C588854207E09CA00F6F23A /* TabController.swift in Sources */,
@@ -501,6 +519,7 @@
 				7EDED74B20F7470C005BCA76 /* OfferController2.swift in Sources */,
 				9CC8A6E2206A252000242A87 /* AppDelegate.swift in Sources */,
 				7EEC06602113823A00B92B21 /* AllPreorderBerdurasi.swift in Sources */,
+				7E977E0C2119DE0B00D65F76 /* AcceptedPembelian.swift in Sources */,
 				9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */,
 				3C07FAF920CE6734008FF049 /* AddKarateristikBarang.swift in Sources */,
 				7E58EA832113D2BA00BF7A2E /* ExploreNegaraPreorder.swift in Sources */,
@@ -517,6 +536,7 @@
 				7EDED74D20F7471E005BCA76 /* OfferController3.swift in Sources */,
 				7E977E06211846A000D65F76 /* CompletedOffer.swift in Sources */,
 				7E8B5DB1210E06E300FFBC85 /* TopupController.swift in Sources */,
+				7E977E082119DB2B00D65F76 /* LihatPreorder.swift in Sources */,
 				7E5D9859210590F4006690B0 /* PesanController.swift in Sources */,
 				7E58EA892113F86B00BF7A2E /* ExploreKategoriPreorder.swift in Sources */,
 				9C502E9020BCE3B000FBCD91 /* PostBarang.swift in Sources */,

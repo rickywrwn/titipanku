@@ -1,8 +1,8 @@
 //
-//  ListPembeliPreorder.swift
+//  LihatPreorder.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 24/07/18.
+//  Created by Ricky Wirawan on 07/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 
 
-class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LihatPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var selectedHarga : String = ""
     var idOffer : String = ""
@@ -106,12 +106,11 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         print(varOffer)
         //fetchOffer()
         
-        labelTgl.text = self.varOffer?.tglBeli
-        let harga = Int((app?.valueHarga)!)
-        let qty = Int((varOffer?.qty)!)
-        let ongkir = Int((varOffer?.valueHarga)!)
-        labelHarga.text = "Rp " + String(harga!*qty!+ongkir!)
-        labelKota.text = self.varOffer?.kota
+        labelA.text = "Tanggl Pembelian"
+        labelTgl.text = varOffer?.tglBeli
+        labelB.text = "Jumlah Barang"
+        labelHarga.text = app?.qty
+        labelKota.text = varOffer?.kota
         label4.isHidden = true
         ongkirText.text = (varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)!
         setupView()
@@ -241,7 +240,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
                             
                             self.present(alert, animated: true)
                         }else{
-                            let alert = UIAlertController(title: "Message", message: "Accept Pembelian Berhasil", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                                 
@@ -404,32 +403,6 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         return label
     }()
     
-    let postButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Terima", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-        
-    }()
-    
-    let declineButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Tolak", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.red
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-        
-    }()
-    
     let dividerLineView1: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
@@ -515,23 +488,6 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         labelTotal.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         labelTotal.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        
-        scrollView.addSubview(postButton)
-        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        
-        scrollView.addSubview(declineButton)
-        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        
         
     }
     

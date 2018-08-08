@@ -1,8 +1,8 @@
 //
-//  ListPembeliPreorder.swift
+//  PenerimaanPembelian.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 24/07/18.
+//  Created by Ricky Wirawan on 07/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 
 
-class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PenerimaanPembelian :  UIViewController {
     
     var selectedHarga : String = ""
     var idOffer : String = ""
@@ -98,7 +98,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Lihat Preorder"
+        navigationItem.title = "Penerimaan"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
@@ -106,171 +106,30 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         print(varOffer)
         //fetchOffer()
         
-        labelTgl.text = self.varOffer?.tglBeli
-        let harga = Int((app?.valueHarga)!)
-        let qty = Int((varOffer?.qty)!)
-        let ongkir = Int((varOffer?.valueHarga)!)
-        labelHarga.text = "Rp " + String(harga!*qty!+ongkir!)
-        labelKota.text = self.varOffer?.kota
+        labelA.text = "Tanggl Pembelian"
+        labelTgl.text = varOffer?.tglBeli
+        labelB.text = "Jumlah Barang"
+        labelHarga.text = app?.qty
+        labelKota.text = varOffer?.kota
+        ResiText.text = varOffer?.nomorResi
         label4.isHidden = true
         ongkirText.text = (varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)!
         setupView()
         //print(detailOffer)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.tag == 3{
-            print("Num: \(indexPath.row)")
-            ongkirText.text = "JNE " + arrNama[indexPath.row] + " - Rp. " + arrHarga[indexPath.row]
-            ongkirTableView.isHidden = true
-            selectedHarga = arrHarga[indexPath.row]
-            label4.isHidden = false
-            let total = Int(selectedHarga)! + Int((varOffer?.hargaOngkir)!)!
-            labelTotal.text = String(total)
-        }
-        
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrNama.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
-        let paket = arrNama[indexPath.row]
-        let harga = arrHarga[indexPath.row]
-        cell.textLabel?.text = paket + " - " + harga
-        
-        return cell
-    }
-    
-    
-    func fetchOngkir(){
-        //kalau post dengan header encoding harus URLencoding
-        let headers = [
-            "key": "590ad699c8c798373e2053a28c7edd1e",
-            "content-type": "application/x-www-form-urlencoded"
-        ]
-        
-        if let berat = app?.berat,let myInt = Int(berat) , let origin = varOffer?.idKota, let destination = app?.idKota{
-            print(myInt)
-            let parameters: Parameters = ["origin": origin,"destination": destination, "weight" : myInt, "courier" : "jne"]
-            print (parameters)
-            Alamofire.request("https://api.rajaongkir.com/starter/cost",method: .post, parameters: parameters,encoding: URLEncoding.default, headers: headers)
-                .responseSwiftyJSON { dataResponse in
-                    
-                    
-                    if let json = dataResponse.value {
-                        print(json)
-                        let hasil = json["rajaongkir"]["results"][0]["costs"]
-                        self.arrNama = []
-                        self.arrHarga = []
-                        for i in 0 ..< hasil.count {
-                            let servis = hasil[i]["service"]
-                            let harga = hasil[i]["cost"][0]["value"]
-                            print(servis.stringValue)
-                            print(harga.stringValue)
-                            self.arrNama.append(servis.stringValue)
-                            self.arrHarga.append(harga.stringValue)
-                            print(self.arrNama)
-                            print(self.arrHarga)
-                            self.ongkirTableView.reloadData()
-                        }
-                        self.ongkirTableView.reloadData()
-                        print(hasil.count)
-                    }
-            }
-        }
-        
-    }
-    
-    @objc func ongkirTapped(_ textField: UITextField) {
-        
-        fetchOngkir()
-        ongkirTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
-        ongkirTableView.dataSource = self
-        ongkirTableView.delegate = self
-        ongkirTableView.tag = 3
-        self.view.addSubview(ongkirTableView)
-        ongkirTableView.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 12).isActive = true
-        ongkirTableView.leftAnchor.constraint( equalTo: ongkirText.leftAnchor).isActive = true
-        ongkirTableView.rightAnchor.constraint(equalTo: ongkirText.rightAnchor).isActive = true
-        ongkirTableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        ongkirTableView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        ongkirTableView.layer.borderWidth = 1
-        ongkirTableView.layer.borderColor = UIColor.black.cgColor
-        ongkirTableView.isHidden = false
-    }
-    
-    
     @objc func handleTerimaOffer(){
         
-        if(ongkirText.text == ""){
-            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
-        }else{
-            
-            // create the alert
-            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menerima?", preferredStyle: UIAlertControllerStyle.alert)
-            
-            // add the actions (buttons)
-            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                if let idOffer = self.varOffer?.id , let idRequest = self.app?.id{
-                    
-                    let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"action":"accept"]
-                    print (parameter)
-                    Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
-                        response in
-                        
-                        //mengambil json
-                        let json = JSON(response.result.value)
-                        print(json)
-                        let cekSukses = json["success"].intValue
-                        let pesan = json["pesan"].stringValue
-                        
-                        if cekSukses != 1 {
-                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                            
-                            self.present(alert, animated: true)
-                        }else{
-                            let alert = UIAlertController(title: "Message", message: "Accept Pembelian Berhasil", preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                                
-                                self.handleBack()
-                            }))
-                            
-                            self.present(alert, animated: true)
-                        }
-                    }
-                }
-            }))
-            
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
-            
-        }
-    }
-    
-    @objc func handleTolak(){
         // create the alert
-        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menolak Pembeli?", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin?", preferredStyle: UIAlertControllerStyle.alert)
         
         // add the actions (buttons)
         alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
         
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id{
+        alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
+            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id{
                 
-                let parameter: Parameters = ["idOffer":idOffer,"action":"decline"]
+                let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"action":"terima"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
                     response in
@@ -279,7 +138,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
                     let json = JSON(response.result.value)
                     print(json)
                     let cekSukses = json["success"].intValue
-                    let pesan = json["message"].stringValue
+                    let pesan = json["pesan"].stringValue
                     
                     if cekSukses != 1 {
                         let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
@@ -288,9 +147,10 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
                         
                         self.present(alert, animated: true)
                     }else{
-                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Message", message: "Belikan Barang Berhasil", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            
                             self.handleBack()
                         }))
                         
@@ -302,7 +162,6 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         
         // show the alert
         self.present(alert, animated: true, completion: nil)
-        print("tolak")
         
     }
     
@@ -315,12 +174,6 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     //tampilan
-    
-    let ongkirTableView : UITableView = {
-        let t = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        t.translatesAutoresizingMaskIntoConstraints = false
-        return t
-    }()
     
     let labelA : UILabel = {
         let label = UILabel()
@@ -375,7 +228,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
     
     let labelOngkir : UILabel = {
         let label = UILabel()
-        label.text = "Metode Pengiriman"
+        label.text = "Nomor Resi"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -385,7 +238,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         textField.textAlignment = .left
         textField.borderStyle = .line
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.inputView = UIView();
+        //textField.inputView = UIView();
         return textField
     }()
     
@@ -404,9 +257,24 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         return label
     }()
     
+    let labelResi : UILabel = {
+        let label = UILabel()
+        label.text = "Metode Pengiriman"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let ResiText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .left
+        textField.borderStyle = .line
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.inputView = UIView();
+        return textField
+    }()
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Terima", for: .normal)
+        button.setTitle("Barang Sudah Diterima", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor.blue
@@ -419,12 +287,12 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
     
     let declineButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Tolak", for: .normal)
+        button.setTitle("Terdapat Masalah", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor.red
         button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
+        //button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
         
@@ -503,6 +371,17 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         ongkirText.font = UIFont.systemFont(ofSize: 15)
         ongkirText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         ongkirText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
+
+        scrollView.addSubview(labelResi)
+        labelResi.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
+        labelResi.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        
+        scrollView.addSubview(ResiText)
+        ResiText.topAnchor.constraint(equalTo: labelResi.bottomAnchor, constant: 10).isActive = true
+        ResiText.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        ResiText.font = UIFont.systemFont(ofSize: 15)
+        ResiText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        ResiText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
         
         scrollView.addSubview(label4)
         label4.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
@@ -536,3 +415,5 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
 }
+
+

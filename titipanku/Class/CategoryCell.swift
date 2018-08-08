@@ -81,7 +81,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("a", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 16)
+        button.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 20)
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -119,7 +119,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         
         appsCollectionView.register(AppCell.self, forCellWithReuseIdentifier: cellId)
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0][v1]-5-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel,"v1": btnMore]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0][v1]-20-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel,"v1": btnMore]))
         
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": dividerLineView]))
         

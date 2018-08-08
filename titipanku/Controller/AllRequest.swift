@@ -11,7 +11,6 @@ import SKActivityIndicatorView
 import Alamofire
 import AlamofireImage
 import Hue
-import SKActivityIndicatorView
 
 class AllRequest: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     

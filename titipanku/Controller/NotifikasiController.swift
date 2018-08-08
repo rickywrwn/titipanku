@@ -45,10 +45,6 @@ class NotifikasiController: UICollectionViewController, UICollectionViewDelegate
         collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 5).isActive = true
         collectionView?.heightAnchor.constraint(equalToConstant: 700).isActive = true
         
-        
-        
-        
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

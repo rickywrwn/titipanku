@@ -90,7 +90,7 @@ class ExploreController : UINavigationController,UICollectionViewDataSource, UIC
         print("It Works")
         let nextCont = ExploreNegara()
         if let dataNegara = notification.userInfo?["isiNegara"] as? isi {
-            nextCont.isiData = dataNegara
+            //nextCont.isiData = dataNegara
             present(nextCont, animated: true, completion: {
             })
         }

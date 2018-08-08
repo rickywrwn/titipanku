@@ -1,8 +1,8 @@
 //
-//  ListPembeliPreorder.swift
+//  LihatResiPreorder.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 24/07/18.
+//  Created by Ricky Wirawan on 08/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 
 
-class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LihatResiPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var selectedHarga : String = ""
     var idOffer : String = ""
@@ -106,12 +106,12 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         print(varOffer)
         //fetchOffer()
         
-        labelTgl.text = self.varOffer?.tglBeli
-        let harga = Int((app?.valueHarga)!)
-        let qty = Int((varOffer?.qty)!)
-        let ongkir = Int((varOffer?.valueHarga)!)
-        labelHarga.text = "Rp " + String(harga!*qty!+ongkir!)
-        labelKota.text = self.varOffer?.kota
+        labelA.text = "Tanggl Pembelian"
+        labelTgl.text = varOffer?.tglBeli
+        labelB.text = "Jumlah Barang"
+        labelHarga.text = app?.qty
+        labelKota.text = varOffer?.kota
+        ResiText.text = varOffer?.nomorResi
         label4.isHidden = true
         ongkirText.text = (varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)!
         setupView()
@@ -241,7 +241,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
                             
                             self.present(alert, animated: true)
                         }else{
-                            let alert = UIAlertController(title: "Message", message: "Accept Pembelian Berhasil", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                                 
@@ -389,6 +389,22 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         return textField
     }()
     
+    let labelResi : UILabel = {
+        let label = UILabel()
+        label.text = "Nomor Resi"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let ResiText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .left
+        textField.borderStyle = .line
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.inputView = UIView();
+        return textField
+    }()
+    
     let label4 : UILabel = {
         let label = UILabel()
         label.text = "Harga Penawaran (Termasuk Ongkir)"
@@ -402,32 +418,6 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         label.font = UIFont.systemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    
-    let postButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Terima", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-        
-    }()
-    
-    let declineButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Tolak", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.red
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-        
     }()
     
     let dividerLineView1: UIView = {
@@ -504,6 +494,17 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         ongkirText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         ongkirText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
         
+        scrollView.addSubview(labelResi)
+        labelResi.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
+        labelResi.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        
+        scrollView.addSubview(ResiText)
+        ResiText.topAnchor.constraint(equalTo: labelResi.bottomAnchor, constant: 10).isActive = true
+        ResiText.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        ResiText.font = UIFont.systemFont(ofSize: 15)
+        ResiText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        ResiText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
+        
         scrollView.addSubview(label4)
         label4.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
         label4.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
@@ -516,23 +517,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         labelTotal.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
-        scrollView.addSubview(postButton)
-        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        
-        scrollView.addSubview(declineButton)
-        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        
-        
     }
     
 }
+
