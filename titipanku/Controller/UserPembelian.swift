@@ -11,23 +11,32 @@ import Alamofire
 import SwiftyJSON
 
 class UserPembelian: UIViewController {
-    struct varInbox {
-        static var statusInbox = ""
-        
+    struct varTambah {
+        static var statusTambah = ""
     }
+    
+    var isiData : isi?
     let navSegmentControl = UISegmentedControl()
     let containerView = UIView()
     
     let layout = UICollectionViewFlowLayout()
     
     lazy var RequestVC: UserRequest = {
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .vertical
         let vc = UserRequest(collectionViewLayout: layout)
+        vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc
     }()
     
     lazy var PreorderVC: UserPreorder = {
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .vertical
         let vc = UserPreorder(collectionViewLayout: layout)
+        vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc
     }()
@@ -40,10 +49,13 @@ class UserPembelian: UIViewController {
         setupView()
         
         navigationItem.title = "Home"
-        
         RequestVC.view.isHidden = false
     }
     
+    @objc public func handleBack(){
+        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
     
     func addAsChildVC(childVC: UIViewController) {
         addChildViewController(childVC)
@@ -60,17 +72,22 @@ class UserPembelian: UIViewController {
     
     @objc func madeSelection(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0{
-            PreorderVC.view.isHidden = true
             RequestVC.view.isHidden = false
-            varInbox.statusInbox = "notif"
+            PreorderVC.view.isHidden = true
         }else if sender.selectedSegmentIndex == 1{
-            RequestVC.view.isHidden = false
-            PreorderVC.view.isHidden = true
-            varInbox.statusInbox = "pesan"
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+            RequestVC.view.isHidden = true
+            PreorderVC.view.isHidden = false
         }
     }
     
+    let backButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        button.setTitle("Cancel", for: .normal)
+        button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
+        button.addTarget(self, action: #selector(handleBack), for: UIControlEvents.touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     func setupView(){
         let screenHeight = UIScreen.main.bounds.height
@@ -79,7 +96,7 @@ class UserPembelian: UIViewController {
         navSegmentControl.addTarget(self, action: #selector(madeSelection), for: .valueChanged)
         
         navSegmentControl.insertSegment(withTitle: "Request", at: 0, animated: false)
-        navSegmentControl.insertSegment(withTitle: "Preorder", at: 1, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Durasi", at: 1, animated: false)
         navSegmentControl.selectedSegmentIndex = 0
         
         view.addSubview(containerView)
@@ -94,12 +111,16 @@ class UserPembelian: UIViewController {
         navSegmentControl.translatesAutoresizingMaskIntoConstraints = false
         navSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         navSegmentControl.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        navSegmentControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
+        navSegmentControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         navSegmentControl.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
         navSegmentControl.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
         
+        //backButton
+        view.addSubview(backButton)
+        backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
+        
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

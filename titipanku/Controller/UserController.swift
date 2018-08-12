@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Alamofire_SwiftyJSON
+import SKActivityIndicatorView
 
 class UserController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -44,8 +45,10 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
                         print(self.isiUser)
                         
                         self.collectionView?.reloadData()
+                        SKActivityIndicator.dismiss()
                     } catch let jsonErr {
                         print("Failed to decode:", jsonErr)
+                        SKActivityIndicator.dismiss()
                     }
                 }
                 }.resume()
@@ -64,12 +67,14 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         self.title = "User"
         navigationItem.title = "Profile"
         print("User Loaded")
+        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
         fetchJSON()
         collectionView?.alwaysBounceVertical = true
 
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(UserDetailCell.self, forCellWithReuseIdentifier: userCellId)
         collectionView?.register(UserActivityCell.self, forCellWithReuseIdentifier: activityCellId)
+        
     }
     
     //logout
@@ -106,6 +111,19 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
             cell.labelEmail.text = isiUser?.email
             cell.LabelNama.text = isiUser?.name
             cell.LabelTanggal.text = isiUser?.tanggalDaftar
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+                Alamofire.request("http://titipanku.xyz/uploads/"+emailNow+".jpg").responseImage { response in
+                    //debugPrint(response)
+                    //let nama = self.app?.name
+                    //print("gambar : "+imageName)
+                    if let image = response.result.value {
+                        //print("image downloaded: \(image)")
+                        cell.imageView.image = image
+                        self.collectionView?.reloadData()
+                    }
+                }
+            }
+            
             
             return cell
         }else if indexPath.item == 1{
@@ -120,6 +138,11 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
             return cell
         }else if indexPath.item == 3{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
+            cell.labelNama.text = "Penjualan"
+            
+            return cell
+        }else if indexPath.item == 4{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
             cell.labelNama.text = "Trip"
             
             return cell
@@ -131,7 +154,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -144,22 +167,23 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Num: \(indexPath.row)")
-        if indexPath.row != 0 && indexPath.row != 1{
+        if indexPath.row != 0 {
             
             let cell = collectionView.cellForItem(at: indexPath)
             cell?.layer.backgroundColor = UIColor.gray.cgColor
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 cell?.layer.backgroundColor = UIColor.white.cgColor
-                if indexPath.row == 2{
+                if indexPath.row == 1{
+                }else if indexPath.row == 2{
                     self.handlePembelian()
                 }else if indexPath.row == 3{
                     self.handleTrip()
                 }else if indexPath.row == 4{
+                    self.handleTrip()
                 }
             }
         }
-        
     }
     
 }

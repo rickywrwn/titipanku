@@ -19,6 +19,7 @@
 		7E411296212088C0008BBF89 /* AddKarateristikTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */; };
 		7E41129A212088D8008BBF89 /* AddHargaTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411299212088D8008BBF89 /* AddHargaTitip.swift */; };
 		7E41129E21208A28008BBF89 /* AddNegaraTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41129D21208A28008BBF89 /* AddNegaraTitip.swift */; };
+		7E4112A021209393008BBF89 /* ReviewPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41129F21209393008BBF89 /* ReviewPembelian.swift */; };
 		7E4A2EA22113559F003F472A /* AllRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A2EA12113559F003F472A /* AllRequest.swift */; };
 		7E58EA7D2113CDB500BF7A2E /* ExploreNegara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */; };
 		7E58EA7F2113CDC600BF7A2E /* ExploreKategori.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA7E2113CDC600BF7A2E /* ExploreKategori.swift */; };
@@ -113,6 +114,7 @@
 		7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikTitip.swift; sourceTree = "<group>"; };
 		7E411299212088D8008BBF89 /* AddHargaTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaTitip.swift; sourceTree = "<group>"; };
 		7E41129D21208A28008BBF89 /* AddNegaraTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraTitip.swift; sourceTree = "<group>"; };
+		7E41129F21209393008BBF89 /* ReviewPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPembelian.swift; sourceTree = "<group>"; };
 		7E4A2EA12113559F003F472A /* AllRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRequest.swift; sourceTree = "<group>"; };
 		7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreNegara.swift; sourceTree = "<group>"; };
 		7E58EA7E2113CDC600BF7A2E /* ExploreKategori.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreKategori.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				7E977E0B2119DE0B00D65F76 /* AcceptedPembelian.swift */,
 				7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */,
 				7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */,
+				7E41129F21209393008BBF89 /* ReviewPembelian.swift */,
 				7E977E072119DB2B00D65F76 /* LihatPreorder.swift */,
 				7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */,
 				7E5D985C21062159006690B0 /* FlashsaleDetail.swift */,
@@ -555,6 +558,7 @@
 				7EDED74D20F7471E005BCA76 /* OfferController3.swift in Sources */,
 				7E977E06211846A000D65F76 /* CompletedOffer.swift in Sources */,
 				7E8B5DB1210E06E300FFBC85 /* TopupController.swift in Sources */,
+				7E4112A021209393008BBF89 /* ReviewPembelian.swift in Sources */,
 				7E41129221206FC9008BBF89 /* PostTitipJuga.swift in Sources */,
 				7E977E082119DB2B00D65F76 /* LihatPreorder.swift in Sources */,
 				7E5D9859210590F4006690B0 /* PesanController.swift in Sources */,
