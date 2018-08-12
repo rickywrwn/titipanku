@@ -7,104 +7,211 @@
 //
 
 import UIKit
+import SKActivityIndicatorView
 import Alamofire
-import SwiftyJSON
+import AlamofireImage
+import Hue
 
-class ExploreNegaraPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayout{
+class ExploreNegaraPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var trips = [trip]()
-    struct trip: Decodable {
-        let country: String
-        let tanggalPulang: String
-        
+    fileprivate let PreorderCellId = "PreorderCellId"
+    var preorders = [App]()
+    var isiData : isi?
+    
+    func fetchRequests(_ completionHandler: @escaping ([App]) -> ()) {
+        if let negara = isiData?.nama{
+            let urlString = "http://titipanku.xyz/api/GetExploreNegaraPreorder.php?negara=\(String(describing: negara))"
+            
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.preorders = try decoder.decode([App].self, from: data)
+                    print(self.preorders)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.preorders)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
     }
     
-    fileprivate let tripCellId = "tripCellId"
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        print("Post Trip")
-        
-        fetchUserTrip()
-        //init tableview
-        
+        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
+        self.fetchRequests{(preorders) -> ()in
+            self.preorders = preorders
+            print("count request" + String(self.preorders.count))
+            self.collectionView?.reloadData()
+            SKActivityIndicator.dismiss()
+        }
         collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(TripsCell.self, forCellWithReuseIdentifier: tripCellId)
-        
+        print(self.preorders)
+        collectionView?.register(RequestCell2.self, forCellWithReuseIdentifier: PreorderCellId)
         setupView()
     }
+    
     private func setupView(){
         view.backgroundColor = .white
         let screenWidth = UIScreen.main.bounds.width
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)
-        //collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 58).isActive = true
-        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
-        collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 5).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 700).isActive = true
+        collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        collectionView?.backgroundColor = UIColor.blue
+        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        //collectionView?.centerXAnchor.constraint(equalTo: view.centerXAnchor ).isActive = true
+        //collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -400).isActive = true
+        //collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 600).isActive = true
         
-        
-        
-        
-        
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tripCellId, for: indexPath) as! TripsCell
-        
-        
-        cell.labelCountry.text = trips[indexPath.row].country
-        cell.LabelTgl.text = trips[indexPath.row].tanggalPulang
-        return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return trips.count
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: 150)
+        return preorders.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PreorderCellId, for: indexPath) as! RequestCell2
+        cell.app = preorders[indexPath.row]
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor(hex: "#d1d8e0").cgColor
+        cell.backgroundColor = UIColor.red
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 180, height: 200)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.backgroundColor = UIColor.gray.cgColor
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // change 2 to desired number of seconds
-            cell?.layer.backgroundColor = UIColor.white.cgColor
+        print("asd")
+        if let app : App = preorders[indexPath.item] {
+            let layout = UICollectionViewFlowLayout()
+            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 0
+            let addDetail = barangDetailController(collectionViewLayout: layout)
+            addDetail.app = app
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromRight
+            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+            view.window!.layer.add(transition, forKey: kCATransition)
+            present(addDetail, animated: false, completion: nil)
+        }else{
+            print("no app")
         }
+        
     }
+}
+
+
+class RequestCell2: BaseCell {
     
-    
-    fileprivate func fetchUserTrip() {
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+    var app: App? {
+        didSet {
+            if let name = app?.name {
+                nameLabel.text = name
+            }
             
-            let urlString = "http://titipanku.xyz/api/GetTrip.php?email=\(String(describing: emailNow))"
-            guard let url = URL(string: urlString) else { return }
-            URLSession.shared.dataTask(with: url) { (data, _, err) in
-                DispatchQueue.main.async {
-                    if let err = err {
-                        print("Failed to get data from url:", err)
-                        return
-                    }
-                    
-                    guard let data = data else { return }
-                    do {
-                        let decoder = JSONDecoder()
-                        self.trips = try decoder.decode([trip].self, from: data)
-                        self.collectionView?.reloadData()
-                        print(self.trips)
-                    } catch let jsonErr {
-                        print("Failed to decode:", jsonErr)
+            categoryLabel.text = app?.country
+            if let price = app?.price {
+                priceLabel.text = "Rp \(price)"
+            } else {
+                priceLabel.text = ""
+            }
+            
+            //async get image dari web
+            DispatchQueue.main.async{
+                
+                if let imageName = self.app?.ImageName {
+                    Alamofire.request("http://titipanku.xyz/uploads/"+imageName).responseImage { response in
+                        //debugPrint(response)
+                        //let nama = self.app?.name
+                        //print("gambar : "+imageName)
+                        if let image = response.result.value {
+                            //print("image downloaded: \(image)")
+                            self.imageView.image = image
+                        }
                     }
                 }
-                }.resume()
+                
+                
+            }
+            
         }
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    let categoryLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor.darkGray
+        return label
+    }()
+    
+    let priceLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor(hex: "#4b7bec")
+        return label
+    }()
+    
+    override func setupViews() {
+        addSubview(imageView)
+        addSubview(nameLabel)
+        addSubview(categoryLabel)
+        addSubview(priceLabel)
+        
+        addConstraintsWithFormat("H:|-4-[v0(100)]|", views: imageView)
+        addConstraintsWithFormat("H:|-4-[v0]|", views: nameLabel)
+        addConstraintsWithFormat("H:|-4-[v0]|", views: categoryLabel)
+        addConstraintsWithFormat("H:|-4-[v0]|", views: priceLabel)
+        
+        addConstraintsWithFormat("V:|-4-[v0(100)]|", views: imageView)
+        addConstraintsWithFormat("V:|-4-[v0]|", views: nameLabel)
+        addConstraintsWithFormat("V:|-4-[v0]|", views: categoryLabel)
+        addConstraintsWithFormat("V:|-4-[v0]|", views: priceLabel)
+        
+    }
     
 }
 

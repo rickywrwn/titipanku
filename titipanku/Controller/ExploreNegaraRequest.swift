@@ -16,35 +16,38 @@ class ExploreNegaraRequest: UICollectionViewController, UICollectionViewDelegate
     
     fileprivate let RequestCellId = "RequestCellId"
     var requests = [App]()
+    var isiData : isi?
     
     func fetchRequests(_ completionHandler: @escaping ([App]) -> ()) {
-        let urlString = "http://titipanku.xyz/api/GetAllRequest.php"
-        
-        URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+        if let negara = isiData?.nama{
+            let urlString = "http://titipanku.xyz/api/GetExploreNegaraRequest.php?negara=\(String(describing: negara))"
             
-            guard let data = data else { return }
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                self.requests = try decoder.decode([App].self, from: data)
-                print(self.requests)
-                DispatchQueue.main.async(execute: { () -> Void in
-                    completionHandler(self.requests)
-                })
-            } catch let err {
-                print(err)
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
                 
-                SKActivityIndicator.dismiss()
-            }
-            
-        }) .resume()
-        
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.requests = try decoder.decode([App].self, from: data)
+                    print(self.requests)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.requests)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,12 +70,12 @@ class ExploreNegaraRequest: UICollectionViewController, UICollectionViewDelegate
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)
-        //collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.backgroundColor = UIColor.green
+        collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        //collectionView?.backgroundColor = UIColor.green
         collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         //collectionView?.centerXAnchor.constraint(equalTo: view.centerXAnchor/-4 ).isActive = true
-        collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -400).isActive = true
+        //collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -400).isActive = true
         //collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         collectionView?.heightAnchor.constraint(equalToConstant: 600).isActive = true
         
@@ -93,7 +96,7 @@ class ExploreNegaraRequest: UICollectionViewController, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.size.width/4, height: 200)
+        return CGSize(width: 180, height: 200)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -33,11 +33,11 @@ struct VarOffer: Decodable {
 var adaNawar = false
 var idOfferNow : String = ""
 var statusOffer = false
+var tinggiDesc : Float = 0
 
 class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     var offers = [VarOffer]()
-    
     var tinggiTextView : Float = 0
     
     var app: App? {
@@ -126,9 +126,6 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Request"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.alwaysBounceVertical = true
@@ -169,6 +166,33 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             self.collectionView?.reloadData()
         }
         
+        
+        // Create the navigation bar
+        let height: CGFloat = 75
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height;
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: statusBarHeight, width: UIScreen.main.bounds.width, height: height))
+        navbar.backgroundColor = UIColor.white
+        navbar.delegate = self as? UINavigationBarDelegate
+
+        
+        // Offset by 20 pixels vertically to take the status bar into account
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Request"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleCancle))
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+        // Assign the navigation item to the navigation bar
+        navbar.items = [navigationItem]
+        
+        // Make the navigation bar a subview of the current view controller
+        self.view.addSubview(navbar)
+        
+        collectionView?.frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height - height))
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -188,7 +212,9 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             SKActivityIndicator.dismiss()
         }
     }
-    
+    @objc func handleCancle(){
+        self.dismiss(animated: true)
+    }
     @objc func handleDiskusi(){
         print("diskusi")
         let layout = UICollectionViewFlowLayout()
@@ -206,8 +232,14 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         navigationController?.pushViewController(appDetailController, animated: true)
     }
     @objc func handleTitip(){
-        //perform(#selector(showHome), with: nil, afterDelay: 0.01)
-        print(app?.id)
+        print("titip")
+        let layout = UICollectionViewFlowLayout()
+        let tambahCont = PostTitipJuga(collectionViewLayout:layout)
+        tambahCont.app = self.app
+        tambahCont.sizeDesc = tinggiDesc
+        print(tinggiDesc)
+        present(tambahCont, animated: true, completion: {
+        })
     }
     @objc func handleOfferCancel(){
         if let idOffer : String = idOfferNow {
@@ -308,11 +340,16 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             //menghitung tinggi textview
             let sizeThatFitsTextView = cell.textView.sizeThatFits(CGSize(width: cell.textView.frame.size.width, height: CGFloat(MAXFLOAT)))
             let heightOfText = sizeThatFitsTextView.height
-
+            tinggiDesc = Float(heightOfText)
             tinggiTextView = Float(heightOfText-55)
             cell.qtyLabel.text = app?.qty
             cell.countryLabel.text = app?.country
             cell.kotaLabel.text = app?.kotaKirim
+            if app?.url == ""{
+                 cell.UrlLabel.text = "Tidak Ada"
+            }else {
+                cell.UrlLabel.text = app?.url
+            }
             return cell
             
         }else if indexPath.item == 1 {
@@ -720,6 +757,27 @@ class AppDetailDescriptionCell: BaseCell {
         return label
     }()
     
+    let imageViewUrl: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.backgroundColor = UIColor.green
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    let UrlLabelKiri: UILabel = {
+        let label = UILabel()
+        label.text = "URL Refrensi:"
+        label.textColor = UIColor.gray
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    let UrlLabel: UILabel = {
+        let label = UILabel()
+        label.text = "kota"
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        return label
+    }()
+    
     let dividerLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
@@ -741,6 +799,9 @@ class AppDetailDescriptionCell: BaseCell {
         addSubview(kotaLabelKiri)
         addSubview(kotaLabel)
         addSubview(imageViewKota)
+        addSubview(UrlLabelKiri)
+        addSubview(UrlLabel)
+        addSubview(imageViewUrl)
         addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-15-[v0]", views: nameLabel)
@@ -749,13 +810,14 @@ class AppDetailDescriptionCell: BaseCell {
         addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewQty,qtyLabelKiri,qtyLabel)
         addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewCountry,countryLabelKiri,countryLabel)
         addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewKota,kotaLabelKiri,kotaLabel)
+        addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewUrl,UrlLabelKiri,UrlLabel)
         addConstraintsWithFormat("H:|[v0]", views: dividerLineView)
         
         //addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v7]-15-[v1]-1-[v4]-5-[v5]-5-[v6]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabelKiri,countryLabelKiri,kotaLabelKiri,tglLabel )
         addConstraintsWithFormat("V:[v0]-5-[v3]-15-[v1]", views: nameLabel, textView, priceLabel ,tglLabel)
-        addConstraintsWithFormat("V:[v0(17)]-5-[v1(17)]-5-[v2(17)]|", views: imageViewQty,imageViewCountry,imageViewKota)
-        addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]|", views: qtyLabelKiri,countryLabelKiri,kotaLabelKiri)
-        addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]|", views: qtyLabel,countryLabel,kotaLabel)
+        addConstraintsWithFormat("V:[v0(17)]-5-[v1(17)]-5-[v2(17)]-5-[v3(17)]|", views: imageViewQty,imageViewCountry,imageViewKota,imageViewUrl)
+        addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]-5-[v3]|", views: qtyLabelKiri,countryLabelKiri,kotaLabelKiri,UrlLabelKiri)
+        addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]-5-[v3]|", views: qtyLabel,countryLabel,kotaLabel,UrlLabel)
         
     }
 }

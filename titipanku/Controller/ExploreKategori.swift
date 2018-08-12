@@ -11,29 +11,42 @@ import Alamofire
 import SwiftyJSON
 
 class ExploreKategori: UIViewController {
-    var isiData : isi?
-    struct varNegara {
-        static var negara = ""
-        
+    struct varTambah {
+        static var statusTambah = ""
     }
+    
+    var isiData : isi?
     let navSegmentControl = UISegmentedControl()
     let containerView = UIView()
     
     let layout = UICollectionViewFlowLayout()
-    lazy var BarangVC: ExploreKategoriRequest = {
+    
+    lazy var RequestVC: ExploreKategoriRequest = {
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .vertical
         let vc = ExploreKategoriRequest(collectionViewLayout: layout)
+        vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc
     }()
     
-    lazy var TripVC: ExploreKategoriPreorder = {
-        let vc = ExploreKategoriPreorder(collectionViewLayout: layout)
-        self.addAsChildVC(childVC: vc)
-        return vc
-    }()
-    
-    lazy var PreorderVC: ExploreKategoriPreorderBerdurasi = {
+    lazy var DurasiVC: ExploreKategoriPreorderBerdurasi = {
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .vertical
         let vc = ExploreKategoriPreorderBerdurasi(collectionViewLayout: layout)
+        vc.isiData = self.isiData
+        self.addAsChildVC(childVC: vc)
+        return vc
+    }()
+    
+    lazy var PreorderVC : ExploreKategoriPreorder = {
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .vertical
+        let vc = ExploreKategoriPreorder(collectionViewLayout: layout)
+        vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc
     }()
@@ -44,13 +57,12 @@ class ExploreKategori: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         setupView()
-        print(isiData)
-        TripVC.view.isHidden = false
+        
+        navigationItem.title = "Home"
+        RequestVC.view.isHidden = false
     }
     
     @objc public func handleBack(){
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadExplore"), object: nil)
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
@@ -70,22 +82,19 @@ class ExploreKategori: UIViewController {
     
     @objc func madeSelection(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0{
-            BarangVC.view.isHidden = true
+            RequestVC.view.isHidden = false
             PreorderVC.view.isHidden = true
-            TripVC.view.isHidden = false
-            varNegara.negara = "Request"
+            DurasiVC.view.isHidden = true
         }else if sender.selectedSegmentIndex == 1{
-            BarangVC.view.isHidden = false
-            TripVC.view.isHidden = true
-            PreorderVC.view.isHidden = true
-            varNegara.negara = "Preorder"
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
-        }else {
-            BarangVC.view.isHidden = true
-            TripVC.view.isHidden = true
+            RequestVC.view.isHidden = true
             PreorderVC.view.isHidden = false
-            varNegara.negara = "Durasi"
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPreorder"), object: nil)
+            DurasiVC.view.isHidden = true
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+        }else if sender.selectedSegmentIndex == 2{
+            RequestVC.view.isHidden = true
+            PreorderVC.view.isHidden = true
+            DurasiVC.view.isHidden = false
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         }
     }
     
@@ -107,7 +116,7 @@ class ExploreKategori: UIViewController {
         
         navSegmentControl.insertSegment(withTitle: "Request", at: 0, animated: false)
         navSegmentControl.insertSegment(withTitle: "Preorder", at: 1, animated: false)
-        navSegmentControl.insertSegment(withTitle: "Preorder Berdurasi", at: 2, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Durasi", at: 2, animated: false)
         navSegmentControl.selectedSegmentIndex = 0
         
         view.addSubview(containerView)
@@ -132,7 +141,6 @@ class ExploreKategori: UIViewController {
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
         
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -140,4 +148,5 @@ class ExploreKategori: UIViewController {
     }
     
 }
+
 

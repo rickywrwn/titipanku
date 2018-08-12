@@ -21,17 +21,32 @@ class ExploreNegara: UIViewController {
     
     let layout = UICollectionViewFlowLayout()
     
-    lazy var BarangVC: NotifikasiController = {
-        let vc = NotifikasiController(collectionViewLayout: layout)
-        self.addAsChildVC(childVC: vc)
-        return vc
-    }()
-    
-    lazy var TripVC: ExploreNegaraRequest = {
+    lazy var RequestVC: ExploreNegaraRequest = {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .vertical
         let vc = ExploreNegaraRequest(collectionViewLayout: layout)
+        vc.isiData = self.isiData
+        self.addAsChildVC(childVC: vc)
+        return vc
+    }()
+    
+    lazy var PreorderVC: ExploreNegaraDurasi = {
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .vertical
+        let vc = ExploreNegaraDurasi(collectionViewLayout: layout)
+        vc.isiData = self.isiData
+        self.addAsChildVC(childVC: vc)
+        return vc
+    }()
+    
+    lazy var DurasiVC: ExploreNegaraPreorder = {
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        layout.scrollDirection = .vertical
+        let vc = ExploreNegaraPreorder(collectionViewLayout: layout)
+        vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc
     }()
@@ -44,8 +59,7 @@ class ExploreNegara: UIViewController {
         setupView()
         
         navigationItem.title = "Home"
-        
-        TripVC.view.isHidden = false
+        RequestVC.view.isHidden = false
     }
     
     @objc public func handleBack(){
@@ -68,13 +82,18 @@ class ExploreNegara: UIViewController {
     
     @objc func madeSelection(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0{
-            BarangVC.view.isHidden = false
-            TripVC.view.isHidden = true
-            varTambah.statusTambah = "preorder"
+            RequestVC.view.isHidden = false
+            PreorderVC.view.isHidden = true
+            DurasiVC.view.isHidden = true
         }else if sender.selectedSegmentIndex == 1{
-            BarangVC.view.isHidden = true
-            TripVC.view.isHidden = false
-            varTambah.statusTambah = "barang"
+            RequestVC.view.isHidden = true
+            PreorderVC.view.isHidden = false
+            DurasiVC.view.isHidden = true
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
+        }else if sender.selectedSegmentIndex == 2{
+            RequestVC.view.isHidden = true
+            PreorderVC.view.isHidden = true
+            DurasiVC.view.isHidden = false
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         }
     }
@@ -96,7 +115,8 @@ class ExploreNegara: UIViewController {
         navSegmentControl.addTarget(self, action: #selector(madeSelection), for: .valueChanged)
         
         navSegmentControl.insertSegment(withTitle: "Request", at: 0, animated: false)
-        navSegmentControl.insertSegment(withTitle: "Preorder", at: 1, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Durasi", at: 1, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Preorder", at: 2, animated: false)
         navSegmentControl.selectedSegmentIndex = 0
         
         view.addSubview(containerView)
@@ -122,10 +142,11 @@ class ExploreNegara: UIViewController {
         
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
 }
+
+

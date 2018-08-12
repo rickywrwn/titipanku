@@ -1,8 +1,8 @@
 //
-//  ExploreKategoriPreorderBerdurasi.swift
+//  ExploreNegaraDurasi.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 03/08/18.
+//  Created by Ricky Wirawan on 11/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 
@@ -12,14 +12,15 @@ import Alamofire
 import AlamofireImage
 import Hue
 
-class ExploreKategoriPreorderBerdurasi: UICollectionViewController, UICollectionViewDelegateFlowLayout{
+class ExploreNegaraDurasi: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
     fileprivate let RequestCellId = "RequestCellId"
     var requests = [App]()
     var isiData : isi?
     
     func fetchRequests(_ completionHandler: @escaping ([App]) -> ()) {
         if let negara = isiData?.nama{
-            let urlString = "http://titipanku.xyz/api/GetExploreKategoriPreorderBerdurasi.php?negara=\(String(describing: negara))"
+            let urlString = "http://titipanku.xyz/api/GetExploreNegaraPreorderBerdurasi.php?negara=\(String(describing: negara))"
             
             URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
                 
@@ -47,7 +48,6 @@ class ExploreKategoriPreorderBerdurasi: UICollectionViewController, UICollection
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         SKActivityIndicator.show("Loading...", userInteractionStatus: false)
@@ -70,7 +70,7 @@ class ExploreKategoriPreorderBerdurasi: UICollectionViewController, UICollection
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        //collectionView?.backgroundColor = UIColor.green
+        collectionView?.backgroundColor = UIColor.green
         collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         //collectionView?.centerXAnchor.constraint(equalTo: view.centerXAnchor/-4 ).isActive = true
@@ -99,7 +99,7 @@ class ExploreKategoriPreorderBerdurasi: UICollectionViewController, UICollection
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("asd")
+        print("preorder 3")
         if let app : App = requests[indexPath.item] {
             let layout = UICollectionViewFlowLayout()
             layout.minimumInteritemSpacing = 0
@@ -119,3 +119,7 @@ class ExploreKategoriPreorderBerdurasi: UICollectionViewController, UICollection
         
     }
 }
+
+
+
+
