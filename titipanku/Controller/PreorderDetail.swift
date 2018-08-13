@@ -15,6 +15,7 @@ import Hue
 
 struct VarOfferPreorder: Decodable {
     let id: String
+    let idPreorder: String
     let idPembeli: String
     let tglBeli: String
     let qty: String
@@ -549,7 +550,7 @@ class AppDetailDescriptionCell1: BaseCell {
     
     let brandLabelKiri: UILabel = {
         let label = UILabel()
-        label.text = "Negara Pembelian:"
+        label.text = "Brand:"
         label.textColor = UIColor.gray
         label.font = UIFont.systemFont(ofSize: 15)
         return label
@@ -618,7 +619,7 @@ class AppDetailDescriptionCell1: BaseCell {
     
     let deadlineLabelKiri: UILabel = {
         let label = UILabel()
-        label.text = "Kota Pengiriman:"
+        label.text = "Tanggal Pulang:"
         label.textColor = UIColor.gray
         label.font = UIFont.systemFont(ofSize: 15)
         return label

@@ -96,9 +96,22 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         navigationController?.pushViewController(tripListCont, animated: true)
         
     }
+    @objc func handleReview(){
+        print("pembelian")
+        let layout = UICollectionViewFlowLayout()
+        let tripListCont = UserReview(collectionViewLayout: layout)
+        navigationController?.pushViewController(tripListCont, animated: true)
+        
+    }
     @objc func handlePembelian(){
         print("pembelian")
         let tripListCont = UserPembelian()
+        navigationController?.pushViewController(tripListCont, animated: true)
+        
+    }
+    @objc func handlePenjualan(){
+        print("penjualan")
+        let tripListCont = UserPenjualan()
         navigationController?.pushViewController(tripListCont, animated: true)
         
     }
@@ -175,17 +188,17 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 cell?.layer.backgroundColor = UIColor.white.cgColor
                 if indexPath.row == 1{
+                    self.handleReview()
                 }else if indexPath.row == 2{
                     self.handlePembelian()
                 }else if indexPath.row == 3{
-                    self.handleTrip()
+                    self.handlePenjualan()
                 }else if indexPath.row == 4{
                     self.handleTrip()
                 }
             }
         }
     }
-    
 }
 
 class UserDetailCell: BaseCell {

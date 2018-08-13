@@ -28,4 +28,7 @@ target 'titipanku' do
   pod 'NVActivityIndicatorView'
   pod 'SKActivityIndicatorView', '~> 0.1.0'
   pod 'Hue'
+  pod 'BetterSegmentedControl', '~> 1.0'
+  pod 'TwicketSegmentedControl'
+  pod 'SnapKit', '~> 4.0.0'
 end

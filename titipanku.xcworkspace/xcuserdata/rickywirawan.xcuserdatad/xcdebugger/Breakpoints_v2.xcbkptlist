@@ -15,8 +15,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "47"
             endingLineNumber = "47"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "fetchFeaturedApps(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "titipanku/Controller/PostTitipJuga.swift"
-            timestampString = "555785926.497967"
+            timestampString = "555814391.20672"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "titipanku/Controller/PostTitipJuga.swift"
-            timestampString = "555785926.498037"
+            timestampString = "555814391.2070709"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "titipanku/Controller/PostTitipJuga.swift"
-            timestampString = "555785926.4980921"
+            timestampString = "555814391.207337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -73,14 +73,91 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "titipanku/Controller/PostTitipJuga.swift"
-            timestampString = "555785926.49814"
+            filePath = "titipanku/Controller/PenerimaanOffer.swift"
+            timestampString = "555817701.264312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
+            startingLineNumber = "366"
+            endingLineNumber = "366"
+            landmarkName = "labelHarga"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "variable initialization expression of titipanku.PenerimaanOffer.labelOngkir : __ObjC.UILabel"
+                  moduleName = "titipanku"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rickywirawan/titipanku/titipanku/Controller/PenerimaanOffer.swift"
+                  timestampString = "555812577.7845809"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "349"
+                  endingLineNumber = "349"
+                  offsetFromSymbolStart = "8">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; __ObjC.UILabel in variable initialization expression of titipanku.PenerimaanOffer.labelOngkir : __ObjC.UILabel"
+                  moduleName = "titipanku"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rickywirawan/titipanku/titipanku/Controller/PenerimaanOffer.swift"
+                  timestampString = "555812577.789572"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "350"
+                  endingLineNumber = "350"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "titipanku.PenerimaanOffer.labelOngkir.getter : __ObjC.UILabel"
+                  moduleName = "titipanku"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rickywirawan/titipanku/titipanku/Controller/PenerimaanOffer.swift"
+                  timestampString = "555812577.7915469"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "349"
+                  endingLineNumber = "349"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "titipanku.PenerimaanOffer.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; titipanku.PenerimaanOffer"
+                  moduleName = "titipanku"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rickywirawan/titipanku/titipanku/Controller/PenerimaanOffer.swift"
+                  timestampString = "555812577.793329"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "349"
+                  endingLineNumber = "349"
+                  offsetFromSymbolStart = "4456">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "titipanku.PenerimaanOffer.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;titipanku.PenerimaanOffer&gt;"
+                  moduleName = "titipanku"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rickywirawan/titipanku/titipanku/Controller/PenerimaanOffer.swift"
+                  timestampString = "555812577.795172"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "349"
+                  endingLineNumber = "349"
+                  offsetFromSymbolStart = "4404">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

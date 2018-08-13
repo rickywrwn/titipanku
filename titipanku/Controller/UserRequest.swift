@@ -60,63 +60,120 @@ class UserRequest: UICollectionViewController, UICollectionViewDelegateFlowLayou
         }
         collectionView?.backgroundColor = UIColor.white
         navigationItem.title = "Request"
-        collectionView?.register(RequestCell1.self, forCellWithReuseIdentifier: RequestCellId)
+        collectionView?.register(HistoryCell.self, forCellWithReuseIdentifier: RequestCellId)
         setupView()
     }
     
     private func setupView(){
-        view.backgroundColor = .white
-        let screenWidth = UIScreen.main.bounds.width
         
-        collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(collectionView!)
-        collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        //collectionView?.backgroundColor = UIColor.green
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
-        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        //collectionView?.centerXAnchor.constraint(equalTo: view.centerXAnchor/-4 ).isActive = true
-        //collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -400).isActive = true
-        //collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 560).isActive = true
-        
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return requests.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! RequestCell1
-        cell.app = requests[indexPath.row]
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor(hex: "#d1d8e0").cgColor
-        cell.backgroundColor = UIColor.red
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! HistoryCell
+        
+        
+        cell.labelCountry.text = requests[indexPath.row].name
+        if requests[indexPath.row].status == "0"{
+            cell.LabelTgl.text = "Ditolak"
+        }else if requests[indexPath.row].status == "1"{
+            cell.LabelTgl.text = "Belum Diterima"
+        }else if requests[indexPath.row].status == "2"{
+            cell.LabelTgl.text = "Diterima"
+        }else if requests[indexPath.row].status == "3"{
+            cell.LabelTgl.text = "Sudah Dibelikan"
+        }else if requests[indexPath.row].status == "4"{
+            cell.LabelTgl.text = "Sudah Dikirim"
+        }else if requests[indexPath.row].status == "5"{
+            cell.LabelTgl.text = "Selesai"
+        }
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180, height: 200)
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return requests.count
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: view.frame.width, height: 100)
+    }
+
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("asd")
         if let app : App = requests[indexPath.item] {
+            
             let layout = UICollectionViewFlowLayout()
-            layout.minimumInteritemSpacing = 0
-            layout.minimumLineSpacing = 0
-            let addDetail = barangDetailController(collectionViewLayout: layout)
-            addDetail.app = app
-            let transition = CATransition()
-            transition.duration = 0.3
-            transition.type = kCATransitionPush
-            transition.subtype = kCATransitionFromRight
-            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-            view.window!.layer.add(transition, forKey: kCATransition)
-            present(addDetail, animated: false, completion: nil)
+            let appDetailController = barangDetailControllerUser(collectionViewLayout: layout)
+            appDetailController.app = app
+            navigationController?.pushViewController(appDetailController, animated: true)
         }else{
             print("no app")
         }
         
     }
 }
+
+class HistoryCell: BaseCell {
+    
+    let labelA : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Nama : "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let labelB : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Status : "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let labelCountry : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.sizeToFit()
+        //        label.layer.borderWidth = 1
+        //        label.layer.borderColor = UIColor.green.cgColor
+        return label
+    }()
+    
+    let LabelTgl : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(labelA)
+        addSubview(labelB)
+        addSubview(labelCountry)
+        addSubview(LabelTgl)
+        addSubview(dividerLineView)
+        
+        addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelA,labelCountry) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelB,LabelTgl) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        
+        addConstraintsWithFormat("V:|-4-[v0]-4-[v1]", views: labelA,labelB)
+        addConstraintsWithFormat("V:|-4-[v0]-4-[v1]", views: labelCountry,LabelTgl )
+        addConstraintsWithFormat("V:|[v0(1)]", views: dividerLineView )
+        
+    }
+    
+}
+

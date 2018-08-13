@@ -14,13 +14,16 @@
 		3C12439F20DFE78600852D2D /* PreorderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C12439E20DFE78600852D2D /* PreorderDetail.swift */; };
 		3C8E38B220C5FB06009AD99D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */; };
 		4935CB4543CCEC46EC37BB63 /* Pods_titipanku.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; };
+		7E1B38D62120E96C00FFD5B0 /* UserPenjualanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */; };
+		7E1B38D82120E98900FFD5B0 /* UserPenjualanPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */; };
+		7E1B38DA2120F06000FFD5B0 /* barangDetailControllerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */; };
 		7E41129221206FC9008BBF89 /* PostTitipJuga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41129121206FC9008BBF89 /* PostTitipJuga.swift */; };
 		7E411294212088AD008BBF89 /* AddDetailTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411293212088AD008BBF89 /* AddDetailTitip.swift */; };
 		7E411296212088C0008BBF89 /* AddKarateristikTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */; };
 		7E41129A212088D8008BBF89 /* AddHargaTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411299212088D8008BBF89 /* AddHargaTitip.swift */; };
 		7E41129E21208A28008BBF89 /* AddNegaraTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41129D21208A28008BBF89 /* AddNegaraTitip.swift */; };
-		7E4112A021209393008BBF89 /* ReviewPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41129F21209393008BBF89 /* ReviewPembelian.swift */; };
 		7E4A2EA22113559F003F472A /* AllRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A2EA12113559F003F472A /* AllRequest.swift */; };
+		7E4D3FE62120D6E0000DE02C /* UserPenjualan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4D3FE52120D6E0000DE02C /* UserPenjualan.swift */; };
 		7E58EA7D2113CDB500BF7A2E /* ExploreNegara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */; };
 		7E58EA7F2113CDC600BF7A2E /* ExploreKategori.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA7E2113CDC600BF7A2E /* ExploreKategori.swift */; };
 		7E58EA812113D28A00BF7A2E /* ExploreNegaraRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA802113D28A00BF7A2E /* ExploreNegaraRequest.swift */; };
@@ -58,6 +61,7 @@
 		7EDED74F20F8EE2F005BCA76 /* AcceptOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */; };
 		7EDED75120FE47FF005BCA76 /* AddDurasiPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED75020FE47FF005BCA76 /* AddDurasiPreorder.swift */; };
 		7EE16FB7211F38240045EEBA /* ExploreNegaraDurasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE16FB6211F38240045EEBA /* ExploreNegaraDurasi.swift */; };
+		7EE3590C212117C100971EF4 /* UserReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE3590B212117C100971EF4 /* UserReview.swift */; };
 		7EE8D0B020E0CCF600BB03A1 /* AddNegaraPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */; };
 		7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */; };
 		7EE8D0B420E0CE0600BB03A1 /* AddKarateristikPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */; };
@@ -109,13 +113,16 @@
 		3C07FAFC20CE6777008FF049 /* AddHargaBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaBarang.swift; sourceTree = "<group>"; };
 		3C12439E20DFE78600852D2D /* PreorderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreorderDetail.swift; sourceTree = "<group>"; };
 		3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "titipanku/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualanRequest.swift; sourceTree = "<group>"; };
+		7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualanPreorder.swift; sourceTree = "<group>"; };
+		7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = barangDetailControllerUser.swift; sourceTree = "<group>"; };
 		7E41129121206FC9008BBF89 /* PostTitipJuga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTitipJuga.swift; sourceTree = "<group>"; };
 		7E411293212088AD008BBF89 /* AddDetailTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailTitip.swift; sourceTree = "<group>"; };
 		7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikTitip.swift; sourceTree = "<group>"; };
 		7E411299212088D8008BBF89 /* AddHargaTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaTitip.swift; sourceTree = "<group>"; };
 		7E41129D21208A28008BBF89 /* AddNegaraTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraTitip.swift; sourceTree = "<group>"; };
-		7E41129F21209393008BBF89 /* ReviewPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPembelian.swift; sourceTree = "<group>"; };
 		7E4A2EA12113559F003F472A /* AllRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRequest.swift; sourceTree = "<group>"; };
+		7E4D3FE52120D6E0000DE02C /* UserPenjualan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualan.swift; sourceTree = "<group>"; };
 		7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreNegara.swift; sourceTree = "<group>"; };
 		7E58EA7E2113CDC600BF7A2E /* ExploreKategori.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreKategori.swift; sourceTree = "<group>"; };
 		7E58EA802113D28A00BF7A2E /* ExploreNegaraRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreNegaraRequest.swift; sourceTree = "<group>"; };
@@ -153,6 +160,7 @@
 		7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptOffer.swift; sourceTree = "<group>"; };
 		7EDED75020FE47FF005BCA76 /* AddDurasiPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDurasiPreorder.swift; sourceTree = "<group>"; };
 		7EE16FB6211F38240045EEBA /* ExploreNegaraDurasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreNegaraDurasi.swift; sourceTree = "<group>"; };
+		7EE3590B212117C100971EF4 /* UserReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReview.swift; sourceTree = "<group>"; };
 		7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikPreorder.swift; sourceTree = "<group>"; };
@@ -248,8 +256,13 @@
 				7E5D98642106C95D006690B0 /* UserPembelian.swift */,
 				7E5D98662106C99E006690B0 /* UserRequest.swift */,
 				7E5D98682106C9AA006690B0 /* UserPreorder.swift */,
+				7E4D3FE52120D6E0000DE02C /* UserPenjualan.swift */,
+				7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */,
+				7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */,
 				9C6463BB20BF696A001E681A /* UserTripList.swift */,
+				7EE3590B212117C100971EF4 /* UserReview.swift */,
 				9C54771E20ACBFB200B3797E /* barangDetailController.swift */,
+				7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */,
 				7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */,
 				7E72A4722116E8E500391FA7 /* AcceptedOffer.swift */,
 				7E977E05211846A000D65F76 /* CompletedOffer.swift */,
@@ -263,7 +276,6 @@
 				7E977E0B2119DE0B00D65F76 /* AcceptedPembelian.swift */,
 				7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */,
 				7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */,
-				7E41129F21209393008BBF89 /* ReviewPembelian.swift */,
 				7E977E072119DB2B00D65F76 /* LihatPreorder.swift */,
 				7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */,
 				7E5D985C21062159006690B0 /* FlashsaleDetail.swift */,
@@ -444,6 +456,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-SwiftyJSON/Alamofire_SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/BetterSegmentedControl/BetterSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
@@ -455,8 +468,10 @@
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SKActivityIndicatorView/SKActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyPickerPopover/SwiftyPickerPopover.framework",
+				"${BUILT_PRODUCTS_DIR}/TwicketSegmentedControl/TwicketSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -464,6 +479,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BetterSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
@@ -475,8 +491,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyPickerPopover.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwicketSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,6 +529,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7EE3590C212117C100971EF4 /* UserReview.swift in Sources */,
 				9CE2AC9F20850658005C1D49 /* UserController.swift in Sources */,
 				7E411294212088AD008BBF89 /* AddDetailTitip.swift in Sources */,
 				7E5D98692106C9AA006690B0 /* UserPreorder.swift in Sources */,
@@ -542,6 +561,8 @@
 				7EEC06602113823A00B92B21 /* AllPreorderBerdurasi.swift in Sources */,
 				7E977E0C2119DE0B00D65F76 /* AcceptedPembelian.swift in Sources */,
 				9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */,
+				7E1B38D82120E98900FFD5B0 /* UserPenjualanPreorder.swift in Sources */,
+				7E1B38DA2120F06000FFD5B0 /* barangDetailControllerUser.swift in Sources */,
 				3C07FAF920CE6734008FF049 /* AddKarateristikBarang.swift in Sources */,
 				7E58EA832113D2BA00BF7A2E /* ExploreNegaraPreorder.swift in Sources */,
 				9CE2AC9D20850639005C1D49 /* ExploreController.swift in Sources */,
@@ -550,6 +571,7 @@
 				9C0BDF80207C7E4F004B2BCF /* registerController.swift in Sources */,
 				7EE16FB7211F38240045EEBA /* ExploreNegaraDurasi.swift in Sources */,
 				3C07FAFD20CE6777008FF049 /* AddHargaBarang.swift in Sources */,
+				7E1B38D62120E96C00FFD5B0 /* UserPenjualanRequest.swift in Sources */,
 				9CE6C2BB20B4CE8100D1B966 /* KomentarBarangController.swift in Sources */,
 				3C07FAF720CE5939008FF049 /* AddDetailBarang.swift in Sources */,
 				9C54771F20ACBFB200B3797E /* barangDetailController.swift in Sources */,
@@ -558,8 +580,8 @@
 				7EDED74D20F7471E005BCA76 /* OfferController3.swift in Sources */,
 				7E977E06211846A000D65F76 /* CompletedOffer.swift in Sources */,
 				7E8B5DB1210E06E300FFBC85 /* TopupController.swift in Sources */,
-				7E4112A021209393008BBF89 /* ReviewPembelian.swift in Sources */,
 				7E41129221206FC9008BBF89 /* PostTitipJuga.swift in Sources */,
+				7E4D3FE62120D6E0000DE02C /* UserPenjualan.swift in Sources */,
 				7E977E082119DB2B00D65F76 /* LihatPreorder.swift in Sources */,
 				7E5D9859210590F4006690B0 /* PesanController.swift in Sources */,
 				7E58EA892113F86B00BF7A2E /* ExploreKategoriPreorder.swift in Sources */,

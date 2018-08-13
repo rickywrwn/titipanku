@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SKActivityIndicatorView
 
 class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
@@ -266,11 +267,13 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
             
             self.present(alert, animated: true)
         }else{
+            
+            SKActivityIndicator.show("Loading...")
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
                 print(emailNow)
                 
                 let parameter: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "url": varDetail.url,"qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota , "idKota": varNegara.idKota ,"provinsi":varNegara.provinsi ,"action" : "insert","action2" : "tidak"]
-                
+                print(parameter)
                 Alamofire.request("http://titipanku.xyz/api/PostBarang.php",method: .post, parameters: parameter).responseSwiftyJSON { dataResponse in
                     
                     //mencetak JON response
@@ -280,7 +283,8 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
                         print(json)
                         let cekSukses = json["success"].intValue
                         let pesan = json["message"].stringValue
-                        
+                        print(cekSukses)
+                        print(pesan)
                         if cekSukses != 1 {
                             let alert = UIAlertController(title: "gagal", message: pesan, preferredStyle: .alert)
                             
@@ -288,9 +292,11 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
                             
                             self.present(alert, animated: true)
                         }else{
-                            let imgData = UIImageJPEGRepresentation(PostTitipJuga.varDetail.gambarBarang!, 0.1)!
+                            print("masuk")
+                            let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
                             
                             let parameters = ["name": "Frank","action" : "insert","action2" : "upload"]
+                            print(parameters)
                             //userfile adalah parameter post untuk file yg ingin di upload
                             Alamofire.upload(multipartFormData: { multipartFormData in
                                 multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
@@ -319,6 +325,7 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
                             let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                SKActivityIndicator.dismiss()
                                 self.handleBack()
                             }))
                             

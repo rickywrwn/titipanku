@@ -129,6 +129,8 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     }
     
     @objc func showHome(){
+        
+        self.hideKeyboardWhenTappedAround()
         self.dismiss(animated: true)
     }
     // end
@@ -150,6 +152,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         NVActivityIndicatorView(frame: frame, type: NVActivityIndicatorType(rawValue: NVActivityIndicatorType.circleStrokeSpin.rawValue))
         
         let size = CGSize(width: 30, height: 30)
+        self.view.endEditing(true)
         startAnimating(size, message: "Loading...")
         
         let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]

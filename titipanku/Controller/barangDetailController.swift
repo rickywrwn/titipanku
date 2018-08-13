@@ -18,6 +18,7 @@ import Hue
 struct VarOffer: Decodable {
     let id: String
     let idPenawar: String
+    let idRequest: String
     let tglOffer: String
     let hargaPenawaran: String
     let valueHarga: String
@@ -167,31 +168,31 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         }
         
         
-        // Create the navigation bar
-        let height: CGFloat = 75
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height;
-        let navbar = UINavigationBar(frame: CGRect(x: 0, y: statusBarHeight, width: UIScreen.main.bounds.width, height: height))
-        navbar.backgroundColor = UIColor.white
-        navbar.delegate = self as? UINavigationBarDelegate
-
-        
-        // Offset by 20 pixels vertically to take the status bar into account
-        navbar.backgroundColor = UIColor(hex: "#3867d6")
-        
-        // Create a navigation item with a title
-        let navigationItem = UINavigationItem()
+//        // Create the navigation bar
+//        let height: CGFloat = 75
+//        let statusBarHeight = UIApplication.shared.statusBarFrame.height;
+//        let navbar = UINavigationBar(frame: CGRect(x: 0, y: statusBarHeight, width: UIScreen.main.bounds.width, height: height))
+//        navbar.backgroundColor = UIColor.white
+//        navbar.delegate = self as? UINavigationBarDelegate
+//
+//
+//        // Offset by 20 pixels vertically to take the status bar into account
+//        navbar.backgroundColor = UIColor(hex: "#3867d6")
+//
+//        // Create a navigation item with a title
+//        let navigationItem = UINavigationItem()
         navigationItem.title = "Request"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleCancle))
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
-        // Assign the navigation item to the navigation bar
-        navbar.items = [navigationItem]
-        
-        // Make the navigation bar a subview of the current view controller
-        self.view.addSubview(navbar)
-        
-        collectionView?.frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height - height))
-        
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleCancle))
+//        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+//        // Assign the navigation item to the navigation bar
+//        navbar.items = [navigationItem]
+//
+//        // Make the navigation bar a subview of the current view controller
+//        self.view.addSubview(navbar)
+//
+//        collectionView?.frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height - height))
+//
         
     }
     
@@ -1388,7 +1389,7 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
                             print(statusOffer)
                             let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil, userInfo: dataIdOffer)
-                            print("tinggal nunggu Sampai")
+                            print("sudah Sampai")
                         }else{
                             print(statusOffer)
                             let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]

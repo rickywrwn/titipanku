@@ -112,8 +112,7 @@ class PenerimaanPembelian :  UIViewController {
         labelHarga.text = app?.qty
         labelKota.text = varOffer?.kota
         ResiText.text = varOffer?.nomorResi
-        label4.isHidden = true
-        ongkirText.text = (varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)!
+        ongkirText.text = "JNE"+(varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)!
         setupView()
         //print(detailOffer)
     }
@@ -127,7 +126,7 @@ class PenerimaanPembelian :  UIViewController {
         alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
-            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id{
+            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id, let review = self.reviewText.text , let rating = self.ratingText.text , let email = self.app?.email{
                 
                 let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"action":"terima"]
                 print (parameter)
@@ -147,14 +146,35 @@ class PenerimaanPembelian :  UIViewController {
                         
                         self.present(alert, animated: true)
                     }else{
-                        let alert = UIAlertController(title: "Message", message: "Belikan Barang Berhasil", preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                        let parameters: Parameters = ["rating": rating,"email":email,"review": review,"action":"insert"]
+                        print (parameters)
+                        Alamofire.request("http://titipanku.xyz/api/PostReview.php",method: .get, parameters: parameters).responseJSON {
+                            response in
                             
-                            self.handleBack()
-                        }))
-                        
-                        self.present(alert, animated: true)
+                            //mengambil json
+                            let json = JSON(response.result.value)
+                            print(json)
+                            let cekSukses = json["success"].intValue
+                            let pesan = json["message"].stringValue
+                            
+                            if cekSukses != 1 {
+                                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                                
+                                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                                
+                                self.present(alert, animated: true)
+                            }else{
+                                let alert = UIAlertController(title: "Message", message: "Review dan Terima Barang Berhasil", preferredStyle: .alert)
+                                
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                    
+                                    self.handleBack()
+                                    
+                                }))
+                                
+                                self.present(alert, animated: true)
+                            }
+                        }
                     }
                 }
             }
@@ -162,6 +182,21 @@ class PenerimaanPembelian :  UIViewController {
         
         // show the alert
         self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    @objc func qtyTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        StringPickerPopover(title: "Ukuran Barang", choices: ["1", "2","3","4","5"])
+            .setSelectedRow(0)
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+                print("done row \(selectedRow) \(selectedString)")
+                self.ratingText.text = selectedString
+            })
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            )
+            .appear(originView: textField, baseViewController: self)
         
     }
     
@@ -228,7 +263,7 @@ class PenerimaanPembelian :  UIViewController {
     
     let labelOngkir : UILabel = {
         let label = UILabel()
-        label.text = "Nomor Resi"
+        label.text = "Metode Pengiriman"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -242,24 +277,9 @@ class PenerimaanPembelian :  UIViewController {
         return textField
     }()
     
-    let label4 : UILabel = {
-        let label = UILabel()
-        label.text = "Harga Penawaran (Termasuk Ongkir)"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let labelTotal : UILabel = {
-        let label = UILabel()
-        label.sizeToFit()
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     let labelResi : UILabel = {
         let label = UILabel()
-        label.text = "Metode Pengiriman"
+        label.text = "Nomor Resi"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -272,6 +292,43 @@ class PenerimaanPembelian :  UIViewController {
         textField.inputView = UIView();
         return textField
     }()
+    
+    let labelReview : UILabel = {
+        let label = UILabel()
+        label.text = "Review Anda"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let reviewText : UITextView = {
+        let textField = UITextView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .left
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor =  UIColor.black.cgColor
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        //textField.addTarget(self, action: #selector(ongkirTapped(_:)),for: UIControlEvents.touchDown)
+        //textField.inputView = UIView();
+        return textField
+    }()
+    
+    let labelRating : UILabel = {
+        let label = UILabel()
+        label.text = "Rating"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let ratingText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(qtyTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
+        return textField
+    }()
+    
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("Barang Sudah Diterima", for: .normal)
@@ -383,17 +440,27 @@ class PenerimaanPembelian :  UIViewController {
         ResiText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         ResiText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
         
-        scrollView.addSubview(label4)
-        label4.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
-        label4.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        scrollView.addSubview(labelReview)
+        labelReview.topAnchor.constraint(equalTo: ResiText.bottomAnchor, constant: 30).isActive = true
+        labelReview.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
-        scrollView.addSubview(labelTotal)
-        labelTotal.topAnchor.constraint(equalTo: label4.bottomAnchor, constant: 10).isActive = true
-        labelTotal.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        labelTotal.font = UIFont.systemFont(ofSize: 25)
-        labelTotal.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
-        labelTotal.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        scrollView.addSubview(reviewText)
+        reviewText.topAnchor.constraint(equalTo: labelReview.bottomAnchor, constant: 10).isActive = true
+        reviewText.heightAnchor.constraint(equalToConstant: 105).isActive = true
+        reviewText.font = UIFont.systemFont(ofSize: 15)
+        reviewText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        reviewText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -50).isActive = true
+        
+        scrollView.addSubview(labelRating)
+        labelRating.topAnchor.constraint(equalTo: reviewText.bottomAnchor, constant: 30).isActive = true
+        labelRating.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        
+        scrollView.addSubview(ratingText)
+        ratingText.topAnchor.constraint(equalTo: labelRating.bottomAnchor, constant: 10).isActive = true
+        ratingText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        ratingText.font = UIFont.systemFont(ofSize: 25)
+        ratingText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        ratingText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
         
         scrollView.addSubview(postButton)
         postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true

@@ -171,14 +171,14 @@ class PenerimaanOffer :  UIViewController {
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
-        //print(app)
+        print(app)
         //fetchOffer()
         fetchJSON()
         labelTgl.text = self.varOffer?.tglPulang
         labelHarga.text = self.app?.nomorResi
         labelKota.text = self.varOffer?.kota
         
-        label4.isHidden = true
+        //label4.isHidden = true
         print(varOffer)
         setupView()
         //print(detailOffer)
@@ -194,7 +194,7 @@ class PenerimaanOffer :  UIViewController {
             
             alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
                 
-                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id {
+                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id, let review = self.ongkirText.text , let rating = self.ratingText.text , let email = self.varOffer?.idPenawar{
                     
                     let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"action":"terima"]
                     print (parameter)
@@ -214,15 +214,35 @@ class PenerimaanOffer :  UIViewController {
                             
                             self.present(alert, animated: true)
                         }else{
-                            let alert = UIAlertController(title: "Message", message: "Belikan Barang Berhasil", preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            let parameters: Parameters = ["rating": rating,"email":email,"review": review,"action":"insert"]
+                            print (parameters)
+                            Alamofire.request("http://titipanku.xyz/api/PostReview.php",method: .get, parameters: parameters).responseJSON {
+                                response in
                                 
-                                self.handleBack()
+                                //mengambil json
+                                let json = JSON(response.result.value)
+                                print(json)
+                                let cekSukses = json["success"].intValue
+                                let pesan = json["message"].stringValue
                                 
-                            }))
-                            
-                            self.present(alert, animated: true)
+                                if cekSukses != 1 {
+                                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                                    
+                                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                                    
+                                    self.present(alert, animated: true)
+                                }else{
+                                    let alert = UIAlertController(title: "Message", message: "Review dan Terima Barang Berhasil", preferredStyle: .alert)
+                                    
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                        
+                                        self.handleBack()
+                                        
+                                    }))
+                                    
+                                    self.present(alert, animated: true)
+                                }
+                            }
                         }
                     }
                 }
@@ -275,6 +295,7 @@ class PenerimaanOffer :  UIViewController {
                         self.present(alert, animated: true)
                     }
                 }
+                
             }
             
         }))
@@ -289,6 +310,22 @@ class PenerimaanOffer :  UIViewController {
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc func qtyTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        StringPickerPopover(title: "Ukuran Barang", choices: ["1", "2","3","4","5"])
+            .setSelectedRow(0)
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+                print("done row \(selectedRow) \(selectedString)")
+                self.ratingText.text = selectedString
+            })
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            )
+            .appear(originView: textField, baseViewController: self)
+        
+    }
+    
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     //tampilan
@@ -347,15 +384,16 @@ class PenerimaanOffer :  UIViewController {
     
     let labelOngkir : UILabel = {
         let label = UILabel()
-        label.text = "Nomor Resi"
+        label.text = "Review Anda"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let ongkirText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    let ongkirText : UITextView = {
+        let textField = UITextView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .left
-        textField.borderStyle = .line
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor =  UIColor.black.cgColor
         textField.translatesAutoresizingMaskIntoConstraints = false
         //textField.addTarget(self, action: #selector(ongkirTapped(_:)),for: UIControlEvents.touchDown)
         //textField.inputView = UIView();
@@ -364,17 +402,20 @@ class PenerimaanOffer :  UIViewController {
     
     let label4 : UILabel = {
         let label = UILabel()
-        label.text = "Harga Penawaran (Termasuk Ongkir)"
+        label.text = "Rating"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let labelTotal : UILabel = {
-        let label = UILabel()
-        label.sizeToFit()
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let ratingText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(qtyTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
+        return textField
     }()
     
     let postButton : UIButton = {
@@ -390,18 +431,18 @@ class PenerimaanOffer :  UIViewController {
         
     }()
     
-        let declineButton : UIButton = {
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-            button.setTitle("Terdapat Masalah", for: .normal)
-            button.setTitleColor(.white, for: .normal)
-            button.setTitleColor(.cyan, for: .selected)
-            button.backgroundColor = UIColor.red
-            button.clipsToBounds = true
-            button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            return button
-    
-        }()
+    let declineButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Terdapat Masalah", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        button.backgroundColor = UIColor.red
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+
+    }()
     
     let dividerLineView1: UIView = {
         let view = UIView()
@@ -472,20 +513,21 @@ class PenerimaanOffer :  UIViewController {
         
         scrollView.addSubview(ongkirText)
         ongkirText.topAnchor.constraint(equalTo: labelOngkir.bottomAnchor, constant: 10).isActive = true
-        ongkirText.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        ongkirText.heightAnchor.constraint(equalToConstant: 105).isActive = true
         ongkirText.font = UIFont.systemFont(ofSize: 15)
         ongkirText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-        ongkirText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
+        ongkirText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -50).isActive = true
         
         scrollView.addSubview(label4)
         label4.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
         label4.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
-        scrollView.addSubview(labelTotal)
-        labelTotal.topAnchor.constraint(equalTo: label4.bottomAnchor, constant: 10).isActive = true
-        labelTotal.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        labelTotal.font = UIFont.systemFont(ofSize: 25)
-        labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        scrollView.addSubview(ratingText)
+        ratingText.topAnchor.constraint(equalTo: label4.bottomAnchor, constant: 10).isActive = true
+        ratingText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        ratingText.font = UIFont.systemFont(ofSize: 25)
+        ratingText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        ratingText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
         
         scrollView.addSubview(postButton)
         postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
@@ -494,13 +536,13 @@ class PenerimaanOffer :  UIViewController {
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
-                scrollView.addSubview(declineButton)
-                declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-                declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-                declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-                declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-                declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        scrollView.addSubview(declineButton)
+        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
+        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
+
+        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
         
     }

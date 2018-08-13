@@ -101,13 +101,14 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-//        let appDetailController = barangDetailController(collectionViewLayout: layout)
-//        navigationController?.pushViewController(appDetailController, animated: true)
-//
-        let tambahCont = barangDetailController(collectionViewLayout:layout)
-        tambahCont.app = app
-        present(tambahCont, animated: true, completion: {
-        })
+        let appDetailController = barangDetailController(collectionViewLayout: layout)
+        appDetailController.app = app
+        navigationController?.pushViewController(appDetailController, animated: true)
+
+//        let tambahCont = barangDetailController(collectionViewLayout:layout)
+//        tambahCont.app = app
+//        present(tambahCont, animated: true, completion: {
+//        })
     }
     
     func showPreorderDetailForApp(_ app: App) {

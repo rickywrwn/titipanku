@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SKActivityIndicatorView
 
 class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
@@ -215,6 +216,8 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
             
             self.present(alert, animated: true)
         }else{
+            
+            SKActivityIndicator.show("Loading...")
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             print(emailNow)
             
@@ -268,6 +271,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
                         let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            SKActivityIndicator.dismiss()
                             self.handleBack()
                         }))
                         

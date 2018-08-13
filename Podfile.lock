@@ -5,6 +5,7 @@ PODS:
     - SwiftyJSON (~> 4.0.0)
   - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
+  - BetterSegmentedControl (1.0)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -75,13 +76,16 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.2.1)
   - NVActivityIndicatorView/Presenter (4.2.1)
   - SKActivityIndicatorView (0.1.0)
+  - SnapKit (4.0.0)
   - SwiftyJSON (4.0.0)
   - SwiftyPickerPopover (6.1.0)
+  - TwicketSegmentedControl (0.1.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
   - Alamofire-SwiftyJSON
   - AlamofireImage (~> 3.3)
+  - BetterSegmentedControl (~> 1.0)
   - Eureka
   - FBSDKCoreKit
   - FBSDKLoginKit
@@ -93,14 +97,17 @@ DEPENDENCIES:
   - MidtransKit
   - NVActivityIndicatorView
   - SKActivityIndicatorView (~> 0.1.0)
+  - SnapKit (~> 4.0.0)
   - SwiftyJSON
   - SwiftyPickerPopover
+  - TwicketSegmentedControl
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Alamofire-SwiftyJSON
     - AlamofireImage
+    - BetterSegmentedControl
     - Bolts
     - Eureka
     - FBSDKCoreKit
@@ -121,13 +128,16 @@ SPEC REPOS:
     - nanopb
     - NVActivityIndicatorView
     - SKActivityIndicatorView
+    - SnapKit
     - SwiftyJSON
     - SwiftyPickerPopover
+    - TwicketSegmentedControl
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   Alamofire-SwiftyJSON: 2b3649d57dc7bb2880fb8b86f8bb969397666916
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
+  BetterSegmentedControl: 92555f980e4273ec414d6187acc5b811659a9abf
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   FBSDKCoreKit: e08ccfcefa7bc1347a07c276dac9bf6c7fe57024
@@ -148,9 +158,11 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   SKActivityIndicatorView: f46936f760d33eb8235333242269bf01cc9248ae
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwiftyPickerPopover: f1bb928efd60e4c754aa957c1bb67372465e9ccb
+  TwicketSegmentedControl: 6d7a4cf243657e0ac3f00d06d873a25334c04042
 
-PODFILE CHECKSUM: 3b9513b6cc0210218bb89105fe6a4a0a84aee59f
+PODFILE CHECKSUM: b6d377d436dcdca0dd818e642799bb5f1f01c026
 
 COCOAPODS: 1.5.3

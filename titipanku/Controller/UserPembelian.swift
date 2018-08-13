@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import BetterSegmentedControl
 
 class UserPembelian: UIViewController {
     struct varTambah {
@@ -22,9 +23,6 @@ class UserPembelian: UIViewController {
     let layout = UICollectionViewFlowLayout()
     
     lazy var RequestVC: UserRequest = {
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        layout.scrollDirection = .vertical
         let vc = UserRequest(collectionViewLayout: layout)
         vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
@@ -32,9 +30,6 @@ class UserPembelian: UIViewController {
     }()
     
     lazy var PreorderVC: UserPreorder = {
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        layout.scrollDirection = .vertical
         let vc = UserPreorder(collectionViewLayout: layout)
         vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
@@ -50,6 +45,33 @@ class UserPembelian: UIViewController {
         
         navigationItem.title = "Home"
         RequestVC.view.isHidden = false
+        
+        let navigationSegmentedControl = BetterSegmentedControl(
+            frame: CGRect(x: 35.0, y: 40.0, width: 200.0, height: 30.0),
+            segments: LabelSegment.segments(withTitles: ["Request", "Preorder"],
+                                            normalFont: UIFont(name: "Avenir", size: 13.0)!,
+                                            normalTextColor: .lightGray,
+                                            selectedFont: UIFont(name: "Avenir", size: 13.0)!,
+                                            selectedTextColor: .white),
+            options:[.backgroundColor(.darkGray),
+                     .indicatorViewBackgroundColor(UIColor(red:0.55, green:0.26, blue:0.86, alpha:1.00)),
+                     .cornerRadius(3.0),
+                     .bouncesOnChange(false)])
+        navigationSegmentedControl.addTarget(self, action: #selector(UserPembelian.navigationSegmentedControlValueChanged(_:)), for: .valueChanged)
+        navigationItem.titleView = navigationSegmentedControl
+    }
+    
+    @objc func navigationSegmentedControlValueChanged(_ sender: BetterSegmentedControl) {
+        if sender.index == 0 {
+            print("Turning lights on.")
+            RequestVC.view.isHidden = false
+            PreorderVC.view.isHidden = true
+        }
+        else {
+            print("Turning lights off.")
+            RequestVC.view.isHidden = true
+            PreorderVC.view.isHidden = false
+        }
     }
     
     @objc public func handleBack(){
@@ -69,16 +91,7 @@ class UserPembelian: UIViewController {
         childVC.view.removeFromSuperview()
         childVC.removeFromParentViewController()
     }
-    
-    @objc func madeSelection(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0{
-            RequestVC.view.isHidden = false
-            PreorderVC.view.isHidden = true
-        }else if sender.selectedSegmentIndex == 1{
-            RequestVC.view.isHidden = true
-            PreorderVC.view.isHidden = false
-        }
-    }
+
     
     let backButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
@@ -93,11 +106,6 @@ class UserPembelian: UIViewController {
         let screenHeight = UIScreen.main.bounds.height
         view.backgroundColor = .white
         
-        navSegmentControl.addTarget(self, action: #selector(madeSelection), for: .valueChanged)
-        
-        navSegmentControl.insertSegment(withTitle: "Request", at: 0, animated: false)
-        navSegmentControl.insertSegment(withTitle: "Durasi", at: 1, animated: false)
-        navSegmentControl.selectedSegmentIndex = 0
         
         view.addSubview(containerView)
         view.addSubview(navSegmentControl)
