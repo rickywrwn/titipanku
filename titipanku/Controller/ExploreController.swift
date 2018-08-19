@@ -20,14 +20,20 @@ struct isi: Decodable {
     let id: String
     let nama: String
 }
-
-class ExploreController : UINavigationController,UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension ExploreController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text{
+            
+            print(searchText)
+        }
+    }
+}
+class ExploreController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     fileprivate let exploreCellId = "exploreCellId"
     
     var isiExplore : listData?
     var isiData = [isi]()
-    
     func fetchExplore(_ completionHandler: @escaping (listData) -> ()) {
         
         let urlString = "http://titipanku.xyz/api/GetExplore.php"
@@ -47,9 +53,8 @@ class ExploreController : UINavigationController,UICollectionViewDataSource, UIC
                 print(self.isiExplore)
                 print("count isiexplore")
                 print(self.isiExplore?.explore.count)
-                self.exploreCollectionView.reloadData()
                 DispatchQueue.main.async(execute: { () -> Void in
-                    self.exploreCollectionView.reloadData()
+                    self.collectionView?.reloadData()
                     completionHandler(self.isiExplore!)
                 })
                 
@@ -70,22 +75,34 @@ class ExploreController : UINavigationController,UICollectionViewDataSource, UIC
         
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.white
-        self.navigationItem.title = "Explore"
         
-        exploreCollectionView.dataSource = self
-        exploreCollectionView.delegate = self
-        exploreCollectionView.register(categoryCollectionView.self, forCellWithReuseIdentifier: categoryCellId)
-        exploreCollectionView.register(countryCollectionView.self, forCellWithReuseIdentifier: countryCellId)
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+        collectionView?.register(categoryCollectionView.self, forCellWithReuseIdentifier: categoryCellId)
+        collectionView?.register(countryCollectionView.self, forCellWithReuseIdentifier: countryCellId)
         NotificationCenter.default.addObserver(self, selector: #selector(showDetailNegara(_:)), name: NSNotification.Name(rawValue: "showDetailNegara"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showDetailKategori(_:)), name: NSNotification.Name(rawValue: "showDetailKategori"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadExplore(_:)), name: NSNotification.Name(rawValue: "reloadExplore"), object: nil)
         setupLayout()
+        navigationItem.title = "Explore"
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.delegate = self
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
+        
         self.fetchExplore{(isiExplore) -> ()in
             self.isiExplore = isiExplore
             //self.collectionView?.reloadData()
         }
     }
-    
+
     @objc func showDetailNegara(_ notification: NSNotification) {
         let nextCont = ExploreNegara()
         if let dataNegara = notification.userInfo?["isiNegara"] as? isi {
@@ -118,29 +135,18 @@ class ExploreController : UINavigationController,UICollectionViewDataSource, UIC
         }
     }
     
-    let exploreCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        collectionView.backgroundColor = UIColor.clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return collectionView
-    }()
-    
     private func setupLayout(){
         
-        view.addSubview(exploreCollectionView)
-        exploreCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        exploreCollectionView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        exploreCollectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        exploreCollectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-        exploreCollectionView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 15).isActive = true
+        view.addSubview(collectionView!)
+        collectionView?.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 60).isActive = true
      
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = isiExplore?.explore.count {
             return count
         }else{
@@ -149,7 +155,7 @@ class ExploreController : UINavigationController,UICollectionViewDataSource, UIC
         return 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.row == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: countryCellId, for: indexPath) as! countryCollectionView
@@ -174,7 +180,7 @@ class ExploreController : UINavigationController,UICollectionViewDataSource, UIC
         return CGSize(width: view.frame.width, height: 240)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.item == 0{
             

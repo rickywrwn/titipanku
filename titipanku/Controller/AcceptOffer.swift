@@ -173,7 +173,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
         SKActivityIndicator.show("Loading...")
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Tawaran"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
@@ -187,7 +186,39 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         label4.isHidden = true
         
         setupView()
+        //supaya navbar full
+        // Create the navigation bar
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        
+        // Offset by 20 pixels vertically to take the status bar into account
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Penawaran"
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleCancle))
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+        // Assign the navigation item to the navigation bar
+        
+        navbar.setItems([navigationItem], animated: false)
+        
+        // Make the navigation bar a subview of the current view controller
+        
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
         //print(detailOffer)
+    }
+    
+    @objc func handleCancle(){
+        self.dismiss(animated: true)
     }
     
     func fetchOrderId(){
@@ -241,7 +272,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
         let paket = arrNama[indexPath.row]
         let harga = arrHarga[indexPath.row]
-        cell.textLabel?.text = paket + " - " + harga + " (" + arrEtd[indexPath.row] + " Hari)"
+        cell.textLabel?.text = paket  + "(" + arrEtd[indexPath.row] + " Hari) " + " - " + harga
         
         return cell
     }
@@ -353,9 +384,9 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                     
                     let saldoNow : Int = saldo! - hargaTotal
                     print(saldoNow)
-                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let saldo : String = String(saldoNow), let idRequest = self.app?.id , let jne : String = self.selectedJenis, let idPenawar = self.varOffer?.idPenawar{
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let saldo : String = String(saldoNow), let idRequest = self.app?.id , let jne : String = self.selectedJenis, let idPenawar = self.varOffer?.idPenawar,let jumlah : String = String(hargaTotal){
                         
-                        let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"jenisOngkir":jne,"saldo":saldoNow,"email":emailNow,"idRequest": idRequest,"idPenawar":idPenawar,"action":"accept"]
+                        let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"hargaOngkir":ongkir,"jenisOngkir":jne,"idPenawar":idPenawar,"saldo":saldoNow,"email":emailNow,"jumlah":jumlah,"action":"accept"]
                         print (parameter)
                         Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
                             response in
@@ -510,7 +541,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
 
     let labelOngkir : UILabel = {
         let label = UILabel()
-        label.text = "Metode Pengiriman"
+        label.text = "Metode Pengiriman (JNE)"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -599,12 +630,12 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
+        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1150)
         let screenWidth = UIScreen.main.bounds.width+10
 
         // constrain the scroll view to 8-pts on each side
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8.0).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8.0).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0).isActive = true
         

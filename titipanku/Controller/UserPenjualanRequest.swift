@@ -12,11 +12,12 @@ import Alamofire
 import AlamofireImage
 import Hue
 
-class UserPenjualanRequest: UICollectionViewController, UICollectionViewDelegateFlowLayout{
+class UserPenjualanRequest: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     fileprivate let RequestCellId = "RequestCellId"
     var requests = [VarOffer]()
     var app : App?
     var isiData : isi?
+    var collectionview: UICollectionView!
     
     func fetchRequests(_ completionHandler: @escaping ([VarOffer]) -> ()) {
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
@@ -52,17 +53,15 @@ class UserPenjualanRequest: UICollectionViewController, UICollectionViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+        
         SKActivityIndicator.show("Loading...", userInteractionStatus: false)
         self.fetchRequests{(requests) -> ()in
             self.requests = requests
             print("count request" + String(self.requests.count))
-            self.collectionView?.reloadData()
+            self.collectionview.reloadData()
             SKActivityIndicator.dismiss()
         }
-        collectionView?.backgroundColor = UIColor.white
-        navigationItem.title = "Request"
-        collectionView?.register(HistoryCell.self, forCellWithReuseIdentifier: RequestCellId)
-        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,10 +69,35 @@ class UserPenjualanRequest: UICollectionViewController, UICollectionViewDelegate
     }
     
     private func setupView(){
+        let screenWidth = UIScreen.main.bounds.width
+        print(screenWidth)
         
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 220, bottom: 0, right: 0)
+        layout.itemSize = CGSize(width: view.frame.width, height: 700)
+        
+        collectionview = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        self.collectionview.register(HistoryCell.self, forCellWithReuseIdentifier: RequestCellId)
+        collectionview.dataSource = self
+        collectionview.delegate = self
+        collectionview.showsVerticalScrollIndicator = false
+        collectionview.backgroundColor = UIColor.white
+        self.view.addSubview(collectionview)
+        
+        self.collectionview.translatesAutoresizingMaskIntoConstraints = false
+        //        view.addSubview(collectionView!)
+        //        //collectionView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        //        //collectionView?.backgroundColor = UIColor.green
+        self.collectionview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        self.collectionview.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        //        //collectionView?.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
+        //
+        self.collectionview.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor,constant: screenWidth / -2).isActive = true
+        //        //collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        self.collectionview.heightAnchor.constraint(equalToConstant: 600).isActive = true
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! HistoryCell
         
@@ -108,23 +132,32 @@ class UserPenjualanRequest: UICollectionViewController, UICollectionViewDelegate
             
         }).resume()
         
+        if let id : String = requests[indexPath.row].idRequest {
+            Alamofire.request("http://titipanku.xyz/uploads/b"+id+".jpg").responseImage { response in
+                if let image = response.result.value {
+                    cell.imageView.image = image
+                }
+            }
+        }
+        
+        cell.LabelTgl.text = requests[indexPath.row].tglOffer
         if requests[indexPath.row].status == "0"{
-            cell.LabelTgl.text = "Ditolak"
+            cell.LabelStatus.text = "Ditolak"
         }else if requests[indexPath.row].status == "1"{
-            cell.LabelTgl.text = "Belum Diterima"
+            cell.LabelStatus.text = "Belum Diterima"
         }else if requests[indexPath.row].status == "2"{
-            cell.LabelTgl.text = "Diterima"
+            cell.LabelStatus.text = "Diterima"
         }else if requests[indexPath.row].status == "3"{
-            cell.LabelTgl.text = "Sudah Dibelikan"
+            cell.LabelStatus.text = "Sudah Dibelikan"
         }else if requests[indexPath.row].status == "4"{
-            cell.LabelTgl.text = "Sudah Dikirim"
+            cell.LabelStatus.text = "Sudah Dikirim"
         }else if requests[indexPath.row].status == "5"{
-            cell.LabelTgl.text = "Selesai"
+            cell.LabelStatus.text = "Selesai"
         }
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return requests.count
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -135,7 +168,7 @@ class UserPenjualanRequest: UICollectionViewController, UICollectionViewDelegate
     @objc func showDetail(){
         if let app : App = app{
             let layout = UICollectionViewFlowLayout()
-            let appDetailController = barangDetailControllerUser(collectionViewLayout: layout)
+            let appDetailController = barangDetailController(collectionViewLayout: layout)
             appDetailController.app = app
             navigationController?.pushViewController(appDetailController, animated: true)
         }else{
@@ -144,7 +177,7 @@ class UserPenjualanRequest: UICollectionViewController, UICollectionViewDelegate
         
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("asd")
         print(requests[indexPath.row].idRequest)
         

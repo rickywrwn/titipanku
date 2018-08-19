@@ -90,27 +90,23 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     @objc func handleTrip(){
-        print("trip")
         let layout = UICollectionViewFlowLayout()
         let tripListCont = UserTripList(collectionViewLayout: layout)
         navigationController?.pushViewController(tripListCont, animated: true)
         
     }
     @objc func handleReview(){
-        print("pembelian")
         let layout = UICollectionViewFlowLayout()
         let tripListCont = UserReview(collectionViewLayout: layout)
         navigationController?.pushViewController(tripListCont, animated: true)
         
     }
     @objc func handlePembelian(){
-        print("pembelian")
         let tripListCont = UserPembelian()
         navigationController?.pushViewController(tripListCont, animated: true)
         
     }
     @objc func handlePenjualan(){
-        print("penjualan")
         let tripListCont = UserPenjualan()
         navigationController?.pushViewController(tripListCont, animated: true)
         
@@ -146,12 +142,12 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
             return cell
         }else if indexPath.item == 2{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
-            cell.labelNama.text = "Pembelian"
+            cell.labelNama.text = "Postinganku"
             
             return cell
         }else if indexPath.item == 3{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: activityCellId, for: indexPath) as! UserActivityCell
-            cell.labelNama.text = "Penjualan"
+            cell.labelNama.text = "Penawaranku"
             
             return cell
         }else if indexPath.item == 4{
@@ -279,14 +275,14 @@ class UserDetailCell: BaseCell {
         addSubview(LabelTanggal)
         addSubview(dividerLineView)
         
-        addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v1]-1-[v0]", views: labelEmail,labelA,imageView) //pipline terakhir dihilangkan
-        addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v0]-1-[v1]", views: labelB,LabelNama,imageView) //pipline terakhir dihilangkan
-        addConstraintsWithFormat("H:|-4-[v2(100)]-20-[v0]-1-[v1]", views: labelC,LabelTanggal,imageView) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-5-[v2(100)]-20-[v1]-1-[v0]", views: labelEmail,labelA,imageView) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-5-[v2(100)]-20-[v0]-1-[v1]", views: labelB,LabelNama,imageView) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-5-[v2(100)]-20-[v0]-1-[v1]", views: labelC,LabelTanggal,imageView) //pipline terakhir dihilangkan
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
         addConstraintsWithFormat("V:|-25-[v0(100)]", views: imageView)
-        addConstraintsWithFormat("V:|-30-[v0]-4-[v1]-4-[v2]", views: labelA,labelB,labelC)
-        addConstraintsWithFormat("V:|-30-[v0]-4-[v1]-4-[v2]", views: labelEmail,LabelNama,LabelTanggal )
+        addConstraintsWithFormat("V:|-30-[v0]-5-[v1]-5-[v2]", views: labelA,labelB,labelC)
+        addConstraintsWithFormat("V:|-30-[v0]-5-[v1]-5-[v2]", views: labelEmail,LabelNama,LabelTanggal )
         addConstraintsWithFormat("V:|-155-[v0(1)]", views:dividerLineView )
         
     }

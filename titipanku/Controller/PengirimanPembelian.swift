@@ -152,7 +152,7 @@ class PengirimanPembelian :  UIViewController {
                         
                         self.present(alert, animated: true)
                     }else{
-                        let alert = UIAlertController(title: "Message", message: "Belikan Barang Berhasil", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Message", message: "Kirim Barang Berhasil", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                             

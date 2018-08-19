@@ -29,8 +29,8 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
             cekGambar = 1
         }
         
-        qtyText.isHidden = true
-        label2.isHidden = true
+//        qtyText.isHidden = true
+//        label2.isHidden = true
         
         setupView()
         self.hideKeyboardWhenTappedAround()
@@ -46,8 +46,8 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
             PostPreorder.varDetail.gambarBarang = BarangImageView.image
             PostPreorder.varDetail.namaBarang = nameText.text!
             PostPreorder.varDetail.brand = brandText.text!
-            //PostPreorder.varDetail.qty = qtyText.text!
-            PostPreorder.varDetail.qty = "0"
+            PostPreorder.varDetail.qty = qtyText.text!
+            //PostPreorder.varDetail.qty = "0"
             PostPreorder.varDetail.desc = descText.text!
             PostPreorder.varDetail.kategori = categoryText.text!
             PostPreorder.varDetail.url = urlText.text!
@@ -373,7 +373,7 @@ class AddDetailPreorder :  UIViewController, UIImagePickerControllerDelegate, UI
         qtyText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         scrollView.addSubview(label3)
-        label3.topAnchor.constraint(equalTo: brandText.bottomAnchor, constant: 30).isActive = true
+        label3.topAnchor.constraint(equalTo: qtyText.bottomAnchor, constant: 30).isActive = true
         label3.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         

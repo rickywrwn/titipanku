@@ -29,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         //facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
+        UIApplication.shared.statusBarStyle = .lightContent
+
         UINavigationBar.appearance().barTintColor = UIColor(hex: "#3867d6")
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         UINavigationBar.appearance().tintColor = .white

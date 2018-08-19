@@ -31,16 +31,6 @@ class ExploreKategori: UIViewController {
         return vc
     }()
     
-    lazy var DurasiVC: ExploreKategoriPreorderBerdurasi = {
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        layout.scrollDirection = .vertical
-        let vc = ExploreKategoriPreorderBerdurasi(collectionViewLayout: layout)
-        vc.isiData = self.isiData
-        self.addAsChildVC(childVC: vc)
-        return vc
-    }()
-    
     lazy var PreorderVC : ExploreKategoriPreorder = {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
@@ -84,16 +74,9 @@ class ExploreKategori: UIViewController {
         if sender.selectedSegmentIndex == 0{
             RequestVC.view.isHidden = false
             PreorderVC.view.isHidden = true
-            DurasiVC.view.isHidden = true
         }else if sender.selectedSegmentIndex == 1{
             RequestVC.view.isHidden = true
             PreorderVC.view.isHidden = false
-            DurasiVC.view.isHidden = true
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
-        }else if sender.selectedSegmentIndex == 2{
-            RequestVC.view.isHidden = true
-            PreorderVC.view.isHidden = true
-            DurasiVC.view.isHidden = false
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         }
     }
@@ -116,7 +99,6 @@ class ExploreKategori: UIViewController {
         
         navSegmentControl.insertSegment(withTitle: "Request", at: 0, animated: false)
         navSegmentControl.insertSegment(withTitle: "Preorder", at: 1, animated: false)
-        navSegmentControl.insertSegment(withTitle: "Durasi", at: 2, animated: false)
         navSegmentControl.selectedSegmentIndex = 0
         
         view.addSubview(containerView)

@@ -39,7 +39,7 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
 //        let icon3 = UITabBarItem(title: "Tambah", image: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal))
 //        item3.tabBarItem = icon3
         
-        let item2 = ExploreController()
+        let item2 = UINavigationController(rootViewController: ExploreController(collectionViewLayout: layout))
         let icon2 = UITabBarItem(title: "Explore", image: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal))
         item2.tabBarItem = icon2
         

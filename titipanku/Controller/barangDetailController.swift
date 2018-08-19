@@ -36,7 +36,7 @@ var idOfferNow : String = ""
 var statusOffer = false
 var tinggiDesc : Float = 0
 
-class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout,UIBarPositioningDelegate {
 
     var offers = [VarOffer]()
     var tinggiTextView : Float = 0
@@ -158,43 +158,52 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                 print(self.offers[i].status)
                 if self.offers[i].status != "1"{
                     statusOffer = true
-                    print("nocok")
                 }else{
-                    print("cok")
                 }
             }
             
             self.collectionView?.reloadData()
         }
         
-        
-//        // Create the navigation bar
-//        let height: CGFloat = 75
-//        let statusBarHeight = UIApplication.shared.statusBarFrame.height;
-//        let navbar = UINavigationBar(frame: CGRect(x: 0, y: statusBarHeight, width: UIScreen.main.bounds.width, height: height))
-//        navbar.backgroundColor = UIColor.white
-//        navbar.delegate = self as? UINavigationBarDelegate
-//
-//
-//        // Offset by 20 pixels vertically to take the status bar into account
-//        navbar.backgroundColor = UIColor(hex: "#3867d6")
-//
-//        // Create a navigation item with a title
-//        let navigationItem = UINavigationItem()
+        //supaya navbar full
+        // Create the navigation bar
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
+
+        // Offset by 20 pixels vertically to take the status bar into account
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
+
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
         navigationItem.title = "Request"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleCancle))
-//        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
-//        // Assign the navigation item to the navigation bar
-//        navbar.items = [navigationItem]
-//
-//        // Make the navigation bar a subview of the current view controller
-//        self.view.addSubview(navbar)
-//
-//        collectionView?.frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height - height))
-//
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+        // Assign the navigation item to the navigation bar
+       
+        navbar.setItems([navigationItem], animated: false)
+
+        // Make the navigation bar a subview of the current view controller
+
+        collectionView?.frame = CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height - 64))
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
         
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+//    public func position(for bar: UIBarPositioning) -> UIBarPosition{
+//    return .topAttached
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -209,6 +218,12 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             self.offers = offers
             print(self.offers)
             print("count baru" + String(self.offers.count))
+            
+            for i in 0 ..< self.offers.count {
+                if self.offers[i].status != "1"{
+                    statusOffer = true
+                }
+            }
             self.collectionView?.reloadData()
             SKActivityIndicator.dismiss()
         }
@@ -230,17 +245,19 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     func showOffer() {
         let appDetailController = OfferController()
         appDetailController.app = app
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func handleTitip(){
         print("titip")
-        let layout = UICollectionViewFlowLayout()
-        let tambahCont = PostTitipJuga(collectionViewLayout:layout)
-        tambahCont.app = self.app
-        tambahCont.sizeDesc = tinggiDesc
-        print(tinggiDesc)
-        present(tambahCont, animated: true, completion: {
-        })
+//        let layout = UICollectionViewFlowLayout()
+//        let tambahCont = PostTitipJuga(collectionViewLayout:layout)
+//        tambahCont.app = self.app
+//        tambahCont.sizeDesc = tinggiDesc
+//        print(tinggiDesc)
+//        present(tambahCont, animated: true, completion: {
+//        })
+        print(statusOffer)
     }
     @objc func handleOfferCancel(){
         if let idOffer : String = idOfferNow {
@@ -284,7 +301,9 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
+        //navigationController?.pushViewController(appDetailController, animated: true)
     }
     @objc func showAcceptedOffer(_ notification: NSNotification) {
         let appDetailController = AcceptedOffer()
@@ -292,15 +311,19 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showConfirmAcceptedOffer(_ notification: NSNotification) {
         let appDetailController = ConfirmAcceptedOffer()
         appDetailController.app = app
+        print("show confirm accepted")
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
+        //navigationController?.pushViewController(appDetailController, animated: true)
     }
     @objc func showPengirimanOffer(_ notification: NSNotification) {
         let appDetailController = PengirimanOffer()
@@ -308,7 +331,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showPenerimaanOffer(_ notification: NSNotification) {
         let appDetailController = PenerimaanOffer()
@@ -316,7 +340,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showCompletedOffer(_ notification: NSNotification) {
         let appDetailController = CompletedOffer()
@@ -324,7 +349,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -428,26 +454,45 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                         }
                     }
                     if cekBeli == false{
-                        if statusOffer == false{
-                            cell.nameLabel.text = "Bantu Belikan"
-                            cell.backgroundColor = UIColor(hex: "#3867d6")
-                            cell.nameLabel.textColor = UIColor.white
-                        }else{
-                            cell.nameLabel.text = "Request Sudah Diterima Oleh User Lain"
+                        
+                        if self.app?.status == "5" {
+                            cell.nameLabel.text = "Request Selesai"
                             cell.backgroundColor = UIColor(hex: "#20bf6b")
                             cell.nameLabel.textColor = UIColor.white
+                        }else{
+                            if statusOffer == false{
+                                cell.nameLabel.text = "Bantu Belikan"
+                                cell.backgroundColor = UIColor(hex: "#3867d6")
+                                cell.nameLabel.textColor = UIColor.white
+                            }else{
+                                cell.nameLabel.text = "Request Sudah Diterima Oleh User Lain"
+                                cell.backgroundColor = UIColor(hex: "#20bf6b")
+                                cell.nameLabel.textColor = UIColor.white
+                            }
                         }
-                        
                     }else{
                         print("statusOffer")
-                        print(statusOffer)
+                        print(statusOffer) //jika user ada menawar disini
                         if statusOffer != true{
+                            //status offer belum diterima
                             cell.nameLabel.text = "Cancel Penawaran"
                             cell.backgroundColor = UIColor(hex: "#eb3b5a")
                             cell.nameLabel.textColor = UIColor.white
                         }else{
                             if self.app?.status == "2" {
                                 cell.nameLabel.text = "Penawaran Anda Sudah Diterima"
+                                cell.backgroundColor = UIColor(hex: "#20bf6b")
+                                cell.nameLabel.textColor = UIColor.white
+                            }else if self.app?.status == "3" {
+                                cell.nameLabel.text = "Penawaran Anda"
+                                cell.backgroundColor = UIColor(hex: "#20bf6b")
+                                cell.nameLabel.textColor = UIColor.white
+                            }else if self.app?.status == "4" {
+                                cell.nameLabel.text = "Penawaran Anda"
+                                cell.backgroundColor = UIColor(hex: "#20bf6b")
+                                cell.nameLabel.textColor = UIColor.white
+                            }else if self.app?.status == "5" {
+                                cell.nameLabel.text = "Request Selesai"
                                 cell.backgroundColor = UIColor(hex: "#20bf6b")
                                 cell.nameLabel.textColor = UIColor.white
                             }
@@ -574,7 +619,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 300) //ukuran gambar
+        return CGSize(width: view.frame.width, height: 400) //ukuran gambar
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -1359,6 +1404,7 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
                             print("tinggal nunggu dibelikan")
                         }else{
                             print(statusOffer)
+                            print("status 2 pemilik post")
                             let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toConfirmAcceptedOffer"), object: nil, userInfo: dataIdOffer)
                         }

@@ -23,14 +23,14 @@ class UserPenjualan: UIViewController {
     let layout = UICollectionViewFlowLayout()
     
     lazy var RequestVC: UserPenjualanRequest = {
-        let vc = UserPenjualanRequest(collectionViewLayout: layout)
+        let vc = UserPenjualanRequest()
         vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc
     }()
     
     lazy var PreorderVC: UserPenjualanPreorder = {
-        let vc = UserPenjualanPreorder(collectionViewLayout: layout)
+        let vc = UserPenjualanPreorder()
         vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc

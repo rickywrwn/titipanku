@@ -59,7 +59,7 @@ class ExploreKategoriPreorder: UICollectionViewController, UICollectionViewDeleg
         }
         collectionView?.backgroundColor = UIColor.white
         navigationItem.title = "Request"
-        collectionView?.register(RequestCell1.self, forCellWithReuseIdentifier: RequestCellId)
+        collectionView?.register(RequestCell.self, forCellWithReuseIdentifier: RequestCellId)
         setupView()
     }
     
@@ -86,7 +86,7 @@ class ExploreKategoriPreorder: UICollectionViewController, UICollectionViewDeleg
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! RequestCell1
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! RequestCell
         cell.app = requests[indexPath.row]
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor(hex: "#d1d8e0").cgColor

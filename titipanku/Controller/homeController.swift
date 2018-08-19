@@ -72,8 +72,9 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         let appDetailController = AllRequest(collectionViewLayout: layout)
-        navigationController?.pushViewController(appDetailController, animated: true)
-        
+        //navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showMorePreorder() {
         print("pencet Preorder ")
@@ -103,12 +104,9 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         layout.minimumLineSpacing = 0
         let appDetailController = barangDetailController(collectionViewLayout: layout)
         appDetailController.app = app
-        navigationController?.pushViewController(appDetailController, animated: true)
-
-//        let tambahCont = barangDetailController(collectionViewLayout:layout)
-//        tambahCont.app = app
-//        present(tambahCont, animated: true, completion: {
-//        })
+        //navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     
     func showPreorderDetailForApp(_ app: App) {

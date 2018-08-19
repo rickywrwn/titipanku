@@ -167,7 +167,6 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Tawaran"
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
@@ -185,7 +184,45 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         label4.isHidden = false
         
         setupView()
+        //supaya navbar full
+        // Create the navigation bar
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        
+        // Offset by 20 pixels vertically to take the status bar into account
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Penawaran"
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleBack))
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+        // Assign the navigation item to the navigation bar
+        
+        navbar.setItems([navigationItem], animated: false)
+        
+        // Make the navigation bar a subview of the current view controller
+        
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
         //print(detailOffer)
+        
+        Alamofire.request("http://titipanku.xyz/uploads/nota"+(self.varOffer?.id)!+".jpg").responseImage { response in
+            //debugPrint(response)
+            //let nama = self.app?.name
+            //print("gambar : "+imageName)
+            if let image = response.result.value {
+                //print("image downloaded: \(image)")
+                self.imageView.image = image
+            }
+        }
     }
     
     func fetchOrderId(){
@@ -523,7 +560,23 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         return label
     }()
     
-    
+    let labelImage : UILabel = {
+        let label = UILabel()
+        label.text = "Nota Pembelian"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    lazy var imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        iv.isUserInteractionEnabled = true
+        return iv
+    }()
     
 //    let postButton : UIButton = {
 //        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -581,12 +634,12 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
+        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1150)
         let screenWidth = UIScreen.main.bounds.width+10
         
         // constrain the scroll view to 8-pts on each side
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8.0).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8.0).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0).isActive = true
         
@@ -634,6 +687,17 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         labelTotal.heightAnchor.constraint(equalToConstant: 50).isActive = true
         labelTotal.font = UIFont.systemFont(ofSize: 25)
         labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        
+        scrollView.addSubview(labelImage)
+        labelImage.topAnchor.constraint(equalTo: labelTotal.bottomAnchor, constant: 30).isActive = true
+        labelImage.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        
+        scrollView.addSubview(imageView)
+        imageView.topAnchor.constraint(equalTo: labelImage.bottomAnchor, constant: 10).isActive = true //anchor ke scrollview
+        imageView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
         
 //        scrollView.addSubview(postButton)
 //        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true

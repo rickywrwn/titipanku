@@ -102,7 +102,6 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         navigationItem.title = "Beli Preorder"
-        print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
         //print(app)
@@ -413,14 +412,20 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
             
             self.present(alert, animated: true)
         }else{
-            
+            if  Int((app?.qty)!)! < Int(qtyText.text!)!{
+                let alert = UIAlertController(title: "Message", message: "Jumlah Barang Melebihi Stok", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
+            }else{
             // create the alert
             let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Membeli Barang?", preferredStyle: UIAlertControllerStyle.alert)
 
             // add the actions (buttons)
             alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
 
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+            alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
                 
                 let saldo = Int((self.isiUser?.valueSaldo)!)
                 let harga = Int((self.app?.valueHarga)!)
@@ -439,9 +444,10 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
                     let saldoNow : Int = saldo! - hargaTotal
                     print(saldoNow)
                     
-                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let qtyAwal = self.app?.qty,let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
+                        var qtyNow = Int(qtyAwal)! - Int(qty)!
                         
-                        let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"saldo":saldoNow,"action":"insert"]
+                        let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"qtyNow":qtyNow,"saldo":saldoNow,"jumlah":hargaTotal,"action":"insert"]
                         print (parameter)
                         Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
                             response in
@@ -476,7 +482,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
 
             // show the alert
             self.present(alert, animated: true, completion: nil)
-            
+            }
         }
     }
     

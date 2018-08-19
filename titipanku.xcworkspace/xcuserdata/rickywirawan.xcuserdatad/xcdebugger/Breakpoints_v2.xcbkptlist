@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "titipanku/Controller/PenerimaanOffer.swift"
-            timestampString = "555817701.264312"
+            timestampString = "556305117.238521"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "366"
-            endingLineNumber = "366"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
             landmarkName = "labelHarga"
             landmarkType = "24">
             <Locations>

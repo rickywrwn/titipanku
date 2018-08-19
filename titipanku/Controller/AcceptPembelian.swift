@@ -342,7 +342,7 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
     let labelB : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Harga Penawaran (Belum Termasuk Ongkir) "
+        label.text = "Harga Penawaran (Termasuk Ongkir) "
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

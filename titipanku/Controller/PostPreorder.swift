@@ -86,7 +86,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                 cell.BarangImageView.isHidden = false
                 cell.labelNama.isHidden = false
                 cell.labelBrand.isHidden = false
-                cell.labelQty.isHidden = true
+                cell.labelQty.isHidden = false
                 cell.descText.isHidden = false
                 cell.labelKategori.isHidden = false
                 cell.deskripsi.isHidden = false
@@ -597,14 +597,14 @@ class InputCell1Pre: BaseCell {
         addConstraintsWithFormat("H:|-80-[v0(100)]|", views: BarangImageView)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelNama)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelBrand)
-        //addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
+        addConstraintsWithFormat("H:|-80-[v0]|", views: labelQty)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelKategori)
         addConstraintsWithFormat("H:|-80-[v0]|", views: labelUrl)
         addConstraintsWithFormat("H:|-80-[v0]-5-[v1]-30-|", views: deskripsi,descText)
         
         addConstraintsWithFormat("V:|[v0(50)]", views: angkaImg)
         addConstraintsWithFormat("V:|-15-[v0]", views: labelA)
-        addConstraintsWithFormat("V:|[v0(50)]-5-[v3(100)]-5-[v1]-5-[v6]-5-[v2]-5-[v4]-5-[v5]", views: imageView,labelNama,labelKategori,BarangImageView,labelUrl,deskripsi,labelBrand)
+        addConstraintsWithFormat("V:|[v0(50)]-5-[v3(100)]-5-[v1]-5-[v6]-5-[v2]-5-[v4]-5-[v5]", views: imageView,labelNama,labelKategori,BarangImageView,labelUrl,deskripsi,labelQty,labelBrand)
         addConstraintsWithFormat("V:|-243-[v0]|", views: descText)
         
     }

@@ -23,14 +23,14 @@ class UserPembelian: UIViewController {
     let layout = UICollectionViewFlowLayout()
     
     lazy var RequestVC: UserRequest = {
-        let vc = UserRequest(collectionViewLayout: layout)
+        let vc = UserRequest()
         vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc
     }()
     
     lazy var PreorderVC: UserPreorder = {
-        let vc = UserPreorder(collectionViewLayout: layout)
+        let vc = UserPreorder()
         vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc

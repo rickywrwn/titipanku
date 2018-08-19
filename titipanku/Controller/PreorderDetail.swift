@@ -234,7 +234,8 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         let komentarController = KomentarBarangController(collectionViewLayout: layout)
         //komentarController.app = app
         print(app?.status)
-        print(offers)
+        //print(app)
+        //print(offers)
         //navigationController?.pushViewController(komentarController, animated: true)
     }
     func showOffer() {
@@ -316,10 +317,11 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
             let heightOfText = sizeThatFitsTextView.height
             tinggiTextView = Float(heightOfText-55)
             cell.brandLabel.text = (app?.brand)!
-            //cell.qtyLabel.text = "Jumlah Barang : " + (app?.qty)!
+            cell.qtyLabel.text = (app?.qty)!
             cell.countryLabel.text =  (app?.country)!
             cell.kotaLabel.text = (app?.kotaKirim)!
             cell.deadlineLabel.text = (app?.deadline)!
+            cell.qtyLabel.text = (app?.qty)!
             return cell
             
         }else if indexPath.item == 1 {
@@ -540,6 +542,28 @@ class AppDetailDescriptionCell1: BaseCell {
         return tv
     }()
     
+    let imageViewQty: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.backgroundColor = UIColor.green
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let qtyLabelKiri: UILabel = {
+        let label = UILabel()
+        label.text = "Jumlah:"
+        label.textColor = UIColor.gray
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let qtyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "count"
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        return label
+    }()
     let imageViewBrand: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -644,6 +668,9 @@ class AppDetailDescriptionCell1: BaseCell {
         addSubview(nameLabel)
         addSubview(tglLabel)
         addSubview(textView)
+        addSubview(qtyLabelKiri)
+        addSubview(qtyLabel)
+        addSubview(imageViewQty)
         addSubview(brandLabelKiri)
         addSubview(brandLabel)
         addSubview(imageViewBrand)
@@ -662,6 +689,7 @@ class AppDetailDescriptionCell1: BaseCell {
         addConstraintsWithFormat("H:|-15-[v0]", views: tglLabel)
         addConstraintsWithFormat("H:|-10-[v0]", views: textView)
         //addConstraintsWithFormat("H:|-15-[v0]-5-|", views: qtyLabel)
+        addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewQty,qtyLabelKiri,qtyLabel)
         addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewBrand,brandLabelKiri,brandLabel)
         addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewCountry,countryLabelKiri,countryLabel)
         addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewKota,kotaLabelKiri,kotaLabel)
@@ -669,9 +697,9 @@ class AppDetailDescriptionCell1: BaseCell {
         addConstraintsWithFormat("H:|[v0]", views: dividerLineView)
         
         addConstraintsWithFormat("V:[v0]-5-[v3]-15-[v1]", views: nameLabel, textView, priceLabel ,tglLabel)
-        addConstraintsWithFormat("V:[v0(17)]-5-[v1(17)]-5-[v2(17)]-5-[v3(17)]|", views: imageViewBrand,imageViewCountry,imageViewKota,imageViewDeadline)
-        addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]-5-[v3]|", views: brandLabelKiri,countryLabelKiri,kotaLabelKiri,deadlineLabelKiri)
-        addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]-5-[v3]|", views: brandLabel,countryLabel,kotaLabel,deadlineLabel)
+        addConstraintsWithFormat("V:[v4(17)]-5-[v0(17)]-5-[v1(17)]-5-[v2(17)]-5-[v3(17)]|", views: imageViewBrand,imageViewCountry,imageViewKota,imageViewDeadline,imageViewQty)
+        addConstraintsWithFormat("V:[v4]-5-[v0]-5-[v1]-5-[v2]-5-[v3]|", views: brandLabelKiri,countryLabelKiri,kotaLabelKiri,deadlineLabelKiri,qtyLabelKiri)
+        addConstraintsWithFormat("V:[v4]-5-[v0]-5-[v1]-5-[v2]-5-[v3]|", views: brandLabel,countryLabel,kotaLabel,deadlineLabel,qtyLabel)
     }
 }
 

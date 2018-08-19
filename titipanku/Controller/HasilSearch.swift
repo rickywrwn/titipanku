@@ -1,8 +1,8 @@
 //
-//  ExploreNegara.swift
+//  HasilSearch.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 03/08/18.
+//  Created by Ricky Wirawan on 20/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class ExploreNegara: UIViewController {
+class HasilSearch: UIViewController {
     struct varTambah {
         static var statusTambah = ""
     }
@@ -130,5 +130,6 @@ class ExploreNegara: UIViewController {
     }
     
 }
+
 
 

@@ -22,6 +22,9 @@
 		7E411296212088C0008BBF89 /* AddKarateristikTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */; };
 		7E41129A212088D8008BBF89 /* AddHargaTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411299212088D8008BBF89 /* AddHargaTitip.swift */; };
 		7E41129E21208A28008BBF89 /* AddNegaraTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41129D21208A28008BBF89 /* AddNegaraTitip.swift */; };
+		7E4209FF2129EB46004F995E /* HasilSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4209FE2129EB46004F995E /* HasilSearch.swift */; };
+		7E420A012129EB59004F995E /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E420A002129EB59004F995E /* SearchRequest.swift */; };
+		7E420A032129EB62004F995E /* SearchPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E420A022129EB62004F995E /* SearchPreorder.swift */; };
 		7E4A2EA22113559F003F472A /* AllRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A2EA12113559F003F472A /* AllRequest.swift */; };
 		7E4D3FE62120D6E0000DE02C /* UserPenjualan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4D3FE52120D6E0000DE02C /* UserPenjualan.swift */; };
 		7E58EA7D2113CDB500BF7A2E /* ExploreNegara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */; };
@@ -30,7 +33,6 @@
 		7E58EA832113D2BA00BF7A2E /* ExploreNegaraPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA822113D2BA00BF7A2E /* ExploreNegaraPreorder.swift */; };
 		7E58EA872113F85D00BF7A2E /* ExploreKategoriRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA862113F85D00BF7A2E /* ExploreKategoriRequest.swift */; };
 		7E58EA892113F86B00BF7A2E /* ExploreKategoriPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA882113F86B00BF7A2E /* ExploreKategoriPreorder.swift */; };
-		7E58EA8B2113F87E00BF7A2E /* ExploreKategoriPreorderBerdurasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA8A2113F87E00BF7A2E /* ExploreKategoriPreorderBerdurasi.swift */; };
 		7E5D9857210590E3006690B0 /* NotifikasiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D9856210590E3006690B0 /* NotifikasiController.swift */; };
 		7E5D9859210590F4006690B0 /* PesanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D9858210590F3006690B0 /* PesanController.swift */; };
 		7E5D985B210604BB006690B0 /* AcceptPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5D985A210604BB006690B0 /* AcceptPreorder.swift */; };
@@ -60,7 +62,6 @@
 		7EDED74D20F7471E005BCA76 /* OfferController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74C20F7471E005BCA76 /* OfferController3.swift */; };
 		7EDED74F20F8EE2F005BCA76 /* AcceptOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */; };
 		7EDED75120FE47FF005BCA76 /* AddDurasiPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED75020FE47FF005BCA76 /* AddDurasiPreorder.swift */; };
-		7EE16FB7211F38240045EEBA /* ExploreNegaraDurasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE16FB6211F38240045EEBA /* ExploreNegaraDurasi.swift */; };
 		7EE3590C212117C100971EF4 /* UserReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE3590B212117C100971EF4 /* UserReview.swift */; };
 		7EE8D0B020E0CCF600BB03A1 /* AddNegaraPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */; };
 		7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */; };
@@ -121,6 +122,9 @@
 		7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikTitip.swift; sourceTree = "<group>"; };
 		7E411299212088D8008BBF89 /* AddHargaTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaTitip.swift; sourceTree = "<group>"; };
 		7E41129D21208A28008BBF89 /* AddNegaraTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraTitip.swift; sourceTree = "<group>"; };
+		7E4209FE2129EB46004F995E /* HasilSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasilSearch.swift; sourceTree = "<group>"; };
+		7E420A002129EB59004F995E /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
+		7E420A022129EB62004F995E /* SearchPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreorder.swift; sourceTree = "<group>"; };
 		7E4A2EA12113559F003F472A /* AllRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRequest.swift; sourceTree = "<group>"; };
 		7E4D3FE52120D6E0000DE02C /* UserPenjualan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualan.swift; sourceTree = "<group>"; };
 		7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreNegara.swift; sourceTree = "<group>"; };
@@ -129,7 +133,6 @@
 		7E58EA822113D2BA00BF7A2E /* ExploreNegaraPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreNegaraPreorder.swift; sourceTree = "<group>"; };
 		7E58EA862113F85D00BF7A2E /* ExploreKategoriRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreKategoriRequest.swift; sourceTree = "<group>"; };
 		7E58EA882113F86B00BF7A2E /* ExploreKategoriPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreKategoriPreorder.swift; sourceTree = "<group>"; };
-		7E58EA8A2113F87E00BF7A2E /* ExploreKategoriPreorderBerdurasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreKategoriPreorderBerdurasi.swift; sourceTree = "<group>"; };
 		7E5D9856210590E3006690B0 /* NotifikasiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifikasiController.swift; sourceTree = "<group>"; };
 		7E5D9858210590F3006690B0 /* PesanController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PesanController.swift; sourceTree = "<group>"; };
 		7E5D985A210604BB006690B0 /* AcceptPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptPreorder.swift; sourceTree = "<group>"; };
@@ -159,7 +162,6 @@
 		7EDED74C20F7471E005BCA76 /* OfferController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController3.swift; sourceTree = "<group>"; };
 		7EDED74E20F8EE2F005BCA76 /* AcceptOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptOffer.swift; sourceTree = "<group>"; };
 		7EDED75020FE47FF005BCA76 /* AddDurasiPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDurasiPreorder.swift; sourceTree = "<group>"; };
-		7EE16FB6211F38240045EEBA /* ExploreNegaraDurasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreNegaraDurasi.swift; sourceTree = "<group>"; };
 		7EE3590B212117C100971EF4 /* UserReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReview.swift; sourceTree = "<group>"; };
 		7EE8D0AF20E0CCF600BB03A1 /* AddNegaraPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailPreorder.swift; sourceTree = "<group>"; };
@@ -241,14 +243,15 @@
 				7E5D9856210590E3006690B0 /* NotifikasiController.swift */,
 				7E5D9858210590F3006690B0 /* PesanController.swift */,
 				9CE2AC9C20850639005C1D49 /* ExploreController.swift */,
+				7E4209FE2129EB46004F995E /* HasilSearch.swift */,
+				7E420A022129EB62004F995E /* SearchPreorder.swift */,
+				7E420A002129EB59004F995E /* SearchRequest.swift */,
 				7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */,
 				7E58EA802113D28A00BF7A2E /* ExploreNegaraRequest.swift */,
 				7E58EA822113D2BA00BF7A2E /* ExploreNegaraPreorder.swift */,
-				7EE16FB6211F38240045EEBA /* ExploreNegaraDurasi.swift */,
 				7E58EA7E2113CDC600BF7A2E /* ExploreKategori.swift */,
 				7E58EA862113F85D00BF7A2E /* ExploreKategoriRequest.swift */,
 				7E58EA882113F86B00BF7A2E /* ExploreKategoriPreorder.swift */,
-				7E58EA8A2113F87E00BF7A2E /* ExploreKategoriPreorderBerdurasi.swift */,
 				7E8B5DAC210DB2D000FFBC85 /* MoreController.swift */,
 				7E8B5DAE210DFADF00FFBC85 /* WalletController.swift */,
 				9CE2AC9E20850658005C1D49 /* UserController.swift */,
@@ -536,6 +539,7 @@
 				9CEF6B5620ADE0BB00ABB81E /* ScreenshotsCell.swift in Sources */,
 				7E41129E21208A28008BBF89 /* AddNegaraTitip.swift in Sources */,
 				7E5D98612106C5F0006690B0 /* ListPembeliFlashSale.swift in Sources */,
+				7E4209FF2129EB46004F995E /* HasilSearch.swift in Sources */,
 				7E5D985B210604BB006690B0 /* AcceptPreorder.swift in Sources */,
 				7E58EA872113F85D00BF7A2E /* ExploreKategoriRequest.swift in Sources */,
 				7E977E12211A7A5400D65F76 /* LihatResiPreorder.swift in Sources */,
@@ -549,6 +553,7 @@
 				7E72A4772117EBAD00391FA7 /* PengirimanOffer.swift in Sources */,
 				7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */,
 				9C588854207E09CA00F6F23A /* TabController.swift in Sources */,
+				7E420A012129EB59004F995E /* SearchRequest.swift in Sources */,
 				7EDED75120FE47FF005BCA76 /* AddDurasiPreorder.swift in Sources */,
 				7E411296212088C0008BBF89 /* AddKarateristikTitip.swift in Sources */,
 				7E4A2EA22113559F003F472A /* AllRequest.swift in Sources */,
@@ -569,8 +574,8 @@
 				7EE8D0B620E0CE1800BB03A1 /* AddHargaPreorder.swift in Sources */,
 				9C6346E22096EA4700CFD274 /* Model.swift in Sources */,
 				9C0BDF80207C7E4F004B2BCF /* registerController.swift in Sources */,
-				7EE16FB7211F38240045EEBA /* ExploreNegaraDurasi.swift in Sources */,
 				3C07FAFD20CE6777008FF049 /* AddHargaBarang.swift in Sources */,
+				7E420A032129EB62004F995E /* SearchPreorder.swift in Sources */,
 				7E1B38D62120E96C00FFD5B0 /* UserPenjualanRequest.swift in Sources */,
 				9CE6C2BB20B4CE8100D1B966 /* KomentarBarangController.swift in Sources */,
 				3C07FAF720CE5939008FF049 /* AddDetailBarang.swift in Sources */,
@@ -599,7 +604,6 @@
 				7E5D985D21062159006690B0 /* FlashsaleDetail.swift in Sources */,
 				7E5D98652106C95D006690B0 /* UserPembelian.swift in Sources */,
 				7E8B5DAD210DB2D000FFBC85 /* MoreController.swift in Sources */,
-				7E58EA8B2113F87E00BF7A2E /* ExploreKategoriPreorderBerdurasi.swift in Sources */,
 				7EE8D0B020E0CCF600BB03A1 /* AddNegaraPreorder.swift in Sources */,
 				7EE8D0B420E0CE0600BB03A1 /* AddKarateristikPreorder.swift in Sources */,
 				3C12439F20DFE78600852D2D /* PreorderDetail.swift in Sources */,

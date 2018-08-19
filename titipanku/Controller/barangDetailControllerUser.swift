@@ -251,7 +251,10 @@ class barangDetailControllerUser: UICollectionViewController, UICollectionViewDe
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        
+        present(appDetailController, animated: true, completion: {
+        })
+        //navigationController?.pushViewController(appDetailController, animated: true)
     }
     @objc func showPengirimanOffer(_ notification: NSNotification) {
         let appDetailController = PengirimanOffer()

@@ -109,7 +109,7 @@ class LihatPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSou
         labelA.text = "Tanggl Pembelian"
         labelTgl.text = varOffer?.tglBeli
         labelB.text = "Jumlah Barang"
-        labelHarga.text = app?.qty
+        labelHarga.text = varOffer?.qty
         labelKota.text = varOffer?.kota
         label4.isHidden = true
         ongkirText.text = (varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)!
