@@ -104,7 +104,7 @@ class ExploreKategoriPreorder: UICollectionViewController, UICollectionViewDeleg
             let layout = UICollectionViewFlowLayout()
             layout.minimumInteritemSpacing = 0
             layout.minimumLineSpacing = 0
-            let addDetail = barangDetailController(collectionViewLayout: layout)
+            let addDetail = PreorderDetail(collectionViewLayout: layout)
             addDetail.app = app
             let transition = CATransition()
             transition.duration = 0.3

@@ -11,31 +11,28 @@ import Alamofire
 import SwiftyJSON
 
 class HasilSearch: UIViewController {
-    struct varTambah {
-        static var statusTambah = ""
-    }
     
-    var isiData : isi?
+    var isiData : String = ""
     let navSegmentControl = UISegmentedControl()
     let containerView = UIView()
     
     let layout = UICollectionViewFlowLayout()
     
-    lazy var RequestVC: ExploreNegaraRequest = {
+    lazy var RequestVC: SearchRequest = {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .vertical
-        let vc = ExploreNegaraRequest(collectionViewLayout: layout)
+        let vc = SearchRequest(collectionViewLayout: layout)
         vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc
     }()
     
-    lazy var PreorderVC: ExploreNegaraPreorder = {
+    lazy var PreorderVC: SearchPreorder = {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .vertical
-        let vc = ExploreNegaraPreorder(collectionViewLayout: layout)
+        let vc = SearchPreorder(collectionViewLayout: layout)
         vc.isiData = self.isiData
         self.addAsChildVC(childVC: vc)
         return vc

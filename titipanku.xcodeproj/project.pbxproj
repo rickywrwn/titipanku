@@ -67,6 +67,7 @@
 		7EE8D0B220E0CD4000BB03A1 /* AddDetailPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */; };
 		7EE8D0B420E0CE0600BB03A1 /* AddKarateristikPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */; };
 		7EE8D0B620E0CE1800BB03A1 /* AddHargaPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE8D0B520E0CE1800BB03A1 /* AddHargaPreorder.swift */; };
+		7EEB20A4212A06E700D2217A /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB20A3212A06E700D2217A /* SearchFilter.swift */; };
 		7EEC065E21137FD800B92B21 /* AllPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEC065D21137FD800B92B21 /* AllPreorder.swift */; };
 		7EEC06602113823A00B92B21 /* AllPreorderBerdurasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEC065F2113823A00B92B21 /* AllPreorderBerdurasi.swift */; };
 		9C0BDF80207C7E4F004B2BCF /* registerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BDF7F207C7E4F004B2BCF /* registerController.swift */; };
@@ -167,6 +168,7 @@
 		7EE8D0B120E0CD4000BB03A1 /* AddDetailPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B320E0CE0600BB03A1 /* AddKarateristikPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikPreorder.swift; sourceTree = "<group>"; };
 		7EE8D0B520E0CE1800BB03A1 /* AddHargaPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaPreorder.swift; sourceTree = "<group>"; };
+		7EEB20A3212A06E700D2217A /* SearchFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
 		7EEC065D21137FD800B92B21 /* AllPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPreorder.swift; sourceTree = "<group>"; };
 		7EEC065F2113823A00B92B21 /* AllPreorderBerdurasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPreorderBerdurasi.swift; sourceTree = "<group>"; };
 		9C0BDF7D207C6FFB004B2BCF /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -244,8 +246,9 @@
 				7E5D9858210590F3006690B0 /* PesanController.swift */,
 				9CE2AC9C20850639005C1D49 /* ExploreController.swift */,
 				7E4209FE2129EB46004F995E /* HasilSearch.swift */,
-				7E420A022129EB62004F995E /* SearchPreorder.swift */,
+				7EEB20A3212A06E700D2217A /* SearchFilter.swift */,
 				7E420A002129EB59004F995E /* SearchRequest.swift */,
+				7E420A022129EB62004F995E /* SearchPreorder.swift */,
 				7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */,
 				7E58EA802113D28A00BF7A2E /* ExploreNegaraRequest.swift */,
 				7E58EA822113D2BA00BF7A2E /* ExploreNegaraPreorder.swift */,
@@ -461,7 +464,6 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/BetterSegmentedControl/BetterSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -471,10 +473,8 @@
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SKActivityIndicatorView/SKActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyPickerPopover/SwiftyPickerPopover.framework",
-				"${BUILT_PRODUCTS_DIR}/TwicketSegmentedControl/TwicketSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -484,7 +484,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BetterSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -494,10 +493,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyPickerPopover.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwicketSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,6 +590,7 @@
 				9C502E9020BCE3B000FBCD91 /* PostBarang.swift in Sources */,
 				7EEC065E21137FD800B92B21 /* AllPreorder.swift in Sources */,
 				9CEF6B5420ADDC1900ABB81E /* TambahViewController.swift in Sources */,
+				7EEB20A4212A06E700D2217A /* SearchFilter.swift in Sources */,
 				7E72A4732116E8E500391FA7 /* AcceptedOffer.swift in Sources */,
 				9C7177B4206BCCB70082E417 /* homeController.swift in Sources */,
 				7E58EA7D2113CDB500BF7A2E /* ExploreNegara.swift in Sources */,

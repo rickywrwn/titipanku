@@ -23,8 +23,10 @@ struct isi: Decodable {
 extension ExploreController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchText = searchBar.text{
-            
-            print(searchText)
+            let nextCont = HasilSearch()
+            nextCont.isiData = searchText
+            present(nextCont, animated: true, completion: {
+            })
         }
     }
 }

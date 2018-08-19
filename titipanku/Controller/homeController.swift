@@ -116,7 +116,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         layout.minimumLineSpacing = 0
         let appDetailController = PreorderDetail(collectionViewLayout: layout)
         appDetailController.app = app
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     
     func showFlashSaleDetailForApp(_ app: App) {
@@ -124,7 +125,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         let layout = UICollectionViewFlowLayout()
         let appDetailController = PreorderDetail(collectionViewLayout: layout)
         appDetailController.app = app
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
