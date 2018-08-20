@@ -26,6 +26,7 @@
 		7E420A012129EB59004F995E /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E420A002129EB59004F995E /* SearchRequest.swift */; };
 		7E420A032129EB62004F995E /* SearchPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E420A022129EB62004F995E /* SearchPreorder.swift */; };
 		7E4A2EA22113559F003F472A /* AllRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A2EA12113559F003F472A /* AllRequest.swift */; };
+		7E4A314B212B059B00472D19 /* FilterPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4A314A212B059B00472D19 /* FilterPreorder.swift */; };
 		7E4D3FE62120D6E0000DE02C /* UserPenjualan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4D3FE52120D6E0000DE02C /* UserPenjualan.swift */; };
 		7E58EA7D2113CDB500BF7A2E /* ExploreNegara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */; };
 		7E58EA7F2113CDC600BF7A2E /* ExploreKategori.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58EA7E2113CDC600BF7A2E /* ExploreKategori.swift */; };
@@ -127,6 +128,7 @@
 		7E420A002129EB59004F995E /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 		7E420A022129EB62004F995E /* SearchPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPreorder.swift; sourceTree = "<group>"; };
 		7E4A2EA12113559F003F472A /* AllRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRequest.swift; sourceTree = "<group>"; };
+		7E4A314A212B059B00472D19 /* FilterPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPreorder.swift; sourceTree = "<group>"; };
 		7E4D3FE52120D6E0000DE02C /* UserPenjualan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualan.swift; sourceTree = "<group>"; };
 		7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreNegara.swift; sourceTree = "<group>"; };
 		7E58EA7E2113CDC600BF7A2E /* ExploreKategori.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreKategori.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				9CE2AC9C20850639005C1D49 /* ExploreController.swift */,
 				7E4209FE2129EB46004F995E /* HasilSearch.swift */,
 				7EEB20A3212A06E700D2217A /* SearchFilter.swift */,
+				7E4A314A212B059B00472D19 /* FilterPreorder.swift */,
 				7E420A002129EB59004F995E /* SearchRequest.swift */,
 				7E420A022129EB62004F995E /* SearchPreorder.swift */,
 				7E58EA7C2113CDB500BF7A2E /* ExploreNegara.swift */,
@@ -552,6 +555,7 @@
 				9C588854207E09CA00F6F23A /* TabController.swift in Sources */,
 				7E420A012129EB59004F995E /* SearchRequest.swift in Sources */,
 				7EDED75120FE47FF005BCA76 /* AddDurasiPreorder.swift in Sources */,
+				7E4A314B212B059B00472D19 /* FilterPreorder.swift in Sources */,
 				7E411296212088C0008BBF89 /* AddKarateristikTitip.swift in Sources */,
 				7E4A2EA22113559F003F472A /* AllRequest.swift in Sources */,
 				9CE2AC9B20850601005C1D49 /* InboxController.swift in Sources */,

@@ -17,10 +17,14 @@ class SearchRequest: UICollectionViewController, UICollectionViewDelegateFlowLay
     fileprivate let RequestCellId = "RequestCellId"
     var requests = [App]()
     var isiData : String = ""
-    
+    struct varFilter {
+        static var negara = ""
+        static var kategori = ""
+        static var search = ""
+    }
     func fetchRequests(_ completionHandler: @escaping ([App]) -> ()) {
         if let search : String = isiData{
-            let urlString = "http://titipanku.xyz/api/SearchRequest.php?search=\(String(describing: search))"
+            let urlString = "http://titipanku.xyz/api/SearchRequest.php?filter=none&negara=none&kategori=none&search=\(String(describing: search))"
             
             URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
                 
@@ -48,6 +52,95 @@ class SearchRequest: UICollectionViewController, UICollectionViewDelegateFlowLay
         }
     }
     
+    func fetchKategori(_ completionHandler: @escaping ([App]) -> ()) {
+        if let search : String = isiData, let kategori : String = varFilter.kategori{
+            let urlString = "http://titipanku.xyz/api/SearchRequest.php?filter=kategori&negara=none&kategori=\(String(describing: kategori))&search=\(String(describing: search))"
+            print(urlString)
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.requests = try decoder.decode([App].self, from: data)
+                    print(self.requests)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.requests)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
+    }
+    
+    func fetchNegara(_ completionHandler: @escaping ([App]) -> ()) {
+        if let search : String = isiData, let negara : String = varFilter.negara{
+            let urlString = "http://titipanku.xyz/api/SearchRequest.php?filter=negara&negara=\(String(describing: negara))&kategori=none&search=\(String(describing: search))"
+            print(urlString)
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.requests = try decoder.decode([App].self, from: data)
+                    print(self.requests)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.requests)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
+    }
+    
+    func fetchSemua(_ completionHandler: @escaping ([App]) -> ()) {
+        if let search : String = isiData, let kategori : String = varFilter.kategori, let negara : String = varFilter.negara{
+            let urlString = "http://titipanku.xyz/api/SearchRequest.php?filter=semua&negara=\(String(describing: negara))&kategori=\(String(describing: kategori))&search=\(String(describing: search))"
+            print(urlString)
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.requests = try decoder.decode([App].self, from: data)
+                    print(self.requests)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.requests)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +154,42 @@ class SearchRequest: UICollectionViewController, UICollectionViewDelegateFlowLay
         collectionView?.backgroundColor = UIColor.white
         navigationItem.title = "Request"
         collectionView?.register(RequestCell.self, forCellWithReuseIdentifier: RequestCellId)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadRequest), name: NSNotification.Name(rawValue: "reloadRequest"), object: nil)
         setupView()
+    }
+    
+    @objc func reloadRequest(){
+        if varFilter.search == "none"{
+            
+        }else if varFilter.search == "kategori"{
+            SKActivityIndicator.show("Loading...")
+            print("reload Kategori")
+            self.fetchKategori{(requests) -> ()in
+                self.requests = requests
+                print("count request" + String(self.requests.count))
+                self.collectionView?.reloadData()
+                SKActivityIndicator.dismiss()
+            }
+        }else if varFilter.search == "negara"{
+            SKActivityIndicator.show("Loading...")
+            print("reload Kategori")
+            self.fetchNegara{(requests) -> ()in
+                self.requests = requests
+                print("count request" + String(self.requests.count))
+                self.collectionView?.reloadData()
+                SKActivityIndicator.dismiss()
+            }
+        }else if varFilter.search == "semua"{
+            SKActivityIndicator.show("Loading...")
+            print("reload Kategori")
+            self.fetchSemua{(requests) -> ()in
+                self.requests = requests
+                print("count request" + String(self.requests.count))
+                self.collectionView?.reloadData()
+                SKActivityIndicator.dismiss()
+            }
+        }
     }
     
     @objc func handleFilter(){
@@ -70,6 +198,11 @@ class SearchRequest: UICollectionViewController, UICollectionViewDelegateFlowLay
         viewControllerB.modalPresentationStyle = .overFullScreen
         
         present(viewControllerB, animated: true, completion: nil)
+    }
+    @objc func handlePrint(){
+        print(varFilter.negara)
+        print(varFilter.kategori)
+        print(varFilter.search)
     }
     private func setupView(){
         view.backgroundColor = .white

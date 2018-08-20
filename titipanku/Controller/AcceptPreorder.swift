@@ -795,7 +795,6 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
         postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
         postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
         

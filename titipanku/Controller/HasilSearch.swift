@@ -81,7 +81,7 @@ class HasilSearch: UIViewController {
     let backButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         //backButton.setImage(UIImage(named: "BackButton.png"), for: .normal) // Image can be downloaded from here below link
-        button.setTitle("Cancel", for: .normal)
+        button.setTitle("Back", for: .normal)
         button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
         button.addTarget(self, action: #selector(handleBack), for: UIControlEvents.touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false

@@ -250,8 +250,6 @@ class AddNegaraTitip :  UIViewController, UITableViewDelegate, UITableViewDataSo
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         fetchNegara(nama: textField.text!)
-        //init tableview
-        //bug untuk pemilihan negara kedua
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
@@ -273,8 +271,6 @@ class AddNegaraTitip :  UIViewController, UITableViewDelegate, UITableViewDataSo
     @objc func textProvDidChange(_ textField: UITextField) {
         
         fetchProv()
-        //init tableview
-        //bug untuk pemilihan negara kedua
         provTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         provTableView.dataSource = self
         provTableView.delegate = self

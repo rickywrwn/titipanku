@@ -65,7 +65,7 @@ class AddDetailTitip :  UIViewController, UIImagePickerControllerDelegate, UINav
     @objc func textFieldTapped(_ textField: UITextField) {
         
         print("tapped")
-        StringPickerPopover(title: "Kategori Barang", choices: ["Elektronik","Makanan dan Minuman","Fashion Pria","Fashion Wanita","Produk Kecantikan","Peralatan Rumah Tangga","Barang Koleksi","Lainnya"])
+        StringPickerPopover(title: "Kategori Barang", choices: ["Elektronik","Makanan","Pakaian"])
             .setSelectedRow(0)
             .setDoneButton(action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")

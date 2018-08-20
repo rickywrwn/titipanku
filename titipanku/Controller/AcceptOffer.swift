@@ -691,7 +691,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
         postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
         postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
         scrollView.addSubview(declineButton)
@@ -699,7 +698,6 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
         declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
         declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
         declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
         
