@@ -90,12 +90,11 @@ class ExploreKategoriPreorder: UICollectionViewController, UICollectionViewDeleg
         cell.app = requests[indexPath.row]
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor(hex: "#d1d8e0").cgColor
-        cell.backgroundColor = UIColor.red
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180, height: 200)
+        return CGSize(width: view.frame.size.width/2-7, height: 265)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

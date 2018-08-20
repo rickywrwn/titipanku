@@ -273,7 +273,8 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     func showOffer() {
         let appDetailController = OfferController()
         appDetailController.app = app
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func handleLain(){
         //perform(#selector(showHome), with: nil, afterDelay: 0.01)
@@ -286,7 +287,8 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showLihatPreorder(_ notification: NSNotification) {
         let appDetailController = LihatPreorder()
@@ -294,7 +296,8 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showLihatResiPreorder(_ notification: NSNotification) {
         let appDetailController = LihatResiPreorder()
@@ -302,7 +305,8 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showAcceptedPreorder(_ notification: NSNotification) {
         let appDetailController = AcceptedPembelian()
@@ -310,7 +314,8 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showPengirimanPreorder(_ notification: NSNotification) {
         let appDetailController = PengirimanPembelian()
@@ -318,7 +323,8 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showPenerimaanPreorder(_ notification: NSNotification) {
         let appDetailController = PenerimaanPembelian()
@@ -326,12 +332,14 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         if let varOffer = notification.userInfo?["varOffer"] as? VarOfferPreorder {
             appDetailController.varOffer = varOffer
         }
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     @objc func showBeliPreorder() {
         let appDetailController = AcceptPreorder()
         appDetailController.app = app
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

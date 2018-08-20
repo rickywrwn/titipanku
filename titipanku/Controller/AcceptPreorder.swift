@@ -25,7 +25,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
     var cities = [city]()
     var prvv : raja?
     var kota : rajaKota?
-    
+    var jumlah : Int = 0
     struct userDetail: Decodable {
         let saldo: String
         let valueSaldo: String
@@ -136,6 +136,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
             selectedPengiriman = arrNama[indexPath.row]
             label4.isHidden = false
             let total = Int(selectedHarga)! + Int((app?.valueHarga)!)! * Int(qtyText.text!)!
+            jumlah = total
             labelTotal.text = "Rp " + String(total)
         }
         
@@ -431,7 +432,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
                 let harga = Int((self.app?.valueHarga)!)
                 let ongkir = Int(self.selectedHarga)
                 
-                let hargaTotal = harga! + ongkir!
+                let hargaTotal = self.jumlah
                 print(hargaTotal)
                 if saldo! < hargaTotal {
                     let alert = UIAlertController(title: "Message", message: "Saldo Anda Kurang, Saldo Saat ini adalah Rp " + (self.isiUser?.saldo)!, preferredStyle: .alert)
@@ -444,10 +445,10 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
                     let saldoNow : Int = saldo! - hargaTotal
                     print(saldoNow)
                     
-                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let qtyAwal = self.app?.qty,let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman{
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let qtyAwal = self.app?.qty,let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman, let jumlah : Int = self.jumlah{
                         var qtyNow = Int(qtyAwal)! - Int(qty)!
                         
-                        let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"qtyNow":qtyNow,"saldo":saldoNow,"jumlah":hargaTotal,"action":"insert"]
+                        let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"qtyNow":qtyNow,"saldo":saldoNow,"jumlah":jumlah,"action":"insert"]
                         print (parameter)
                         Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
                             response in

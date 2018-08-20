@@ -170,7 +170,8 @@ class UserPenjualanRequest: UIViewController, UICollectionViewDataSource, UIColl
             let layout = UICollectionViewFlowLayout()
             let appDetailController = barangDetailController(collectionViewLayout: layout)
             appDetailController.app = app
-            navigationController?.pushViewController(appDetailController, animated: true)
+            present(appDetailController, animated: true, completion: {
+            })
         }else{
             print("no app")
         }

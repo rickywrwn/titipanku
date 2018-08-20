@@ -160,45 +160,6 @@ class SearchPreorder: UICollectionViewController, UICollectionViewDelegateFlowLa
         setupView()
     }
     
-    private func setupView(){
-        view.backgroundColor = .white
-        let screenWidth = UIScreen.main.bounds.width
-        
-        collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(collectionView!)
-        
-        //collectionView?.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: screenWidth/4).isActive = true
-        collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
-        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 600).isActive = true
-        
-        let backButton : UIButton = {
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
-            button.setImage(UIImage(named: "plus"), for: .normal)
-            //button.setTitle("Cancel", for: .normal)
-            button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
-            button.addTarget(self, action: #selector(handleFilter), for: UIControlEvents.touchUpInside)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            return button
-        }()
-        //backButton
-        view.addSubview(backButton)
-        backButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        backButton.centerXAnchor.constraint(equalTo: collectionView!.centerXAnchor, constant: 0).isActive = true
-        backButton.topAnchor.constraint(equalTo: (collectionView?.bottomAnchor)!, constant: 0).isActive = true
-        
-    }
-    
-    @objc func handleFilter(){
-        let viewControllerB = SearchFilter()
-        
-        viewControllerB.modalPresentationStyle = .overFullScreen
-        
-        present(viewControllerB, animated: true, completion: nil)
-    }
-    
     @objc func reloadPreorder(){
         if varFilter.search == "none"{
             
@@ -230,6 +191,45 @@ class SearchPreorder: UICollectionViewController, UICollectionViewDelegateFlowLa
                 SKActivityIndicator.dismiss()
             }
         }
+    }
+    
+    @objc func handleFilter(){
+        let viewControllerB = FilterPreorder()
+        
+        viewControllerB.modalPresentationStyle = .overFullScreen
+        
+        present(viewControllerB, animated: true, completion: nil)
+    }
+    
+    private func setupView(){
+        view.backgroundColor = .white
+        let screenWidth = UIScreen.main.bounds.width
+        
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView!)
+        
+        //collectionView?.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: screenWidth/4).isActive = true
+        collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 550).isActive = true
+        
+        let backButton : UIButton = {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+            button.setImage(UIImage(named: "plus"), for: .normal)
+            //button.setTitle("Cancel", for: .normal)
+            button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
+            button.addTarget(self, action: #selector(handleFilter), for: UIControlEvents.touchUpInside)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }()
+        //backButton
+        view.addSubview(backButton)
+        backButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        backButton.centerXAnchor.constraint(equalTo: collectionView!.centerXAnchor, constant: 0).isActive = true
+        backButton.topAnchor.constraint(equalTo: (collectionView?.bottomAnchor)!, constant: 0).isActive = true
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

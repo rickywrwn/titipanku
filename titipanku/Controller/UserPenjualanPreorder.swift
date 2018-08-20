@@ -165,7 +165,8 @@ func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection s
             let layout = UICollectionViewFlowLayout()
             let appDetailController = PreorderDetail(collectionViewLayout: layout)
             appDetailController.app = app
-            navigationController?.pushViewController(appDetailController, animated: true)
+            present(appDetailController, animated: true, completion: {
+            })
         }else{
             print("no app")
         }

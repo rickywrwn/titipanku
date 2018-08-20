@@ -176,12 +176,12 @@ class CompletedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSo
         //fetchOrderId()
         fetchJSON()
         labelTgl.text = self.varOffer?.tglPulang
-        labelHarga.text = self.varOffer?.hargaPenawaran
+        labelHarga.text = "Rp " + (self.varOffer?.hargaPenawaran)!
         labelKota.text = self.varOffer?.kota
         //labelOngkir.text = (self.varOffer?.jenisOngkir)! + "+" + (self.varOffer?.hargaOngkir)!
         ongkirText.text =  (self.varOffer?.jenisOngkir)! + " - " + (self.varOffer?.hargaOngkir)!
         let total = Int((self.varOffer?.valueHarga)!)! + Int((self.varOffer?.hargaOngkir)!)!
-        labelTotal.text = "Rp. " + String(total)
+        labelTotal.text = "Rp " + String(total)
         label4.isHidden = false
         
         setupView()
@@ -477,7 +477,7 @@ class CompletedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSo
     let labelA : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Tanggal Penerimaan "
+        label.text = "Tanggal Pulang "
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

@@ -70,12 +70,8 @@ class ExploreKategoriRequest: UICollectionViewController, UICollectionViewDelega
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        //collectionView?.backgroundColor = UIColor.green
         collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
-        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-        //collectionView?.centerXAnchor.constraint(equalTo: view.centerXAnchor/-4 ).isActive = true
-        //collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -400).isActive = true
-        //collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
         collectionView?.heightAnchor.constraint(equalToConstant: 600).isActive = true
         
     }
@@ -90,12 +86,11 @@ class ExploreKategoriRequest: UICollectionViewController, UICollectionViewDelega
         cell.app = requests[indexPath.row]
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor(hex: "#d1d8e0").cgColor
-        cell.backgroundColor = UIColor.red
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 180, height: 200)
+        return CGSize(width: view.frame.size.width/4-7, height: 265)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
