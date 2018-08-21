@@ -46,33 +46,19 @@ class UserPembelian: UIViewController {
         navigationItem.title = "Home"
         RequestVC.view.isHidden = false
         
-        let navigationSegmentedControl = BetterSegmentedControl(
-            frame: CGRect(x: 35.0, y: 40.0, width: 200.0, height: 30.0),
-            segments: LabelSegment.segments(withTitles: ["Request", "Preorder"],
-                                            normalFont: UIFont(name: "Avenir", size: 13.0)!,
-                                            normalTextColor: .lightGray,
-                                            selectedFont: UIFont(name: "Avenir", size: 13.0)!,
-                                            selectedTextColor: .white),
-            options:[.backgroundColor(.darkGray),
-                     .indicatorViewBackgroundColor(UIColor(red:0.55, green:0.26, blue:0.86, alpha:1.00)),
-                     .cornerRadius(3.0),
-                     .bouncesOnChange(false)])
-        navigationSegmentedControl.addTarget(self, action: #selector(UserPembelian.navigationSegmentedControlValueChanged(_:)), for: .valueChanged)
-        navigationItem.titleView = navigationSegmentedControl
     }
     
-    @objc func navigationSegmentedControlValueChanged(_ sender: BetterSegmentedControl) {
-        if sender.index == 0 {
-            print("Turning lights on.")
+    @objc func madeSelection(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0{
             RequestVC.view.isHidden = false
             PreorderVC.view.isHidden = true
-        }
-        else {
-            print("Turning lights off.")
+        }else if sender.selectedSegmentIndex == 1{
             RequestVC.view.isHidden = true
             PreorderVC.view.isHidden = false
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBarang"), object: nil)
         }
     }
+    
     
     @objc public func handleBack(){
         navigationController?.popViewController(animated: true)
@@ -105,6 +91,11 @@ class UserPembelian: UIViewController {
     func setupView(){
         let screenHeight = UIScreen.main.bounds.height
         view.backgroundColor = .white
+        navSegmentControl.addTarget(self, action: #selector(madeSelection), for: .valueChanged)
+        
+        navSegmentControl.insertSegment(withTitle: "Request", at: 0, animated: false)
+        navSegmentControl.insertSegment(withTitle: "Preorder", at: 1, animated: false)
+        navSegmentControl.selectedSegmentIndex = 0
         
         
         view.addSubview(containerView)
@@ -116,17 +107,17 @@ class UserPembelian: UIViewController {
         containerView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         containerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
-        navSegmentControl.translatesAutoresizingMaskIntoConstraints = false
-        navSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        navSegmentControl.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        navSegmentControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-        navSegmentControl.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
-        navSegmentControl.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
-        
         //backButton
         view.addSubview(backButton)
         backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
+        
+        navSegmentControl.translatesAutoresizingMaskIntoConstraints = false
+        navSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        navSegmentControl.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        navSegmentControl.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10).isActive = true
+        navSegmentControl.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
+        navSegmentControl.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
         
     }
     

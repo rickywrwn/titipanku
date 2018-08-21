@@ -172,6 +172,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         NotificationCenter.default.addObserver(self, selector: #selector(showPengirimanPreorder(_:)), name: NSNotification.Name(rawValue: "toPengirimanPreorder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPenerimaanPreorder(_:)), name: NSNotification.Name(rawValue: "toPenerimaanPreorder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadPreorderDetail"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showUser(_:)), name: NSNotification.Name(rawValue: "toUserPreorder"), object: nil)
          SKActivityIndicator.show("Loading...")
         if let email = self.app?.email, let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             if email == emailNow {
@@ -280,6 +281,18 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         //perform(#selector(showHome), with: nil, afterDelay: 0.01)
         print(app?.id)
        
+    }
+    @objc func showUser(_ notification: NSNotification) {
+        
+        let layout = UICollectionViewFlowLayout()
+        let appDetailController = UserController(collectionViewLayout: layout)
+        if let varOffer = notification.userInfo?["email"] as? String {
+            UserController.emailUser.email = varOffer
+            UserController.emailUser.status = "lain"
+        }
+        present(appDetailController, animated: true, completion: {
+        })
+        //navigationController?.pushViewController(appDetailController, animated: true)
     }
     @objc func showAcceptPreorder(_ notification: NSNotification) {
         let appDetailController = AcceptPembelian()
@@ -886,8 +899,9 @@ class AppDetailUser1: BaseCell, UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.item == 0{
-            
-            print("request")
+            print("penjual")
+            let dataIdOffer:[String: String] = ["email": user]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toUserPreorder"), object: nil, userInfo: dataIdOffer)
         }else{
             print("penawar")
         }
@@ -1217,6 +1231,8 @@ class AppOfferListDalam1: BaseCell , UICollectionViewDataSource, UICollectionVie
         
         if indexPath.row == 0{
             print(varOffer?.idPembeli)
+            let dataIdOffer:[String: String] = ["email": (varOffer?.idPembeli)!]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toUserPreorder"), object: nil, userInfo: dataIdOffer)
         }else{
             print(varOffer)
             

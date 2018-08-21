@@ -24,8 +24,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         view.backgroundColor = .white
         print("Post Trip")
         setupView()
-        
-        self.hideKeyboardWhenTappedAround()
+        myTableView.keyboardDismissMode = .onDrag
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -33,7 +32,6 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         print("Value: \(countries[indexPath.row])")
         CountryTextField.text = countries[indexPath.row].name
         myTableView.isHidden = true
-        self.hideKeyboardWhenTappedAround()
     }
     
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,6 +42,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
         let country = countries[indexPath.row]
         cell.textLabel?.text = country.name
+        cell.selectionStyle = UITableViewCellSelectionStyle.default
         return cell
     }
     

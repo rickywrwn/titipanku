@@ -19,7 +19,7 @@ class UserPreorder: UIViewController, UICollectionViewDataSource, UICollectionVi
     var collectionview: UICollectionView!
     
     func fetchRequests(_ completionHandler: @escaping ([App]) -> ()) {
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+        if let emailNow : String = UserController.emailUser.email  {
             let urlString = "http://titipanku.xyz/api/GetPreorderUser.php?email=\(String(describing: emailNow))"
         URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
             
@@ -78,7 +78,7 @@ class UserPreorder: UIViewController, UICollectionViewDataSource, UICollectionVi
         self.collectionview.translatesAutoresizingMaskIntoConstraints = false
         self.collectionview.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         self.collectionview.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor,constant: 0).isActive = true
-        self.collectionview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        self.collectionview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         self.collectionview.heightAnchor.constraint(equalToConstant: 600).isActive = true
     }
     
@@ -124,7 +124,8 @@ class UserPreorder: UIViewController, UICollectionViewDataSource, UICollectionVi
             let layout = UICollectionViewFlowLayout()
             let appDetailController = PreorderDetail(collectionViewLayout: layout)
             appDetailController.app = app
-            navigationController?.pushViewController(appDetailController, animated: true)
+            present(appDetailController, animated: true, completion: {
+            })
         }else{
             print("no app")
         }

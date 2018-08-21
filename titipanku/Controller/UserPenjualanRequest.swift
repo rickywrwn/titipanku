@@ -20,7 +20,7 @@ class UserPenjualanRequest: UIViewController, UICollectionViewDataSource, UIColl
     var collectionview: UICollectionView!
     
     func fetchRequests(_ completionHandler: @escaping ([VarOffer]) -> ()) {
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+        if let emailNow : String = UserController.emailUser.email {
             print(emailNow)
             let urlString = "http://titipanku.xyz/api/GetUserPenjualanRequest.php?email=\(String(describing: emailNow))"
             
@@ -88,7 +88,7 @@ class UserPenjualanRequest: UIViewController, UICollectionViewDataSource, UIColl
         //        view.addSubview(collectionView!)
         //        //collectionView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
         //        //collectionView?.backgroundColor = UIColor.green
-        self.collectionview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        self.collectionview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         self.collectionview.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         //        //collectionView?.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
         //

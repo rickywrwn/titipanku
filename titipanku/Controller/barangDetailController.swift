@@ -148,6 +148,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         NotificationCenter.default.addObserver(self, selector: #selector(showPenerimaanOffer(_:)), name: NSNotification.Name(rawValue: "toPenerimaanOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showCompletedOffer(_:)), name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
+        
+         NotificationCenter.default.addObserver(self, selector: #selector(showUser(_:)), name: NSNotification.Name(rawValue: "toUser"), object: nil)
         adaNawar = false
         statusOffer = false
         SKActivityIndicator.show("Loading...")
@@ -300,6 +302,18 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         appDetailController.app = app
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
+        }
+        present(appDetailController, animated: true, completion: {
+        })
+        //navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    @objc func showUser(_ notification: NSNotification) {
+        
+        let layout = UICollectionViewFlowLayout()
+        let appDetailController = UserController(collectionViewLayout: layout)
+        if let varOffer = notification.userInfo?["email"] as? String {
+            UserController.emailUser.email = varOffer
+            UserController.emailUser.status = "lain"
         }
         present(appDetailController, animated: true, completion: {
         })
@@ -1052,16 +1066,25 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if indexPath.item == 0{
-            print("request")
-            print(self.user + "user nama")
-            print(self.user + ".jpg")
+        if statusOffer == false{
+            if indexPath.item == 0{
+                //user sendiri blm ada traveller
+                let dataIdOffer:[String: String] = ["email": user]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toUser"), object: nil, userInfo: dataIdOffer)
+            }else{
+
+            }
         }else{
-            print("penawar")
-            print(self.traveller + "traveler nama")
-            print(self.traveller + ".jpg")
+            if indexPath.item == 0{
+               //user sendiri sdh ad atraveller
+                let dataIdOffer:[String: String] = ["email": user]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toUser"), object: nil, userInfo: dataIdOffer)
+            }else{
+                //trvaeller
+                let dataIdOffer:[String: String] = ["email": traveller]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toUser"), object: nil, userInfo: dataIdOffer)
+            }
         }
-        userCollectionView.reloadData()
         
     }
     
@@ -1348,6 +1371,13 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListKiriCellId, for: indexPath) as! OfferListKiri
             //cell.app = appCategory?.apps?[indexPath.item]
             //cell.backgroundColor = UIColor.red
+            if let email : String = varOffer?.idPenawar  {
+                Alamofire.request("http://titipanku.xyz/uploads/"+email+".jpg").responseImage { response in
+                    if let image = response.result.value {
+                        cell.imageView.image = image
+                    }
+                }
+            }
             cell.nameLabel.text = varOffer?.idPenawar
             return cell
         }else{
@@ -1381,6 +1411,9 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
         if indexPath.row == 0{
             print(varOffer?.idPenawar)
             print(statusOffer)
+            
+            let dataIdOffer:[String: String] = ["email": (varOffer?.idPenawar)!]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toUser"), object: nil, userInfo: dataIdOffer)
         }else{
             
             print("statusoffernow")

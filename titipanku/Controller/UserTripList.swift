@@ -29,13 +29,43 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
        
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(TripsCell.self, forCellWithReuseIdentifier: tripCellId)
+        setupView()
         
+    }
+    
+    private func setupView(){
+        let backButton : UIButton = {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+            button.setTitle("Cancel", for: .normal)
+            button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
+            button.addTarget(self, action: #selector(handleBack), for: UIControlEvents.touchUpInside)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }()
+        
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView!)
+        
+        //collectionView?.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: screenWidth/4).isActive = true
+        collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
+        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        
+        //backButton
+        view.addSubview(backButton)
+        backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
+    }
+    
+    @objc public func handleBack(){
+        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tripCellId, for: indexPath) as! TripsCell
-        
 
         cell.labelCountry.text = trips[indexPath.row].country
         cell.LabelTgl.text = trips[indexPath.row].tanggalPulang
@@ -61,7 +91,7 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
     
     fileprivate func fetchUserTrip() {
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+        if let emailNow : String = UserController.emailUser.email {
             
             let urlString = "http://titipanku.xyz/api/GetTrip.php?email=\(String(describing: emailNow))"
             guard let url = URL(string: urlString) else { return }

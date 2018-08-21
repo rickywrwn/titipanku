@@ -21,7 +21,7 @@ class UserPenjualanPreorder: UIViewController, UICollectionViewDataSource, UICol
     
     func fetchRequests(_ completionHandler: @escaping ([VarOfferPreorder]) -> ()) {
         print("asdads")
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+        if let emailNow : String = UserController.emailUser.email {
             
             print(emailNow)
             let urlString = "http://titipanku.xyz/api/GetUserPenjualanPreorder.php?email=\(String(describing: emailNow))"
@@ -88,7 +88,7 @@ class UserPenjualanPreorder: UIViewController, UICollectionViewDataSource, UICol
         self.collectionview.translatesAutoresizingMaskIntoConstraints = false
         self.collectionview.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         self.collectionview.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor,constant: 0).isActive = true
-        self.collectionview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        self.collectionview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         self.collectionview.heightAnchor.constraint(equalToConstant: 600).isActive = true
     }
     
@@ -207,8 +207,6 @@ func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection s
             
             
         }).resume()
-        
-        
         
     }
 }

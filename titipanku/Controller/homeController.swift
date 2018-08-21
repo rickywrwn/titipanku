@@ -35,6 +35,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserController.emailUser.status = "sendiri"
         if  cekLogged == true{
             print("masuk home")
         }else {
