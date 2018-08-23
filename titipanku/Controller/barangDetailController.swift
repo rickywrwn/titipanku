@@ -310,7 +310,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     @objc func showUser(_ notification: NSNotification) {
         
         let layout = UICollectionViewFlowLayout()
-        let appDetailController = UserController(collectionViewLayout: layout)
+        let appDetailController = UserController()
         if let varOffer = notification.userInfo?["email"] as? String {
             UserController.emailUser.email = varOffer
             UserController.emailUser.status = "lain"

@@ -43,11 +43,11 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
         let icon2 = UITabBarItem(title: "Explore", image: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal))
         item2.tabBarItem = icon2
         
-        let item5 =  UINavigationController(rootViewController: UserController(collectionViewLayout: layout))
-        let icon5 = UITabBarItem(title: "User", image: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal))
+        let item5 =  UserController()
+        let icon5 = UITabBarItem(title: "Profile", image: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal))
         item5.tabBarItem = icon5
         
-        let item6 =  UINavigationController(rootViewController: MoreController(collectionViewLayout: layout))
+        let item6 =  MoreController()
         let icon6 = UITabBarItem(title: "More", image: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "list")?.withRenderingMode(.alwaysOriginal))
         item6.tabBarItem = icon6
         

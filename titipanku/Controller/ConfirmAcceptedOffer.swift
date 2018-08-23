@@ -418,7 +418,7 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
             
             alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
                
-                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id , let idPenawar = self.varOffer?.idPenawar{
+                if let emailNow = self.app?.email, let idOffer = self.varOffer?.id, let idRequest = self.app?.id , let idPenawar = self.varOffer?.idPenawar{
                     
                     let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"idPenawar":idPenawar,"action":"confirm","action2" : "tidak"]
                     print (parameter)
@@ -487,52 +487,6 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
             self.present(alert, animated: true, completion: nil)
             
         }
-    }
-    
-    @objc func handleTolak(){
-        // create the alert
-        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin?", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // add the actions (buttons)
-        alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-        
-        alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id{
-                
-                let parameter: Parameters = ["idOffer":idOffer,"action":"confirm"]
-                print (parameter)
-                Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
-                    response in
-                    
-                    //mengambil json
-                    let json = JSON(response.result.value)
-                    print(json)
-                    let cekSukses = json["success"].intValue
-                    let pesan = json["message"].stringValue
-                    
-                    if cekSukses != 1 {
-                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                        
-                        self.present(alert, animated: true)
-                    }else{
-                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                            self.handleBack()
-                        }))
-                        
-                        self.present(alert, animated: true)
-                    }
-                }
-            }
-        }))
-        
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
-        print("tolak")
-        
     }
     
     @objc private func handleBack(){

@@ -132,7 +132,6 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
         if indexPath.item == 0 {
             let cell: CategoryCell
             

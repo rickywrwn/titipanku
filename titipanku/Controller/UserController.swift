@@ -12,7 +12,7 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 import SKActivityIndicatorView
 
-class UserController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UserController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     struct userDetail: Decodable {
@@ -47,7 +47,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
                         self.isiUser = try decoder.decode(userDetail.self, from: data)
                         print(self.isiUser)
                         
-                        self.collectionView?.reloadData()
+                        self.userCollectionView.reloadData()
                         SKActivityIndicator.dismiss()
                     } catch let jsonErr {
                         print("Failed to decode:", jsonErr)
@@ -62,6 +62,13 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
     fileprivate let cellId = "cellId"
     fileprivate let activityCellId = "activityCellId"
     
+    var userCollectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = UIColor.white
+        return cv
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let status : String = emailUser.status{
@@ -72,47 +79,50 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.white
         self.title = "User"
-        navigationItem.title = "Profile"
         print("User Loaded")
         SKActivityIndicator.show("Loading...", userInteractionStatus: false)
         fetchJSON()
-        collectionView?.alwaysBounceVertical = true
-
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(UserDetailCell.self, forCellWithReuseIdentifier: userCellId)
-        collectionView?.register(UserActivityCell.self, forCellWithReuseIdentifier: activityCellId)
         
-        if emailUser.status != "sendiri" {
-            //supaya navbar full
-            // Create the navigation bar
-            let screenSize: CGRect = UIScreen.main.bounds
-            let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
-            navbar.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(navbar)
-            navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-            navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
-            
-            // Offset by 20 pixels vertically to take the status bar into account
-            navbar.backgroundColor = UIColor(hex: "#3867d6")
-            
-            // Create a navigation item with a title
-            let navigationItem = UINavigationItem()
-            navigationItem.title = "User"
+        view.addSubview(userCollectionView)
+        userCollectionView.alwaysBounceVertical = true
+        userCollectionView.delegate = self
+        userCollectionView.dataSource = self
+        userCollectionView.backgroundColor = UIColor.white
+        userCollectionView.register(UserDetailCell.self, forCellWithReuseIdentifier: userCellId)
+        userCollectionView.register(UserActivityCell.self, forCellWithReuseIdentifier: activityCellId)
+        
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        
+        // Offset by 20 pixels vertically to take the status bar into account
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Profile"
+        if emailUser.status != "sendiri"{
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
-            //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
-            // Assign the navigation item to the navigation bar
-            
-            navbar.setItems([navigationItem], animated: false)
-            
-            // Make the navigation bar a subview of the current view controller
-            
-            collectionView?.frame = CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height - 64))
-            let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
-            let statusBarColor = UIColor(hex: "#4373D8")
-            statusBarView.backgroundColor = statusBarColor
-            view.addSubview(statusBarView)
         }
-
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+        // Assign the navigation item to the navigation bar
+        
+        navbar.setItems([navigationItem], animated: false)
+        
+        // Make the navigation bar a subview of the current view controller
+        
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
+        
+        userCollectionView.topAnchor.constraint(equalTo: navbar.bottomAnchor, constant: 5).isActive = true
+        userCollectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        userCollectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
+        userCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
     }
     
     @objc func handleCancle(){
@@ -158,7 +168,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userCellId, for: indexPath) as! UserDetailCell
@@ -166,19 +176,25 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
             cell.labelEmail.text = isiUser?.email
             cell.LabelNama.text = isiUser?.name
             cell.LabelTanggal.text = isiUser?.tanggalDaftar
+            if emailUser.status == "sendiri" {
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
                 Alamofire.request("http://titipanku.xyz/uploads/"+emailNow+".jpg").responseImage { response in
-                    //debugPrint(response)
-                    //let nama = self.app?.name
-                    //print("gambar : "+imageName)
                     if let image = response.result.value {
-                        //print("image downloaded: \(image)")
                         cell.imageView.image = image
-                        self.collectionView?.reloadData()
+                        self.userCollectionView.reloadData()
                     }
                 }
             }
-            
+            }else{
+                if let emailNow : String = emailUser.email {
+                    Alamofire.request("http://titipanku.xyz/uploads/"+emailNow+".jpg").responseImage { response in
+                        if let image = response.result.value {
+                            cell.imageView.image = image
+                            self.userCollectionView.reloadData()
+                        }
+                    }
+                }
+            }
             
             return cell
         }else if indexPath.item == 1{
@@ -208,7 +224,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -220,7 +236,7 @@ class UserController : UICollectionViewController, UICollectionViewDelegateFlowL
         return CGSize(width: view.frame.width, height: 40)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Num: \(indexPath.row)")
         if indexPath.row != 0 {
             

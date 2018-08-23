@@ -403,10 +403,10 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         }else{
             print(dateTextField.text)
             print(dateBack)
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglPulang : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text{
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglPulang : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text, let email = self.app?.email{
                 print(tglPulang)
                 
-                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglPulang": tglPulang, "provinsi":provinsi, "kota": kota, "idKota": selectedCity, "action" : "insert"]
+                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglPulang": tglPulang, "provinsi":provinsi, "kota": kota, "idKota": selectedCity,"email":email, "action" : "insert"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/PostOffer.php",method: .get, parameters: parameter).responseJSON {
                     response in

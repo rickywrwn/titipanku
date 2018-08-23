@@ -190,11 +190,40 @@ class TopupController :  UIViewController,MidtransUIPaymentViewControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        navigationItem.title = "Topup Wallet"
         hideKeyboardWhenTappedAround()
         fetchJSON()
         fetchOrderId()
-        setupView()
+        setupView() // Create the navigation bar
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        
+        // Offset by 20 pixels vertically to take the status bar into account
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Topup Wallet"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+        // Assign the navigation item to the navigation bar
+        
+        navbar.setItems([navigationItem], animated: false)
+        
+        // Make the navigation bar a subview of the current view controller
+        
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
+    }
+    
+    @objc public func handleCancle(){
+        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func handleTerimaOffer(){

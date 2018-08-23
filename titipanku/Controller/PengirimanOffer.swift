@@ -241,7 +241,7 @@ class PengirimanOffer :  UIViewController {
             
             alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
                 
-                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id , let idPenawar = self.varOffer?.idPenawar,let nomorResi = self.ongkirText.text{
+                if let emailNow = self.app?.email, let idOffer = self.varOffer?.id, let idRequest = self.app?.id , let idPenawar = self.varOffer?.idPenawar,let nomorResi = self.ongkirText.text{
                     
                     let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"idPenawar":idPenawar,"nomorResi":nomorResi,"action":"kirim"]
                     print (parameter)
@@ -261,7 +261,7 @@ class PengirimanOffer :  UIViewController {
                             
                             self.present(alert, animated: true)
                         }else{
-                            let alert = UIAlertController(title: "Message", message: "Belikan Barang Berhasil", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "Message", message: "Kirim Barang Berhasil", preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                                 

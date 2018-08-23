@@ -285,7 +285,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     @objc func showUser(_ notification: NSNotification) {
         
         let layout = UICollectionViewFlowLayout()
-        let appDetailController = UserController(collectionViewLayout: layout)
+        let appDetailController = UserController()
         if let varOffer = notification.userInfo?["email"] as? String {
             UserController.emailUser.email = varOffer
             UserController.emailUser.status = "lain"
@@ -874,11 +874,7 @@ class AppDetailUser1: BaseCell, UICollectionViewDataSource, UICollectionViewDele
             DispatchQueue.main.async{
                 
                 Alamofire.request("http://titipanku.xyz/uploads/"+self.user+".jpg").responseImage { response in
-                    //debugPrint(response)
-                    //let nama = self.app?.name
-                    //print("gambar : "+imageName)
                     if let image = response.result.value {
-                        //print("image downloaded: \(image)")
                         cell.imageView.image = image
                     }
                 }
@@ -1189,6 +1185,14 @@ class AppOfferListDalam1: BaseCell , UICollectionViewDataSource, UICollectionVie
             //cell.app = appCategory?.apps?[indexPath.item]
             //cell.backgroundColor = UIColor.red
             cell.nameLabel.text = varOffer?.idPembeli
+            DispatchQueue.main.async{
+                
+                Alamofire.request("http://titipanku.xyz/uploads/"+(self.varOffer?.idPembeli)!+".jpg").responseImage { response in
+                    if let image = response.result.value {
+                        cell.imageView.image = image
+                    }
+                }
+            }
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerListKananCellId, for: indexPath) as! OfferListKanan1

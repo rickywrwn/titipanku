@@ -353,7 +353,7 @@ class PenerimaanOffer :  UIViewController {
     @objc func qtyTapped(_ textField: UITextField) {
         
         print("tapped")
-        StringPickerPopover(title: "Ukuran Barang", choices: ["1", "2","3","4","5"])
+        StringPickerPopover(title: "Rating Anda", choices: ["1", "2","3","4","5"])
             .setSelectedRow(0)
             .setDoneButton(action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")

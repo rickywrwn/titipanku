@@ -434,9 +434,9 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id{
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id, let idPenawar = self.varOffer?.idPenawar, let idRequest = self.varOffer?.idRequest{
                 
-                let parameter: Parameters = ["idOffer":idOffer,"action":"decline"]
+                let parameter: Parameters = ["idOffer":idOffer,"idPenawar":idPenawar,"idRequest":idRequest,"action":"decline"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
                     response in

@@ -7,103 +7,245 @@
 //
 
 import UIKit
+import SKActivityIndicatorView
 import Alamofire
-import SwiftyJSON
+import AlamofireImage
+import Hue
 
-class NotifikasiController: UICollectionViewController, UICollectionViewDelegateFlowLayout{
-    
-    var trips = [trip]()
-    struct trip: Decodable {
-        let country: String
-        let tanggalPulang: String
+class NotifikasiController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    fileprivate let RequestCellId = "RequestCellId"
+    var notifications  = [notifikasiDetail]()
+    struct notifikasiDetail: Decodable {
+        let id: String
+        let name: String
+        let email: String
+        let idTujuan: String
+        let jenis: String
+        let tanggal: String
+        
+    }
+    var collectionview: UICollectionView!
+    func fetchRequests(_ completionHandler: @escaping ([notifikasiDetail]) -> ()) {
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String  {
+            let urlString = "http://titipanku.xyz/api/GetNotifikasiUser.php?email=\(String(describing: emailNow))"
+            
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.notifications = try decoder.decode([notifikasiDetail].self, from: data)
+                    print(self.notifications)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.notifications)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    self.collectionview.reloadData()
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
+        
+    }
+    var app: App?
+    func fetchDetail(idRequest : String, completionHandler: @escaping (App) -> ()) {
+        if let id : String = idRequest  {
+            let urlString = "http://titipanku.xyz/api/DetailBarang.php?id=\(id)"
+            
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.app = try decoder.decode(App.self, from: data)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.app!)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    self.collectionview.reloadData()
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
         
     }
     
-    fileprivate let tripCellId = "tripCellId"
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        print("Post Trip")
-        
-        fetchUserTrip()
-        //init tableview
-        
-        collectionView?.backgroundColor = UIColor.white
-        collectionView?.register(TripsCell.self, forCellWithReuseIdentifier: tripCellId)
-       
         setupView()
-    }
-    private func setupView(){
-        view.backgroundColor = .white
-        let screenWidth = UIScreen.main.bounds.width
         
-        collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(collectionView!)
-        //collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 58).isActive = true
-        collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
-        collectionView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 5).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 700).isActive = true
+        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
+        self.fetchRequests{(notifications) -> ()in
+            self.notifications = notifications
+            print("count request" + String(self.notifications.count))
+            self.collectionview.reloadData()
+            SKActivityIndicator.dismiss()
+        }
         
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    private func setupView(){
+        let screenWidth = UIScreen.main.bounds.width
+        print(screenWidth)
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tripCellId, for: indexPath) as! TripsCell
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 220, bottom: 0, right: 0)
+        layout.itemSize = CGSize(width: view.frame.width, height: 700)
         
+        collectionview = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        self.collectionview.register(NotificationCell.self, forCellWithReuseIdentifier: RequestCellId)
+        collectionview.dataSource = self
+        collectionview.delegate = self
+        collectionview.showsVerticalScrollIndicator = false
+        collectionview.backgroundColor = UIColor.white
+        self.view.addSubview(collectionview)
         
-        cell.labelCountry.text = trips[indexPath.row].country
-        cell.LabelTgl.text = trips[indexPath.row].tanggalPulang
+        self.collectionview.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        self.collectionview.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        self.collectionview.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor,constant: screenWidth / -2).isActive = true
+        self.collectionview.heightAnchor.constraint(equalToConstant: 600).isActive = true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! NotificationCell
+        
+        if let id : String = notifications[indexPath.row].idTujuan {
+            Alamofire.request("http://titipanku.xyz/uploads/b"+id+".jpg").responseImage { response in
+                if let image = response.result.value {
+                    cell.imageView.image = image
+                }
+            }
+        }
+        cell.labelCountry.text = notifications[indexPath.row].name
+        cell.LabelTgl.text = notifications[indexPath.row].tanggal
+
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return trips.count
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return notifications.count
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: 150)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.backgroundColor = UIColor.gray.cgColor
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // change 2 to desired number of seconds
-            cell?.layer.backgroundColor = UIColor.white.cgColor
-        }
+        return CGSize(width: view.frame.width, height: 100)
     }
     
     
-    fileprivate func fetchUserTrip() {
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        self.fetchDetail(idRequest: notifications[indexPath.row].idTujuan,completionHandler: {(app) -> () in
+            self.app = app
+            print(app)
+            if let appe : App = self.app {
+
+                let layout = UICollectionViewFlowLayout()
+                let appDetailController = barangDetailController(collectionViewLayout: layout)
+                appDetailController.app = appe
+                self.present(appDetailController, animated: true, completion: {
+                })
+            }else{
+                print("no app")
+            }
             
-            let urlString = "http://titipanku.xyz/api/GetTrip.php?email=\(String(describing: emailNow))"
-            guard let url = URL(string: urlString) else { return }
-            URLSession.shared.dataTask(with: url) { (data, _, err) in
-                DispatchQueue.main.async {
-                    if let err = err {
-                        print("Failed to get data from url:", err)
-                        return
-                    }
-                    
-                    guard let data = data else { return }
-                    do {
-                        let decoder = JSONDecoder()
-                        self.trips = try decoder.decode([trip].self, from: data)
-                        self.collectionView?.reloadData()
-                        print(self.trips)
-                    } catch let jsonErr {
-                        print("Failed to decode:", jsonErr)
-                    }
-                }
-                }.resume()
-        }
+        })
+        
+
+        
     }
-    
-    
 }
 
-
-
+class NotificationCell: BaseCell {
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let labelA : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Nama : "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    
+    let labelCountry : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.sizeToFit()
+        //        label.layer.borderWidth = 1
+        //        label.layer.borderColor = UIColor.green.cgColor
+        return label
+    }()
+    
+    let labelB : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Tanggal : "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    
+    let LabelTgl : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(labelA)
+        addSubview(labelB)
+        addSubview(labelCountry)
+        addSubview(LabelTgl)
+        addSubview(imageView)
+        addSubview(dividerLineView)
+        
+        addConstraintsWithFormat("H:|-5-[v2(100)]-10-[v0]-5-[v1]", views: labelA,labelCountry,imageView) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-5-[v2(100)]-10-[v0]-5-[v1]", views: labelB,LabelTgl,imageView)
+        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        
+        addConstraintsWithFormat("V:|-5-[v0(100)]", views: imageView)
+        addConstraintsWithFormat("V:|-15-[v0]-5-[v1]", views: labelA,labelB)
+        addConstraintsWithFormat("V:|-15-[v0]-5-[v1]", views: labelCountry,LabelTgl )
+        addConstraintsWithFormat("V:|[v0(1)]", views: dividerLineView )
+        
+    }
+    
+}
 

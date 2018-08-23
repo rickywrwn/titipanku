@@ -75,6 +75,8 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SKActivityIndicator.show("Loading...")
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.white
         
@@ -102,6 +104,7 @@ class ExploreController : UICollectionViewController, UICollectionViewDelegateFl
         self.fetchExplore{(isiExplore) -> ()in
             self.isiExplore = isiExplore
             //self.collectionView?.reloadData()
+            SKActivityIndicator.dismiss()
         }
     }
 

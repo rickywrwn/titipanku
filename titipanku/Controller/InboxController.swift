@@ -21,7 +21,7 @@ class InboxController: UIViewController {
     let layout = UICollectionViewFlowLayout()
     
     lazy var NotifVC: NotifikasiController = {
-        let vc = NotifikasiController(collectionViewLayout: layout)
+        let vc = NotifikasiController()
         self.addAsChildVC(childVC: vc)
         return vc
     }()
