@@ -1,8 +1,8 @@
 //
-//  KomentarBarangController.swift
+//  KomentarPreorder.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 23/05/18.
+//  Created by Ricky Wirawan on 29/08/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 import SKActivityIndicatorView
 
-class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+class KomentarPreorder: UIViewController,UITextFieldDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     fileprivate let RequestCellId = "RequestCellId"
     
     var app: App?
@@ -37,7 +37,7 @@ class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectio
     var collectionview: UICollectionView!
     func fetchRequests(_ completionHandler: @escaping ([comment]) -> ()) {
         if let idPost = app?.id  {
-            let urlString = "http://titipanku.xyz/api/GetDiskusiRequest.php?idPost=\(String(describing: idPost))"
+            let urlString = "http://titipanku.xyz/api/GetDiskusiPreorder.php?idPost=\(String(describing: idPost))"
             
             URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
                 
@@ -103,7 +103,7 @@ class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectio
                 
                 let parameter: Parameters = ["email": emailNow,"isi": isi,"idPost":idPost, "action" : "insert"]
                 print(parameter)
-                Alamofire.request("http://titipanku.xyz/api/PostDiskusiRequest.php",method: .get, parameters: parameter).responseSwiftyJSON { dataResponse in
+                Alamofire.request("http://titipanku.xyz/api/PostDiskusiPreorder.php",method: .get, parameters: parameter).responseSwiftyJSON { dataResponse in
                     
                     //mencetak JON response
                     if let json = dataResponse.value {
@@ -150,7 +150,7 @@ class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectio
             self.collectionview.reloadData()
             SKActivityIndicator.dismiss()
         }
-       
+        
         setupView()
     }
     
@@ -283,7 +283,7 @@ class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectio
         UIView.commitAnimations()
     }
 }
-    
+
 
 
 

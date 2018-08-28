@@ -14,6 +14,7 @@
 		3C12439F20DFE78600852D2D /* PreorderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C12439E20DFE78600852D2D /* PreorderDetail.swift */; };
 		3C8E38B220C5FB06009AD99D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */; };
 		4935CB4543CCEC46EC37BB63 /* Pods_titipanku.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; };
+		7E01B6002135B8DC003652BD /* KomentarPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01B5FF2135B8DC003652BD /* KomentarPreorder.swift */; };
 		7E1B38D62120E96C00FFD5B0 /* UserPenjualanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */; };
 		7E1B38D82120E98900FFD5B0 /* UserPenjualanPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */; };
 		7E1B38DA2120F06000FFD5B0 /* barangDetailControllerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */; };
@@ -117,6 +118,7 @@
 		3C07FAFC20CE6777008FF049 /* AddHargaBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaBarang.swift; sourceTree = "<group>"; };
 		3C12439E20DFE78600852D2D /* PreorderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreorderDetail.swift; sourceTree = "<group>"; };
 		3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "titipanku/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		7E01B5FF2135B8DC003652BD /* KomentarPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KomentarPreorder.swift; sourceTree = "<group>"; };
 		7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualanRequest.swift; sourceTree = "<group>"; };
 		7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualanPreorder.swift; sourceTree = "<group>"; };
 		7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = barangDetailControllerUser.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				7E5D98602106C5F0006690B0 /* ListPembeliFlashSale.swift */,
 				7E5D98622106C630006690B0 /* AcceptFlashsale.swift */,
 				9CE6C2BA20B4CE8100D1B966 /* KomentarBarangController.swift */,
+				7E01B5FF2135B8DC003652BD /* KomentarPreorder.swift */,
 				7EDED74A20F7470C005BCA76 /* OfferController2.swift */,
 				7EDED74C20F7471E005BCA76 /* OfferController3.swift */,
 				9CEF6B5320ADDC1900ABB81E /* TambahViewController.swift */,
@@ -572,6 +575,7 @@
 				9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */,
 				7E1B38D82120E98900FFD5B0 /* UserPenjualanPreorder.swift in Sources */,
 				7E1B38DA2120F06000FFD5B0 /* barangDetailControllerUser.swift in Sources */,
+				7E01B6002135B8DC003652BD /* KomentarPreorder.swift in Sources */,
 				3C07FAF920CE6734008FF049 /* AddKarateristikBarang.swift in Sources */,
 				7E58EA832113D2BA00BF7A2E /* ExploreNegaraPreorder.swift in Sources */,
 				9CE2AC9D20850639005C1D49 /* ExploreController.swift in Sources */,

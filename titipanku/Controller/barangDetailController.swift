@@ -243,6 +243,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
 //        print(self.app?.status)
 //        print(self.app?.nomorResi)
         //print(self.offers[0].id)
+        komentarController.app = self.app
         present(komentarController, animated: true, completion: {
         })
     }

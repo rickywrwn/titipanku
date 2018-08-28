@@ -262,12 +262,14 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc func handleDiskusi(){
-        let komentarController = KomentarBarangController()
+        let komentarController = KomentarPreorder()
         //komentarController.app = app
         print(app?.status)
         //print(app)
         //print(offers)
-        //navigationController?.pushViewController(komentarController, animated: true)
+        komentarController.app = self.app
+        present(komentarController, animated: true, completion: {
+        })
     }
     func showOffer() {
         let appDetailController = OfferController()
@@ -275,11 +277,12 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
         present(appDetailController, animated: true, completion: {
         })
     }
+    
     @objc func handleLain(){
         //perform(#selector(showHome), with: nil, afterDelay: 0.01)
         print(app?.id)
-       
     }
+    
     @objc func showUser(_ notification: NSNotification) {
         
         let layout = UICollectionViewFlowLayout()
