@@ -84,7 +84,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         let appDetailController = AllPreorder(collectionViewLayout: layout)
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
         
     }
     @objc func showMorePreorderBerdurasi() {
@@ -94,7 +95,8 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         let appDetailController = AllPreorderBerdurasi(collectionViewLayout: layout)
-        navigationController?.pushViewController(appDetailController, animated: true)
+        present(appDetailController, animated: true, completion: {
+        })
         
     }
     

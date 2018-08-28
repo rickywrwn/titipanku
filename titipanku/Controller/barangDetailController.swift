@@ -182,9 +182,12 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
         navigationItem.title = "Request"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let email = app?.email{
+            if email != emailNow{
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
+            }
+        }
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
        
         navbar.setItems([navigationItem], animated: false)
@@ -234,15 +237,14 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         self.dismiss(animated: true)
     }
     @objc func handleDiskusi(){
-        print("diskusi")
-        let layout = UICollectionViewFlowLayout()
-        let komentarController = KomentarBarangController(collectionViewLayout: layout)
+        let komentarController = KomentarBarangController()
         //komentarController.app = app
-        print(statusOffer)
-        print(self.app?.status)
-        print(self.app?.nomorResi)
+//        print(statusOffer)
+//        print(self.app?.status)
+//        print(self.app?.nomorResi)
         //print(self.offers[0].id)
-        //navigationController?.pushViewController(komentarController, animated: true)
+        present(komentarController, animated: true, completion: {
+        })
     }
     func showOffer() {
         let appDetailController = OfferController()
@@ -252,13 +254,13 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     @objc func handleTitip(){
         print("titip")
-//        let layout = UICollectionViewFlowLayout()
-//        let tambahCont = PostTitipJuga(collectionViewLayout:layout)
-//        tambahCont.app = self.app
-//        tambahCont.sizeDesc = tinggiDesc
-//        print(tinggiDesc)
-//        present(tambahCont, animated: true, completion: {
-//        })
+        let layout = UICollectionViewFlowLayout()
+        let tambahCont = PostTitipJuga(collectionViewLayout:layout)
+        tambahCont.app = self.app
+        tambahCont.sizeDesc = tinggiDesc
+        print(tinggiDesc)
+        present(tambahCont, animated: true, completion: {
+        })
         print(statusOffer)
     }
     @objc func handleOfferCancel(){

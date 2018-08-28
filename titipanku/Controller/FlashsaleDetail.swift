@@ -155,9 +155,7 @@ class FlashsaleDetail: UICollectionViewController, UICollectionViewDelegateFlowL
     }
     
     @objc func handleDiskusi(){
-        print("diskusi")
-        let layout = UICollectionViewFlowLayout()
-        let komentarController = KomentarBarangController(collectionViewLayout: layout)
+        let komentarController = KomentarBarangController()
         //komentarController.app = app
         navigationController?.pushViewController(komentarController, animated: true)
     }

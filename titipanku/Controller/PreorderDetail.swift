@@ -262,9 +262,7 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc func handleDiskusi(){
-        print("diskusi")
-        let layout = UICollectionViewFlowLayout()
-        let komentarController = KomentarBarangController(collectionViewLayout: layout)
+        let komentarController = KomentarBarangController()
         //komentarController.app = app
         print(app?.status)
         //print(app)

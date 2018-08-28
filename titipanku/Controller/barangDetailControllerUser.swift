@@ -168,13 +168,11 @@ class barangDetailControllerUser: UICollectionViewController, UICollectionViewDe
         self.dismiss(animated: true)
     }
     @objc func handleDiskusi(){
-        print("diskusi")
-        let layout = UICollectionViewFlowLayout()
-        let komentarController = KomentarBarangController(collectionViewLayout: layout)
+        let komentarController = KomentarBarangController()
         //komentarController.app = app
-        print(statusOffer)
-        print(self.app?.status)
-        print(self.app?.nomorResi)
+//        print(statusOffer)
+//        print(self.app?.status)
+//        print(self.app?.nomorResi)
         //print(self.offers[0].id)
         //navigationController?.pushViewController(komentarController, animated: true)
     }
