@@ -65,10 +65,14 @@ class TopupController :  UIViewController,MidtransUIPaymentViewControllerDelegat
 
                     self.present(alert, animated: true)
                 }else{
-                    //self.handleBack()
+                    self.handleBack()
                 }
             }
         }
+    }
+    
+    @objc private func handleBack(){
+        self.dismiss(animated: true, completion: nil)
     }
     
     func paymentViewController(_ viewController: MidtransUIPaymentViewController!, paymentFailed error: Error!) {

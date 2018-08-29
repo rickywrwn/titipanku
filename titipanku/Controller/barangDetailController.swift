@@ -37,7 +37,13 @@ var statusOffer = false
 var tinggiDesc : Float = 0
 
 class barangDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout,UIBarPositioningDelegate {
-
+    var trips = [trip]()
+    struct trip: Decodable {
+        let id: String
+        let country: String
+        let tanggalPulang: String
+        let status: String
+    }
     var offers = [VarOffer]()
     var tinggiTextView : Float = 0
     
@@ -81,6 +87,31 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         }
     }
     
+    func fetchUserTrip() {
+        if let emailNow : String = UserDefaults.standard.value(forKey: "loggedEmail") as! String {
+            
+            let urlString = "http://titipanku.xyz/api/GetTrip.php?email=\(String(describing: emailNow))"
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    do {
+                        let decoder = JSONDecoder()
+                        self.trips = try decoder.decode([trip].self, from: data)
+                        self.collectionView?.reloadData()
+                        print(self.trips)
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                    }
+                }
+                }.resume()
+        }
+    }
     
     func fetchOffer(_ completionHandler: @escaping ([VarOffer]) -> ()) {
         if let id = self.app?.id {
@@ -153,6 +184,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         adaNawar = false
         statusOffer = false
         SKActivityIndicator.show("Loading...")
+        fetchUserTrip()
         self.fetchOffer{(offers) -> ()in
             self.offers = offers
             print("count offers" + String(self.offers.count))
@@ -436,7 +468,12 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: offerCellId, for: indexPath) as! AppDetailOffer
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             
+                cell.backgroundColor = UIColor.white
+                cell.nameLabel.textColor = UIColor.white
                 if self.app?.email == emailNow{
+                    
+                    cell.backgroundColor = UIColor.white
+                    cell.nameLabel.textColor = UIColor.white
                     if statusOffer != true{
                         cell.nameLabel.text = "List Penawar"
                         cell.backgroundColor = UIColor.white
@@ -462,7 +499,8 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     }
                     
                 }else{
-                    
+                    cell.backgroundColor = UIColor.white
+                    cell.nameLabel.textColor = UIColor.white
                     var cekBeli = false
                     for i in 0 ..< self.offers.count {
                         if emailNow == self.offers[i].idPenawar{
@@ -649,14 +687,32 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
                     cell?.layer.backgroundColor = UIColor.gray.cgColor
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         
+                        cell?.layer.backgroundColor = UIColor(hex: "#4b7bec").cgColor
                         if  self.offers.count > 0 {
                             
                             if adaNawar == false{
                                 if statusOffer == false{
-                                    print("bantu")
-                                    cell?.layer.backgroundColor = UIColor(hex: "#4b7bec").cgColor
-                                    print(statusOffer)
-                                    self.showOffer()
+                                    var negaraAda = false
+                                    for i in 0 ..< self.trips.count{
+                                        if self.app?.country == self.trips[i].country && self.trips[i].status != "0"{
+                                            negaraAda = true
+                                            OfferController.dataTrip.id = self.trips[i].id
+                                        }
+                                    }
+                                    if negaraAda == true{
+                                        //bantu belikan
+                                        print("bantu")
+                                        print(statusOffer)
+                                        self.showOffer()
+                                    }else{
+                                        let alert = UIAlertController(title: "Message", message: "Saat Ini Anda Tidak Sedang Melakukan Perjalanan Ke Negara Pembelian Request", preferredStyle: .alert)
+                                        
+                                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                                        
+                                        self.present(alert, animated: true)
+                                    }
+                                    
+                                    
                                 }else{
                                     print("request sudah di terima oleh user lain dan sudah dibayar")
                                     cell?.layer.backgroundColor = UIColor(hex: "#20bf6b").cgColor
@@ -691,8 +747,26 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
 //                                }
 //                            }
                         }else{
-                            cell?.layer.backgroundColor = UIColor(hex: "#4b7bec").cgColor
-                            self.showOffer()
+                            var negaraAda = false
+                            for i in 0 ..< self.trips.count{
+                                if self.app?.country == self.trips[i].country && self.trips[i].status != "0"{
+                                    negaraAda = true
+                                    OfferController.dataTrip.id = self.trips[i].id
+                                }
+                            }
+                            if negaraAda == true{
+                                //bantu belikan
+                                print("bantu")
+                                cell?.layer.backgroundColor = UIColor(hex: "#4b7bec").cgColor
+                                print(statusOffer)
+                                self.showOffer()
+                            }else{
+                                let alert = UIAlertController(title: "Message", message: "Anda Harus Melakukan Perjalanan ke Negara Yang Sama", preferredStyle: .alert)
+                                
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                                
+                                self.present(alert, animated: true)
+                            }
                         }
                     }
                 }
@@ -829,7 +903,7 @@ class AppDetailDescriptionCell: BaseCell {
     }()
     let UrlLabelKiri: UILabel = {
         let label = UILabel()
-        label.text = "URL Refrensi:"
+        label.text = "URL Referensi:"
         label.textColor = UIColor.gray
         label.font = UIFont.systemFont(ofSize: 15)
         return label

@@ -15,6 +15,9 @@ import Alamofire_SwiftyJSON
 
 class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    struct dataTrip {
+        static var id = ""
+    }
     var arrNama = [String]()
     var arrHarga = [String]()
     var kotaKirim : String = ""
@@ -403,10 +406,10 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         }else{
             print(dateTextField.text)
             print(dateBack)
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglPulang : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text, let email = self.app?.email{
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let id : String = app?.id, let idPemilik : String = app?.email,let hargaPenawaran : String = hargaText.text , let tglPulang : String = dateBack , let provinsi : String = provinsiText.text , let kota : String = kotaText.text, let email = self.app?.email,let idTrip :String = dataTrip.id{
                 print(tglPulang)
                 
-                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglPulang": tglPulang, "provinsi":provinsi, "kota": kota, "idKota": selectedCity,"email":email, "action" : "insert"]
+                let parameter: Parameters = ["idRequest":id,"idPenawar": emailNow, "idPemilik": idPemilik, "hargaPenawaran":hargaPenawaran, "tglPulang": tglPulang, "provinsi":provinsi, "kota": kota, "idKota": selectedCity,"email":email,"idTrip":idTrip, "action" : "insert"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/PostOffer.php",method: .get, parameters: parameter).responseJSON {
                     response in

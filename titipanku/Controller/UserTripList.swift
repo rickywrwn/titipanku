@@ -13,8 +13,10 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     var trips = [trip]()
     struct trip: Decodable {
+        let id: String
         let country: String
         let tanggalPulang: String
+        let status : String
         
     }
     
@@ -69,6 +71,11 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
 
         cell.labelCountry.text = trips[indexPath.row].country
         cell.LabelTgl.text = trips[indexPath.row].tanggalPulang
+        if trips[indexPath.row].status == "1"{
+            cell.LabelStatus.text = "Belum Pulang"
+        }else{
+             cell.LabelStatus.text = "Sudah Pulang"
+        }
         return cell
     }
     
@@ -137,6 +144,14 @@ class TripsCell: BaseCell {
         return label
     }()
     
+    let labelC : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.text = "Status : "
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
     let labelCountry : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
@@ -153,7 +168,12 @@ class TripsCell: BaseCell {
         return label
     }()
     
-    
+    let LabelStatus : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
     let dividerLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
@@ -166,16 +186,19 @@ class TripsCell: BaseCell {
         
         addSubview(labelA)
         addSubview(labelB)
+        addSubview(labelC)
         addSubview(labelCountry)
         addSubview(LabelTgl)
+        addSubview(LabelStatus)
         addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelA,labelCountry) //pipline terakhir dihilangkan
-        addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelB,LabelTgl) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelB,LabelTgl)
+        addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelC,LabelStatus)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|-4-[v0]-4-[v1]", views: labelA,labelB)
-        addConstraintsWithFormat("V:|-4-[v0]-4-[v1]", views: labelCountry,LabelTgl )
+        addConstraintsWithFormat("V:|-4-[v0]-4-[v1]-4-[v2]", views: labelA,labelB,labelC)
+        addConstraintsWithFormat("V:|-4-[v0]-4-[v1]-4-[v2]", views: labelCountry,LabelTgl,LabelStatus )
         addConstraintsWithFormat("V:|[v0(1)]", views: dividerLineView )
         
     }

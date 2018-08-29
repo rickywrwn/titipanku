@@ -15,6 +15,8 @@
 		3C8E38B220C5FB06009AD99D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */; };
 		4935CB4543CCEC46EC37BB63 /* Pods_titipanku.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; };
 		7E01B6002135B8DC003652BD /* KomentarPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01B5FF2135B8DC003652BD /* KomentarPreorder.swift */; };
+		7E01B6022135C99B003652BD /* WithdrawController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01B6012135C99B003652BD /* WithdrawController.swift */; };
+		7E01B604213606EA003652BD /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01B603213606E9003652BD /* ChatController.swift */; };
 		7E1B38D62120E96C00FFD5B0 /* UserPenjualanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */; };
 		7E1B38D82120E98900FFD5B0 /* UserPenjualanPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */; };
 		7E1B38DA2120F06000FFD5B0 /* barangDetailControllerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */; };
@@ -119,6 +121,8 @@
 		3C12439E20DFE78600852D2D /* PreorderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreorderDetail.swift; sourceTree = "<group>"; };
 		3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "titipanku/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7E01B5FF2135B8DC003652BD /* KomentarPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KomentarPreorder.swift; sourceTree = "<group>"; };
+		7E01B6012135C99B003652BD /* WithdrawController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawController.swift; sourceTree = "<group>"; };
+		7E01B603213606E9003652BD /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualanRequest.swift; sourceTree = "<group>"; };
 		7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualanPreorder.swift; sourceTree = "<group>"; };
 		7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = barangDetailControllerUser.swift; sourceTree = "<group>"; };
@@ -250,6 +254,7 @@
 				9CE2AC9A20850601005C1D49 /* InboxController.swift */,
 				7E5D9856210590E3006690B0 /* NotifikasiController.swift */,
 				7E5D9858210590F3006690B0 /* PesanController.swift */,
+				7E01B603213606E9003652BD /* ChatController.swift */,
 				9CE2AC9C20850639005C1D49 /* ExploreController.swift */,
 				7E4209FE2129EB46004F995E /* HasilSearch.swift */,
 				7EEB20A3212A06E700D2217A /* SearchFilter.swift */,
@@ -264,6 +269,7 @@
 				7E58EA882113F86B00BF7A2E /* ExploreKategoriPreorder.swift */,
 				7E8B5DAC210DB2D000FFBC85 /* MoreController.swift */,
 				7E8B5DAE210DFADF00FFBC85 /* WalletController.swift */,
+				7E01B6012135C99B003652BD /* WithdrawController.swift */,
 				7E8B5DB0210E06E300FFBC85 /* TopupController.swift */,
 				9CE2AC9E20850658005C1D49 /* UserController.swift */,
 				7E5D98642106C95D006690B0 /* UserPembelian.swift */,
@@ -484,6 +490,7 @@
 				"${BUILT_PRODUCTS_DIR}/SKActivityIndicatorView/SKActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyPickerPopover/SwiftyPickerPopover.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -504,6 +511,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyPickerPopover.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,6 +601,7 @@
 				7EDED74D20F7471E005BCA76 /* OfferController3.swift in Sources */,
 				7E977E06211846A000D65F76 /* CompletedOffer.swift in Sources */,
 				7E8B5DB1210E06E300FFBC85 /* TopupController.swift in Sources */,
+				7E01B6022135C99B003652BD /* WithdrawController.swift in Sources */,
 				7E41129221206FC9008BBF89 /* PostTitipJuga.swift in Sources */,
 				7E4D3FE62120D6E0000DE02C /* UserPenjualan.swift in Sources */,
 				7E977E082119DB2B00D65F76 /* LihatPreorder.swift in Sources */,
@@ -616,6 +625,7 @@
 				7E8B5DAD210DB2D000FFBC85 /* MoreController.swift in Sources */,
 				7EE8D0B020E0CCF600BB03A1 /* AddNegaraPreorder.swift in Sources */,
 				7EE8D0B420E0CE0600BB03A1 /* AddKarateristikPreorder.swift in Sources */,
+				7E01B604213606EA003652BD /* ChatController.swift in Sources */,
 				3C12439F20DFE78600852D2D /* PreorderDetail.swift in Sources */,
 				9C54771D20ACB41100B3797E /* CategoryCell.swift in Sources */,
 				3C07FAFB20CE675F008FF049 /* AddNegaraBarang.swift in Sources */,

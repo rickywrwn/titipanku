@@ -106,7 +106,7 @@ class WalletController :  UIViewController {
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
         navigationItem.title = "Titipanku Wallet"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleBack))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -120,21 +120,20 @@ class WalletController :  UIViewController {
         view.addSubview(statusBarView)
     }
     
-    @objc public func handleCancle(){
-        navigationController?.popViewController(animated: true)
+    @objc private func handleBack(){
         self.dismiss(animated: true, completion: nil)
     }
     
-   
     @objc func handleTerimaOffer(){
         let walletCont = TopupController()
         present(walletCont, animated: true, completion: {
-            
         })
     }
     
     @objc func handleTolak(){
-        
+        let walletCont = WithdrawController()
+        present(walletCont, animated: true, completion: {
+        })
     }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 35)

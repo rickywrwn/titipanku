@@ -279,7 +279,6 @@ class PreorderDetail: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     @objc func handleLain(){
-        //perform(#selector(showHome), with: nil, afterDelay: 0.01)
         print(app?.id)
     }
     

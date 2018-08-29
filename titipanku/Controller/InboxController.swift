@@ -27,7 +27,8 @@ class InboxController: UIViewController {
     }()
     
     lazy var PesanVC: PesanController = {
-        let vc = PesanController(collectionViewLayout: layout)
+        let vc = PesanController()
+        //let vc = PesanController(collectionViewLayout: layout)
         self.addAsChildVC(childVC: vc)
         return vc
     }()
