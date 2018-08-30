@@ -12,11 +12,45 @@ import SwiftyJSON
 import SKActivityIndicatorView
 import Firebase
 import FirebaseDatabase
+import Hue
 
-class ChatController: UIViewController,UITextFieldDelegate{
+class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     fileprivate let RequestCellId = "RequestCellId"
     
+    var collectionChat: UICollectionView!
+    var arrText = [String]()
+    var arrEmail = [String]()
     var chat : chatroom?
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! ChatCell
+        
+        if let id : String = arrEmail[indexPath.row],let text : String = arrText[indexPath.row],let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String{
+            cell.labelKiri.text = text
+            cell.LabelKanan.text = text
+            cell.LabelKanan.isHidden = false
+            cell.labelKiri.isHidden = false
+            
+            if id == emailNow{
+                cell.labelKiri.isHidden = true
+            }else{
+                cell.LabelKanan.isHidden = true
+            }
+            
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return arrEmail.count
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: view.frame.width, height: 50)
+    }
+    
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("Send", for: .normal)
@@ -31,7 +65,7 @@ class ChatController: UIViewController,UITextFieldDelegate{
     }()
     let textField : UITextField = {
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .center
+        textField.textAlignment = .left
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -45,10 +79,15 @@ class ChatController: UIViewController,UITextFieldDelegate{
                 let value = snapshot.value as? NSDictionary
                 print(value)
                 let email = value?["email"] as? String ?? ""
-                print(email)
-                // ...
+                let text = value?["text"] as? String ?? ""
+                self.arrEmail.append(email)
+                self.arrText.append(text)
+                print(self.arrEmail)
+                print(self.arrText)
+                self.collectionChat.reloadData()
+                //self.scrollToBottom()
+                
             }, withCancel: nil)
-            
         }
     }
     
@@ -67,6 +106,8 @@ class ChatController: UIViewController,UITextFieldDelegate{
                 let value = ["text": textField.text!,"email":emailNow]
                 childRef.updateChildValues(value)
             }
+            
+            textField.text = ""
         }
         
     }
@@ -105,19 +146,36 @@ class ChatController: UIViewController,UITextFieldDelegate{
         
         // Make the navigation bar a subview of the current view controller
         
-        //collectionView?.frame = CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height - 64))
         let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         let statusBarColor = UIColor(hex: "#4373D8")
         statusBarView.backgroundColor = statusBarColor
         view.addSubview(statusBarView)
         
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        layout.itemSize = CGSize(width: view.frame.width, height: 700)
+        
+        collectionChat = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        self.collectionChat.register(ChatCell.self, forCellWithReuseIdentifier: RequestCellId)
+        collectionChat.dataSource = self
+        collectionChat.delegate = self
+        collectionChat.showsVerticalScrollIndicator = false
+        collectionChat.backgroundColor = UIColor.white
+        self.view.addSubview(collectionChat)
+        
+        self.collectionChat.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionChat.topAnchor.constraint(equalTo: navbar.bottomAnchor, constant: 0).isActive = true
+        self.collectionChat.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
+        self.collectionChat.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor,constant: 0).isActive = true
+        self.collectionChat.heightAnchor.constraint(equalToConstant: 600).isActive = true
+        
         view.addSubview(textField)
         textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        textField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         textField.font = UIFont.systemFont(ofSize: 25)
         textField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         textField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: -70).isActive = true
-        
         textField.delegate = self
         
         //PostButton
@@ -131,6 +189,15 @@ class ChatController: UIViewController,UITextFieldDelegate{
         
     }
     
+    func scrollToBottom(animated: Bool = true) {
+        let bottomOffset = CGPoint(
+            x: 0,
+            y: self.collectionChat.contentSize.height
+                - self.collectionChat.bounds.size.height
+                + self.collectionChat.contentInset.bottom)
+        self.collectionChat.setContentOffset(bottomOffset, animated: animated)
+    }
+    
     @objc func handleCancle(){
         self.dismiss(animated: true)
     }
@@ -138,12 +205,12 @@ class ChatController: UIViewController,UITextFieldDelegate{
     var offsetY:CGFloat = 0
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -215, up: true)
+        moveTextField(textField, moveDistance: -225, up: true)
     }
     
     // Finish Editing The Text Field
     func textFieldDidEndEditing(_ textField: UITextField) {
-        moveTextField(textField, moveDistance: -215, up: false)
+        moveTextField(textField, moveDistance: -225, up: false)
     }
     
     // Hide the keyboard when the return key pressed
@@ -164,5 +231,75 @@ class ChatController: UIViewController,UITextFieldDelegate{
         UIView.commitAnimations()
     }
 }
+
+class ChatCell: BaseCell {
+    
+    let labelKiri : UILabelPadding = {
+        let label = UILabelPadding()
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.sizeToFit()
+        label.numberOfLines = 5
+        label.layer.borderWidth = 1
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 10
+        label.layer.borderColor = UIColor.gray.cgColor
+        return label
+    }()
+    
+    let LabelKanan : UILabelPadding = {
+        let label = UILabelPadding()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.numberOfLines = 5
+        label.layer.borderWidth = 1
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 10
+        label.layer.borderColor = UIColor(hex: "#3867d6").cgColor
+
+        return label
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(labelKiri)
+        addSubview(LabelKanan)
+        addSubview(dividerLineView)
+        
+        addConstraintsWithFormat("H:|-5-[v0(170)][v1(170)]-10-|", views: labelKiri,LabelKanan) //pipline terakhir dihilangkan
+        
+        addConstraintsWithFormat("V:|-5-[v0]", views: labelKiri)
+        addConstraintsWithFormat("V:|-5-[v0]", views: LabelKanan)
+        
+    }
+    
+}
+
+class UILabelPadding: UILabel {
+    
+    let padding = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, padding))
+    }
+    
+    override var intrinsicContentSize : CGSize {
+        let superContentSize = super.intrinsicContentSize
+        let width = superContentSize.width + padding.left + padding.right
+        let heigth = superContentSize.height + padding.top + padding.bottom
+        return CGSize(width: width, height: heigth)
+    }
+    
+    
+    
+}
+
+
 
 

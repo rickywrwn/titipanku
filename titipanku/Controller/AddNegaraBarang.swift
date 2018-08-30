@@ -348,7 +348,6 @@ class AddNegaraBarang :  UIViewController, UITableViewDelegate, UITableViewDataS
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
-        textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)),
                             for: UIControlEvents.editingChanged)

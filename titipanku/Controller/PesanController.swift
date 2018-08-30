@@ -17,6 +17,7 @@ struct chatroom: Decodable {
     let id: String
     let emailA: String
     let emailB: String
+    let tanggal: String
 }
 class PesanController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     fileprivate let RequestCellId = "RequestCellId"
@@ -75,7 +76,7 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
         SKActivityIndicator.show("Loading...", userInteractionStatus: false)
         self.fetchRequests{(chats) -> ()in
             self.chats = chats
-            print("count request" + String(self.chats.count))
+            print(self.chats)
             self.collectionChat.reloadData()
             SKActivityIndicator.dismiss()
         }
@@ -90,7 +91,7 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
         layout.itemSize = CGSize(width: view.frame.width, height: 700)
         
         collectionChat = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        self.collectionChat.register(NotificationCell.self, forCellWithReuseIdentifier: RequestCellId)
+        self.collectionChat.register(ChatroomCell.self, forCellWithReuseIdentifier: RequestCellId)
         collectionChat.dataSource = self
         collectionChat.delegate = self
         collectionChat.showsVerticalScrollIndicator = false
@@ -98,7 +99,7 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
         self.view.addSubview(collectionChat)
         
         self.collectionChat.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionChat.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
+        self.collectionChat.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         self.collectionChat.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         self.collectionChat.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor,constant: 0).isActive = true
         self.collectionChat.heightAnchor.constraint(equalToConstant: 500).isActive = true
@@ -113,17 +114,27 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! NotificationCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! ChatroomCell
         
-        if let id : String = chats[indexPath.row].id {
-            Alamofire.request("http://titipanku.xyz/uploads/"+id+".jpg").responseImage { response in
-                if let image = response.result.value {
-                    cell.imageView.image = image
+        if let id : String = chats[indexPath.row].id,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let emailA : String =  chats[indexPath.row].emailA, let emailB : String =  chats[indexPath.row].emailB {
+            
+            if emailNow == emailA{
+                cell.labelA.text = emailB
+                Alamofire.request("http://titipanku.xyz/uploads/"+emailB+".jpg").responseImage { response in
+                    if let image = response.result.value {
+                        cell.imageView.image = image
+                    }
+                }
+            }else{
+                cell.labelA.text = emailA
+                Alamofire.request("http://titipanku.xyz/uploads/"+emailA+".jpg").responseImage { response in
+                    if let image = response.result.value {
+                        cell.imageView.image = image
+                    }
                 }
             }
         }
-        cell.labelCountry.text = chats[indexPath.row].emailA
-        cell.LabelTgl.text = chats[indexPath.row].emailB
+        cell.labelB.text = chats[indexPath.row].tanggal
         
         return cell
     }
@@ -156,3 +167,58 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
         }
     }
 }
+
+class ChatroomCell: BaseCell {
+    
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 16
+        iv.image = UIImage(named: "coba")
+        iv.layer.masksToBounds = true
+        return iv
+    }()
+    
+    let labelA : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 25)
+        return label
+    }()
+    
+    let labelB : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
+    }()
+    
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
+        return view
+    }()
+    
+    
+    override func setupViews() {
+        super.setupViews()
+        
+        addSubview(labelA)
+        addSubview(labelB)
+        addSubview(imageView)
+        addSubview(dividerLineView)
+        
+        addConstraintsWithFormat("H:|-5-[v1(100)]-10-[v0]", views: labelA,imageView) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-5-[v1(100)]-10-[v0]", views: labelB,imageView)
+        addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
+        
+        addConstraintsWithFormat("V:|-5-[v0(100)]", views: imageView)
+        addConstraintsWithFormat("V:|-15-[v0]-5-[v1]", views: labelA,labelB)
+        addConstraintsWithFormat("V:|[v0(1)]", views: dividerLineView )
+        
+    }
+    
+}
+
+

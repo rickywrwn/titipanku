@@ -14,6 +14,7 @@ import SKActivityIndicatorView
 
 class UserController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    var chats  = [chatroom]()
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     struct userDetail: Decodable {
         let name: String
@@ -25,6 +26,36 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
     struct emailUser {
         static var email = ""
         static var status = ""
+    }
+    func fetchChatroom(_ completionHandler: @escaping ([chatroom]) -> ()) {
+        if let emailA = UserDefaults.standard.value(forKey: "loggedEmail") as? String ,let emailB : String = emailUser.email{
+            let urlString = "http://titipanku.xyz/api/GetChatUser.php?emailA=\(String(describing: emailA))&emailB=\(String(describing: emailB))"
+            
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.chats = try decoder.decode([chatroom].self, from: data)
+                    print(self.chats)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.chats)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
+        
     }
     fileprivate func fetchJSON() {
         if let emailNow : String = emailUser.email {
@@ -106,6 +137,11 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
         navigationItem.title = "Profile"
         if emailUser.status != "sendiri"{
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Chat", style: .done, target: self, action: #selector(handleChat))
+            self.fetchChatroom{(chats) -> ()in
+                self.chats = chats
+                SKActivityIndicator.dismiss()
+            }
         }
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
@@ -129,6 +165,103 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
         self.dismiss(animated: true)
     }
     
+    @objc func handleChat(){
+        if self.chats.count > 0{
+            if let idChatroom : String = self.chats[0].id {
+                
+                let parameters: Parameters = ["idChatroom": idChatroom]
+                print(parameters)
+                Alamofire.request("http://titipanku.xyz/api/SetChatUser.php",method: .get, parameters: parameters).responseJSON {
+                    response in
+                    
+                    //mencetak JSON response
+                    if let json = response.result.value {
+                        print("JSON: \(json)")
+                    }
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        if let chat : chatroom = self.chats[0] {
+                            let layout = UICollectionViewFlowLayout()
+                            layout.minimumInteritemSpacing = 0
+                            layout.minimumLineSpacing = 0
+                            let addDetail = ChatController()
+                            addDetail.chat = chat
+                            let transition = CATransition()
+                            transition.duration = 0.3
+                            transition.type = kCATransitionPush
+                            transition.subtype = kCATransitionFromRight
+                            transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                            self.view.window!.layer.add(transition, forKey: kCATransition)
+                            self.present(addDetail, animated: false, completion: nil)
+                        }else{
+                            print("no app")
+                        }
+                    }
+                }
+            }
+        }else{
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+                print(emailNow)
+                let parameters: Parameters = ["emailA": emailNow,"emailB": emailUser.email ,"action" : "insert"]
+                print(parameters)
+                Alamofire.request("http://titipanku.xyz/api/PostChat.php",method: .get, parameters: parameters).responseJSON {
+                    response in
+                    
+                    //mencetak JSON response
+                    if let json = response.result.value {
+                        print("JSON: \(json)")
+                    }
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: "gagal", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        self.fetchChatroom{(chats) -> ()in
+                            self.chats = chats
+                            if let chat : chatroom = self.chats[0] {
+                                let layout = UICollectionViewFlowLayout()
+                                layout.minimumInteritemSpacing = 0
+                                layout.minimumLineSpacing = 0
+                                let addDetail = ChatController()
+                                addDetail.chat = chat
+                                let transition = CATransition()
+                                transition.duration = 0.3
+                                transition.type = kCATransitionPush
+                                transition.subtype = kCATransitionFromRight
+                                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                                self.view.window!.layer.add(transition, forKey: kCATransition)
+                                self.present(addDetail, animated: false, completion: nil)
+                            }else{
+                                print("no app")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
     //logout
     @objc func handleLogout(){
         UserDefaults.standard.set(false, forKey:"logged")
@@ -148,6 +281,7 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
         })
         
     }
+    
     @objc func handleReview(){
         let layout = UICollectionViewFlowLayout()
         let tripListCont = UserReview(collectionViewLayout: layout)
@@ -155,12 +289,14 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
         })
         
     }
+    
     @objc func handlePembelian(){
         let tripListCont = UserPembelian()
         present(tripListCont, animated: true, completion: {
         })
         
     }
+    
     @objc func handlePenjualan(){
         let tripListCont = UserPenjualan()
         present(tripListCont, animated: true, completion: {
@@ -237,23 +373,19 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        if indexPath.row != 0 {
-            
-            let cell = collectionView.cellForItem(at: indexPath)
-            cell?.layer.backgroundColor = UIColor.gray.cgColor
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                cell?.layer.backgroundColor = UIColor.white.cgColor
-                if indexPath.row == 1{
-                    self.handleReview()
-                }else if indexPath.row == 2{
-                    self.handlePembelian()
-                }else if indexPath.row == 3{
-                    self.handlePenjualan()
-                }else if indexPath.row == 4{
-                    self.handleTrip()
-                }
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.backgroundColor = UIColor.gray.cgColor
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            cell?.layer.backgroundColor = UIColor.white.cgColor
+            if indexPath.row == 1{
+                self.handleReview()
+            }else if indexPath.row == 2{
+                self.handlePembelian()
+            }else if indexPath.row == 3{
+                self.handlePenjualan()
+            }else if indexPath.row == 4{
+                self.handleTrip()
             }
         }
     }
@@ -298,8 +430,6 @@ class UserDetailCell: BaseCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
         label.sizeToFit()
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = UIColor.green.cgColor
         return label
     }()
     
