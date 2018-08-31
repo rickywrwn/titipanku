@@ -67,7 +67,7 @@ class AllPreorderBerdurasi: UICollectionViewController, UICollectionViewDelegate
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = "Preorder Berdurasi"
+        navigationItem.title = "Preorder"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
@@ -89,7 +89,7 @@ class AllPreorderBerdurasi: UICollectionViewController, UICollectionViewDelegate
             SKActivityIndicator.dismiss()
         }
         collectionView?.backgroundColor = UIColor.white
-        navigationItem.title = "Preorder Berdurasi"
+        navigationItem.title = "Preorder"
         collectionView?.register(RequestCell.self, forCellWithReuseIdentifier: RequestCellId)
     }
     
@@ -113,9 +113,11 @@ class AllPreorderBerdurasi: UICollectionViewController, UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if let app : App = requests[indexPath.item] {
-            print("pencet preorder 2 gan")
+            print("pencet preorder")
             let layout = UICollectionViewFlowLayout()
-            let appDetailController = FlashsaleDetail(collectionViewLayout: layout)
+            layout.minimumInteritemSpacing = 0
+            layout.minimumLineSpacing = 0
+            let appDetailController = PreorderDetail(collectionViewLayout: layout)
             appDetailController.app = app
             present(appDetailController, animated: true, completion: {
             })
@@ -123,6 +125,3 @@ class AllPreorderBerdurasi: UICollectionViewController, UICollectionViewDelegate
         
     }
 }
-
-
-

@@ -9,16 +9,19 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+struct trip: Decodable {
+    let id: String
+    let country: String
+    let tanggalPulang: String
+    let status : String
+    
+}
+
 class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayout{
     
     var trips = [trip]()
-    struct trip: Decodable {
-        let id: String
-        let country: String
-        let tanggalPulang: String
-        let status : String
-        
-    }
+    var isiUser  : userDetail?
+    
     
     fileprivate let tripCellId = "tripCellId"
     override func viewDidLoad() {
@@ -50,9 +53,9 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
         
         //collectionView?.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: screenWidth/4).isActive = true
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
         collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
-        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15).isActive = true
         
         //backButton
         view.addSubview(backButton)
@@ -84,7 +87,7 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: 50)
+        return CGSize(width: view.frame.width, height: 120)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -93,6 +96,23 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
         cell?.layer.backgroundColor = UIColor.gray.cgColor
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // change 2 to desired number of seconds
             cell?.layer.backgroundColor = UIColor.white.cgColor
+            if let trip : trip = self.trips[indexPath.row] {
+                let layout = UICollectionViewFlowLayout()
+                layout.minimumInteritemSpacing = 0
+                layout.minimumLineSpacing = 0
+                let addDetail = UserTripDetail()
+                addDetail.tripUser = trip
+                addDetail.isiUser = self.isiUser
+                let transition = CATransition()
+                transition.duration = 0.3
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+                self.view.window!.layer.add(transition, forKey: kCATransition)
+                self.present(addDetail, animated: false, completion: nil)
+            }else{
+                print("no app")
+            }
         }
     }
 
@@ -192,13 +212,13 @@ class TripsCell: BaseCell {
         addSubview(LabelStatus)
         addSubview(dividerLineView)
         
-        addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelA,labelCountry) //pipline terakhir dihilangkan
-        addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelB,LabelTgl)
-        addConstraintsWithFormat("H:|-4-[v0]-5-[v1]", views: labelC,LabelStatus)
+        addConstraintsWithFormat("H:|-10-[v0]-5-[v1]", views: labelA,labelCountry) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-10-[v0]-5-[v1]", views: labelB,LabelTgl)
+        addConstraintsWithFormat("H:|-10-[v0]-5-[v1]", views: labelC,LabelStatus)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
-        addConstraintsWithFormat("V:|-4-[v0]-4-[v1]-4-[v2]", views: labelA,labelB,labelC)
-        addConstraintsWithFormat("V:|-4-[v0]-4-[v1]-4-[v2]", views: labelCountry,LabelTgl,LabelStatus )
+        addConstraintsWithFormat("V:|-10-[v0]-5-[v1]-5-[v2]", views: labelA,labelB,labelC)
+        addConstraintsWithFormat("V:|-10-[v0]-5-[v1]-5-[v2]", views: labelCountry,LabelTgl,LabelStatus )
         addConstraintsWithFormat("V:|[v0(1)]", views: dividerLineView )
         
     }

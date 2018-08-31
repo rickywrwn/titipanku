@@ -33,6 +33,9 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     override func viewWillAppear(_ animated: Bool) {
         //collectionView?.reloadData()
     }
+    var time = 7200
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UserController.emailUser.status = "sendiri"
@@ -64,8 +67,9 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         NotificationCenter.default.addObserver(self, selector: #selector(showMorePreorderBerdurasi), name: NSNotification.Name(rawValue: "showMorePreorderBerdurasi"), object: nil)
         
         setupView()
-    }
+        }
     
+        
     @objc func showMoreRequest() {
         print("pencet Request")
         let layout = UICollectionViewFlowLayout()

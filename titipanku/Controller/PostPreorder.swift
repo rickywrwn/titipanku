@@ -45,7 +45,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     struct varDurasi {
         static var countdownText = ""
-        static var countdownValue = ""
+        static var countdownValue = 0.0
         static var batasWaktu = ""
         static var statusBatas = 0
         static var status = 0
@@ -381,7 +381,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
                         
                         PostPreorder.varDurasi.batasWaktu = ""
                         PostPreorder.varDurasi.countdownText = ""
-                        PostPreorder.varDurasi.countdownValue = ""
+                        PostPreorder.varDurasi.countdownValue = 0.0
                         PostPreorder.varDurasi.status = 0
                     }
                 }

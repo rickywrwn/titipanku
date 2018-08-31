@@ -201,7 +201,7 @@ class CompletedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSo
         let navigationItem = UINavigationItem()
         navigationItem.title = "Penawaran"
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleBack))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleBack))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -336,132 +336,9 @@ class CompletedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     
-    @objc func handleTerimaOffer(){
-        
-        if(ongkirText.text == ""){
-            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
-        }else{
-            
-            // create the alert
-            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menerima Offer?", preferredStyle: UIAlertControllerStyle.alert)
-            
-            // add the actions (buttons)
-            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                
-                let saldo = Int((self.isiUser?.valueSaldo)!)
-                let harga = Int((self.varOffer?.valueHarga)!)
-                let ongkir = Int(self.selectedHarga)
-                
-                let hargaTotal = harga! + ongkir!
-                print(hargaTotal)
-                if saldo! < hargaTotal {
-                    let alert = UIAlertController(title: "Message", message: "Saldo Anda Kurang, Saldo Saat ini adalah Rp " + (self.isiUser?.saldo)!, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                    
-                    self.present(alert, animated: true)
-                }else{
-                    
-                    let saldoNow : Int = saldo! - hargaTotal
-                    print(saldoNow)
-                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let saldo : String = String(saldoNow), let idRequest = self.app?.id {
-                        
-                        let parameter: Parameters = ["idOffer": idOffer,"hargaOngkir":ongkir,"saldo":saldoNow,"email":emailNow,"idRequest": idRequest,"action":"accept"]
-                        print (parameter)
-                        Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
-                            response in
-                            
-                            //mengambil json
-                            let json = JSON(response.result.value)
-                            print(json)
-                            let cekSukses = json["success"].intValue
-                            let pesan = json["message"].stringValue
-                            
-                            if cekSukses != 1 {
-                                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                                
-                                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                                
-                                self.present(alert, animated: true)
-                            }else{
-                                let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
-                                
-                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                                    
-                                    self.handleBack()
-                                    
-                                }))
-                                
-                                self.present(alert, animated: true)
-                            }
-                        }
-                    }
-                }
-                
-            }))
-            
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
-            
-        }
-    }
-    
-    @objc func handleTolak(){
-        // create the alert
-        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menolak Offer?", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // add the actions (buttons)
-        alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-        
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id{
-                
-                let parameter: Parameters = ["idOffer":idOffer,"action":"decline"]
-                print (parameter)
-                Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
-                    response in
-                    
-                    //mengambil json
-                    let json = JSON(response.result.value)
-                    print(json)
-                    let cekSukses = json["success"].intValue
-                    let pesan = json["message"].stringValue
-                    
-                    if cekSukses != 1 {
-                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                        
-                        self.present(alert, animated: true)
-                    }else{
-                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                            self.handleBack()
-                        }))
-                        
-                        self.present(alert, animated: true)
-                    }
-                }
-            }
-        }))
-        
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
-        print("tolak")
-        
-    }
-    
     @objc private func handleBack(){
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
-        navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }
     

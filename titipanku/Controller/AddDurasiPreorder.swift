@@ -11,7 +11,7 @@ import SwiftyPickerPopover
 
 class AddDurasiPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSource{
     
-    var detik : String = ""
+    var detik : Double = 0.0
     let pilihanBatas : [String] = ["Ya","Tidak"]
     var selectedBatas : Int = 0
     override func viewDidLoad() {
@@ -133,7 +133,7 @@ class AddDurasiPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
         CountdownPickerPopover(title: "Lama Waktu Penjualan")
             .setSelectedTimeInterval(TimeInterval())
             .setDoneButton(action: { popover, timeInterval in print("timeInterval \(timeInterval)")
-                self.detik = String(timeInterval)
+                self.detik = timeInterval
                 let (h, m, s) = self.secondsToHoursMinutesSeconds (seconds: Int(timeInterval))
                 if(m > 0){
                     print ("\(h) Jam, \(m) Menit")
@@ -142,6 +142,7 @@ class AddDurasiPreorder :  UIViewController, UITableViewDelegate, UITableViewDat
                     print ("\(h) Jam")
                     self.countdownText.text = "\(h) Jam"
                 }
+                print(self.detik)
                 
             } )
             .setCancelButton(action: { _, _ in print("cancel")})

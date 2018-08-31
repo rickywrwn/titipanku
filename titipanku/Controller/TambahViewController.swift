@@ -91,7 +91,7 @@ class TambahViewController: UIViewController {
         
         PostPreorder.varDurasi.batasWaktu = ""
         PostPreorder.varDurasi.countdownText = ""
-        PostPreorder.varDurasi.countdownValue = ""
+        PostPreorder.varDurasi.countdownValue = 0.0
         PostPreorder.varDurasi.status = 0
         
         navigationController?.popViewController(animated: true)

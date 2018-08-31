@@ -20,6 +20,7 @@ class UserReview: UICollectionViewController, UICollectionViewDelegateFlowLayout
         let id: String
         let review: String
         let rating: String
+        let reviewer: String
         
     }
     
@@ -108,7 +109,7 @@ class UserReview: UICollectionViewController, UICollectionViewDelegateFlowLayout
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! ReviewCell
-        if let email : String = UserController.emailUser.email  {
+        if let email : String = reviews[indexPath.row].reviewer  {
             Alamofire.request("http://titipanku.xyz/uploads/"+email+".jpg").responseImage { response in
                 if let image = response.result.value {
                     cell.imageView.image = image

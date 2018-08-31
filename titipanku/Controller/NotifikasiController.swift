@@ -136,8 +136,8 @@ class NotifikasiController: UIViewController, UICollectionViewDataSource, UIColl
                 }
             }
         }
-        cell.labelCountry.text = notifications[indexPath.row].name
-        cell.LabelTgl.text = notifications[indexPath.row].tanggal
+        cell.labelA.text = notifications[indexPath.row].name
+        cell.labelB.text = notifications[indexPath.row].tanggal
 
         return cell
     }
@@ -152,7 +152,7 @@ class NotifikasiController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        SKActivityIndicator.show("Loading...")
         self.fetchDetail(idRequest: notifications[indexPath.row].idTujuan,completionHandler: {(app) -> () in
             self.app = app
             print(app)
@@ -162,16 +162,16 @@ class NotifikasiController: UIViewController, UICollectionViewDataSource, UIColl
                 let appDetailController = barangDetailController(collectionViewLayout: layout)
                 appDetailController.app = appe
                 self.present(appDetailController, animated: true, completion: {
+                    SKActivityIndicator.dismiss()
                 })
             }else{
                 print("no app")
+                SKActivityIndicator.dismiss()
             }
             
         })
-        
-
-        
     }
+    
 }
 
 class NotificationCell: BaseCell {
@@ -188,33 +188,14 @@ class NotificationCell: BaseCell {
     let labelA : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Nama : "
+        label.text = "Nama"
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
-    
-    
-    let labelCountry : UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.sizeToFit()
-        //        label.layer.borderWidth = 1
-        //        label.layer.borderColor = UIColor.green.cgColor
-        return label
-    }()
-    
     let labelB : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Tanggal : "
-        label.font = UIFont.systemFont(ofSize: 15)
-        return label
-    }()
-    
-    
-    let LabelTgl : UILabel = {
-        let label = UILabel()
-        label.sizeToFit()
+        label.text = "Tanggal"
         label.font = UIFont.systemFont(ofSize: 15)
         return label
     }()
@@ -231,18 +212,15 @@ class NotificationCell: BaseCell {
         
         addSubview(labelA)
         addSubview(labelB)
-        addSubview(labelCountry)
-        addSubview(LabelTgl)
         addSubview(imageView)
         addSubview(dividerLineView)
         
-        addConstraintsWithFormat("H:|-5-[v2(100)]-10-[v0]-5-[v1]", views: labelA,labelCountry,imageView) //pipline terakhir dihilangkan
-        addConstraintsWithFormat("H:|-5-[v2(100)]-10-[v0]-5-[v1]", views: labelB,LabelTgl,imageView)
+        addConstraintsWithFormat("H:|-5-[v1(100)]-10-[v0]", views: labelA,imageView) //pipline terakhir dihilangkan
+        addConstraintsWithFormat("H:|-5-[v1(100)]-10-[v0]", views: labelB,imageView)
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         
         addConstraintsWithFormat("V:|-5-[v0(100)]", views: imageView)
         addConstraintsWithFormat("V:|-15-[v0]-5-[v1]", views: labelA,labelB)
-        addConstraintsWithFormat("V:|-15-[v0]-5-[v1]", views: labelCountry,LabelTgl )
         addConstraintsWithFormat("V:|[v0(1)]", views: dividerLineView )
         
     }

@@ -12,21 +12,24 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 import SKActivityIndicatorView
 
+struct userDetail: Decodable {
+    let name: String
+    let email: String
+    let tanggalDaftar: String
+    
+}
+
 class UserController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var chats  = [chatroom]()
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
-    struct userDetail: Decodable {
-        let name: String
-        let email: String
-        let tanggalDaftar: String
-        
-    }
-    var isiUser  : userDetail?
+   
     struct emailUser {
         static var email = ""
         static var status = ""
     }
+    var isiUser  : userDetail?
+    
     func fetchChatroom(_ completionHandler: @escaping ([chatroom]) -> ()) {
         if let emailA = UserDefaults.standard.value(forKey: "loggedEmail") as? String ,let emailB : String = emailUser.email{
             let urlString = "http://titipanku.xyz/api/GetChatUser.php?emailA=\(String(describing: emailA))&emailB=\(String(describing: emailB))"
@@ -277,6 +280,7 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
     @objc func handleTrip(){
         let layout = UICollectionViewFlowLayout()
         let tripListCont = UserTripList(collectionViewLayout: layout)
+        tripListCont.isiUser = self.isiUser
         present(tripListCont, animated: true, completion: {
         })
         

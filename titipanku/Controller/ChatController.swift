@@ -72,6 +72,7 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
     }()
     
     func observeMessages(){
+        SKActivityIndicator.show("Loading...")
         if let chatId = chat?.id {
             let ref = Database.database().reference().child("messages").child(chatId)
             ref.observe(.childAdded, with: { (snapshot) in
@@ -88,6 +89,7 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
                 //self.scrollToBottom()
                 
             }, withCancel: nil)
+            SKActivityIndicator.dismiss()
         }
     }
     

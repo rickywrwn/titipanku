@@ -124,7 +124,7 @@ class AllRequest: UICollectionViewController, UICollectionViewDelegateFlowLayout
 }
 
 class RequestCell: BaseCell {
-    
+    var time = 0.0
     var app: App? {
         didSet {
             if let name = app?.name {
@@ -144,7 +144,19 @@ class RequestCell: BaseCell {
                 
             }
             
-            categoryLabel.text = app?.country
+            if app?.batasWaktu == "1", let cdValue : Double = app?.cdValue{
+                var timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+                
+                time = cdValue
+                let hours = Int(time) / 3600
+                let minutes = Int(time) / 60 % 60
+                let seconds = Int(time) % 60
+                categoryLabel.text = String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+            }else{
+                
+                categoryLabel.text = app?.country
+            }
+            
             if let price = app?.price {
                 priceLabel.text = "Rp \(price)"
             } else {
@@ -172,6 +184,15 @@ class RequestCell: BaseCell {
         }
     }
     
+    @objc func updateCounter() {
+        //you code, this is an example
+        time = time - 1
+        let hours = Int(time) / 3600
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        //print(String(format:"%02i:%02i:%02i", hours, minutes, seconds))
+        categoryLabel.text = String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()

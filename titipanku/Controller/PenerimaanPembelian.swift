@@ -126,7 +126,7 @@ class PenerimaanPembelian :  UIViewController {
         alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
-            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id, let review = self.reviewText.text , let rating = self.ratingText.text , let email = self.app?.email{
+            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id, let review = self.reviewText.text , let rating = self.ratingText.text , let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String{
                 
                 let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"action":"terima"]
                 print (parameter)
@@ -146,7 +146,7 @@ class PenerimaanPembelian :  UIViewController {
                         
                         self.present(alert, animated: true)
                     }else{
-                        let parameters: Parameters = ["rating": rating,"email":email,"review": review,"action":"insert"]
+                        let parameters: Parameters = ["rating": rating,"email":email,"review": review,"reviewer": emailNow,"action":"insert"]
                         print (parameters)
                         Alamofire.request("http://titipanku.xyz/api/PostReview.php",method: .get, parameters: parameters).responseJSON {
                             response in

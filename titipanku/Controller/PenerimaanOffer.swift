@@ -253,7 +253,7 @@ class PenerimaanOffer :  UIViewController {
                             
                             self.present(alert, animated: true)
                         }else{
-                            let parameters: Parameters = ["rating": rating,"email":email,"review": review,"action":"insert"]
+                            let parameters: Parameters = ["rating": rating,"email":email,"reviewer":emailNow,"review": review,"action":"insert"]
                             print (parameters)
                             Alamofire.request("http://titipanku.xyz/api/PostReview.php",method: .get, parameters: parameters).responseJSON {
                                 response in

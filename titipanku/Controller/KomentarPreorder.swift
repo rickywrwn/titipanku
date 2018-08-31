@@ -235,8 +235,8 @@ class KomentarPreorder: UIViewController,UITextFieldDelegate,UICollectionViewDat
                 }
             }
         }
-        cell.labelCountry.text = comments[indexPath.row].isi
-        cell.LabelTgl.text = comments[indexPath.row].tanggal
+        cell.labelA.text = comments[indexPath.row].isi
+        cell.labelB.text = comments[indexPath.row].tanggal
         
         return cell
     }
