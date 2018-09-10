@@ -174,6 +174,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                 
+                self.stopAnimating()
                 self.present(alert, animated: true)
             }else{
                 let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)

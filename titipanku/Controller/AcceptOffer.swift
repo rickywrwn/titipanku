@@ -202,7 +202,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         let navigationItem = UINavigationItem()
         navigationItem.title = "Penawaran"
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleCancle))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(btnCancel))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -472,6 +472,10 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         
     }
     
+    @objc private func btnCancel(){
+        
+        self.dismiss(animated: true, completion: nil)
+    }
     @objc private func handleBack(){
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)

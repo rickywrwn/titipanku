@@ -178,6 +178,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         NotificationCenter.default.addObserver(self, selector: #selector(showPengirimanOffer(_:)), name: NSNotification.Name(rawValue: "toPengirimanOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPenerimaanOffer(_:)), name: NSNotification.Name(rawValue: "toPenerimaanOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showCompletedOffer(_:)), name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showCancelReivew(_:)), name: NSNotification.Name(rawValue: "toCancelReview"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadBarangDetail), name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
         
          NotificationCenter.default.addObserver(self, selector: #selector(showUser(_:)), name: NSNotification.Name(rawValue: "toUser"), object: nil)
@@ -394,6 +395,15 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     @objc func showCompletedOffer(_ notification: NSNotification) {
         let appDetailController = CompletedOffer()
+        appDetailController.app = app
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
+            appDetailController.varOffer = varOffer
+        }
+        present(appDetailController, animated: true, completion: {
+        })
+    }
+    @objc func showCancelReivew(_ notification: NSNotification) {
+        let appDetailController = CancelReview()
         appDetailController.app = app
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
             appDetailController.varOffer = varOffer
@@ -950,7 +960,6 @@ class AppDetailDescriptionCell: BaseCell {
         addConstraintsWithFormat("H:|-15-[v0(17)]-5-[v1]-5-[v2]", views: imageViewUrl,UrlLabelKiri,UrlLabel)
         addConstraintsWithFormat("H:|[v0]", views: dividerLineView)
         
-        //addConstraintsWithFormat("V:|-15-[v0]-5-[v3]-5-[v7]-15-[v1]-1-[v4]-5-[v5]-5-[v6]-25-[v2(1)]-15-|", views: nameLabel, textView, dividerLineView, priceLabel ,qtyLabelKiri,countryLabelKiri,kotaLabelKiri,tglLabel )
         addConstraintsWithFormat("V:[v0]-5-[v3]-15-[v1]", views: nameLabel, textView, priceLabel ,tglLabel)
         addConstraintsWithFormat("V:[v0(17)]-5-[v1(17)]-5-[v2(17)]-5-[v3(17)]|", views: imageViewQty,imageViewCountry,imageViewKota,imageViewUrl)
         addConstraintsWithFormat("V:[v0]-5-[v1]-5-[v2]-5-[v3]|", views: qtyLabelKiri,countryLabelKiri,kotaLabelKiri,UrlLabelKiri)
@@ -1550,6 +1559,18 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
                             print(statusOffer)
                             let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil, userInfo: dataIdOffer)
+                        }
+                    }
+                    else if varOffer?.status == "6"{
+                        if emailNow != varOffer?.idPenawar{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toCancelReview"), object: nil, userInfo: dataIdOffer)
+                            print("sudah Sampai")
+                        }else{
+                            print(statusOffer)
+//                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+//                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil, userInfo: dataIdOffer)
                         }
                     }
                     

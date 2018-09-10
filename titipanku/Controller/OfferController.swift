@@ -126,7 +126,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         let navigationItem = UINavigationItem()
         navigationItem.title = "Bantu Belikan"
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleBack))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(btnCancel))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -138,6 +138,11 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         let statusBarColor = UIColor(hex: "#4373D8")
         statusBarView.backgroundColor = statusBarColor
         view.addSubview(statusBarView)
+    }
+    
+    @objc private func btnCancel(){
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

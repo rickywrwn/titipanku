@@ -201,7 +201,7 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         let navigationItem = UINavigationItem()
         navigationItem.title = "Penawaran"
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleBack))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(btnCancel))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -214,6 +214,11 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         statusBarView.backgroundColor = statusBarColor
         view.addSubview(statusBarView)
         //print(detailOffer)
+    }
+    
+    @objc private func btnCancel(){
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     func fetchOrderId(){

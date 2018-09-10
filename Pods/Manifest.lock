@@ -27,6 +27,9 @@ PODS:
   - Firebase/Database (4.11.0):
     - Firebase/Core
     - FirebaseDatabase (= 4.1.5)
+  - Firebase/Messaging (4.11.0):
+    - Firebase/Core
+    - FirebaseMessaging (= 2.1.1)
   - FirebaseAnalytics (4.1.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
@@ -44,6 +47,12 @@ PODS:
     - leveldb-library (~> 1.18)
   - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
+  - FirebaseMessaging (2.1.1):
+    - FirebaseAnalytics (~> 4.1)
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.5)
   - GoogleSignIn (4.1.2):
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
     - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
@@ -52,6 +61,8 @@ PODS:
   - GoogleToolboxForMac/DebugUtils (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/Logger (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
   - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3)":
@@ -82,6 +93,7 @@ PODS:
   - NVActivityIndicatorView (4.2.1):
     - NVActivityIndicatorView/Presenter (= 4.2.1)
   - NVActivityIndicatorView/Presenter (4.2.1)
+  - Protobuf (3.6.1)
   - SKActivityIndicatorView (0.1.0)
   - SwiftyJSON (4.0.0)
   - SwiftyPickerPopover (6.1.0)
@@ -97,6 +109,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Messaging
   - GoogleSignIn
   - Hue
   - MidtransKit
@@ -121,6 +134,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseDatabase
     - FirebaseInstanceID
+    - FirebaseMessaging
     - GoogleSignIn
     - GoogleToolboxForMac
     - GTMOAuth2
@@ -131,6 +145,7 @@ SPEC REPOS:
     - MidtransKit
     - nanopb
     - NVActivityIndicatorView
+    - Protobuf
     - SKActivityIndicatorView
     - SwiftyJSON
     - SwiftyPickerPopover
@@ -150,6 +165,7 @@ SPEC CHECKSUMS:
   FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
   FirebaseDatabase: 5f0bc6134c5c237cf55f9e1249d406770a75eafd
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
+  FirebaseMessaging: db0e01c52ef7e1f42846431273558107d084ede4
   GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
@@ -160,10 +176,11 @@ SPEC CHECKSUMS:
   MidtransKit: 80d2271ab31a4d2a187fdce7e83c224dd8142231
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
+  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SKActivityIndicatorView: f46936f760d33eb8235333242269bf01cc9248ae
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwiftyPickerPopover: f1bb928efd60e4c754aa957c1bb67372465e9ccb
 
-PODFILE CHECKSUM: 4033907361262af3dcdccaf6feff37b8aaaed1c5
+PODFILE CHECKSUM: 31dbee858f5777a944f7b80fae1080755cfb579a
 
 COCOAPODS: 1.5.3

@@ -196,7 +196,7 @@ class PenerimaanOffer :  UIViewController {
         let navigationItem = UINavigationItem()
         navigationItem.title = "Penerimaan"
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleBack))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(btnCancel))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -219,6 +219,11 @@ class PenerimaanOffer :  UIViewController {
                 self.imageView.image = image
             }
         }
+    }
+    
+    @objc private func btnCancel(){
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func handleTerimaOffer(){
@@ -303,11 +308,11 @@ class PenerimaanOffer :  UIViewController {
         
         alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
             
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id{
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id, let idPenawar = self.varOffer?.idPenawar{
                 
-                let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"action":"terima"]
+                let parameter: Parameters = ["emailA":emailNow,"emailB": idPenawar,"action":"insert"]
                 print (parameter)
-                Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
+                Alamofire.request("http://titipanku.xyz/api/PostChatMasalah.php",method: .get, parameters: parameter).responseJSON {
                     response in
                     
                     //mengambil json

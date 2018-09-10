@@ -13,6 +13,7 @@ target 'titipanku' do
   pod 'GoogleSignIn'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
+  pod 'Firebase/Messaging'
  
   pod 'FBSDKCoreKit'
   pod 'FBSDKShareKit'

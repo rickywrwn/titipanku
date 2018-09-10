@@ -208,7 +208,7 @@ class PengirimanOffer :  UIViewController {
         let navigationItem = UINavigationItem()
         navigationItem.title = "Pengiriman"
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleBack))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(btnCancel))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -221,6 +221,11 @@ class PengirimanOffer :  UIViewController {
         statusBarView.backgroundColor = statusBarColor
         view.addSubview(statusBarView)
         //print(detailOffer)
+    }
+    
+    @objc private func btnCancel(){
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func handleTerimaOffer(){
@@ -386,7 +391,6 @@ class PengirimanOffer :  UIViewController {
         button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-        
     }()
     
     let labelImage : UILabel = {

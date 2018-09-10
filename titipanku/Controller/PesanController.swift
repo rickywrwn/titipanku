@@ -18,6 +18,7 @@ struct chatroom: Decodable {
     let emailA: String
     let emailB: String
     let tanggal: String
+    let jenis: String
 }
 class PesanController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     fileprivate let RequestCellId = "RequestCellId"
@@ -116,7 +117,7 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! ChatroomCell
         
-        if let id : String = chats[indexPath.row].id,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let emailA : String =  chats[indexPath.row].emailA, let emailB : String =  chats[indexPath.row].emailB {
+        if let id : String = chats[indexPath.row].id,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let emailA : String =  chats[indexPath.row].emailA, let emailB : String =  chats[indexPath.row].emailB, let jenis : String = chats[indexPath.row].jenis {
             
             if emailNow == emailA{
                 cell.labelA.text = emailB
@@ -132,6 +133,10 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
                         cell.imageView.image = image
                     }
                 }
+            }
+            
+            if jenis == "masalah"{
+                cell.labelA.textColor = UIColor.red
             }
         }
         cell.labelB.text = chats[indexPath.row].tanggal

@@ -200,7 +200,7 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         let navigationItem = UINavigationItem()
         navigationItem.title = "Penawaran"
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleBack))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(btnCancel))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -223,6 +223,11 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
                 self.imageView.image = image
             }
         }
+    }
+    
+    @objc private func btnCancel(){
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     func fetchOrderId(){
@@ -698,23 +703,6 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 300).isActive = true
         
-        
-//        scrollView.addSubview(postButton)
-//        postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
-//        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-//        postButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-//        postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-//
-//        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-//
-//        scrollView.addSubview(declineButton)
-//        declineButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0).isActive = true
-//        declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
-//        declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
-//        declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-//
-//        declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-//
         
     }
     

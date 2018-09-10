@@ -76,6 +76,7 @@
 		7EEB20A4212A06E700D2217A /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB20A3212A06E700D2217A /* SearchFilter.swift */; };
 		7EEC065E21137FD800B92B21 /* AllPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEC065D21137FD800B92B21 /* AllPreorder.swift */; };
 		7EEC06602113823A00B92B21 /* AllPreorderBerdurasi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEC065F2113823A00B92B21 /* AllPreorderBerdurasi.swift */; };
+		7EF786A6213D043800EB4C43 /* CancelReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF786A5213D043800EB4C43 /* CancelReview.swift */; };
 		9C0BDF80207C7E4F004B2BCF /* registerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0BDF7F207C7E4F004B2BCF /* registerController.swift */; };
 		9C502E9020BCE3B000FBCD91 /* PostBarang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */; };
 		9C502E9220BCE3BB00FBCD91 /* PostNegara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C502E9120BCE3BB00FBCD91 /* PostNegara.swift */; };
@@ -183,6 +184,7 @@
 		7EEB20A3212A06E700D2217A /* SearchFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
 		7EEC065D21137FD800B92B21 /* AllPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPreorder.swift; sourceTree = "<group>"; };
 		7EEC065F2113823A00B92B21 /* AllPreorderBerdurasi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllPreorderBerdurasi.swift; sourceTree = "<group>"; };
+		7EF786A5213D043800EB4C43 /* CancelReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelReview.swift; sourceTree = "<group>"; };
 		9C0BDF7D207C6FFB004B2BCF /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0BDF7F207C7E4F004B2BCF /* registerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registerController.swift; sourceTree = "<group>"; };
 		9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBarang.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				7E72A474211731DE00391FA7 /* ConfirmAcceptedOffer.swift */,
 				7E72A4762117EBAD00391FA7 /* PengirimanOffer.swift */,
 				7E977E03211841FE00D65F76 /* PenerimaanOffer.swift */,
+				7EF786A5213D043800EB4C43 /* CancelReview.swift */,
 				7EDED74820F7329D005BCA76 /* OfferController.swift */,
 				3C12439E20DFE78600852D2D /* PreorderDetail.swift */,
 				7E5D985A210604BB006690B0 /* AcceptPreorder.swift */,
@@ -493,6 +496,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SKActivityIndicatorView/SKActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyPickerPopover/SwiftyPickerPopover.framework",
@@ -514,6 +518,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyPickerPopover.framework",
@@ -559,6 +564,7 @@
 				9CEF6B5620ADE0BB00ABB81E /* ScreenshotsCell.swift in Sources */,
 				7E41129E21208A28008BBF89 /* AddNegaraTitip.swift in Sources */,
 				7E5D98612106C5F0006690B0 /* ListPembeliFlashSale.swift in Sources */,
+				7EF786A6213D043800EB4C43 /* CancelReview.swift in Sources */,
 				7E4209FF2129EB46004F995E /* HasilSearch.swift in Sources */,
 				7E5D985B210604BB006690B0 /* AcceptPreorder.swift in Sources */,
 				7E58EA872113F85D00BF7A2E /* ExploreKategoriRequest.swift in Sources */,
