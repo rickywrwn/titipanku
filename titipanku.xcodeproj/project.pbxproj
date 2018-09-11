@@ -12,7 +12,6 @@
 		3C07FAFB20CE675F008FF049 /* AddNegaraBarang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C07FAFA20CE675F008FF049 /* AddNegaraBarang.swift */; };
 		3C07FAFD20CE6777008FF049 /* AddHargaBarang.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C07FAFC20CE6777008FF049 /* AddHargaBarang.swift */; };
 		3C12439F20DFE78600852D2D /* PreorderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C12439E20DFE78600852D2D /* PreorderDetail.swift */; };
-		3C8E38B220C5FB06009AD99D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */; };
 		4935CB4543CCEC46EC37BB63 /* Pods_titipanku.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; };
 		7E01B6002135B8DC003652BD /* KomentarPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01B5FF2135B8DC003652BD /* KomentarPreorder.swift */; };
 		7E01B6022135C99B003652BD /* WithdrawController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01B6012135C99B003652BD /* WithdrawController.swift */; };
@@ -61,6 +60,8 @@
 		7E977E102119EB3700D65F76 /* PenerimaanPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */; };
 		7E977E12211A7A5400D65F76 /* LihatResiPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */; };
 		7EA9CCCB20F3422A003C8D8D /* Pods_titipanku.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7EC037312146FAFA00476982 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EC037302146FAFA00476982 /* GoogleService-Info.plist */; };
+		7EC0373521484CF800476982 /* UserEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0373421484CF800476982 /* UserEdit.swift */; };
 		7EC55F9E2138BE31002C0FD8 /* UserTripDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC55F9D2138BE31002C0FD8 /* UserTripDetail.swift */; };
 		7ECA1D34212B7EF100D26A77 /* LihatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECA1D33212B7EF100D26A77 /* LihatUser.swift */; };
 		7EDED74920F7329D005BCA76 /* OfferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDED74820F7329D005BCA76 /* OfferController.swift */; };
@@ -121,7 +122,6 @@
 		3C07FAFA20CE675F008FF049 /* AddNegaraBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNegaraBarang.swift; sourceTree = "<group>"; };
 		3C07FAFC20CE6777008FF049 /* AddHargaBarang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHargaBarang.swift; sourceTree = "<group>"; };
 		3C12439E20DFE78600852D2D /* PreorderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreorderDetail.swift; sourceTree = "<group>"; };
-		3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "titipanku/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7E01B5FF2135B8DC003652BD /* KomentarPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KomentarPreorder.swift; sourceTree = "<group>"; };
 		7E01B6012135C99B003652BD /* WithdrawController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawController.swift; sourceTree = "<group>"; };
 		7E01B603213606E9003652BD /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
@@ -169,6 +169,8 @@
 		7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PengirimanPembelian.swift; sourceTree = "<group>"; };
 		7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenerimaanPembelian.swift; sourceTree = "<group>"; };
 		7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LihatResiPreorder.swift; sourceTree = "<group>"; };
+		7EC037302146FAFA00476982 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7EC0373421484CF800476982 /* UserEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEdit.swift; sourceTree = "<group>"; };
 		7EC55F9D2138BE31002C0FD8 /* UserTripDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTripDetail.swift; sourceTree = "<group>"; };
 		7ECA1D33212B7EF100D26A77 /* LihatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LihatUser.swift; sourceTree = "<group>"; };
 		7EDED74820F7329D005BCA76 /* OfferController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferController.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				7E01B6012135C99B003652BD /* WithdrawController.swift */,
 				7E8B5DB0210E06E300FFBC85 /* TopupController.swift */,
 				9CE2AC9E20850658005C1D49 /* UserController.swift */,
+				7EC0373421484CF800476982 /* UserEdit.swift */,
 				7E5D98642106C95D006690B0 /* UserPembelian.swift */,
 				7E5D98662106C99E006690B0 /* UserRequest.swift */,
 				7E5D98682106C9AA006690B0 /* UserPreorder.swift */,
@@ -355,8 +358,8 @@
 			isa = PBXGroup;
 			children = (
 				9CE2ACA020850774005C1D49 /* Class */,
-				3C8E38B120C5FB06009AD99D /* GoogleService-Info.plist */,
 				7E8DA56220F33FB7003C9D1F /* titipanku.entitlements */,
+				7EC037302146FAFA00476982 /* GoogleService-Info.plist */,
 				9CC8A6E1206A252000242A87 /* AppDelegate.swift */,
 				9C7177AD206A31990082E417 /* Controller */,
 				9CC8A6E5206A252000242A87 /* Main.storyboard */,
@@ -449,7 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CC8A6EC206A252000242A87 /* LaunchScreen.storyboard in Resources */,
-				3C8E38B220C5FB06009AD99D /* GoogleService-Info.plist in Resources */,
+				7EC037312146FAFA00476982 /* GoogleService-Info.plist in Resources */,
 				9CC8A6E9206A252000242A87 /* Assets.xcassets in Resources */,
 				9CC8A6E7206A252000242A87 /* Main.storyboard in Resources */,
 			);
@@ -488,6 +491,7 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/BetterSegmentedControl/BetterSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -495,6 +499,8 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
+				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
+				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SKActivityIndicatorView/SKActivityIndicatorView.framework",
@@ -510,6 +516,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BetterSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -517,6 +524,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Imaginary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SKActivityIndicatorView.framework",
@@ -631,6 +640,7 @@
 				7E5D9857210590E3006690B0 /* NotifikasiController.swift in Sources */,
 				7E72A475211731DE00391FA7 /* ConfirmAcceptedOffer.swift in Sources */,
 				7E41129A212088D8008BBF89 /* AddHargaTitip.swift in Sources */,
+				7EC0373521484CF800476982 /* UserEdit.swift in Sources */,
 				9C82E69620BF231600B21F21 /* PostPreorder.swift in Sources */,
 				7E58EA7F2113CDC600BF7A2E /* ExploreKategori.swift in Sources */,
 				7E5D985D21062159006690B0 /* FlashsaleDetail.swift in Sources */,

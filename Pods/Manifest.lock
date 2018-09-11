@@ -12,6 +12,7 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - Cache (4.2.0)
   - FBSDKCoreKit (4.31.1):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.31.1):
@@ -78,7 +79,12 @@ PODS:
   - GTMSessionFetcher/Full (1.1.14):
     - GTMSessionFetcher/Core (= 1.1.14)
   - Hue (3.0.1)
+  - Imaginary (3.0.3):
+    - Cache (~> 4.0)
   - leveldb-library (1.20)
+  - Lightbox (2.1.2):
+    - Hue (~> 3.0)
+    - Imaginary (~> 3.0)
   - MidtransCoreKit (1.12.1)
   - MidtransKit (1.12.1):
     - MidtransCoreKit (~> 1.12.1)
@@ -112,6 +118,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - GoogleSignIn
   - Hue
+  - Lightbox
   - MidtransKit
   - NVActivityIndicatorView
   - SKActivityIndicatorView (~> 0.1.0)
@@ -125,6 +132,7 @@ SPEC REPOS:
     - AlamofireImage
     - BetterSegmentedControl
     - Bolts
+    - Cache
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
@@ -140,7 +148,9 @@ SPEC REPOS:
     - GTMOAuth2
     - GTMSessionFetcher
     - Hue
+    - Imaginary
     - leveldb-library
+    - Lightbox
     - MidtransCoreKit
     - MidtransKit
     - nanopb
@@ -156,6 +166,7 @@ SPEC CHECKSUMS:
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
   BetterSegmentedControl: 92555f980e4273ec414d6187acc5b811659a9abf
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Cache: f28f8dd64b632155aabf9b3906b036a659048251
   FBSDKCoreKit: e08ccfcefa7bc1347a07c276dac9bf6c7fe57024
   FBSDKLoginKit: 99797ac39252fef6f72600b886f6ee60b4b29cab
   FBSDKShareKit: e640c41c9fcd61929eeb3d0c21ad335103e7cb62
@@ -171,7 +182,9 @@ SPEC CHECKSUMS:
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 390ea358e5a0d0133153806f744662dad933d06b
   Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
+  Imaginary: 9b45836a5af881f452a86e0a1215772ae4712d00
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  Lightbox: 2dc267df8be2285bc7724cb11cbbf4aaaf59dced
   MidtransCoreKit: 15404e6aa6b07b5cfbccf6e1da1a8ea49d1a34a8
   MidtransKit: 80d2271ab31a4d2a187fdce7e83c224dd8142231
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
@@ -181,6 +194,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwiftyPickerPopover: f1bb928efd60e4c754aa957c1bb67372465e9ccb
 
-PODFILE CHECKSUM: 31dbee858f5777a944f7b80fae1080755cfb579a
+PODFILE CHECKSUM: 1195419ceaed4fc5314542819a7d589fdfa39bfa
 
 COCOAPODS: 1.5.3

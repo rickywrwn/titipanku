@@ -11,9 +11,10 @@ import Alamofire
 import SwiftyJSON
 import Alamofire_SwiftyJSON
 import SKActivityIndicatorView
+import Lightbox
 
 class homeController: UICollectionViewController,UICollectionViewDelegateFlowLayout{
-    
+
     fileprivate let cellId = "cellId"
     fileprivate let preorderCellId = "preorderCellId"
     fileprivate let flashCellId = "flashCellId"
@@ -65,11 +66,33 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         NotificationCenter.default.addObserver(self, selector: #selector(showMoreRequest), name: NSNotification.Name(rawValue: "showMoreRequest"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showMorePreorder), name: NSNotification.Name(rawValue: "showMorePreorder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showMorePreorderBerdurasi), name: NSNotification.Name(rawValue: "showMorePreorderBerdurasi"), object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(popImage), name: NSNotification.Name(rawValue: "popImage"), object: nil)
         setupView()
         }
     
-        
+    
+    @objc func popImage(_ notification: NSNotification) {
+        print("pop")
+        if let gambar = notification.userInfo?["gambar"] as? UIImage {
+            let images = [LightboxImage(
+                image: gambar,
+                text: ""
+            )]
+            // Create an instance of LightboxController.
+            let controller = LightboxController(images: images)
+            
+            // Set delegates.
+            controller.pageDelegate = self
+            controller.dismissalDelegate = self
+            
+            // Use dynamic background.
+            controller.dynamicBackground = true
+            
+            // Present your controller.
+            present(controller, animated: true, completion: nil)
+        }
+    }
+    
     @objc func showMoreRequest() {
         print("pencet Request")
         let layout = UICollectionViewFlowLayout()
@@ -199,6 +222,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         header.appCategory = featuredApps?.bannerCategory
         
+        
         return header
     }
 
@@ -225,6 +249,20 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
   
 }
 
+extension homeController: LightboxControllerPageDelegate {
+    
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+        print(page)
+    }
+}
+
+extension homeController: LightboxControllerDismissalDelegate {
+    
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+        // ...
+    }
+}
+
 
 class Header: CategoryCell {
     
@@ -248,11 +286,30 @@ class Header: CategoryCell {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppCell
         cell.app = appCategory?.apps?[indexPath.item]
+        cell.imageView.isUserInteractionEnabled = true
+          DispatchQueue.main.async{
+            print("http://titipanku.xyz/uploads/banner"+String(indexPath.row)+".jpg")
+            Alamofire.request("http://titipanku.xyz/uploads/banner"+String(indexPath.row)+".jpg").responseImage { response in
+                if let image = response.result.value {
+                    cell.imageView.image = image
+                    
+                }
+            }
+        }
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: frame.width / 2 + 50, height: frame.height)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell: AppCell = collectionView.cellForItem(at: indexPath) as! AppCell
+        print(indexPath.row)
+        let gambar = cell.imageView.image
+        let dataIdOffer:[String: UIImage] = ["gambar": gambar!]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "popImage"), object: nil, userInfo: dataIdOffer)
+        
     }
     
     fileprivate class BannerCell: AppCell {

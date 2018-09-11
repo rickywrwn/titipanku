@@ -145,6 +145,8 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
                 self.chats = chats
                 SKActivityIndicator.dismiss()
             }
+        }else{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Profile", style: .done, target: self, action: #selector(handleEdit))
         }
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
@@ -166,6 +168,17 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
     
     @objc func handleCancle(){
         self.dismiss(animated: true)
+    }
+    
+    @objc func handleEdit(){
+        let addDetail = UserEdit()
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
+        self.view.window!.layer.add(transition, forKey: kCATransition)
+        self.present(addDetail, animated: false, completion: nil)
     }
     
     @objc func handleChat(){
@@ -318,6 +331,7 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
             cell.LabelTanggal.text = isiUser?.tanggalDaftar
             if emailUser.status == "sendiri" {
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+                print("http://titipanku.xyz/uploads/"+emailNow+".jpg")
                 Alamofire.request("http://titipanku.xyz/uploads/"+emailNow+".jpg").responseImage { response in
                     if let image = response.result.value {
                         cell.imageView.image = image

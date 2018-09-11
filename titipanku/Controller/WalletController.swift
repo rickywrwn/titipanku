@@ -84,6 +84,9 @@ class WalletController :  UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        fetchJSON()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

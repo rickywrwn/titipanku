@@ -73,8 +73,6 @@ class MoreController: UIViewController, UICollectionViewDataSource, UICollection
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: moreCellId, for: indexPath) as! MoreCell
         if indexPath.row == 0{
             cell.labelA.text = "Titipanku Wallet"
-        }else if indexPath.row == 1{
-            cell.labelA.text = "Settings"
         }else {
             cell.labelA.text = "Logout"
         }
@@ -82,7 +80,7 @@ class MoreController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -116,7 +114,7 @@ class MoreController: UIViewController, UICollectionViewDataSource, UICollection
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // change 2 to desired number of seconds
             if indexPath.row == 0{
                 self.handleWallet()
-            }else if indexPath.row == 2{
+            }else if indexPath.row == 1{
                 self.handleLogout()
             }
             cell?.layer.backgroundColor = UIColor.white.cgColor

@@ -28,4 +28,5 @@ target 'titipanku' do
   pod 'SKActivityIndicatorView', '~> 0.1.0'
   pod 'Hue'
   pod 'BetterSegmentedControl', '~> 1.0'
+  pod 'Lightbox'
 end
