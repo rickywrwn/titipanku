@@ -169,9 +169,9 @@ class AcceptedPembelian :  UIViewController {
         alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
-            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id{
+            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id, let idPembeli = self.varOffer?.idPembeli{
                 
-                let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"action":"confirm"]
+                let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"idPembeli":idPembeli,"action":"confirm"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
                     response in

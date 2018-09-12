@@ -167,7 +167,11 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
             label4.isHidden = false
             let total = Int(selectedHarga)! + Int((app?.valueHarga)!)! * Int(qtyText.text!)!
             jumlah = total
-            labelTotal.text = "Rp " + String(total)
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.minimumFractionDigits = 0
+            let s2 = formatter.string(from:total  as NSNumber)
+            labelTotal.text = "Rp " + s2!
         }
         
     }
@@ -420,12 +424,20 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
                 
                 if self.ongkirText.text == ""{
                     let total = Int((self.app?.valueHarga)!)! * Int(selectedString)!
-                    self.labelTotal.text = "Rp " + String(total)
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = .decimal
+                    formatter.minimumFractionDigits = 0
+                    let s2 = formatter.string(from:total  as NSNumber)
+                    self.labelTotal.text = "Rp " + s2!
                     
                 }else{
                     
                     let total = Int(self.selectedHarga)! + Int((self.app?.valueHarga)!)! * Int(selectedString)!
-                    self.labelTotal.text = "Rp " + String(total)
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = .decimal
+                    formatter.minimumFractionDigits = 0
+                    let s2 = formatter.string(from:total  as NSNumber)
+                    self.labelTotal.text = "Rp " + s2!
                 }
             })
             .setCancelButton(action: { (_, _, _) in print("cancel")}
@@ -489,10 +501,10 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
                     let saldoNow : Int = saldo! - hargaTotal
                     print(saldoNow)
                     
-                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let qtyAwal = self.app?.qty,let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman, let jumlah : Int = self.jumlah{
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idPreorder = self.app?.id , let idPemilik = self.app?.email,let ongkir : String = self.selectedHarga, let qty = self.qtyText.text, let qtyAwal = self.app?.qty,let kota = self.kotaText.text,let pengiriman : String = self.selectedPengiriman, let jumlah : Int = self.jumlah{
                         var qtyNow = Int(qtyAwal)! - Int(qty)!
                         
-                        let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"qtyNow":qtyNow,"saldo":saldoNow,"jumlah":jumlah,"action":"insert"]
+                        let parameter: Parameters = ["idPreorder": idPreorder,"email":emailNow, "qty" : qty ,"kota":kota,"idKota":self.selectedCity,"hargaOngkir":ongkir,"pengiriman":pengiriman,"qtyNow":qtyNow,"saldo":saldoNow,"idPemilik":idPemilik,"jumlah":jumlah,"action":"insert"]
                         print (parameter)
                         Alamofire.request("http://titipanku.xyz/api/PostBeliPreorder.php",method: .get, parameters: parameter).responseJSON {
                             response in

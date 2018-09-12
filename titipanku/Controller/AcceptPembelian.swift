@@ -157,7 +157,11 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
             selectedHarga = arrHarga[indexPath.row]
             label4.isHidden = false
             let total = Int(selectedHarga)! + Int((varOffer?.hargaOngkir)!)!
-            labelTotal.text = String(total)
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.minimumFractionDigits = 0
+            let s2 = formatter.string(from:total  as NSNumber)
+            labelTotal.text = "Rp " + s2!
         }
         
     }
@@ -277,9 +281,9 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
             alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
             
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                if let idOffer = self.varOffer?.id , let idRequest = self.app?.id{
+                if let idOffer = self.varOffer?.id ,let idPreorder = self.app?.id,let idPembeli = self.varOffer?.idPembeli{
                     
-                    let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"action":"accept"]
+                    let parameter: Parameters = ["idOffer": idOffer,"idPreorder": idPreorder,"idPembeli":idPembeli,"action":"accept"]
                     print (parameter)
                     Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
                         response in
@@ -325,9 +329,9 @@ class AcceptPembelian :  UIViewController, UITableViewDelegate, UITableViewDataS
         alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id{
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id,let idPreorder = self.app?.id,let idPembeli = self.varOffer?.idPembeli{
                 
-                let parameter: Parameters = ["idOffer":idOffer,"action":"decline"]
+                let parameter: Parameters = ["idOffer":idOffer,"idPreorder":idPreorder,"idPembeli":idPembeli,"action":"decline"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
                     response in

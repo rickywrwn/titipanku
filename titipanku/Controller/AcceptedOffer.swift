@@ -180,7 +180,11 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
         //labelOngkir.text = (self.varOffer?.jenisOngkir)! + "+" + (self.varOffer?.hargaOngkir)!
         ongkirText.text =  (self.varOffer?.jenisOngkir)! + " - " + (self.varOffer?.hargaOngkir)!
         let total = Int((self.varOffer?.valueHarga)!)! + Int((self.varOffer?.hargaOngkir)!)!
-        labelTotal.text = "Rp. " + String(total)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 0
+        let s2 = formatter.string(from:total  as NSNumber)
+        labelTotal.text = "Rp " + s2!
         label4.isHidden = false
         
         setupView()
@@ -267,6 +271,11 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
             label4.isHidden = false
             let total = Int(selectedHarga)! + Int((varOffer?.valueHarga)!)!
             labelTotal.text = String(total)
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.minimumFractionDigits = 0
+            let s2 = formatter.string(from:total  as NSNumber)
+            labelTotal.text = "Rp " + s2!
         }
         
     }

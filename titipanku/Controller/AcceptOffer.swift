@@ -181,7 +181,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         //fetchOrderId()
         fetchJSON()
         labelTgl.text = self.varOffer?.tglPulang
-        labelHarga.text = self.varOffer?.hargaPenawaran
+        labelHarga.text = "Rp " + (self.varOffer?.hargaPenawaran)!
         labelKota.text = self.varOffer?.kota
         label4.isHidden = true
         
@@ -258,7 +258,11 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
             selectedJenis = arrNama[indexPath.row]
             label4.isHidden = false
             let total = Int(selectedHarga)! + Int((varOffer?.valueHarga)!)!
-            labelTotal.text = String(total)
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.minimumFractionDigits = 0
+            let s2 = formatter.string(from:total  as NSNumber)
+            labelTotal.text = "Rp " + s2!
         }
         
     }

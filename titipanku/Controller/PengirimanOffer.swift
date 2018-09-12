@@ -179,7 +179,11 @@ class PengirimanOffer :  UIViewController {
         //labelOngkir.text = (self.varOffer?.jenisOngkir)! + "+" + (self.varOffer?.hargaOngkir)!
         //ongkirText.text =  (self.varOffer?.jenisOngkir)! + " - " + (self.varOffer?.hargaOngkir)!
         let total = Int((self.varOffer?.valueHarga)!)! + Int((self.varOffer?.hargaOngkir)!)!
-        labelTotal.text = "Rp " + String(total)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 0
+        let s2 = formatter.string(from:total  as NSNumber)
+        labelTotal.text = "Rp " + s2!
         label4.isHidden = false
         print(varOffer)
         Alamofire.request("http://titipanku.xyz/uploads/nota"+(self.varOffer?.id)!+".jpg").responseImage { response in

@@ -186,7 +186,7 @@ class PenerimaanPembelian :  UIViewController {
         alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
             if let idOffer = self.varOffer?.id , let idRequest = self.app?.id, let review = self.reviewText.text , let rating = self.ratingText.text , let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String{
                 
-                let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"action":"terima"]
+                let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"idPemilik":email,"action":"terima"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
                     response in

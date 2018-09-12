@@ -175,9 +175,9 @@ class PengirimanPembelian :  UIViewController {
         alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
-            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id, let nomorResi = self.ongkirText.text{
+            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id, let nomorResi = self.ongkirText.text,let idPembeli = self.varOffer?.idPembeli{
                 
-                let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"nomorResi":nomorResi,"action":"kirim"]
+                let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"nomorResi":nomorResi,"idPembeli":idPembeli,"action":"kirim"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
                     response in

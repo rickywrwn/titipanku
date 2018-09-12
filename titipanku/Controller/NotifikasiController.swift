@@ -88,6 +88,37 @@ class NotifikasiController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
+    func fetchPreorder(idRequest : String, completionHandler: @escaping (App) -> ()) {
+        if let id : String = idRequest  {
+            let urlString = "http://titipanku.xyz/api/DetailPreorder.php?id=\(id)"
+            
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+                
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.app = try decoder.decode(App.self, from: data)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.app!)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    self.collectionview.reloadData()
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -128,11 +159,21 @@ class NotifikasiController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! NotificationCell
-        
-        if let id : String = notifications[indexPath.row].idTujuan {
-            Alamofire.request("http://titipanku.xyz/uploads/b"+id+".jpg").responseImage { response in
-                if let image = response.result.value {
-                    cell.imageView.image = image
+        if notifications[indexPath.row].jenis == "request"{
+            
+            if let id : String = notifications[indexPath.row].idTujuan {
+                Alamofire.request("http://titipanku.xyz/uploads/b"+id+".jpg").responseImage { response in
+                    if let image = response.result.value {
+                        cell.imageView.image = image
+                    }
+                }
+            }
+        }else{
+            if let id : String = notifications[indexPath.row].idTujuan {
+                Alamofire.request("http://titipanku.xyz/uploads/p"+id+".jpg").responseImage { response in
+                    if let image = response.result.value {
+                        cell.imageView.image = image
+                    }
                 }
             }
         }
@@ -153,23 +194,46 @@ class NotifikasiController: UIViewController, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         SKActivityIndicator.show("Loading...")
-        self.fetchDetail(idRequest: notifications[indexPath.row].idTujuan,completionHandler: {(app) -> () in
-            self.app = app
-            print(app)
-            if let appe : App = self.app {
-
-                let layout = UICollectionViewFlowLayout()
-                let appDetailController = barangDetailController(collectionViewLayout: layout)
-                appDetailController.app = appe
-                self.present(appDetailController, animated: true, completion: {
+        
+        if self.notifications[indexPath.row].jenis == "request"{
+            self.fetchDetail(idRequest: notifications[indexPath.row].idTujuan,completionHandler: {(app) -> () in
+                self.app = app
+                print(app)
+                if let appe : App = self.app {
+                    
+                    let layout = UICollectionViewFlowLayout()
+                    let appDetailController = barangDetailController(collectionViewLayout: layout)
+                    appDetailController.app = appe
+                    self.present(appDetailController, animated: true, completion: {
+                        SKActivityIndicator.dismiss()
+                    })
+                }else{
+                    print("no app")
                     SKActivityIndicator.dismiss()
-                })
-            }else{
-                print("no app")
-                SKActivityIndicator.dismiss()
-            }
-            
-        })
+                }
+                
+            })
+        }else{
+            self.fetchPreorder(idRequest: notifications[indexPath.row].idTujuan,completionHandler: {(app) -> () in
+                self.app = app
+                print(app)
+                if let appe : App = self.app {
+                    
+                    let layout = UICollectionViewFlowLayout()
+                    
+                    let appDetailController = PreorderDetail(collectionViewLayout: layout)
+                    appDetailController.app = appe
+                    self.present(appDetailController, animated: true, completion: {
+                        SKActivityIndicator.dismiss()
+                    })
+                }else{
+                    print("no app")
+                    SKActivityIndicator.dismiss()
+                }
+                
+            })
+        }
+        
     }
     
 }
