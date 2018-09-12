@@ -147,6 +147,34 @@ class PenerimaanPembelian :  UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    func sendNotif(){
+        if let idTujuan = self.app?.id{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Pembeli Telah Menerima Barang Dengan Baik"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
+    
+    func sendNotifTolak(){
+        if let idTujuan = self.app?.id{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Terdapat Masalah Pada Transaksimu"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
+    
     @objc func handleTerimaOffer(){
         
         // create the alert
@@ -194,6 +222,7 @@ class PenerimaanPembelian :  UIViewController {
                                 
                                 self.present(alert, animated: true)
                             }else{
+                                self.sendNotif()
                                 let alert = UIAlertController(title: "Message", message: "Review dan Terima Barang Berhasil", preferredStyle: .alert)
                                 
                                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -244,6 +273,7 @@ class PenerimaanPembelian :  UIViewController {
                         
                         self.present(alert, animated: true)
                     }else{
+                        self.sendNotifTolak()
                         let alert = UIAlertController(title: "Message", message: "Penerimaan Barang Berhasil", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -413,7 +443,7 @@ class PenerimaanPembelian :  UIViewController {
         button.setTitle("Barang Sudah Diterima", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false

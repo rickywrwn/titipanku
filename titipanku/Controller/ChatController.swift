@@ -93,6 +93,20 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
         }
     }
     
+    func sendNotif(){
+        if let idTujuan = self.chat?.emailB{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Ada Chat Masuk!"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
+    
     @objc func handlePost(){
         if(textField.text == ""){
             let alert = UIAlertController(title: "Peringatan", message: "Komentar Tidak Boleh Kosong", preferredStyle: .alert)
@@ -112,6 +126,7 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
                 let childRef = ref.childByAutoId()
                 let value = ["text": textField.text!,"email":emailNow,"date":result]
                 childRef.updateChildValues(value)
+                self.sendNotif()
             }
             
             textField.text = ""

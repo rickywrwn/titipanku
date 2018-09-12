@@ -347,9 +347,15 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         
         let layout = UICollectionViewFlowLayout()
         let appDetailController = UserController()
-        if let varOffer = notification.userInfo?["email"] as? String {
+        if let varOffer = notification.userInfo?["email"] as? String,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             UserController.emailUser.email = varOffer
-            UserController.emailUser.status = "lain"
+            if emailNow == varOffer{
+                
+                UserController.emailUser.status = "sendiriBack"
+            }else{
+                
+                UserController.emailUser.status = "lain"
+            }
         }
         present(appDetailController, animated: true, completion: {
         })

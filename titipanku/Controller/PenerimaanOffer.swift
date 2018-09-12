@@ -226,6 +226,20 @@ class PenerimaanOffer :  UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    func sendNotif(){
+        if let idTujuan = self.varOffer?.idPenawar{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Requester Telah Menerima Barang"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
+    
     @objc func handleTerimaOffer(){
         let saldo = Int((self.isiUser?.valueSaldo)!)
         let harga = Int((self.varOffer?.valueHarga)!)
@@ -276,6 +290,8 @@ class PenerimaanOffer :  UIViewController {
                                     
                                     self.present(alert, animated: true)
                                 }else{
+                                    
+                                    self.sendNotif()
                                     let alert = UIAlertController(title: "Message", message: "Review dan Terima Barang Berhasil", preferredStyle: .alert)
                                     
                                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -467,7 +483,7 @@ class PenerimaanOffer :  UIViewController {
         button.setTitle("Barang Sampai", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false

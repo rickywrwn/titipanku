@@ -109,6 +109,7 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
             if status == "sendiri"{
                 emailUser.email = emailNow
             }
+            print("emailuser"+emailUser.status)
         }
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.white
@@ -138,14 +139,18 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
         navigationItem.title = "Profile"
-        if emailUser.status != "sendiri"{
+        if emailUser.status == "lain"{
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Chat", style: .done, target: self, action: #selector(handleChat))
             self.fetchChatroom{(chats) -> ()in
                 self.chats = chats
                 SKActivityIndicator.dismiss()
             }
+        }else if emailUser.status == "sendiri"{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Profile", style: .done, target: self, action: #selector(handleEdit))
         }else{
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Profile", style: .done, target: self, action: #selector(handleEdit))
         }
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
@@ -180,7 +185,19 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
         self.view.window!.layer.add(transition, forKey: kCATransition)
         self.present(addDetail, animated: false, completion: nil)
     }
-    
+    func sendNotif(){
+        if let idTujuan : String = emailUser.email{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Ada Chat Masuk!"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
     @objc func handleChat(){
         if self.chats.count > 0{
             if let idChatroom : String = self.chats[0].id {
@@ -207,6 +224,7 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
                         
                         self.present(alert, animated: true)
                     }else{
+                       self.sendNotif()
                         if let chat : chatroom = self.chats[0] {
                             let layout = UICollectionViewFlowLayout()
                             layout.minimumInteritemSpacing = 0

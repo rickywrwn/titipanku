@@ -147,7 +147,19 @@ class AcceptedPembelian :  UIViewController {
         
         self.dismiss(animated: true, completion: nil)
     }
-    
+    func sendNotif(){
+        if let idTujuan = self.varOffer?.idPembeli{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Barang Pesanan Anda Sudah Dibelikan Traveler"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
     @objc func handleTerimaOffer(){
         
         // create the alert
@@ -177,6 +189,7 @@ class AcceptedPembelian :  UIViewController {
                         
                         self.present(alert, animated: true)
                     }else{
+                        self.sendNotif()
                         let alert = UIAlertController(title: "Message", message: "Belikan Barang Berhasil", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -195,51 +208,6 @@ class AcceptedPembelian :  UIViewController {
         
     }
     
-    @objc func handleTolak(){
-        // create the alert
-        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menolak Pembeli?", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // add the actions (buttons)
-        alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-        
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id{
-                
-                let parameter: Parameters = ["idOffer":idOffer,"action":"decline"]
-                print (parameter)
-                Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
-                    response in
-                    
-                    //mengambil json
-                    let json = JSON(response.result.value)
-                    print(json)
-                    let cekSukses = json["success"].intValue
-                    let pesan = json["message"].stringValue
-                    
-                    if cekSukses != 1 {
-                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                        
-                        self.present(alert, animated: true)
-                    }else{
-                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                            self.handleBack()
-                        }))
-                        
-                        self.present(alert, animated: true)
-                    }
-                }
-            }
-        }))
-        
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
-        print("tolak")
-        
-    }
     
     @objc private func handleBack(){
         
@@ -338,7 +306,7 @@ class AcceptedPembelian :  UIViewController {
         button.setTitle("Barang Sudah Dibelikan", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false

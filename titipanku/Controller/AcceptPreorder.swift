@@ -434,6 +434,20 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         
     }
     
+    func sendNotif(){
+        if let idTujuan = self.app?.email{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Ada Penawaran Baru di Preordermu"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
+    
     @objc func handleTerimaOffer(){
         
         if(ongkirText.text == ""){
@@ -496,6 +510,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
                                 
                                 self.present(alert, animated: true)
                             }else{
+                               self.sendNotif()
                                 let alert = UIAlertController(title: "Message", message: "Pembelian Preorder Berhasil", preferredStyle: .alert)
                                 
                                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
@@ -693,7 +708,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         button.setTitle("Beli", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false

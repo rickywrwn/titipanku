@@ -401,6 +401,20 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
         ongkirTableView.isHidden = false
     }
     
+    func sendNotif(){
+        if let idTujuan = self.app?.email{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Terdapat Penawaran Baru di Requestmu"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
+    
     @objc func handlePostBarang(){
         if(provinsiText.text == "" && kotaText.text == "" && dateTextField.text == "" && hargaText.text == ""){
             let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
@@ -432,6 +446,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
                         
                         self.present(alert, animated: true)
                     }else{
+                        self.sendNotif()
                         let alert = UIAlertController(title: "Message", message: "Post Offer Berhasil", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -572,10 +587,10 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
     
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Post Barang", for: .normal)
+        button.setTitle("Bantu Belikan", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handlePostBarang), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false

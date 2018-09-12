@@ -343,7 +343,33 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         ongkirTableView.isHidden = false
     }
     
+    func sendNotif(){
+        if let idTujuan = self.varOffer?.idPenawar{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Requester Menerima Offermu"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
     
+    func sendNotifTolak(){
+        if let idTujuan = self.varOffer?.idPenawar{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Requester Menolak Offermu"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
     @objc func handleTerimaOffer(){
         
         if(ongkirText.text == ""){
@@ -404,6 +430,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                                 
                                 self.present(alert, animated: true)
                             }else{
+                                self.sendNotif()
                                 let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
                                 
                                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -454,6 +481,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
                         
                         self.present(alert, animated: true)
                     }else{
+                        self.sendNotifTolak()
                         let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
@@ -583,7 +611,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
         button.setTitle("Terima", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
