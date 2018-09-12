@@ -10,63 +10,41 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SKActivityIndicatorView
+import Firebase
+import FirebaseDatabase
+import Hue
 
 class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     fileprivate let RequestCellId = "RequestCellId"
     
     var app: App?
     
-    var comments  = [comment]()
-    struct comment: Decodable {
-        let id: String
-        let email: String
-        let isi: String
-        let tanggal: String
-    }
+    var arrText = [String]()
+    var arrEmail = [String]()
     
-    @objc func handleReload(){
+    func observeMessages(){
         SKActivityIndicator.show("Loading...")
-        self.fetchRequests{(comments) -> ()in
-            self.comments = comments
-            print("count request" + String(self.comments.count))
-            self.collectionview.reloadData()
+        if let idPost = app?.id {
+            let ref = Database.database().reference().child("comment").child("request").child(idPost)
+            ref.observe(.childAdded, with: { (snapshot) in
+                // Get user value
+                let value = snapshot.value as? NSDictionary
+                print(value)
+                let email = value?["email"] as? String ?? ""
+                let text = value?["text"] as? String ?? ""
+                self.arrEmail.append(email)
+                self.arrText.append(text)
+                print(self.arrEmail)
+                print(self.arrText)
+                self.collectionview.reloadData()
+                //self.scrollToBottom()
+                
+            }, withCancel: nil)
             SKActivityIndicator.dismiss()
         }
     }
     
     var collectionview: UICollectionView!
-    func fetchRequests(_ completionHandler: @escaping ([comment]) -> ()) {
-        if let idPost = app?.id  {
-            let urlString = "http://titipanku.xyz/api/GetDiskusiRequest.php?idPost=\(String(describing: idPost))"
-            
-            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
-                
-                guard let data = data else { return }
-                
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    self.comments = try decoder.decode([comment].self, from: data)
-                    print(self.comments)
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        completionHandler(self.comments)
-                    })
-                } catch let err {
-                    print(err)
-                    
-                    self.collectionview.reloadData()
-                    SKActivityIndicator.dismiss()
-                }
-                
-            }) .resume()
-        }
-        
-    }
-    
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("Send", for: .normal)
@@ -95,44 +73,21 @@ class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectio
             
             self.present(alert, animated: true)
         }else{
-            
-            self.textField.resignFirstResponder()
-            SKActivityIndicator.show("Loading...")
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String,let isi = textField.text, let idPost = app?.id {
-                print(emailNow)
+            let date = Date()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "YYYY-MM-DD"
+            let result = formatter.string(from: date)
+
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
                 
-                let parameter: Parameters = ["email": emailNow,"isi": isi,"idPost":idPost, "action" : "insert"]
-                print(parameter)
-                Alamofire.request("http://titipanku.xyz/api/PostDiskusiRequest.php",method: .get, parameters: parameter).responseSwiftyJSON { dataResponse in
-                    
-                    //mencetak JON response
-                    if let json = dataResponse.value {
-                        
-                        //mengambil json
-                        print(json)
-                        let cekSukses = json["success"].intValue
-                        let pesan = json["message"].stringValue
-                        
-                        if cekSukses != 1 {
-                            let alert = UIAlertController(title: "gagal", message: pesan, preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                            
-                            self.present(alert, animated: true)
-                        }else{
-                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                                SKActivityIndicator.dismiss()
-                                self.textField.text = ""
-                                self.handleReload()
-                            }))
-                            
-                            self.present(alert, animated: true)
-                        }
-                    }
-                }
+                self.textField.resignFirstResponder()
+                let ref = Database.database().reference().child("comment").child("request").child((app?.id)!)
+                let childRef = ref.childByAutoId()
+                let value = ["text": textField.text!,"email":emailNow,"date":result]
+                childRef.updateChildValues(value)
             }
+            
+            textField.text = ""
         }
         
     }
@@ -143,14 +98,7 @@ class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectio
         
         self.hideKeyboardWhenTappedAround()
         
-        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
-        self.fetchRequests{(comments) -> ()in
-            self.comments = comments
-            print("count request" + String(self.comments.count))
-            self.collectionview.reloadData()
-            SKActivityIndicator.dismiss()
-        }
-       
+        observeMessages()
         setupView()
     }
     
@@ -228,21 +176,21 @@ class KomentarBarangController: UIViewController,UITextFieldDelegate,UICollectio
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RequestCellId, for: indexPath) as! NotificationCell
         
-        if let id : String = comments[indexPath.row].email {
+        if let id : String = arrEmail[indexPath.row] {
             Alamofire.request("http://titipanku.xyz/uploads/"+id+".jpg").responseImage { response in
                 if let image = response.result.value {
                     cell.imageView.image = image
                 }
             }
         }
-        cell.labelA.text = comments[indexPath.row].isi
-        cell.labelB.text = comments[indexPath.row].tanggal
+        cell.labelA.text = arrEmail[indexPath.row]
+        cell.labelB.text = arrText[indexPath.row]
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return comments.count
+        return arrEmail.count
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         

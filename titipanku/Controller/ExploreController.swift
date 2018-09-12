@@ -259,6 +259,7 @@ class categoryCollectionView: BaseCell,UICollectionViewDataSource, UICollectionV
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: catId, for: indexPath) as! categoryCollect
         cell.nameLabel.text = dataExplore?.isi[indexPath.row].nama
+        cell.imageView.image = UIImage.init(named: (dataExplore?.isi[indexPath.row].nama)!)
         return cell
     }
     

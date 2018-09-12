@@ -844,7 +844,7 @@ class AppDetailDescriptionCell: BaseCell {
     let imageViewQty: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage.init(named: "amount")
         iv.layer.masksToBounds = true
         return iv
     }()
@@ -865,7 +865,7 @@ class AppDetailDescriptionCell: BaseCell {
     let imageViewCountry: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage.init(named: "country")
         iv.layer.masksToBounds = true
         return iv
     }()
@@ -886,7 +886,7 @@ class AppDetailDescriptionCell: BaseCell {
     let imageViewKota: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage.init(named: "city")
         iv.layer.masksToBounds = true
         return iv
     }()
@@ -907,7 +907,7 @@ class AppDetailDescriptionCell: BaseCell {
     let imageViewUrl: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage.init(named: "url")
         iv.layer.masksToBounds = true
         return iv
     }()

@@ -327,7 +327,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         googleSignOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         googleSignOutButton.topAnchor.constraint(equalTo: facebookSignInButton.bottomAnchor, constant: 30).isActive = true
         
-       
+       googleSignOutButton.isHidden = true
 
     }
     

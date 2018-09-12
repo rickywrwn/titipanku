@@ -221,8 +221,6 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! Header
         
         header.appCategory = featuredApps?.bannerCategory
-        
-        
         return header
     }
 
@@ -239,14 +237,12 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     func setupView(){
         
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-  
 }
 
 extension homeController: LightboxControllerPageDelegate {
@@ -288,7 +284,6 @@ class Header: CategoryCell {
         cell.app = appCategory?.apps?[indexPath.item]
         cell.imageView.isUserInteractionEnabled = true
           DispatchQueue.main.async{
-            print("http://titipanku.xyz/uploads/banner"+String(indexPath.row)+".jpg")
             Alamofire.request("http://titipanku.xyz/uploads/banner"+String(indexPath.row)+".jpg").responseImage { response in
                 if let image = response.result.value {
                     cell.imageView.image = image
@@ -300,11 +295,13 @@ class Header: CategoryCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width / 2 + 50, height: frame.height)
+        return CGSize(width: frame.width-5, height: frame.height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell: AppCell = collectionView.cellForItem(at: indexPath) as! AppCell
+        
+        print("http://titipanku.xyz/uploads/banner"+String(indexPath.row)+".jpg")
         print(indexPath.row)
         let gambar = cell.imageView.image
         let dataIdOffer:[String: UIImage] = ["gambar": gambar!]

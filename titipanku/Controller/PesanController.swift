@@ -19,6 +19,8 @@ struct chatroom: Decodable {
     let emailB: String
     let tanggal: String
     let jenis: String
+    let tujuan: String
+    let idTujuan: String
 }
 class PesanController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     fileprivate let RequestCellId = "RequestCellId"

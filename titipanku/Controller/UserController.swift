@@ -331,7 +331,7 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
             cell.LabelTanggal.text = isiUser?.tanggalDaftar
             if emailUser.status == "sendiri" {
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
-                print("http://titipanku.xyz/uploads/"+emailNow+".jpg")
+                
                 Alamofire.request("http://titipanku.xyz/uploads/"+emailNow+".jpg").responseImage { response in
                     if let image = response.result.value {
                         cell.imageView.image = image

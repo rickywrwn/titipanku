@@ -598,8 +598,7 @@ class AppDetailDescriptionCell1: BaseCell {
     let imageViewQty: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
-        iv.layer.masksToBounds = true
+        iv.image = UIImage.init(named: "amount")
         return iv
     }()
     
@@ -620,7 +619,7 @@ class AppDetailDescriptionCell1: BaseCell {
     let imageViewBrand: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage.init(named: "brand")
         iv.layer.masksToBounds = true
         return iv
     }()
@@ -643,7 +642,7 @@ class AppDetailDescriptionCell1: BaseCell {
     let imageViewCountry: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage.init(named: "country")
         iv.layer.masksToBounds = true
         return iv
     }()
@@ -666,7 +665,7 @@ class AppDetailDescriptionCell1: BaseCell {
     let imageViewKota: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage.init(named: "city")
         iv.layer.masksToBounds = true
         return iv
     }()
@@ -689,7 +688,7 @@ class AppDetailDescriptionCell1: BaseCell {
     let imageViewDeadline: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage.init(named: "deadline")
         iv.layer.masksToBounds = true
         return iv
     }()

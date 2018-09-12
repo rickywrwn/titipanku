@@ -135,20 +135,24 @@ class UserPenjualanPreorder: UIViewController, UICollectionViewDataSource, UICol
                 }
             }
         }
-        cell.LabelTgl.text = requests[indexPath.row].tglBeli
+        cell.labelA.text = "Tanggal : "
+        cell.labelB.text = "Status : "
+        cell.labelCountry.text = requests[indexPath.row].tglBeli
         if requests[indexPath.row].status == "0"{
-            cell.LabelStatus.text = "Ditolak"
+            cell.LabelTgl.text = "Ditolak"
         }else if requests[indexPath.row].status == "1"{
-            cell.LabelStatus.text = "Belum Diterima"
+            cell.LabelTgl.text = "Belum Diterima"
         }else if requests[indexPath.row].status == "2"{
-            cell.LabelStatus.text = "Diterima"
+            cell.LabelTgl.text = "Diterima"
         }else if requests[indexPath.row].status == "3"{
-            cell.LabelStatus.text = "Sudah Dibelikan"
+            cell.LabelTgl.text = "Sudah Dibelikan"
         }else if requests[indexPath.row].status == "4"{
-            cell.LabelStatus.text = "Sudah Dikirim"
+            cell.LabelTgl.text = "Sudah Dikirim"
         }else if requests[indexPath.row].status == "5"{
-            cell.LabelStatus.text = "Selesai"
+            cell.LabelTgl.text = "Selesai"
         }
+        cell.LabelStatus.isHidden = true
+        cell.labelC.isHidden = true
         return cell
     }
     
@@ -178,7 +182,7 @@ func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection s
         print(requests[indexPath.row].idPreorder)
         
         SKActivityIndicator.show("Loading...", userInteractionStatus: false)
-        let urlString = "http://titipanku.xyz/api/DetailPreorder.php?id=\(requests[indexPath.row].idPreorder)"
+        let urlString = "http://titipanku.xyz/api/DetailPreorderUser.php?id=\(requests[indexPath.row].idPreorder)"
         
         URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
             

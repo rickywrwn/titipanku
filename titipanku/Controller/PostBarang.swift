@@ -200,7 +200,7 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         button.setTitle("Post Barang", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handlePostBarang), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -315,18 +315,16 @@ class PostBarang: UICollectionViewController, UICollectionViewDelegateFlowLayout
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
-        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -110).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 75).isActive = true
+        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -160).isActive = true
         
         
         //PostButton
         view.addSubview(postButton)
         postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor ).isActive = true
-        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        postButton.topAnchor.constraint(equalTo: (collectionView?.bottomAnchor)!, constant: 10).isActive = true
         postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
     }
     

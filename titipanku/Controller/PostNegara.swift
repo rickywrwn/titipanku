@@ -10,6 +10,7 @@ import UIKit
 import SwiftyPickerPopover
 import Alamofire
 import SwiftyJSON
+import Hue
 
 class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
      
@@ -216,7 +217,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         //button.layer.borderColor = UIColor.black.cgColor
         //button.layer.borderWidth = 2
         //button.layer.cornerRadius = 5
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handlePostTrip), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -229,7 +230,7 @@ class PostNegara: UIViewController , UITableViewDelegate, UITableViewDataSource{
         let screenWidth = UIScreen.main.bounds.width
         //Label Negara
         view.addSubview(LabelNegara)
-        LabelNegara.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
+        LabelNegara.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 75).isActive = true
         LabelNegara.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: screenWidth / -2).isActive = true
         
         //CountryTextField

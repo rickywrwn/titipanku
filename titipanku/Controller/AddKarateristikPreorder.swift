@@ -95,34 +95,40 @@ class AddKarateristikPreorder :  UIViewController{
     func setupView(){
         
         // Create the navigation bar
-        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
         
         // Offset by 20 pixels vertically to take the status bar into account
-        navigationBar.backgroundColor = UIColor.white
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
         navigationItem.title = "Karateristik Barang"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleCancle))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
-        navigationBar.items = [navigationItem]
+        
+        navbar.setItems([navigationItem], animated: false)
         
         // Make the navigation bar a subview of the current view controller
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(navigationBar)
-        navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
-        navigationBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
         
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
         
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 850)
+        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1150)
         
         
         // constrain the scroll view to 8-pts on each side
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8.0).isActive = true
-        scrollView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 8.0).isActive = true
+        scrollView.topAnchor.constraint(equalTo: navbar.bottomAnchor, constant: 8.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0).isActive = true
         

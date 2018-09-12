@@ -215,6 +215,55 @@ class PenerimaanPembelian :  UIViewController {
         
     }
     
+    @objc func handleTolak(){
+        // create the alert
+        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin ?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // add the actions (buttons)
+        alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
+            
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String,let idPreorder = self.app?.id, let idPemilik = self.app?.email{
+                
+                let parameter: Parameters = ["emailA":emailNow,"emailB": idPemilik,"tujuan":"preorder","idTujuan":idPreorder,"action":"insert"]
+                print (parameter)
+                Alamofire.request("http://titipanku.xyz/api/PostChatMasalah.php",method: .get, parameters: parameter).responseJSON {
+                    response in
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        let alert = UIAlertController(title: "Message", message: "Penerimaan Barang Berhasil", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            
+                            self.handleBack()
+                            
+                        }))
+                        
+                        self.present(alert, animated: true)
+                    }
+                }
+                
+            }
+            
+        }))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @objc func qtyTapped(_ textField: UITextField) {
         
         print("tapped")
@@ -379,7 +428,7 @@ class PenerimaanPembelian :  UIViewController {
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor.red
         button.clipsToBounds = true
-        //button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
+        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
         
@@ -420,7 +469,7 @@ class PenerimaanPembelian :  UIViewController {
         
         // constrain the scroll view to 8-pts on each side
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8.0).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8.0).isActive = true
         

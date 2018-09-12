@@ -132,17 +132,33 @@ class TambahViewController: UIViewController {
         }
     }
     
-    let backButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
-        //backButton.setImage(UIImage(named: "BackButton.png"), for: .normal) // Image can be downloaded from here below link
-        button.setTitle("Cancel", for: .normal)
-        button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
-        button.addTarget(self, action: #selector(handleBack), for: UIControlEvents.touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     func setupView(){
+        //supaya navbar full
+        // Create the navigation bar
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        
+        // Offset by 20 pixels vertically to take the status bar into account
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Post"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleBack))
+        // Assign the navigation item to the navigation bar
+        
+        navbar.setItems([navigationItem], animated: false)
+        
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
+        
+        
         let screenHeight = UIScreen.main.bounds.height
         view.backgroundColor = .white
         
@@ -161,6 +177,7 @@ class TambahViewController: UIViewController {
         containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         containerView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         containerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 55).isActive = true
         
         navSegmentControl.translatesAutoresizingMaskIntoConstraints = false
         navSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -169,10 +186,6 @@ class TambahViewController: UIViewController {
         navSegmentControl.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 30).isActive = true
         navSegmentControl.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 30).isActive = true
         
-        //backButton
-        view.addSubview(backButton)
-        backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
 
     }
     

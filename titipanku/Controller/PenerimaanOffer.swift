@@ -310,7 +310,7 @@ class PenerimaanOffer :  UIViewController {
             
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id, let idPenawar = self.varOffer?.idPenawar{
                 
-                let parameter: Parameters = ["emailA":emailNow,"emailB": idPenawar,"action":"insert"]
+                let parameter: Parameters = ["emailA":emailNow,"emailB": idPenawar,"tujuan":"request","idTujuan":idRequest,"action":"insert"]
                 print (parameter)
                 Alamofire.request("http://titipanku.xyz/api/PostChatMasalah.php",method: .get, parameters: parameter).responseJSON {
                     response in
@@ -328,7 +328,7 @@ class PenerimaanOffer :  UIViewController {
                         
                         self.present(alert, animated: true)
                     }else{
-                        let alert = UIAlertController(title: "Message", message: "Penerimaan Barang Berhasil", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Message", message: "Berhasil Menghubungi Admin, Silakan Menuju Chatroom", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                             

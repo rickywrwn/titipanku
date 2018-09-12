@@ -101,11 +101,16 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
             
             self.present(alert, animated: true)
         }else{
+            let date = Date()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "YYYY-MM-DD"
+            
+            let result = formatter.string(from: date)
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
                 self.textField.resignFirstResponder()
                 let ref = Database.database().reference().child("messages").child((chat?.id)!)
                 let childRef = ref.childByAutoId()
-                let value = ["text": textField.text!,"email":emailNow]
+                let value = ["text": textField.text!,"email":emailNow,"date":result]
                 childRef.updateChildValues(value)
             }
             

@@ -272,7 +272,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         button.setTitle("Post Titipan Berdurasi", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handlePostBarang), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -403,17 +403,15 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
         view.addSubview(collectionView!)
         collectionView?.heightAnchor.constraint(equalToConstant: 200).isActive = true
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150).isActive = true
-        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -110).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 75).isActive = true
+        collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -160).isActive = true
         
         
         view.addSubview(postButton)
         postButton.centerXAnchor.constraint(equalTo: view.centerXAnchor ).isActive = true
-        postButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
+        postButton.topAnchor.constraint(equalTo: (collectionView?.bottomAnchor)!, constant: 10).isActive = true
         postButton.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
     }
     
@@ -838,7 +836,7 @@ class InputCell5Pre: BaseCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 16
-        iv.image = UIImage(named: "empat")
+        iv.image = UIImage(named: "lima")
         iv.layer.masksToBounds = true
         return iv
     }()

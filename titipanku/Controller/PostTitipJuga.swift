@@ -251,7 +251,7 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
         button.setTitle("Post Barang", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
-        button.backgroundColor = UIColor.blue
+        button.backgroundColor = UIColor(hex: "#4373D8")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handlePostBarang), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -368,26 +368,31 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
     private func setupView(){
         
         // Create the navigation bar
-        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
         
         // Offset by 20 pixels vertically to take the status bar into account
-        navigationBar.backgroundColor = UIColor(hex: "#3867d6")
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = "Detail Barang"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(handleCancle))
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+        navigationItem.title = "Titip Juga"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
         // Assign the navigation item to the navigation bar
-        navigationBar.items = [navigationItem]
+        
+        navbar.setItems([navigationItem], animated: false)
         
         // Make the navigation bar a subview of the current view controller
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(navigationBar)
-        navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
-        navigationBar.widthAnchor.constraint(equalToConstant: view.frame.size.width).isActive = true
         
-        
+        collectionView?.frame = CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height - 64))
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
         
         view.backgroundColor = .white
         let screenWidth = UIScreen.main.bounds.width
