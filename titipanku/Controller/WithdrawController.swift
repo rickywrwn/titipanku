@@ -11,7 +11,6 @@ import MidtransKit
 import Alamofire
 import SwiftyJSON
 import Alamofire_SwiftyJSON
-import NVActivityIndicatorView
 
 class WithdrawController :  UIViewController {
     

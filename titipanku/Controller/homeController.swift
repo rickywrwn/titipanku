@@ -38,6 +38,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
 
     
     override func viewDidLoad() {
+        print("hello world")
         super.viewDidLoad()
         UserController.emailUser.status = "sendiri"
         if  cekLogged == true{
@@ -306,7 +307,6 @@ class Header: CategoryCell {
         let gambar = cell.imageView.image
         let dataIdOffer:[String: UIImage] = ["gambar": gambar!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "popImage"), object: nil, userInfo: dataIdOffer)
-        
     }
     
     fileprivate class BannerCell: AppCell {

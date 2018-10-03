@@ -97,14 +97,12 @@ class registerController: UIViewController {
     
     let registerButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
+        button.setTitleColor(.white, for: .normal)
         button.clipsToBounds = true
         button.setTitle("Register", for: .normal)
         button.addTarget(self, action: #selector(handleRegister), for: UIControlEvents.touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor(hex: "#3867d6")
         return button
     }()
     
@@ -121,39 +119,30 @@ class registerController: UIViewController {
     //klik register
     @objc private func handleRegister(){
         
-        
         let parameters: Parameters = ["email": emailTextField.text!,"password": passwordTextField.text!, "name" : fullNameTextField.text! ,"action" : "register"]
         Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
             response in
-
             //mencetak JSON response
             if let json = response.result.value {
                 print("JSON: \(json)")
             }
-
             //mengambil json
             let json = JSON(response.result.value)
             print(json)
             let cekSukses = json["success"].intValue
             let pesan = json["message"].stringValue
-            
             print(pesan)
             if cekSukses != 1 {
                 let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-
                 self.present(alert, animated: true)
             }else{
                 let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                     self.handleBack()
                 }))
-
                 self.present(alert, animated: true)
             }
-
         }
     }
     
@@ -222,8 +211,8 @@ class registerController: UIViewController {
         //registerButton
         view.addSubview(registerButton)
         registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        registerButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
-        registerButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
+        registerButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        registerButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         registerButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         registerButton.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor, constant: 50).isActive = true
         

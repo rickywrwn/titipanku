@@ -240,6 +240,12 @@ class PenerimaanOffer :  UIViewController {
         }
     }
     
+    @objc func handleCekResi(){
+        let tambahCont = CekResi()
+        present(tambahCont, animated: true, completion: {
+        })
+    }
+    
     @objc func handleTerimaOffer(){
         let saldo = Int((self.isiUser?.valueSaldo)!)
         let harga = Int((self.varOffer?.valueHarga)!)
@@ -425,6 +431,19 @@ class PenerimaanOffer :  UIViewController {
         return label
     }()
     
+    let cekResi : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Cek Resi", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        button.backgroundColor = UIColor(hex: "#4373D8")
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handleCekResi), for: UIControlEvents.touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+        
+    }()
+    
     let labelC : UILabel = {
         let label = UILabel()
         label.sizeToFit()
@@ -587,6 +606,12 @@ class PenerimaanOffer :  UIViewController {
         scrollView.addSubview(labelOngkir)
         labelOngkir.topAnchor.constraint(equalTo: labelKota.bottomAnchor, constant: 30).isActive = true
         labelOngkir.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        
+        scrollView.addSubview(cekResi)
+        cekResi.leftAnchor.constraint(equalTo: labelHarga.rightAnchor, constant: 20).isActive = true
+        cekResi.topAnchor.constraint(equalTo: labelB.topAnchor, constant: 0).isActive = true
+        cekResi.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        cekResi.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         scrollView.addSubview(ongkirText)
         ongkirText.topAnchor.constraint(equalTo: labelOngkir.bottomAnchor, constant: 10).isActive = true

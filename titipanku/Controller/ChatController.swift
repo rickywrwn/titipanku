@@ -72,25 +72,25 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
     }()
     
     func observeMessages(){
-        SKActivityIndicator.show("Loading...")
-        if let chatId = chat?.id {
-            let ref = Database.database().reference().child("messages").child(chatId)
-            ref.observe(.childAdded, with: { (snapshot) in
-                // Get user value
-                let value = snapshot.value as? NSDictionary
-                print(value)
-                let email = value?["email"] as? String ?? ""
-                let text = value?["text"] as? String ?? ""
-                self.arrEmail.append(email)
-                self.arrText.append(text)
-                print(self.arrEmail)
-                print(self.arrText)
-                self.collectionChat.reloadData()
-                //self.scrollToBottom()
-                
-            }, withCancel: nil)
-            SKActivityIndicator.dismiss()
-        }
+    SKActivityIndicator.show("Loading...")
+    if let chatId = chat?.id {
+        let ref = Database.database().reference().child("messages").child(chatId)
+        ref.observe(.childAdded, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            print(value)
+            let email = value?["email"] as? String ?? ""
+            let text = value?["text"] as? String ?? ""
+            self.arrEmail.append(email)
+            self.arrText.append(text)
+            print(self.arrEmail)
+            print(self.arrText)
+            self.collectionChat.reloadData()
+            //self.scrollToBottom()
+            
+        }, withCancel: nil)
+        SKActivityIndicator.dismiss()
+    }
     }
     
     func sendNotif(){
@@ -121,11 +121,11 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
             
             let result = formatter.string(from: date)
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
-                self.textField.resignFirstResponder()
-                let ref = Database.database().reference().child("messages").child((chat?.id)!)
-                let childRef = ref.childByAutoId()
-                let value = ["text": textField.text!,"email":emailNow,"date":result]
-                childRef.updateChildValues(value)
+self.textField.resignFirstResponder()
+let ref = Database.database().reference().child("messages").child((chat?.id)!)
+let childRef = ref.childByAutoId()
+let value = ["text": textField.text!,"email":emailNow,"date":result]
+childRef.updateChildValues(value)
                 self.sendNotif()
             }
             

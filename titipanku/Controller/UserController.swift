@@ -63,32 +63,32 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
     fileprivate func fetchJSON() {
         if let emailNow : String = emailUser.email {
             print(emailNow)
-            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
-            guard let url = URL(string: urlString) else { return }
-            URLSession.shared.dataTask(with: url) { (data, _, err) in
-                DispatchQueue.main.async {
-                    if let err = err {
-                        print("Failed to get data from url:", err)
-                        return
-                    }
-                    
-                    guard let data = data else { return }
-                    print(data)
-                    do {
-                        // link in description for video on JSONDecoder
-                        let decoder = JSONDecoder()
-                        // Swift 4.1
-                        self.isiUser = try decoder.decode(userDetail.self, from: data)
-                        print(self.isiUser)
-                        
-                        self.userCollectionView.reloadData()
-                        SKActivityIndicator.dismiss()
-                    } catch let jsonErr {
-                        print("Failed to decode:", jsonErr)
-                        SKActivityIndicator.dismiss()
-                    }
-                }
-                }.resume()
+let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
+guard let url = URL(string: urlString) else { return }
+URLSession.shared.dataTask(with: url) { (data, _, err) in
+DispatchQueue.main.async {
+if let err = err {
+    print("Failed to get data from url:", err)
+    return
+}
+
+guard let data = data else { return }
+print(data)
+do {
+    // link in description for video on JSONDecoder
+    let decoder = JSONDecoder()
+    // Swift 4.1
+    self.isiUser = try decoder.decode(userDetail.self, from: data)
+    print(self.isiUser)
+    
+    self.userCollectionView.reloadData()
+    SKActivityIndicator.dismiss()
+} catch let jsonErr {
+    print("Failed to decode:", jsonErr)
+    SKActivityIndicator.dismiss()
+}
+}
+}.resume()
         }
     }
     

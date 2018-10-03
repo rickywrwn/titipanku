@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import BetterSegmentedControl
 
 class UserPembelian: UIViewController {
     struct varTambah {

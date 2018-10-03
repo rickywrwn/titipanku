@@ -9,12 +9,14 @@
 import UIKit
 import Firebase
 import GoogleSignIn
-import FBSDKLoginKit
+//import FBSDKLoginKit
 import Alamofire
 import SwiftyJSON
-import NVActivityIndicatorView
+import FacebookLogin
+import FacebookCore
 
-class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButtonDelegate, GIDSignInDelegate, NVActivityIndicatorViewable {
+//, FBSDKLoginButtonDelegate
+class loginController: UIViewController ,GIDSignInUIDelegate {
     var cekLogged : Bool = UserDefaults.standard.bool(forKey: "logged")
     
     override func viewDidLoad() {
@@ -28,12 +30,11 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
             
         }
         // Do any additional setup after loading the view, typically from a nib.
-        GIDSignIn.sharedInstance().uiDelegate = self
         setupLayout()
        
         //google sign in
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().signInSilently()
         
         //print("TESTING = \(cekLogged)")
         
@@ -41,76 +42,87 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         if  cekLogged == true{
             handleSegueFacebook()
         }
+        
+        //cek fesbuk login
+        if let accessToken = AccessToken.current {
+            // User is logged in, use 'accessToken' here.
+            print(accessToken)
+        }
+    }
+    func signInWillDispatch(signIn: GIDSignIn!, error: NSError!) {
+        print("dispatch")
+    }
+    
+    // Present a view that prompts the user to sign in with Google
+    func signIn(signIn: GIDSignIn!,
+                presentViewController viewController: UIViewController!) {
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    // Dismiss the "Sign in with Google" view
+    func signIn(signIn: GIDSignIn!,
+                dismissViewController viewController: UIViewController!) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     //facebook login
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        print("Log out facebook")
-    }
+//    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+//        print("Log out facebook")
+//    }
     
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if error != nil {
-            print(error)
-            return
-        }
-        
-//        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields":"id, name, email"]).start{
-//            (connection, result, err) in
-//            
-//            if err != nil{
-//                print("failed to start graph request", err)
+//    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+//        if error != nil {
+//            print(error)
+//            return
+//        }
+//        
+////        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields":"id, name, email"]).start{
+////            (connection, result, err) in
+////            
+////            if err != nil{
+////                print("failed to start graph request", err)
+////                return
+////            }
+////            print(result)
+////        }
+//        let accesTokenFB = FBSDKAccessToken.current()
+//        guard let accessTokenFBString = accesTokenFB?.tokenString else {return}
+//        let credentialFB = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+//        
+//        Auth.auth().signIn(with: credentialFB) { (user, errfb) in
+//            if let errfb = errfb {
+//                print("firebase fb error", errfb)
 //                return
 //            }
-//            print(result)
+//            // User is signed in
+//            let userfb = Auth.auth().currentUser
+//            print("firebase FB sukses", userfb?.email)
+//            if let email = userfb?.email , let name = userfb?.displayName{
+//                let parameters: Parameters = ["email": userfb?.email, "action" : "facebook"]
+//                Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
+//                    response in
+//                    
+//                    //mencetak JSON response
+//                    if let json = response.result.value {
+//                        print("JSON: \(json)")
+//                    }
+//                    
+//                    //mengambil json
+//                    let json = JSON(response.result.value)
+//                    let cekSukses = json["success"].intValue
+//                    let pesan = json["message"].stringValue
+//                    
+//                    if cekSukses != 1 {
+//                        
+//                    }else{
+//                    }
+//                }
+//            }
+//            
+//            
 //        }
-        let accesTokenFB = FBSDKAccessToken.current()
-        guard let accessTokenFBString = accesTokenFB?.tokenString else {return}
-        let credentialFB = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-        
-        Auth.auth().signIn(with: credentialFB) { (user, errfb) in
-            if let errfb = errfb {
-                print("firebase fb error", errfb)
-                return
-            }
-            // User is signed in
-            let userfb = Auth.auth().currentUser
-            print("firebase FB sukses", userfb?.email)
-            let parameters: Parameters = ["email": userfb?.email, "action" : "facebook"]
-            Alamofire.request("http://titipanku.xyz/api/Login.php",method: .post, parameters: parameters)
-            self.handleSegueFacebook()
-        }
-    }
+//    }
     //akhir facebook login
-    
-    //google sign in
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        
-        if let err = error {
-            print("Login Failed : ", err)
-            return
-        }
-        print("Login Google Success", user)
-        
-        //firebase
-        guard let authentication = user.authentication else { return }
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
-                                                       accessToken: authentication.accessToken)
-        
-        Auth.auth().signIn(with: credential) { (user, error) in
-            if let error = error {
-                print("Firebase error", error)
-                return
-            }
-            guard let uid = user?.email else {return}
-            print("Firebase sukses", uid)
-            let parameters: Parameters = ["email": uid, "action" : "google"]
-            Alamofire.request("http://titipanku.xyz/api/Login.php", method: .post, parameters: parameters)
-            //Alamofire.request("http://localhost/titipankuu/Login.php", method: .post, parameters: parameters)
-            self.handleSegueFacebook()
-        }
-    }
-    //end google sign in
-    
     
     @objc func handleSegueRegister(){
         perform(#selector(showRegisterPage), with: nil, afterDelay: 0.01)
@@ -149,59 +161,130 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     //login
     @objc func handleLogin(){
         let frame = CGRect(x: 50, y: 50, width: 30, height: 30)
-        NVActivityIndicatorView(frame: frame, type: NVActivityIndicatorType(rawValue: NVActivityIndicatorType.circleStrokeSpin.rawValue))
         
         let size = CGSize(width: 30, height: 30)
         self.view.endEditing(true)
-        startAnimating(size, message: "Loading...")
         
-        let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]
-        Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
-            response in
-            
-            //mencetak JSON response
-            if let json = response.result.value {
-                print("JSON: \(json)")
-            }
-            
-            //mengambil json
-            let json = JSON(response.result.value)
-            let cekSukses = json["success"].intValue
-            let pesan = json["message"].stringValue
-            
-            if cekSukses != 1 {
-                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-                
-                self.stopAnimating()
-                self.present(alert, animated: true)
-            }else{
-                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                UserDefaults.standard.set(true, forKey:"logged")
-                UserDefaults.standard.set(self.usernameTextField.text!, forKey:"loggedEmail")
-                UserDefaults.standard.synchronize()
-                print(self.usernameTextField.text!)
-                self.stopAnimating()
-                self.showHome()
-            }))
-                
-                self.present(alert, animated: true)
-            }
-            
-            //            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-            //                print("Data: \(utf8Text)") // original server data as UTF8 string
-            //            }
-        }
+let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]
+Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
+response in
+
+//mencetak JSON response
+if let json = response.result.value {
+    print("JSON: \(json)")
+}
+
+//mengambil json
+let json = JSON(response.result.value)
+let cekSukses = json["success"].intValue
+let pesan = json["message"].stringValue
+
+if cekSukses != 1 {
+    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+    
+    self.present(alert, animated: true)
+}else{
+    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+    UserDefaults.standard.set(true, forKey:"logged")
+    UserDefaults.standard.set(self.usernameTextField.text!, forKey:"loggedEmail")
+    UserDefaults.standard.synchronize()
+    print(self.usernameTextField.text!)
+    self.showHome()
+}))
+    
+    self.present(alert, animated: true)
+}
+
+//            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+//                print("Data: \(utf8Text)") // original server data as UTF8 string
+//            }
+}
     }
     
+    @objc func loginButtonClicked() {
+        let loginManager = LoginManager()
+        
+        loginManager.logIn(readPermissions: [.publicProfile], viewController: self, completion:{
+            loginResult in
+            switch loginResult {
+            case .failed(let error):
+                print(error)
+            case .cancelled:
+                print("User cancelled login.")
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                print("Logged in!")
+                print(accessToken)
+                
+                if(AccessToken.current != nil){
+                    let req = GraphRequest(graphPath: "me", parameters: ["fields": "email,first_name,last_name,gender,picture"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod(rawValue: "GET")!)
+                    req.start({ (connection, result) in
+                        switch result {
+                        case .failed(let error):
+                            print(error)
+                            
+                        case .success(let graphResponse):
+                            if let responseDictionary = graphResponse.dictionaryValue {
+                                print(responseDictionary)
+                                let firstNameFB = responseDictionary["first_name"] as? String
+                                let lastNameFB = responseDictionary["last_name"] as? String
+                                let socialIdFB = responseDictionary["id"] as? String
+                                let emailFB = responseDictionary["email"] as? String
+                                let genderFB = responseDictionary["gender"] as? String
+                                let pictureUrlFB = responseDictionary["picture"] as? [String:Any]
+                                let photoData = pictureUrlFB!["data"] as? [String:Any]
+                                let photoUrl = photoData!["url"] as? String
+                                print(firstNameFB, lastNameFB, socialIdFB, genderFB, photoUrl)
+                                
+                                let full = firstNameFB! + " " + lastNameFB!
+                                if let emails = emailFB, let name : String = full{
+                                    let parameters: Parameters = ["email": emails,"name":name, "action" : "facebook"]
+                                    Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
+                                        response in
+                                        
+                                        //mencetak JSON response
+                                        if let json = response.result.value {
+                                            print("JSON: \(json)")
+                                        }
+                                        
+                                        //mengambil json
+                                        let json = JSON(response.result.value)
+                                        let cekSukses = json["success"].intValue
+                                        let pesan = json["message"].stringValue
+                                        
+                                        if cekSukses != 1 {
+                                            
+                                        }else{
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        } )
+
+    }
     //tampilan
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleToFill
+        iv.image = UIImage.init(named: "logotrans")
+        iv.layer.masksToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
     let usernameTextField : UITextField = {
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.borderStyle = .roundedRect
+        textField.borderStyle = .bezel
         textField.placeholder = "Email"
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
         textField.textAlignment = .center
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -210,7 +293,8 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     let passwordTextField : UITextField = {
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.placeholder = "Password"
-        textField.borderStyle = .roundedRect
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
         textField.textAlignment = .center
         textField.isSecureTextEntry = true
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -220,10 +304,8 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     let loginButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("Login", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor(hex: "#3867d6")
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleLogin), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -233,12 +315,14 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
     
     let registerButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitleColor(.black, for: .normal)
         button.setTitle("Register", for: .normal)
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 5
+        button.backgroundColor = UIColor(hex: "#3867d6")
+        button.setTitleColor(UIColor.white, for: .normal)
+        
+        // Handle clicks on the button
+        
         button.addTarget(self, action: #selector(handleSegueRegister), for: UIControlEvents.touchUpInside)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -249,13 +333,25 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         return signInButton
     }()
     
-    let facebookSignInButton : FBSDKLoginButton = {
-        let fbSignInButton = FBSDKLoginButton(frame: CGRect(x: 0, y: 0, width: 150, height: 30))
-        fbSignInButton.translatesAutoresizingMaskIntoConstraints = false
-        // fbSignInButton.delegate = self
-        fbSignInButton.readPermissions = ["email"]
-        return fbSignInButton
+    let facebookButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.backgroundColor = UIColor(hex: "#3867d6")
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitle("Login Facebook", for: .normal)
+        button.addTarget(self, action: #selector(loginButtonClicked), for: UIControlEvents.touchUpInside)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
+    
+//    let facebookSignInButton : FBSDKLoginButton = {
+//        let fbSignInButton = FBSDKLoginButton(frame: CGRect(x: 0, y: 0, width: 150, height: 30))
+//        fbSignInButton.translatesAutoresizingMaskIntoConstraints = false
+//        // fbSignInButton.delegate = self
+//        fbSignInButton.readPermissions = ["email"]
+//        return fbSignInButton
+//    }()
+    
     
     let googleSignOutButton : UIButton = {
         let button = UIButton(type: .system)
@@ -267,10 +363,15 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         return button
     }()
     
-    
-    
     private func setupLayout(){
         view.backgroundColor = .white
+        
+        //usernameTextField
+        view.addSubview(imageView)
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        imageView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         
         //usernameTextField
         view.addSubview(usernameTextField)
@@ -279,7 +380,7 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         usernameTextField.font = UIFont.systemFont(ofSize: 25)
         usernameTextField.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         usernameTextField.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        usernameTextField.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: 200).isActive = true
+        usernameTextField.topAnchor.constraint(greaterThanOrEqualTo: imageView.bottomAnchor, constant: 0).isActive = true
         
         //passwordTextField
         view.addSubview(passwordTextField)
@@ -294,38 +395,38 @@ class loginController: UIViewController , GIDSignInUIDelegate , FBSDKLoginButton
         view.addSubview(loginButton)
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        loginButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
-        loginButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
-        loginButton.topAnchor.constraint(greaterThanOrEqualTo: passwordTextField.bottomAnchor, constant: 30).isActive = true
+        loginButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        loginButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        loginButton.topAnchor.constraint(greaterThanOrEqualTo: passwordTextField.bottomAnchor, constant: 50).isActive = true
         
         //registerButton
         view.addSubview(registerButton)
         registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         registerButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        registerButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
-        registerButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
+        registerButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        registerButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 15).isActive = true
         
         //googleSignInButton
         view.addSubview(googleSignInButton)
         googleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         googleSignInButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        googleSignInButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
-        googleSignInButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
+        googleSignInButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        googleSignInButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         googleSignInButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 15).isActive = true
  
         //fbSignInButton
-        view.addSubview(facebookSignInButton)
-        facebookSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        facebookSignInButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        facebookSignInButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 120).isActive = true
-        facebookSignInButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 120).isActive = true
-        facebookSignInButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 15).isActive = true
+        view.addSubview(facebookButton)
+        facebookButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        facebookButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        facebookButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        facebookButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        facebookButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 15).isActive = true
         
         //googleSignOutButton
         view.addSubview(googleSignOutButton)
         googleSignOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        googleSignOutButton.topAnchor.constraint(equalTo: facebookSignInButton.bottomAnchor, constant: 30).isActive = true
+        googleSignOutButton.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 30).isActive = true
         
        googleSignOutButton.isHidden = true
 

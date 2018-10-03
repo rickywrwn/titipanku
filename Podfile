@@ -1,4 +1,4 @@
-# Uncomment the next line to define a global platform for your project
+ # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
 target 'titipanku' do
@@ -10,23 +10,20 @@ target 'titipanku' do
   pod 'Alamofire', '~> 4.7'
 
   pod 'Firebase/Auth'
-  pod 'GoogleSignIn'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
   pod 'Firebase/Messaging'
  
-  pod 'FBSDKCoreKit'
-  pod 'FBSDKShareKit'
-  pod 'FBSDKLoginKit'
+ pod 'FacebookCore'
+pod 'FacebookLogin'
+pod 'FacebookShare'
 
   pod 'SwiftyJSON'
   pod 'Alamofire-SwiftyJSON'
   pod 'SwiftyPickerPopover'
   pod 'AlamofireImage', '~> 3.3'
   pod 'MidtransKit'
-  pod 'NVActivityIndicatorView'
   pod 'SKActivityIndicatorView', '~> 0.1.0'
   pod 'Hue'
-  pod 'BetterSegmentedControl', '~> 1.0'
   pod 'Lightbox'
 end

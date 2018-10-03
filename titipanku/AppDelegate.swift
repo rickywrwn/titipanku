@@ -9,16 +9,17 @@
 import UIKit
 import Firebase
 import GoogleSignIn
-import FBSDKCoreKit
+//import FBSDKCoreKit
 import MidtransKit
 import UserNotifications
 import FirebaseInstanceID
 import FirebaseMessaging
 import Alamofire
 import SwiftyJSON
+import FacebookCore
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate, MessagingDelegate{
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate, MessagingDelegate,GIDSignInDelegate{
     
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
@@ -32,8 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         MidtransCreditCardConfig.shared().paymentType = .twoclick
         
         FirebaseApp.configure()
+        
+        //google
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
         //facebook
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         UIApplication.shared.statusBarStyle = .lightContent
 
         UINavigationBar.appearance().barTintColor = UIColor(hex: "#3867d6")
@@ -74,6 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         return true
     }
+    
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         
         print("Firebase registration token: \(fcmToken)")
@@ -143,15 +148,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             //google
             GIDSignIn.sharedInstance().handle(url,sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,annotation: [:])
             
-            //facebook
-            let handle = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: [UIApplicationOpenURLOptionsKey.annotation])
+//            //facebook
+//            let handle = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: [UIApplicationOpenURLOptionsKey.annotation])
             
-            return handle
+            //return handle
+            return SDKApplicationDelegate.shared.application(application, open: url, options: options)
+            
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url as URL?,
+                                                 sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                 annotation: options[UIApplicationOpenURLOptionsKey.annotation])
     }
     
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+              withError error: Error!) {
+        if let error = error {
+            print("\(error.localizedDescription)")
+        } else {
+            // Perform any operations on signed in user here.
+            let userId = user.userID                  // For client-side use only!
+            let idToken = user.authentication.idToken // Safe to send to the server
+            let fullName = user.profile.name
+            let givenName = user.profile.givenName
+            let familyName = user.profile.familyName
+            let email = user.profile.email
+            // ...
+            if let emails = email, let name = fullName{
+                let parameters: Parameters = ["email": emails,"name":name, "action" : "google"]
+                Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
+                    response in
+                    
+                    //mencetak JSON response
+                    if let json = response.result.value {
+                        print("JSON: \(json)")
+                    }
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    
+                    if cekSukses != 1 {
+                       
+                    }else{
+                    }
+                }
+            }
+        }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
+              withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
+    }
+
     
     
-    //akhir google sigin in
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

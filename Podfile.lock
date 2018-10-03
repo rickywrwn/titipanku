@@ -5,7 +5,6 @@ PODS:
     - SwiftyJSON (~> 4.0.0)
   - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
-  - BetterSegmentedControl (1.0)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -13,12 +12,25 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
   - Cache (4.2.0)
-  - FBSDKCoreKit (4.31.1):
+  - FacebookCore (0.3.2):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.35)
+  - FacebookLogin (0.3.2):
+    - Bolts (~> 1.8)
+    - FacebookCore (~> 0.3.2)
+    - FBSDKCoreKit (~> 4.35)
+    - FBSDKLoginKit (~> 4.35)
+  - FacebookShare (0.3.2):
+    - Bolts (~> 1.8)
+    - FacebookCore (~> 0.3.2)
+    - FBSDKCoreKit (~> 4.35)
+    - FBSDKShareKit (~> 4.35)
+  - FBSDKCoreKit (4.35.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.31.1):
+  - FBSDKLoginKit (4.35.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.31.1):
-    - FBSDKCoreKit (~> 4.31.1)
+  - FBSDKShareKit (4.35.0):
+    - FBSDKCoreKit (~> 4.35.0)
   - Firebase/Auth (4.11.0):
     - Firebase/Core
     - FirebaseAuth (= 4.5.0)
@@ -96,9 +108,6 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - NVActivityIndicatorView (4.2.1):
-    - NVActivityIndicatorView/Presenter (= 4.2.1)
-  - NVActivityIndicatorView/Presenter (4.2.1)
   - Protobuf (3.6.1)
   - SKActivityIndicatorView (0.1.0)
   - SwiftyJSON (4.0.0)
@@ -108,10 +117,9 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - Alamofire-SwiftyJSON
   - AlamofireImage (~> 3.3)
-  - BetterSegmentedControl (~> 1.0)
-  - FBSDKCoreKit
-  - FBSDKLoginKit
-  - FBSDKShareKit
+  - FacebookCore
+  - FacebookLogin
+  - FacebookShare
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -120,7 +128,6 @@ DEPENDENCIES:
   - Hue
   - Lightbox
   - MidtransKit
-  - NVActivityIndicatorView
   - SKActivityIndicatorView (~> 0.1.0)
   - SwiftyJSON
   - SwiftyPickerPopover
@@ -130,9 +137,11 @@ SPEC REPOS:
     - Alamofire
     - Alamofire-SwiftyJSON
     - AlamofireImage
-    - BetterSegmentedControl
     - Bolts
     - Cache
+    - FacebookCore
+    - FacebookLogin
+    - FacebookShare
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
@@ -154,7 +163,6 @@ SPEC REPOS:
     - MidtransCoreKit
     - MidtransKit
     - nanopb
-    - NVActivityIndicatorView
     - Protobuf
     - SKActivityIndicatorView
     - SwiftyJSON
@@ -164,12 +172,14 @@ SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   Alamofire-SwiftyJSON: 2b3649d57dc7bb2880fb8b86f8bb969397666916
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
-  BetterSegmentedControl: 92555f980e4273ec414d6187acc5b811659a9abf
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Cache: f28f8dd64b632155aabf9b3906b036a659048251
-  FBSDKCoreKit: e08ccfcefa7bc1347a07c276dac9bf6c7fe57024
-  FBSDKLoginKit: 99797ac39252fef6f72600b886f6ee60b4b29cab
-  FBSDKShareKit: e640c41c9fcd61929eeb3d0c21ad335103e7cb62
+  FacebookCore: fe93222bb70346730ef33b061d493e9e7a7cb1f5
+  FacebookLogin: a4e225974791c82836765a294582b4778baffc07
+  FacebookShare: 5319f2655d53d20c595745a68dae8476027b8bae
+  FBSDKCoreKit: 1a5b2e3ceb5ca827a53c54aa5f4a3480efff80d2
+  FBSDKLoginKit: 00a3d65d1226852f9d76dcddff01981e5e6d9c38
+  FBSDKShareKit: 2ddbd7e6432023fff957af62e23a3671b84319f7
   Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
   FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
   FirebaseAuth: 147bf340a0706b44ca1753d6b41ebafd9687cfe6
@@ -188,12 +198,11 @@ SPEC CHECKSUMS:
   MidtransCoreKit: 15404e6aa6b07b5cfbccf6e1da1a8ea49d1a34a8
   MidtransKit: 80d2271ab31a4d2a187fdce7e83c224dd8142231
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  NVActivityIndicatorView: 8068ba3ad39cb44cbaab25d89ff2546b3f092681
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SKActivityIndicatorView: f46936f760d33eb8235333242269bf01cc9248ae
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwiftyPickerPopover: f1bb928efd60e4c754aa957c1bb67372465e9ccb
 
-PODFILE CHECKSUM: 1195419ceaed4fc5314542819a7d589fdfa39bfa
+PODFILE CHECKSUM: 584e7b745ebdd4b9b267486a7fe72a92be820c49
 
 COCOAPODS: 1.5.3
