@@ -19,6 +19,8 @@
 		7E1B38D62120E96C00FFD5B0 /* UserPenjualanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */; };
 		7E1B38D82120E98900FFD5B0 /* UserPenjualanPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */; };
 		7E1B38DA2120F06000FFD5B0 /* barangDetailControllerUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */; };
+		7E339A9921688BE700F55E79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E339A9821688BE700F55E79 /* GoogleService-Info.plist */; };
+		7E339A9F2168F63F00F55E79 /* EditPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E339A9E2168F63F00F55E79 /* EditPreorder.swift */; };
 		7E41129221206FC9008BBF89 /* PostTitipJuga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E41129121206FC9008BBF89 /* PostTitipJuga.swift */; };
 		7E411294212088AD008BBF89 /* AddDetailTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411293212088AD008BBF89 /* AddDetailTitip.swift */; };
 		7E411296212088C0008BBF89 /* AddKarateristikTitip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */; };
@@ -61,7 +63,6 @@
 		7E977E102119EB3700D65F76 /* PenerimaanPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */; };
 		7E977E12211A7A5400D65F76 /* LihatResiPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */; };
 		7EA9CCCB20F3422A003C8D8D /* Pods_titipanku.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7EC037312146FAFA00476982 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EC037302146FAFA00476982 /* GoogleService-Info.plist */; };
 		7EC0373521484CF800476982 /* UserEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0373421484CF800476982 /* UserEdit.swift */; };
 		7EC55F9E2138BE31002C0FD8 /* UserTripDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC55F9D2138BE31002C0FD8 /* UserTripDetail.swift */; };
 		7ECA1D34212B7EF100D26A77 /* LihatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECA1D33212B7EF100D26A77 /* LihatUser.swift */; };
@@ -129,6 +130,8 @@
 		7E1B38D52120E96C00FFD5B0 /* UserPenjualanRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualanRequest.swift; sourceTree = "<group>"; };
 		7E1B38D72120E98900FFD5B0 /* UserPenjualanPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPenjualanPreorder.swift; sourceTree = "<group>"; };
 		7E1B38D92120F06000FFD5B0 /* barangDetailControllerUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = barangDetailControllerUser.swift; sourceTree = "<group>"; };
+		7E339A9821688BE700F55E79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "olist/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7E339A9E2168F63F00F55E79 /* EditPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPreorder.swift; sourceTree = "<group>"; };
 		7E41129121206FC9008BBF89 /* PostTitipJuga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTitipJuga.swift; sourceTree = "<group>"; };
 		7E411293212088AD008BBF89 /* AddDetailTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailTitip.swift; sourceTree = "<group>"; };
 		7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKarateristikTitip.swift; sourceTree = "<group>"; };
@@ -171,7 +174,6 @@
 		7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PengirimanPembelian.swift; sourceTree = "<group>"; };
 		7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenerimaanPembelian.swift; sourceTree = "<group>"; };
 		7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LihatResiPreorder.swift; sourceTree = "<group>"; };
-		7EC037302146FAFA00476982 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7EC0373421484CF800476982 /* UserEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEdit.swift; sourceTree = "<group>"; };
 		7EC55F9D2138BE31002C0FD8 /* UserTripDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTripDetail.swift; sourceTree = "<group>"; };
 		7ECA1D33212B7EF100D26A77 /* LihatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LihatUser.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				9C502E8F20BCE3B000FBCD91 /* PostBarang.swift */,
 				7E41129121206FC9008BBF89 /* PostTitipJuga.swift */,
 				9C82E69520BF231600B21F21 /* PostPreorder.swift */,
+				7E339A9E2168F63F00F55E79 /* EditPreorder.swift */,
 				7E411293212088AD008BBF89 /* AddDetailTitip.swift */,
 				7E411295212088C0008BBF89 /* AddKarateristikTitip.swift */,
 				7E41129D21208A28008BBF89 /* AddNegaraTitip.swift */,
@@ -362,7 +365,7 @@
 			children = (
 				9CE2ACA020850774005C1D49 /* Class */,
 				7E8DA56220F33FB7003C9D1F /* titipanku.entitlements */,
-				7EC037302146FAFA00476982 /* GoogleService-Info.plist */,
+				7E339A9821688BE700F55E79 /* GoogleService-Info.plist */,
 				9CC8A6E1206A252000242A87 /* AppDelegate.swift */,
 				9C7177AD206A31990082E417 /* Controller */,
 				9CC8A6E5206A252000242A87 /* Main.storyboard */,
@@ -455,7 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CC8A6EC206A252000242A87 /* LaunchScreen.storyboard in Resources */,
-				7EC037312146FAFA00476982 /* GoogleService-Info.plist in Resources */,
+				7E339A9921688BE700F55E79 /* GoogleService-Info.plist in Resources */,
 				9CC8A6E9206A252000242A87 /* Assets.xcassets in Resources */,
 				9CC8A6E7206A252000242A87 /* Main.storyboard in Resources */,
 			);
@@ -585,6 +588,7 @@
 				7E977E12211A7A5400D65F76 /* LihatResiPreorder.swift in Sources */,
 				9C7177AF206A31B20082E417 /* loginController.swift in Sources */,
 				7E5D98632106C630006690B0 /* AcceptFlashsale.swift in Sources */,
+				7E339A9F2168F63F00F55E79 /* EditPreorder.swift in Sources */,
 				9C6463BC20BF696A001E681A /* UserTripList.swift in Sources */,
 				7E7B60C8216139A100106EE6 /* CekResi.swift in Sources */,
 				7E977E102119EB3700D65F76 /* PenerimaanPembelian.swift in Sources */,
@@ -808,7 +812,7 @@
 				INFOPLIST_FILE = titipanku/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.sttsfasfd.titipanku;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stts.titipanku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -828,7 +832,7 @@
 				INFOPLIST_FILE = titipanku/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.sttsfasfd.titipanku;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.stts.titipanku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

@@ -12,6 +12,7 @@ import SwiftyPickerPopover
 import SwiftyJSON
 import Alamofire_SwiftyJSON
 import MidtransKit
+import SKActivityIndicatorView
 
 class PenerimaanOffer :  UIViewController {
     
@@ -56,9 +57,10 @@ class PenerimaanOffer :  UIViewController {
                         self.isiUser = try decoder.decode(userDetail.self, from: data)
                         print(self.isiUser)
                         //self.labelB.text = "Rp " + (self.isiUser?.saldo)!
-                        
+                        SKActivityIndicator.dismiss()
                     } catch let jsonErr {
                         print("Failed to decode:", jsonErr)
+                        SKActivityIndicator.dismiss()
                     }
                 }
                 }.resume()
@@ -163,9 +165,14 @@ class PenerimaanOffer :  UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        SKActivityIndicator.dismiss()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SKActivityIndicator.show("Loading...")
         view.backgroundColor = UIColor.white
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
@@ -242,11 +249,15 @@ class PenerimaanOffer :  UIViewController {
     
     @objc func handleCekResi(){
         let tambahCont = CekResi()
+        if let resi = labelHarga.text{
+            tambahCont.nomor = resi
+        }
         present(tambahCont, animated: true, completion: {
         })
     }
     
     @objc func handleTerimaOffer(){
+        if ongkirText.text == "" || ratingText.text != "" {
         let saldo = Int((self.isiUser?.valueSaldo)!)
         let harga = Int((self.varOffer?.valueHarga)!)
         let hargaTotal = harga! + Int((self.varOffer?.hargaOngkir)!)!
@@ -317,7 +328,13 @@ class PenerimaanOffer :  UIViewController {
             
             // show the alert
             self.present(alert, animated: true, completion: nil)
+         }else{
+            let alert = UIAlertController(title: "Message", message: "Data Tidak Lengkap", preferredStyle: .alert)
             
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }
         
     }
     
@@ -382,11 +399,11 @@ class PenerimaanOffer :  UIViewController {
         print("tapped")
         StringPickerPopover(title: "Rating Anda", choices: ["1", "2","3","4","5"])
             .setSelectedRow(0)
-            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.ratingText.text = selectedString
             })
-            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         
@@ -603,15 +620,15 @@ class PenerimaanOffer :  UIViewController {
         labelKota.topAnchor.constraint(equalTo: labelC.bottomAnchor, constant: 10).isActive = true
         labelKota.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
-        scrollView.addSubview(labelOngkir)
-        labelOngkir.topAnchor.constraint(equalTo: labelKota.bottomAnchor, constant: 30).isActive = true
-        labelOngkir.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-        
         scrollView.addSubview(cekResi)
-        cekResi.leftAnchor.constraint(equalTo: labelHarga.rightAnchor, constant: 20).isActive = true
-        cekResi.topAnchor.constraint(equalTo: labelB.topAnchor, constant: 0).isActive = true
+        cekResi.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        cekResi.topAnchor.constraint(equalTo: labelKota.topAnchor, constant: 30).isActive = true
         cekResi.widthAnchor.constraint(equalToConstant: 100).isActive = true
         cekResi.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        scrollView.addSubview(labelOngkir)
+        labelOngkir.topAnchor.constraint(equalTo: cekResi.bottomAnchor, constant: 350).isActive = true
+        labelOngkir.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
         scrollView.addSubview(ongkirText)
         ongkirText.topAnchor.constraint(equalTo: labelOngkir.bottomAnchor, constant: 10).isActive = true
@@ -632,7 +649,7 @@ class PenerimaanOffer :  UIViewController {
         ratingText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
         
         scrollView.addSubview(labelImage)
-        labelImage.topAnchor.constraint(equalTo: ratingText.bottomAnchor, constant: 30).isActive = true
+        labelImage.topAnchor.constraint(equalTo: cekResi.bottomAnchor, constant: 0).isActive = true
         labelImage.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
         scrollView.addSubview(imageView)

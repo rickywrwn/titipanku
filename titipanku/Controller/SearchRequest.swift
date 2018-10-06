@@ -152,7 +152,7 @@ class SearchRequest: UICollectionViewController, UICollectionViewDelegateFlowLay
             SKActivityIndicator.dismiss()
         }
         collectionView?.backgroundColor = UIColor.white
-        navigationItem.title = "Request"
+        navigationItem.title = "Permintaan"
         collectionView?.register(RequestCell.self, forCellWithReuseIdentifier: RequestCellId)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadRequest), name: NSNotification.Name(rawValue: "reloadRequest"), object: nil)

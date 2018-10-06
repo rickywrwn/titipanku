@@ -87,6 +87,13 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
         setupView()
     }
     
+    let labelLegend : UILabel = {
+        let label = UILabel()
+        label.text = "Merah : Chat Masalah, Hitam : Chat User"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     private func setupView(){
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -106,8 +113,9 @@ class PesanController: UIViewController,UICollectionViewDataSource, UICollection
         self.collectionChat.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
         self.collectionChat.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor,constant: 0).isActive = true
         self.collectionChat.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        self.view.addSubview(labelLegend)
+        labelLegend.topAnchor.constraint(equalTo: collectionChat.bottomAnchor, constant: 5).isActive = true
         
-       
     }
     
     

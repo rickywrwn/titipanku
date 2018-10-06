@@ -246,62 +246,52 @@ class PengirimanOffer :  UIViewController {
     }
     @objc func handleTerimaOffer(){
         
-        if(ongkirText.text == ""){
-            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
+        // create the alert
+        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin ?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // add the actions (buttons)
+        alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
             
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
-        }else{
-            
-            // create the alert
-            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin ?", preferredStyle: UIAlertControllerStyle.alert)
-            
-            // add the actions (buttons)
-            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-            
-            alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
+            if let emailNow = self.app?.email, let idOffer = self.varOffer?.id, let idRequest = self.app?.id , let idPenawar = self.varOffer?.idPenawar,let nomorResi = self.ongkirText.text{
                 
-                if let emailNow = self.app?.email, let idOffer = self.varOffer?.id, let idRequest = self.app?.id , let idPenawar = self.varOffer?.idPenawar,let nomorResi = self.ongkirText.text{
+                let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"idPenawar":idPenawar,"nomorResi":nomorResi,"action":"kirim"]
+                print (parameter)
+                Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
+                    response in
                     
-                    let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"idPenawar":idPenawar,"nomorResi":nomorResi,"action":"kirim"]
-                    print (parameter)
-                    Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
-                        response in
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                         
-                        //mengambil json
-                        let json = JSON(response.result.value)
-                        print(json)
-                        let cekSukses = json["success"].intValue
-                        let pesan = json["message"].stringValue
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                         
-                        if cekSukses != 1 {
-                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        self.present(alert, animated: true)
+                    }else{
+                        self.sendNotif()
+                        let alert = UIAlertController(title: "Message", message: "Kirim Barang Berhasil", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                             
-                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                            self.handleBack()
                             
-                            self.present(alert, animated: true)
-                        }else{
-                            self.sendNotif()
-                            let alert = UIAlertController(title: "Message", message: "Kirim Barang Berhasil", preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                                
-                                self.handleBack()
-                                
-                            }))
-                            
-                            self.present(alert, animated: true)
-                        }
+                        }))
+                        
+                        self.present(alert, animated: true)
                     }
                 }
-                
-            }))
+            }
             
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
-            
-        }
+        }))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc private func handleBack(){
@@ -378,8 +368,6 @@ class PengirimanOffer :  UIViewController {
         textField.textAlignment = .left
         textField.borderStyle = .line
         textField.translatesAutoresizingMaskIntoConstraints = false
-        //textField.addTarget(self, action: #selector(ongkirTapped(_:)),for: UIControlEvents.touchDown)
-        //textField.inputView = UIView();
         return textField
     }()
     

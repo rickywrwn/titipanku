@@ -210,7 +210,7 @@ class TopupController :  UIViewController,MidtransUIPaymentViewControllerDelegat
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = "Topup Wallet"
+        navigationItem.title = "Pengisian Wallet"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar

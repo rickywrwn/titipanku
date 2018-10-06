@@ -8,13 +8,55 @@
 
 import UIKit
 import SwiftyPickerPopover
+import SKActivityIndicatorView
 
 class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-     var imgBarang: UIImage?
+    
+    struct kategori: Decodable {
+        let nama: String
+    }
+    
+    var listKategori = [kategori]()
+    var daftarKategori = [String]()
+    fileprivate func fetchKategori() {
+        let urlString = "http://titipanku.xyz/api/GetKategori.php"
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data, _, err) in
+            DispatchQueue.main.async {
+                if let err = err {
+                    print("Failed to get data from url:", err)
+                    return
+                }
+                
+                guard let data = data else { return }
+                print(data)
+                do {
+                    // link in description for video on JSONDecoder
+                    let decoder = JSONDecoder()
+                    // Swift 4.1
+                    self.listKategori = try decoder.decode([kategori].self, from: data)
+                    print(self.listKategori)
+                    for i in 0..<self.listKategori.count {
+                        self.daftarKategori.append(self.listKategori[i].nama)
+                    }
+                    print(self.daftarKategori)
+                    SKActivityIndicator.dismiss()
+                } catch let jsonErr {
+                    print("Failed to decode:", jsonErr)
+                    SKActivityIndicator.dismiss()
+                }
+            }
+            }.resume()
+    }
+    
+    var imgBarang: UIImage?
     var cekGambar : Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        SKActivityIndicator.show("Loading...")
+        
+        fetchKategori()
         
         if PostBarang.varDetail.status != 0 {
             BarangImageView.image = PostBarang.varDetail.gambarBarang
@@ -65,13 +107,13 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
     @objc func textFieldTapped(_ textField: UITextField) {
         
         print("tapped")
-        StringPickerPopover(title: "Kategori Barang", choices: ["Elektronik","Makanan","Pakaian"])
+        StringPickerPopover(title: "Kategori Barang", choices: daftarKategori)
             .setSelectedRow(0)
-            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.categoryText.text = selectedString
             })
-            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         
@@ -82,11 +124,11 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         print("tapped")
         StringPickerPopover(title: "Jumlah Barang", choices: ["1","2","3","4","5","6","7","8","9","10"])
             .setSelectedRow(0)
-            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.qtyText.text = selectedString
             })
-            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         
@@ -95,15 +137,15 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
     @objc func imgTapped(_ imageView: UIImageView) {
         print("tapped gambar")
         
-        let alert = UIAlertController(title: "Choose one of the following:", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
+        let alert = UIAlertController(title: "Ambil gambar dari", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Galeri", style: .default, handler: { action in
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.allowsEditing = true
             self.present(picker, animated: true, completion: nil)
             
         }))
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Kamera", style: .default, handler: { action in
             self.openCamera()
         }))
         self.present(alert, animated: true, completion: nil)
@@ -305,7 +347,7 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         
         // add the scroll view to self.view
         self.view.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1150)
+        scrollView.contentSize = CGSize(width: view.frame.size.width - 16 , height: 1500)
         
         
         // constrain the scroll view to 8-pts on each side

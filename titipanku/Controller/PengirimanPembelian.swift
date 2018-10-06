@@ -108,7 +108,7 @@ class PengirimanPembelian :  UIViewController {
         labelA.text = "Tanggl Pembelian"
         labelTgl.text = varOffer?.tglBeli
         labelB.text = "Jumlah Barang"
-        labelHarga.text = app?.qty
+        labelHarga.text = varOffer?.qty
         labelKota.text = varOffer?.kota
         label4.isHidden = true
         // Create the navigation bar

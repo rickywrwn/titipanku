@@ -32,7 +32,7 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
         item1.tabBarItem = icon1
         
         let item4 = InboxController()
-        let icon4 = UITabBarItem(title: "Inbox", image: UIImage(named: "inbox")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "inbox")?.withRenderingMode(.alwaysOriginal))
+        let icon4 = UITabBarItem(title: "Pesan", image: UIImage(named: "inbox")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "inbox")?.withRenderingMode(.alwaysOriginal))
         item4.tabBarItem = icon4
         
 //        let item3 = TambahViewController()
@@ -44,11 +44,11 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
         item2.tabBarItem = icon2
         
         let item5 =  UserController()
-        let icon5 = UITabBarItem(title: "Profile", image: UIImage(named: "profile")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "profile")?.withRenderingMode(.alwaysOriginal))
+        let icon5 = UITabBarItem(title: "Profil", image: UIImage(named: "profile")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "profile")?.withRenderingMode(.alwaysOriginal))
         item5.tabBarItem = icon5
         
         let item6 =  MoreController()
-        let icon6 = UITabBarItem(title: "More", image: UIImage(named: "more")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "more")?.withRenderingMode(.alwaysOriginal))
+        let icon6 = UITabBarItem(title: "Lainnya", image: UIImage(named: "more")?.withRenderingMode(.alwaysOriginal), selectedImage: UIImage(named: "more")?.withRenderingMode(.alwaysOriginal))
         item6.tabBarItem = icon6
         
         let controllers = [item1,item2,item4,item5,item6]  //array of the root view controllers displayed by the tab bar interface

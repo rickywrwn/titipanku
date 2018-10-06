@@ -418,7 +418,7 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
     
     @objc func handleTerimaOffer(){
         
-        if(ongkirText.text == "" || cekGambar == false){
+        if(cekGambar == false){
             let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -588,14 +588,12 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         return label
     }()
     
-    let ongkirText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .left
-        textField.borderStyle = .line
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        //textField.addTarget(self, action: #selector(ongkirTapped(_:)),for: UIControlEvents.touchDown)
-        textField.inputView = UIView();
-        return textField
+    let ongkirText : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     let label4 : UILabel = {

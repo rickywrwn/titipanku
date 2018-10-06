@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyPickerPopover
 import SwiftyJSON
 import Alamofire_SwiftyJSON
+import SKActivityIndicatorView
 
 
 class PenerimaanPembelian :  UIViewController {
@@ -57,6 +58,46 @@ class PenerimaanPembelian :  UIViewController {
         
     }
     
+    struct userDetail: Decodable {
+        let saldo: String
+        let valueSaldo: String
+    }
+    
+    var isiUser  : userDetail?
+    
+    fileprivate func fetchJSON() {
+        if let userPenawar = app?.email {
+            print(userPenawar)
+            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: userPenawar))"
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    print(data)
+                    do {
+                        // link in description for video on JSONDecoder
+                        let decoder = JSONDecoder()
+                        // Swift 4.1
+                        self.isiUser = try decoder.decode(userDetail.self, from: data)
+                        print(self.isiUser)
+                        //self.labelB.text = "Rp " + (self.isiUser?.saldo)!
+                        SKActivityIndicator.dismiss()
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                        SKActivityIndicator.dismiss()
+                    }
+                }
+                }.resume()
+        }
+    }
+    
+    
+    
     var app: App? {
         didSet {
             
@@ -82,10 +123,11 @@ class PenerimaanPembelian :  UIViewController {
                         let appDetail = try decoder.decode(App.self, from: data)
                         //print(appDetail)
                         self.app = appDetail
-                        
+                        SKActivityIndicator.dismiss()
                         
                     } catch let err {
                         print(err)
+                        SKActivityIndicator.dismiss()
                     }
                     
                     
@@ -97,18 +139,20 @@ class PenerimaanPembelian :  UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchJSON()
         view.backgroundColor = UIColor.white
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false
         labelOngkir.isHidden = false
         print(app)
         print(varOffer)
+        SKActivityIndicator.show("Loading...")
         //fetchOffer()
         
         labelA.text = "Tanggl Pembelian"
         labelTgl.text = varOffer?.tglBeli
         labelB.text = "Jumlah Barang"
-        labelHarga.text = app?.qty
+        labelHarga.text = varOffer?.qty
         labelKota.text = varOffer?.kota
         ResiText.text = varOffer?.nomorResi
         ongkirText.text = "JNE"+(varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)! // Create the navigation bar
@@ -140,6 +184,11 @@ class PenerimaanPembelian :  UIViewController {
         view.addSubview(statusBarView)
         setupView()
         //print(detailOffer)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        SKActivityIndicator.dismiss()
     }
     
     @objc private func btnCancel(){
@@ -176,71 +225,86 @@ class PenerimaanPembelian :  UIViewController {
     }
     
     @objc func handleTerimaOffer(){
-        
-        // create the alert
-        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin?", preferredStyle: UIAlertControllerStyle.alert)
-        
-        // add the actions (buttons)
-        alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-        
-        alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
-            if let idOffer = self.varOffer?.id , let idRequest = self.app?.id, let review = self.reviewText.text , let rating = self.ratingText.text , let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String{
-                
-                let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"idPemilik":email,"action":"terima"]
-                print (parameter)
-                Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
-                    response in
+        if reviewText.text != "" || ratingText.text != "" {
+            let saldo = Int((self.isiUser?.valueSaldo)!)
+            let harga = Int((self.app?.valueHarga)!)
+            let qty = Int((self.varOffer?.qty)!)
+            
+            let hargaTotal = harga!*qty! + Int((self.varOffer?.valueHarga)!)!
+            
+            let saldoNow : Int = saldo! + hargaTotal
+            // create the alert
+            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin?", preferredStyle: UIAlertControllerStyle.alert)
+            
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
+            
+            alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
+                if let idOffer = self.varOffer?.id ,let idRequest = self.app?.id, let review = self.reviewText.text , let rating = self.ratingText.text, let saldoNow : Int = saldoNow , let email = self.app?.email,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String{
                     
-                    //mengambil json
-                    let json = JSON(response.result.value)
-                    print(json)
-                    let cekSukses = json["success"].intValue
-                    let pesan = json["pesan"].stringValue
-                    
-                    if cekSukses != 1 {
-                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                    let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"idPemilik":email, "saldo":saldoNow,"action":"terima"]
+                    print (parameter)
+                    Alamofire.request("http://titipanku.xyz/api/SetPreorder.php",method: .get, parameters: parameter).responseJSON {
+                        response in
                         
-                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        //mengambil json
+                        let json = JSON(response.result.value)
+                        print(json)
+                        let cekSukses = json["success"].intValue
+                        let pesan = json["pesan"].stringValue
                         
-                        self.present(alert, animated: true)
-                    }else{
-                        let parameters: Parameters = ["rating": rating,"email":email,"review": review,"reviewer": emailNow,"action":"insert"]
-                        print (parameters)
-                        Alamofire.request("http://titipanku.xyz/api/PostReview.php",method: .get, parameters: parameters).responseJSON {
-                            response in
+                        if cekSukses != 1 {
+                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                             
-                            //mengambil json
-                            let json = JSON(response.result.value)
-                            print(json)
-                            let cekSukses = json["success"].intValue
-                            let pesan = json["message"].stringValue
+                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                             
-                            if cekSukses != 1 {
-                                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                            self.present(alert, animated: true)
+                        }else{
+                            let parameters: Parameters = ["rating": rating,"email":email,"review": review,"reviewer": emailNow ,"action":"insert"]
+                            print (parameters)
+                            Alamofire.request("http://titipanku.xyz/api/PostReview.php",method: .get, parameters: parameters).responseJSON {
+                                response in
                                 
-                                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                                //mengambil json
+                                let json = JSON(response.result.value)
+                                print(json)
+                                let cekSukses = json["success"].intValue
+                                let pesan = json["message"].stringValue
                                 
-                                self.present(alert, animated: true)
-                            }else{
-                                self.sendNotif()
-                                let alert = UIAlertController(title: "Message", message: "Review dan Terima Barang Berhasil", preferredStyle: .alert)
-                                
-                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                if cekSukses != 1 {
+                                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                                     
-                                    self.handleBack()
+                                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                                     
-                                }))
-                                
-                                self.present(alert, animated: true)
+                                    self.present(alert, animated: true)
+                                }else{
+                                    self.sendNotif()
+                                    let alert = UIAlertController(title: "Message", message: "Review dan Terima Barang Berhasil", preferredStyle: .alert)
+                                    
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                        
+                                        self.handleBack()
+                                        
+                                    }))
+                                    
+                                    self.present(alert, animated: true)
+                                }
                             }
                         }
                     }
                 }
-            }
-        }))
+            }))
+            
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "Message", message: "Data Tidak Lengkap", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }
         
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
         
     }
     
@@ -299,11 +363,11 @@ class PenerimaanPembelian :  UIViewController {
         print("tapped")
         StringPickerPopover(title: "Ukuran Barang", choices: ["1", "2","3","4","5"])
             .setSelectedRow(0)
-            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.ratingText.text = selectedString
             })
-            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         
@@ -314,6 +378,16 @@ class PenerimaanPembelian :  UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadPreorderDetail"), object: nil)
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleCekResi(){
+        let tambahCont = CekResi()
+        if let resi = ResiText.text{
+             tambahCont.nomor = resi
+        }
+       
+        present(tambahCont, animated: true, completion: {
+        })
     }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
@@ -377,13 +451,12 @@ class PenerimaanPembelian :  UIViewController {
         return label
     }()
     
-    let ongkirText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .left
-        textField.borderStyle = .line
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        //textField.inputView = UIView();
-        return textField
+    let ongkirText : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     let labelResi : UILabel = {
@@ -393,13 +466,24 @@ class PenerimaanPembelian :  UIViewController {
         return label
     }()
     
-    let ResiText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .left
-        textField.borderStyle = .line
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.inputView = UIView();
-        return textField
+    let ResiText : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let cekResi : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Cek Resi", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        button.backgroundColor = UIColor(hex: "#4373D8")
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handleCekResi), for: UIControlEvents.touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     let labelReview : UILabel = {
@@ -527,8 +611,14 @@ class PenerimaanPembelian :  UIViewController {
         labelKota.topAnchor.constraint(equalTo: labelC.bottomAnchor, constant: 10).isActive = true
         labelKota.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
+        scrollView.addSubview(cekResi)
+        cekResi.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        cekResi.topAnchor.constraint(equalTo: labelKota.topAnchor, constant: 30).isActive = true
+        cekResi.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        cekResi.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
         scrollView.addSubview(labelOngkir)
-        labelOngkir.topAnchor.constraint(equalTo: labelKota.bottomAnchor, constant: 30).isActive = true
+        labelOngkir.topAnchor.constraint(equalTo: cekResi.bottomAnchor, constant: 30).isActive = true
         labelOngkir.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
         scrollView.addSubview(ongkirText)

@@ -40,7 +40,7 @@ class loginController: UIViewController ,GIDSignInUIDelegate {
         
         //cek sudah login
         if  cekLogged == true{
-            handleSegueFacebook()
+            handleToHome()
         }
         
         //cek fesbuk login
@@ -136,7 +136,7 @@ class loginController: UIViewController ,GIDSignInUIDelegate {
     }
     
     //pindah ke home setelah login
-    @objc func handleSegueFacebook(){
+    @objc func handleToHome(){
         perform(#selector(showHome), with: nil, afterDelay: 0.01)
     }
     
@@ -165,44 +165,72 @@ class loginController: UIViewController ,GIDSignInUIDelegate {
         let size = CGSize(width: 30, height: 30)
         self.view.endEditing(true)
         
-let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]
-Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
-response in
-
-//mencetak JSON response
-if let json = response.result.value {
-    print("JSON: \(json)")
-}
-
-//mengambil json
-let json = JSON(response.result.value)
-let cekSukses = json["success"].intValue
-let pesan = json["message"].stringValue
-
-if cekSukses != 1 {
-    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+        if usernameTextField.text == "" || passwordTextField.text == ""{
+            let alert = UIAlertController(title: "Message", message: "Data Tidak Lengkap", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }else{
+            
+            if isValidEmail(testStr: usernameTextField.text!){
+                let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]
+                Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
+                    response in
+                    
+                    //mencetak JSON response
+                    if let json = response.result.value {
+                        print("JSON: \(json)")
+                    }
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            UserDefaults.standard.set(true, forKey:"logged")
+                            UserDefaults.standard.set(self.usernameTextField.text!, forKey:"loggedEmail")
+                            UserDefaults.standard.synchronize()
+                            print(self.usernameTextField.text!)
+                            self.showHome()
+                        }))
+                        
+                        self.present(alert, animated: true)
+                    }
+                    
+                    //            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                    //                print("Data: \(utf8Text)") // original server data as UTF8 string
+                    //            }
+                }
+            }
+            else{
+                let alert = UIAlertController(title: "Message", message: "Email Tidak Valid", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
+            }
+            
+            
+        }
+    }
     
-    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-    
-    self.present(alert, animated: true)
-}else{
-    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-    
-    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-    UserDefaults.standard.set(true, forKey:"logged")
-    UserDefaults.standard.set(self.usernameTextField.text!, forKey:"loggedEmail")
-    UserDefaults.standard.synchronize()
-    print(self.usernameTextField.text!)
-    self.showHome()
-}))
-    
-    self.present(alert, animated: true)
-}
-
-//            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-//                print("Data: \(utf8Text)") // original server data as UTF8 string
-//            }
-}
+    func isValidEmail(testStr:String) -> Bool {
+        print("validate emilId: \(testStr)")
+        let emailRegEx = "^(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?(?:(?:(?:[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+(?:\\.[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+)*)|(?:\"(?:(?:(?:(?: )*(?:(?:[!#-Z^-~]|\\[|\\])|(?:\\\\(?:\\t|[ -~]))))+(?: )*)|(?: )+)\"))(?:@)(?:(?:(?:[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)(?:\\.[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)*)|(?:\\[(?:(?:(?:(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))\\.){3}(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))))|(?:(?:(?: )*[!-Z^-~])*(?: )*)|(?:[Vv][0-9A-Fa-f]+\\.[-A-Za-z0-9._~!$&'()*+,;=:]+))\\])))(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?$"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        let result = emailTest.evaluate(with: testStr)
+        return result
     }
     
     @objc func loginButtonClicked() {
@@ -258,6 +286,10 @@ if cekSukses != 1 {
                                         if cekSukses != 1 {
                                             
                                         }else{
+                                            UserDefaults.standard.set(true, forKey:"logged")
+                                            UserDefaults.standard.set(emailFB, forKey:"loggedEmail")
+                                            UserDefaults.standard.synchronize()
+                                            self.handleToHome()
                                         }
                                     }
                                 }
@@ -315,14 +347,10 @@ if cekSukses != 1 {
     
     let registerButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Register", for: .normal)
-        button.backgroundColor = UIColor(hex: "#3867d6")
-        button.setTitleColor(UIColor.white, for: .normal)
-        
-        // Handle clicks on the button
-        
+        button.setTitle("Belum punya akun? Daftar Disini", for: .normal)
+        button.backgroundColor = UIColor.clear
+        button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleSegueRegister), for: UIControlEvents.touchUpInside)
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -343,15 +371,6 @@ if cekSukses != 1 {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-//    let facebookSignInButton : FBSDKLoginButton = {
-//        let fbSignInButton = FBSDKLoginButton(frame: CGRect(x: 0, y: 0, width: 150, height: 30))
-//        fbSignInButton.translatesAutoresizingMaskIntoConstraints = false
-//        // fbSignInButton.delegate = self
-//        fbSignInButton.readPermissions = ["email"]
-//        return fbSignInButton
-//    }()
-    
     
     let googleSignOutButton : UIButton = {
         let button = UIButton(type: .system)
@@ -399,21 +418,13 @@ if cekSukses != 1 {
         loginButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         loginButton.topAnchor.constraint(greaterThanOrEqualTo: passwordTextField.bottomAnchor, constant: 50).isActive = true
         
-        //registerButton
-        view.addSubview(registerButton)
-        registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        registerButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        registerButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
-        registerButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 15).isActive = true
-        
         //googleSignInButton
         view.addSubview(googleSignInButton)
         googleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         googleSignInButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         googleSignInButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
         googleSignInButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
-        googleSignInButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 15).isActive = true
+        googleSignInButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 15).isActive = true
  
         //fbSignInButton
         view.addSubview(facebookButton)
@@ -423,12 +434,15 @@ if cekSukses != 1 {
         facebookButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         facebookButton.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: 15).isActive = true
         
-        //googleSignOutButton
-        view.addSubview(googleSignOutButton)
-        googleSignOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        googleSignOutButton.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 30).isActive = true
         
-       googleSignOutButton.isHidden = true
+        //registerButton
+        view.addSubview(registerButton)
+        registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        registerButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        registerButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        registerButton.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        registerButton.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 15).isActive = true
+        
 
     }
     

@@ -37,9 +37,7 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
             }else{
                 cell.LabelKanan.isHidden = true
             }
-            
         }
-        
         return cell
     }
     
@@ -53,7 +51,7 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
     
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Send", for: .normal)
+        button.setTitle("Kirim", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor.blue
@@ -72,25 +70,25 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
     }()
     
     func observeMessages(){
-    SKActivityIndicator.show("Loading...")
-    if let chatId = chat?.id {
-        let ref = Database.database().reference().child("messages").child(chatId)
-        ref.observe(.childAdded, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? NSDictionary
-            print(value)
-            let email = value?["email"] as? String ?? ""
-            let text = value?["text"] as? String ?? ""
-            self.arrEmail.append(email)
-            self.arrText.append(text)
-            print(self.arrEmail)
-            print(self.arrText)
-            self.collectionChat.reloadData()
-            //self.scrollToBottom()
-            
-        }, withCancel: nil)
-        SKActivityIndicator.dismiss()
-    }
+        SKActivityIndicator.show("Loading...")
+        if let chatId = chat?.id {
+            let ref = Database.database().reference().child("messages").child(chatId)
+            ref.observe(.childAdded, with: { (snapshot) in
+                // Get user value
+                let value = snapshot.value as? NSDictionary
+                print(value)
+                let email = value?["email"] as? String ?? ""
+                let text = value?["text"] as? String ?? ""
+                self.arrEmail.append(email)
+                self.arrText.append(text)
+                print(self.arrEmail)
+                print(self.arrText)
+                self.collectionChat.reloadData()
+                //self.scrollToBottom()
+                
+            }, withCancel: nil)
+            SKActivityIndicator.dismiss()
+        }
     }
     
     func sendNotif(){
@@ -109,7 +107,7 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
     
     @objc func handlePost(){
         if(textField.text == ""){
-            let alert = UIAlertController(title: "Peringatan", message: "Komentar Tidak Boleh Kosong", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Peringatan", message: "Pesan Tidak Boleh Kosong", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
@@ -121,11 +119,11 @@ class ChatController: UIViewController,UITextFieldDelegate,UICollectionViewDataS
             
             let result = formatter.string(from: date)
             if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
-self.textField.resignFirstResponder()
-let ref = Database.database().reference().child("messages").child((chat?.id)!)
-let childRef = ref.childByAutoId()
-let value = ["text": textField.text!,"email":emailNow,"date":result]
-childRef.updateChildValues(value)
+                self.textField.resignFirstResponder()
+                let ref = Database.database().reference().child("messages").child((chat?.id)!)
+                let childRef = ref.childByAutoId()
+                let value = ["text": textField.text!,"email":emailNow,"date":result]
+                childRef.updateChildValues(value)
                 self.sendNotif()
             }
             

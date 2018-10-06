@@ -108,7 +108,7 @@ class AcceptedPembelian :  UIViewController {
         labelA.text = "Tanggl Pembelian"
         labelTgl.text = varOffer?.tglBeli
         labelB.text = "Jumlah Barang"
-        labelHarga.text = app?.qty
+        labelHarga.text = varOffer?.qty
         labelKota.text = varOffer?.kota
         label4.isHidden = true
         ongkirText.text = (varOffer?.pengiriman)! + " " + (varOffer?.hargaOngkir)!
@@ -277,13 +277,12 @@ class AcceptedPembelian :  UIViewController {
         return label
     }()
     
-    let ongkirText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .left
-        textField.borderStyle = .line
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.inputView = UIView();
-        return textField
+    let ongkirText : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     let label4 : UILabel = {

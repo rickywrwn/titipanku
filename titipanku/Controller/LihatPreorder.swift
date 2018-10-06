@@ -87,8 +87,6 @@ class LihatPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSou
                     } catch let err {
                         print(err)
                     }
-                    
-                    
                 }).resume()
             }
         }
@@ -307,14 +305,22 @@ class LihatPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSou
         return label
     }()
     
-    let ongkirText : UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        textField.textAlignment = .left
-        textField.borderStyle = .line
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.inputView = UIView();
-        return textField
+    let ongkirText : UILabel = {
+        let label = UILabel()
+        label.sizeToFit()
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
+    
+//    let ongkirText : UITextField = {
+//        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//        textField.textAlignment = .left
+//        textField.borderStyle = .line
+//        textField.translatesAutoresizingMaskIntoConstraints = false
+//        textField.inputView = UIView();
+//        return textField
+//    }()
     
     let label4 : UILabel = {
         let label = UILabel()

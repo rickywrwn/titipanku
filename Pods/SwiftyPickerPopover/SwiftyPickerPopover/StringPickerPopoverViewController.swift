@@ -38,11 +38,11 @@ public class StringPickerPopoverViewController: AbstractPickerPopoverViewControl
             navigationItem.rightBarButtonItem = nil
         }
         cancelButton.title = popover?.cancelButton.title
-        cancelButton.tintColor = popover?.cancelButton.color ?? popover?.tintColor
+        cancelButton.tintColor = UIColor.white
         navigationItem.setLeftBarButton(cancelButton, animated: false)
         
         doneButton.title = popover?.doneButton.title
-        doneButton.tintColor = popover?.doneButton.color ?? popover?.tintColor
+        doneButton.tintColor = UIColor.white
         navigationItem.setRightBarButton(doneButton, animated: false)
 
         // Select row if needed

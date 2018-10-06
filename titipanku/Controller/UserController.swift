@@ -63,32 +63,32 @@ class UserController : UIViewController, UICollectionViewDataSource, UICollectio
     fileprivate func fetchJSON() {
         if let emailNow : String = emailUser.email {
             print(emailNow)
-let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
-guard let url = URL(string: urlString) else { return }
-URLSession.shared.dataTask(with: url) { (data, _, err) in
-DispatchQueue.main.async {
-if let err = err {
-    print("Failed to get data from url:", err)
-    return
-}
+            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+            DispatchQueue.main.async {
+                if let err = err {
+                    print("Failed to get data from url:", err)
+                    return
+                }
 
-guard let data = data else { return }
-print(data)
-do {
-    // link in description for video on JSONDecoder
-    let decoder = JSONDecoder()
-    // Swift 4.1
-    self.isiUser = try decoder.decode(userDetail.self, from: data)
-    print(self.isiUser)
-    
-    self.userCollectionView.reloadData()
-    SKActivityIndicator.dismiss()
-} catch let jsonErr {
-    print("Failed to decode:", jsonErr)
-    SKActivityIndicator.dismiss()
-}
-}
-}.resume()
+                guard let data = data else { return }
+                print(data)
+                do {
+                    // link in description for video on JSONDecoder
+                    let decoder = JSONDecoder()
+                    // Swift 4.1
+                    self.isiUser = try decoder.decode(userDetail.self, from: data)
+                    print(self.isiUser)
+                    
+                    self.userCollectionView.reloadData()
+                    SKActivityIndicator.dismiss()
+                } catch let jsonErr {
+                    print("Failed to decode:", jsonErr)
+                    SKActivityIndicator.dismiss()
+                }
+            }
+            }.resume()
         }
     }
     
@@ -113,7 +113,7 @@ do {
         }
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.white
-        self.title = "User"
+        self.title = "Profil"
         print("User Loaded")
         SKActivityIndicator.show("Loading...", userInteractionStatus: false)
         fetchJSON()
@@ -138,7 +138,7 @@ do {
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = "Profile"
+        navigationItem.title = "Profil"
         if emailUser.status == "lain"{
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Chat", style: .done, target: self, action: #selector(handleChat))
@@ -147,11 +147,11 @@ do {
                 SKActivityIndicator.dismiss()
             }
         }else if emailUser.status == "sendiri"{
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Profile", style: .done, target: self, action: #selector(handleEdit))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ubah Profil", style: .done, target: self, action: #selector(handleEdit))
         }else{
             
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit Profile", style: .done, target: self, action: #selector(handleEdit))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ubah Profil", style: .done, target: self, action: #selector(handleEdit))
         }
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar

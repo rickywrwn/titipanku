@@ -50,11 +50,11 @@ class AddKarateristikPreorder :  UIViewController{
         print("tapped")
         StringPickerPopover(title: "Berat Barang", choices: ["1 Kg","2 Kg","3 Kg","4 Kg","5 Kg"])
             .setSelectedRow(0)
-            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.beratText.text = selectedString
             })
-            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         

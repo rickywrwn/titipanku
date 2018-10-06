@@ -141,7 +141,7 @@ class WithdrawController :  UIViewController {
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = "Withdraw Wallet"
+        navigationItem.title = "Penarikan Wallet"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
         
         // Assign the navigation item to the navigation bar

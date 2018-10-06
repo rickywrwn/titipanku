@@ -25,7 +25,6 @@ class AddHargaBarang :  UIViewController{
     @objc func handleCancle(){
         self.dismiss(animated: true)
     }
-    
     @objc func handleSubmit(){
         
         if hargaText.text != ""{

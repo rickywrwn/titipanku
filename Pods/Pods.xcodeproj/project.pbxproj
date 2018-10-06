@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -351,7 +351,6 @@
 		34F8F86F0BFD171EF6411FFD56A2F467 /* VTSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CFAE2A5373FBA3C60E1C594AEC5E8D /* VTSegmentedControl.m */; };
 		352F78A5D8048D77937FE53DB2686BCA /* GPBCodedInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = A463D17AE5D3673AEEABE250AA6165A9 /* GPBCodedInputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		359C8B15D516A4238C186DF99DA6AC57 /* FBSDKAppEventsState.h in Headers */ = {isa = PBXBuildFile; fileRef = 9731A82A3EF0117D996C36B9C019AD11 /* FBSDKAppEventsState.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		35B57F3D00CE0CD7882AEE5E59D89B00 /* StringPickerPopover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C02CCD0C948180C2D8F025AF72D3FD2 /* StringPickerPopover.storyboard */; };
 		35C07BF627C88A05C6780C58AA1743D9 /* SDKSharingDelegateBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5A5F67360A514227F32E64B31A7E0 /* SDKSharingDelegateBridge.swift */; };
 		35C8F09D077ADD659D1BE20434C32FCC /* en_telkomsel_cash.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B77AB267F47DDEE4EC85B2E948BD90 /* en_telkomsel_cash.plist */; };
 		35CAF34CB125B6A224647AB28C00F258 /* FBSDKDeviceLoginError.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EDA41B53FC8754063E9D7FA8EA14DC0 /* FBSDKDeviceLoginError.m */; };
@@ -1937,7 +1936,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0015CCC6766DE3F95EC863C53D908555 /* Imaginary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Imaginary.framework; path = Imaginary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0015CCC6766DE3F95EC863C53D908555 /* Imaginary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Imaginary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0019966208E4CA206E64E999856412D2 /* MidtransKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MidtransKit.xcconfig; sourceTree = "<group>"; };
 		0019B27EA5EA631BB9CB9495133F3212 /* visa-mastercard-jcb@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "visa-mastercard-jcb@3x.png"; path = "MidtransKit/MidtransKit/resources/visa-mastercard-jcb@3x.png"; sourceTree = "<group>"; };
 		004BFDF0F793A403C1C31AA701CDCFB3 /* SyncStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SyncStorage.swift; path = Source/Shared/Storage/SyncStorage.swift; sourceTree = "<group>"; };
@@ -1948,7 +1947,7 @@
 		00CB18B9EE1B8F03336B2D5067BDB9D9 /* Alamofire-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Alamofire-dummy.m"; sourceTree = "<group>"; };
 		00E1804EA1310BDFD1D1933B4E7C20DE /* AppEvent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppEvent.swift; path = Sources/Core/AppEvents/AppEvent.swift; sourceTree = "<group>"; };
 		01157745CE38FC970A1CC34F7A6773A3 /* Imaginary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Imaginary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0165E71AD4A16B73D7C1CAF2917AB57F /* testharness.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = testharness.cc; path = util/testharness.cc; sourceTree = "<group>"; };
+		0165E71AD4A16B73D7C1CAF2917AB57F /* testharness.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = testharness.cc; path = util/testharness.cc; sourceTree = "<group>"; };
 		01DF46E7E66FACDBDA5753ECAF772BA7 /* MidtransPaymentWebController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentWebController.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentWebController.m; sourceTree = "<group>"; };
 		01FA3F965CC627B8DC8E7E66953FB4A6 /* GPBExtensionRegistry.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBExtensionRegistry.m; path = objectivec/GPBExtensionRegistry.m; sourceTree = "<group>"; };
 		021548DA3E087CCAD53D7BE527B525ED /* OpenGraphObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OpenGraphObject.swift; path = Sources/Share/Content/OpenGraph/OpenGraphObject.swift; sourceTree = "<group>"; };
@@ -2011,7 +2010,7 @@
 		0A1CB6E8A509CEB27C063034B8789804 /* MidGopayViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidGopayViewController.m; path = MidtransKit/MidtransKit/classes/MidGopayViewController.m; sourceTree = "<group>"; };
 		0A2421E3E86D069C28265AFAC1D5CDAD /* FBSDKSwizzler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKSwizzler.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKSwizzler.m; sourceTree = "<group>"; };
 		0A40F7A4E20509D70466558D326FB2B2 /* FBSDKDeviceRequestsHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKDeviceRequestsHelper.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKDeviceRequestsHelper.m; sourceTree = "<group>"; };
-		0A71A12BFB183D0A7C7298D9114115C4 /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Bolts.framework; path = Bolts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A71A12BFB183D0A7C7298D9114115C4 /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Bolts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A7BC053013BF1D65883406B8452CF2E /* FBSDKAccessTokenCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAccessTokenCache.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenCache.m; sourceTree = "<group>"; };
 		0A889C41C9EA0C514C046632CEDEE893 /* MIdtransUIDetailedTitleController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MIdtransUIDetailedTitleController.h; path = MidtransKit/MidtransKit/classes/MIdtransUIDetailedTitleController.h; sourceTree = "<group>"; };
 		0AA06A4699AD8369CB867E7C49174E89 /* MidtransCreditCardConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransCreditCardConfig.h; path = MidtransCoreKit/MidtransCoreKit/MidtransCreditCardConfig.h; sourceTree = "<group>"; };
@@ -2026,7 +2025,7 @@
 		0C55C3498DEA26B2F4AB0776430AB65D /* Type.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Type.pbobjc.h; path = objectivec/google/protobuf/Type.pbobjc.h; sourceTree = "<group>"; };
 		0C98967E62A124E2F3008D25C8CB378E /* VTErrorStatusController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTErrorStatusController.m; path = MidtransKit/MidtransKit/classes/VTErrorStatusController.m; sourceTree = "<group>"; };
 		0CAA03BDA564C0ED229F47A9F46CB9D2 /* CreditCardBack@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "CreditCardBack@2x.png"; path = "MidtransKit/MidtransKit/resources/CreditCardBack@2x.png"; sourceTree = "<group>"; };
-		0D015450C7779F7902558EF5C29F1BAD /* crc32c.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = crc32c.cc; path = util/crc32c.cc; sourceTree = "<group>"; };
+		0D015450C7779F7902558EF5C29F1BAD /* crc32c.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = crc32c.cc; path = util/crc32c.cc; sourceTree = "<group>"; };
 		0D054D7E2005A5D73D6616B707EE5AF7 /* Struct.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Struct.pbobjc.m; path = objectivec/google/protobuf/Struct.pbobjc.m; sourceTree = "<group>"; };
 		0D06C0412E5B772D0B1557A68BBC3D41 /* MidtransUIPaymentController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransUIPaymentController.m; path = MidtransKit/MidtransKit/classes/MidtransUIPaymentController.m; sourceTree = "<group>"; };
 		0DA7B0BC4C68A19A51E2C9FDD1EE8CCA /* Amex@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Amex@2x.png"; path = "MidtransKit/MidtransKit/resources/Amex@2x.png"; sourceTree = "<group>"; };
@@ -2054,7 +2053,7 @@
 		1180E2C2E3240CF46BF37B5459A22601 /* Pods-titipanku.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-titipanku.modulemap"; sourceTree = "<group>"; };
 		11889E8E3E3BB0395DDD9FE143FFEEBE /* MidtransPaymentGOPAY.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentGOPAY.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentGOPAY.h; sourceTree = "<group>"; };
 		1191E26EDE8D6EBDBD6F98F7E00757B8 /* MidtransPaymentDetails.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentDetails.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentDetails.h; sourceTree = "<group>"; };
-		119D202C9732A339A1050DEED737AF61 /* MidtransKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MidtransKit.framework; path = MidtransKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		119D202C9732A339A1050DEED737AF61 /* MidtransKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MidtransKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C0F75FC143DD89E7E455BB8F521447 /* MidtransTransactionDetailViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransTransactionDetailViewController.xib; path = MidtransKit/MidtransKit/resources/MidtransTransactionDetailViewController.xib; sourceTree = "<group>"; };
 		11E6DE67C066AF79B8B89ACEA3307268 /* prevIcon@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "prevIcon@2x.png"; path = "MidtransKit/MidtransKit/resources/prevIcon@2x.png"; sourceTree = "<group>"; };
 		11EF9C69CB4DAC89B4FC052198DF92A2 /* write_batch_internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = write_batch_internal.h; path = db/write_batch_internal.h; sourceTree = "<group>"; };
@@ -2066,14 +2065,14 @@
 		12BB8DE084E3F34302B494CD9BAEA074 /* FBSDKSharing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKSharing.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKSharing.h; sourceTree = "<group>"; };
 		12C515428C16F84CADD67E231E2C4728 /* FBSDKAccessTokenExpirer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAccessTokenExpirer.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenExpirer.h; sourceTree = "<group>"; };
 		12FB22B2AD4F888532E51EDD07C4C90B /* CreditCardFront@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "CreditCardFront@2x.png"; path = "MidtransKit/MidtransKit/resources/CreditCardFront@2x.png"; sourceTree = "<group>"; };
-		133CAAB7C4168DE65342D0276FEA5713 /* coding.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = coding.cc; path = util/coding.cc; sourceTree = "<group>"; };
+		133CAAB7C4168DE65342D0276FEA5713 /* coding.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = coding.cc; path = util/coding.cc; sourceTree = "<group>"; };
 		135EFA52C36C53B4460CD5AFC30A39CF /* mutexlock.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mutexlock.h; path = util/mutexlock.h; sourceTree = "<group>"; };
 		136A4CF45BC601FF63CC6D55D5CBD12E /* FBSDKCameraEffectArguments.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKCameraEffectArguments.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKCameraEffectArguments.h; sourceTree = "<group>"; };
 		138875F9EE8413BCEC67D8C3BF165300 /* MidtransNewCreditCardViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransNewCreditCardViewController.xib; path = MidtransKit/MidtransKit/resources/MidtransNewCreditCardViewController.xib; sourceTree = "<group>"; };
 		13926FBC973E9EFD5F2AF949A821D0EE /* FBSDKTypeUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKTypeUtility.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKTypeUtility.h; sourceTree = "<group>"; };
 		13CF5248602AF730CF8264C185BBEC54 /* FacebookShare-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FacebookShare-umbrella.h"; sourceTree = "<group>"; };
 		1402C2E2DC503DA5C645C9AE007EBD7C /* VTBillpaySuccessController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = VTBillpaySuccessController.xib; path = MidtransKit/MidtransKit/resources/VTBillpaySuccessController.xib; sourceTree = "<group>"; };
-		1407B595B6A21C9DCCAFAD6EF8B8015C /* leveldb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = leveldb.framework; path = "leveldb-library.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1407B595B6A21C9DCCAFAD6EF8B8015C /* leveldb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = leveldb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		14459E1CC1C9639867CCCF5E49C2D49C /* BFAppLinkReturnToRefererView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFAppLinkReturnToRefererView.h; path = Bolts/iOS/BFAppLinkReturnToRefererView.h; sourceTree = "<group>"; };
 		144E520A3B009A0E74D6265D3C33BD5E /* VTSubGuideController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTSubGuideController.m; path = MidtransKit/MidtransKit/classes/VTSubGuideController.m; sourceTree = "<group>"; };
 		14623B9074EDD12BCF8C58C3C2382D02 /* MidtransUIXibView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransUIXibView.m; path = MidtransKit/MidtransKit/classes/MidtransUIXibView.m; sourceTree = "<group>"; };
@@ -2121,7 +2120,7 @@
 		1C3712DB768BEEB5FED84C2C4A8B3C3D /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKStrings.bundle; sourceTree = "<group>"; };
 		1C701DEC31FA93F571A7F858B9AEE3E0 /* FBSDKLoginManagerLoginResult+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKLoginManagerLoginResult+Internal.h"; path = "FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginManagerLoginResult+Internal.h"; sourceTree = "<group>"; };
 		1C7474577B0D260FF53AFF12BF16351A /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
-		1CAE74A2091B0AED1F183CF74B52DC36 /* version_edit.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = version_edit.cc; path = db/version_edit.cc; sourceTree = "<group>"; };
+		1CAE74A2091B0AED1F183CF74B52DC36 /* version_edit.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = version_edit.cc; path = db/version_edit.cc; sourceTree = "<group>"; };
 		1CDA8A518483047571DBFBE0EF4F24B5 /* FBSDKSettings.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKSettings.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKSettings.m; sourceTree = "<group>"; };
 		1CE14F9EB100463150369377ABFCCCF4 /* VTGuideView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTGuideView.h; path = MidtransKit/MidtransKit/classes/VTGuideView.h; sourceTree = "<group>"; };
 		1CECFDD795B0552FAF13E32CA9004AB8 /* FacebookLogin.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FacebookLogin.xcconfig; sourceTree = "<group>"; };
@@ -2141,7 +2140,7 @@
 		1F6854D4DDEEB2888BA0D6F84DD9152A /* MidtransUIConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUIConfiguration.h; path = MidtransKit/MidtransKit/classes/MidtransUIConfiguration.h; sourceTree = "<group>"; };
 		1FCEF95DBDB19FE9FE40A697BFFFF66A /* FBSDKShareMediaContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareMediaContent.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareMediaContent.h; sourceTree = "<group>"; };
 		1FD1EA8CC7B4214A3E1829B1498C54D1 /* GTMSessionFetcher.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GTMSessionFetcher.xcconfig; sourceTree = "<group>"; };
-		2029B7A3E90F370518837A8BCEBC5D64 /* FacebookLogin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FacebookLogin.framework; path = FacebookLogin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2029B7A3E90F370518837A8BCEBC5D64 /* FacebookLogin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FacebookLogin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		205CB62CD9BA24D593480C9F874CC40D /* FacebookCore-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FacebookCore-umbrella.h"; sourceTree = "<group>"; };
 		208F4193CCEF875F9E0F88183186A889 /* FBSDKGraphRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGraphRequest.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKGraphRequest.m; sourceTree = "<group>"; };
 		20946FB6292F15C6056BCCB3F89FF2C8 /* GPBWireFormat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBWireFormat.m; path = objectivec/GPBWireFormat.m; sourceTree = "<group>"; };
@@ -2151,18 +2150,18 @@
 		21056756094B0B6E08398E14B5C63727 /* MidtransPrivateConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPrivateConfig.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPrivateConfig.h; sourceTree = "<group>"; };
 		217C30F8EFB916C4F37A546A318D45EF /* MidtransPaymentMethodHeader.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransPaymentMethodHeader.xib; path = MidtransKit/MidtransKit/resources/MidtransPaymentMethodHeader.xib; sourceTree = "<group>"; };
 		218CE653F92B2BBC7F3C4F5F23F79127 /* FBSDKProfile+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKProfile+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKProfile+Internal.h"; sourceTree = "<group>"; };
-		218FEAE12613484A8303E07D62298253 /* dumpfile.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = dumpfile.cc; path = db/dumpfile.cc; sourceTree = "<group>"; };
+		218FEAE12613484A8303E07D62298253 /* dumpfile.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = dumpfile.cc; path = db/dumpfile.cc; sourceTree = "<group>"; };
 		21B33DFB5FFF9FC4325ABEB8E90F4344 /* MidtransUIRoundedLabel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransUIRoundedLabel.m; path = MidtransKit/MidtransKit/classes/MidtransUIRoundedLabel.m; sourceTree = "<group>"; };
 		21F0E87FFA23757F2B5978282030EDEA /* GTMSessionFetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMSessionFetcher.m; path = Source/GTMSessionFetcher.m; sourceTree = "<group>"; };
 		220C93FDB40B0660B9115092F6CE330E /* LightboxConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LightboxConfig.swift; path = Source/LightboxConfig.swift; sourceTree = "<group>"; };
 		2288F03583C59E594C26243FC9902C46 /* LoginButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginButton.swift; path = Sources/Login/LoginButton.swift; sourceTree = "<group>"; };
 		22BE537908E381B2EDC8D3C7970D9A1D /* MidtransUIFontSource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransUIFontSource.m; path = MidtransKit/MidtransKit/classes/MidtransUIFontSource.m; sourceTree = "<group>"; };
 		22CB59C4C5C93F31A291508FB1FEA258 /* GraphRequestProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GraphRequestProtocol.swift; path = Sources/Core/GraphRequest/GraphRequestProtocol.swift; sourceTree = "<group>"; };
-		22CC3C244B903F571EFAB93433B3F4C5 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = "SourceSansPro-Semibold.ttf"; path = "MidtransKit/MidtransKit/resources/SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
+		22CC3C244B903F571EFAB93433B3F4C5 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "SourceSansPro-Semibold.ttf"; path = "MidtransKit/MidtransKit/resources/SourceSansPro-Semibold.ttf"; sourceTree = "<group>"; };
 		2308A1B90626AC800B2F9B9649625C5D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		235AA524F15A8CE3B396EDDB7EE89F7C /* FBSDKContainerViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKContainerViewController.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKContainerViewController.m; sourceTree = "<group>"; };
 		236104C60C015BABBB49F97B5599D58D /* MidtransPaymentDanamonOnline.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentDanamonOnline.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentDanamonOnline.h; sourceTree = "<group>"; };
-		2364EB7ABA8E9C37842D24F67795AF76 /* status.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = status.cc; path = util/status.cc; sourceTree = "<group>"; };
+		2364EB7ABA8E9C37842D24F67795AF76 /* status.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = status.cc; path = util/status.cc; sourceTree = "<group>"; };
 		2380D8120915946CF7502180B59203CF /* VTKlikbcaSuccessController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTKlikbcaSuccessController.m; path = MidtransKit/MidtransKit/classes/VTKlikbcaSuccessController.m; sourceTree = "<group>"; };
 		23ECCD36D5DB3B87DD3CCF47A893CD49 /* mandiri_atm_3@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "mandiri_atm_3@2x.png"; path = "MidtransKit/MidtransKit/resources/mandiri_atm_3@2x.png"; sourceTree = "<group>"; };
 		241A6E2BD8D3D98D96387A5FF1FACCA1 /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Image.swift; path = Source/Image.swift; sourceTree = "<group>"; };
@@ -2238,7 +2237,6 @@
 		2F230AF9B05C43C11B5FB8E65EC05021 /* FBSDKShareLinkContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareLinkContent.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareLinkContent.h; sourceTree = "<group>"; };
 		2F3268DDE8751424A4FC35DF30149F01 /* MidtransLuhn.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransLuhn.h; path = MidtransCoreKit/MidtransCoreKit/MidtransLuhn.h; sourceTree = "<group>"; };
 		2F37A3F030B4469C1FDD31355D69AB00 /* MidtransCoreKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransCoreKit.h; path = MidtransCoreKit/MidtransCoreKit/MidtransCoreKit.h; sourceTree = "<group>"; };
-		2F61E3F2DB32CB71F5B608D4ECE436D0 /* StringPickerPopover.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = StringPickerPopover.storyboard; path = Base.lproj/StringPickerPopover.storyboard; sourceTree = "<group>"; };
 		2F843EAE4AECAF4E28579C54DD255EBB /* MIdtransPaymentGCI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MIdtransPaymentGCI.m; path = MidtransCoreKit/MidtransCoreKit/MIdtransPaymentGCI.m; sourceTree = "<group>"; };
 		2FA1F6FEB8EFCD2D50FFD0049971AF34 /* FBSDKShareMessengerGenericTemplateContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareMessengerGenericTemplateContent.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareMessengerGenericTemplateContent.m; sourceTree = "<group>"; };
 		2FEA7D95EB9DAD2B0CFB92602F161BB8 /* FBSDKAppEvents+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKAppEvents+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEvents+Internal.h"; sourceTree = "<group>"; };
@@ -2253,13 +2251,13 @@
 		312E9958F004D724FD4651743A1A5A3D /* BFCancellationTokenSource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFCancellationTokenSource.m; path = Bolts/Common/BFCancellationTokenSource.m; sourceTree = "<group>"; };
 		31478759468F24F1AE8D5BA05610A017 /* en_mandiri_clickpay.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = en_mandiri_clickpay.plist; path = MidtransKit/MidtransKit/resources/en_mandiri_clickpay.plist; sourceTree = "<group>"; };
 		314914A53CF0BFA21D868CC597B07ADA /* other_va@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "other_va@2x.png"; path = "MidtransKit/MidtransKit/resources/other_va@2x.png"; sourceTree = "<group>"; };
-		319622FC5FE6441B765E1A7743B37A48 /* db_iter.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = db_iter.cc; path = db/db_iter.cc; sourceTree = "<group>"; };
+		319622FC5FE6441B765E1A7743B37A48 /* db_iter.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = db_iter.cc; path = db/db_iter.cc; sourceTree = "<group>"; };
 		31A1BFA5573D5EFCE773D2A0D96FD118 /* UIImageView+AlamofireImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImageView+AlamofireImage.swift"; path = "Source/UIImageView+AlamofireImage.swift"; sourceTree = "<group>"; };
 		31A9A14741D987B448CF5BB39B4D148E /* CountdownPickerPopoverViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CountdownPickerPopoverViewController.swift; path = SwiftyPickerPopover/CountdownPickerPopoverViewController.swift; sourceTree = "<group>"; };
 		31C937954C05DBE92DC8ADA301CFE4B8 /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
 		31ED81D8BFA257E0105E21AB8634EF97 /* FBSDKLoginUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLoginUtility.h; path = FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginUtility.h; sourceTree = "<group>"; };
 		31EE6C7576D9EF743886654DCBEDF679 /* bni_va6@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "bni_va6@2x.png"; path = "MidtransKit/MidtransKit/resources/bni_va6@2x.png"; sourceTree = "<group>"; };
-		32356F26C401EEF9ECE0722E6DD02E57 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AlamofireImage.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32356F26C401EEF9ECE0722E6DD02E57 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		323FBF8E052D0DE7C4E8D0B78AF42D5D /* VTGuideView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = VTGuideView.xib; path = MidtransKit/MidtransKit/resources/VTGuideView.xib; sourceTree = "<group>"; };
 		325D7F904DB3F31AF75A1D6DCF10E950 /* bersama_preview@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "bersama_preview@3x.png"; path = "MidtransKit/MidtransKit/resources/bersama_preview@3x.png"; sourceTree = "<group>"; };
 		326265624010012A6EF076E74060548C /* FBSDKContainerViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKContainerViewController.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKContainerViewController.h; sourceTree = "<group>"; };
@@ -2271,7 +2269,7 @@
 		32F6B17ACBEAA6B1CEFDECBD110291D8 /* FBSDKInternalUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKInternalUtility.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKInternalUtility.m; sourceTree = "<group>"; };
 		3313892F56F12AA9E58154B2B0CEA15A /* FBSDKSharePhotoContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKSharePhotoContent.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKSharePhotoContent.m; sourceTree = "<group>"; };
 		3317D8CB80591775F0EE83116DBD5A4A /* atomic_pointer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = atomic_pointer.h; path = port/atomic_pointer.h; sourceTree = "<group>"; };
-		333A69646DB19DF7D85C6D11BBE39F57 /* iterator.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = iterator.cc; path = table/iterator.cc; sourceTree = "<group>"; };
+		333A69646DB19DF7D85C6D11BBE39F57 /* iterator.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = iterator.cc; path = table/iterator.cc; sourceTree = "<group>"; };
 		3363CD64E597922A2D5E8D5445BFD95D /* GPBDescriptor_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBDescriptor_PackagePrivate.h; path = objectivec/GPBDescriptor_PackagePrivate.h; sourceTree = "<group>"; };
 		33A9242380EB3A6563931D03959D9A7A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33ABB3BD129A57E656046530060224A1 /* UIView+Toast.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+Toast.m"; path = "MidtransKit/MidtransKit/classes/UIView+Toast.m"; sourceTree = "<group>"; };
@@ -2320,8 +2318,8 @@
 		38EFB740C2B304E68F07C90329855288 /* FBSDKAppEventsUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppEventsUtility.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsUtility.m; sourceTree = "<group>"; };
 		397C88832E5BD03D0B49FFF830E17881 /* FBSDKLoginCompletion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLoginCompletion.h; path = FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginCompletion.h; sourceTree = "<group>"; };
 		39E4C5A66BC7B1335FC605E5FBCE8D8B /* DiskConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DiskConfig.swift; path = Source/Shared/Configuration/DiskConfig.swift; sourceTree = "<group>"; };
-		3A0D6CB44CDF93617756A3C2FFE4881A /* pb_encode.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_encode.c; sourceTree = "<group>"; };
-		3A271ACE8833D04A6E17D8EBA782235A /* filter_block.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = filter_block.cc; path = table/filter_block.cc; sourceTree = "<group>"; };
+		3A0D6CB44CDF93617756A3C2FFE4881A /* pb_encode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_encode.c; sourceTree = "<group>"; };
+		3A271ACE8833D04A6E17D8EBA782235A /* filter_block.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = filter_block.cc; path = table/filter_block.cc; sourceTree = "<group>"; };
 		3A82E882AEBED7CFD0878D131C621693 /* GoogleToolboxForMac-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GoogleToolboxForMac-umbrella.h"; sourceTree = "<group>"; };
 		3A844ACCAEFFF8F924F8A235332FDE7A /* VTPaymentStatusViewModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTPaymentStatusViewModel.m; path = MidtransKit/MidtransKit/classes/VTPaymentStatusViewModel.m; sourceTree = "<group>"; };
 		3AD88F0A901F3FDD54AC3879C322C688 /* VTCardListController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTCardListController.h; path = MidtransKit/MidtransKit/classes/VTCardListController.h; sourceTree = "<group>"; };
@@ -2360,7 +2358,7 @@
 		3F2E7709FDAB13AFDB069349A60ED48F /* GPBRootObject_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBRootObject_PackagePrivate.h; path = objectivec/GPBRootObject_PackagePrivate.h; sourceTree = "<group>"; };
 		3F3CDBDCBC8A527FFE10388182A97431 /* Pods-titipanku.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-titipanku.debug.xcconfig"; sourceTree = "<group>"; };
 		3F728A8FBA415F5270AB9023A965CD76 /* FBSDKMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKMacros.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKMacros.h; sourceTree = "<group>"; };
-		3F73EEF9FEE4D1F463C84424F601947E /* GTMOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GTMOAuth2.framework; path = GTMOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F73EEF9FEE4D1F463C84424F601947E /* GTMOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GTMOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F76BF7E1FF997ED9B86AD9CE74C4C43 /* maybank.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = maybank.png; path = MidtransKit/MidtransKit/resources/maybank.png; sourceTree = "<group>"; };
 		3F7E5EE0EF556C553D8F729A2C1CFCCC /* SNPPostPaymentVAViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = SNPPostPaymentVAViewController.xib; path = MidtransKit/MidtransKit/resources/SNPPostPaymentVAViewController.xib; sourceTree = "<group>"; };
 		40887B6035E86DB1EF6DA8E953169385 /* FBSDKAccessToken.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAccessToken.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKAccessToken.h; sourceTree = "<group>"; };
@@ -2373,7 +2371,7 @@
 		42383E08B3702209645379F085BAEE4C /* LikeControl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LikeControl.swift; path = Sources/Share/Views/LikeControl.swift; sourceTree = "<group>"; };
 		42628557E4E2739BF0CDAC1B8B915AEB /* MIDGopayDetailView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MIDGopayDetailView.m; path = MidtransKit/MidtransKit/MIDGopayDetailView.m; sourceTree = "<group>"; };
 		42672C5F127346A7AC87FF48BE8C7B47 /* other_alto_2@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "other_alto_2@2x.png"; path = "MidtransKit/MidtransKit/resources/other_alto_2@2x.png"; sourceTree = "<group>"; };
-		427189BB60F6ECE9A4A39F610C27F608 /* table.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = table.cc; path = table/table.cc; sourceTree = "<group>"; };
+		427189BB60F6ECE9A4A39F610C27F608 /* table.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = table.cc; path = table/table.cc; sourceTree = "<group>"; };
 		42C82867B636A508735F05AA52404755 /* MidtransItemCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransItemCell.h; path = MidtransKit/MidtransKit/classes/MidtransItemCell.h; sourceTree = "<group>"; };
 		42F392D43370EC0DFF7AE028B0D8E78E /* UserProfile.PictureView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserProfile.PictureView.swift; path = Sources/Core/UserProfile/UserProfile.PictureView.swift; sourceTree = "<group>"; };
 		42F8FB56C9BA2398D44B0DDF4BC4B435 /* icon-help@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "icon-help@3x.png"; path = "MidtransKit/MidtransKit/resources/icon-help@3x.png"; sourceTree = "<group>"; };
@@ -2382,9 +2380,9 @@
 		432862A1C5AF37CADA68DEBFF7E28B05 /* sms@1.5x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "sms@1.5x.png"; path = "MidtransKit/MidtransKit/resources/sms@1.5x.png"; sourceTree = "<group>"; };
 		432CF712D5E3DF179CD58D7E1028E06D /* SKActivityIndicatorView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SKActivityIndicatorView.modulemap; sourceTree = "<group>"; };
 		43316C41D777CA89F6CC9AB6EAAB55C2 /* OpenGraphPropertyContaining.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OpenGraphPropertyContaining.swift; path = Sources/Share/Content/OpenGraph/OpenGraphPropertyContaining.swift; sourceTree = "<group>"; };
-		4331B2810E10239B16F304CBF28277CD /* cache.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = cache.cc; path = util/cache.cc; sourceTree = "<group>"; };
+		4331B2810E10239B16F304CBF28277CD /* cache.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = cache.cc; path = util/cache.cc; sourceTree = "<group>"; };
 		434326F96300020ADE8E0DD374206D10 /* FBSDKLikeDialog.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeDialog.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeDialog.h; sourceTree = "<group>"; };
-		4364B3EF89CF1CEFFBCE065D37E11ECB /* logging.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = logging.cc; path = util/logging.cc; sourceTree = "<group>"; };
+		4364B3EF89CF1CEFFBCE065D37E11ECB /* logging.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = logging.cc; path = util/logging.cc; sourceTree = "<group>"; };
 		43802E861027D29A9CCC4CA7CB7DF83F /* cimb_clicks@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "cimb_clicks@2x.png"; path = "MidtransKit/MidtransKit/resources/cimb_clicks@2x.png"; sourceTree = "<group>"; };
 		43E6F6673A3EAF0E3352C0F2726DFFF0 /* VTTwoClickController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTTwoClickController.m; path = MidtransKit/MidtransKit/classes/VTTwoClickController.m; sourceTree = "<group>"; };
 		44A049F0280696169413933F771D0896 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2392,7 +2390,7 @@
 		44BCD08D2D38C7F6FA13A0381572511D /* visa-mastercard-jcb-amex.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "visa-mastercard-jcb-amex.png"; path = "MidtransKit/MidtransKit/resources/visa-mastercard-jcb-amex.png"; sourceTree = "<group>"; };
 		44E7108CFEFD2AD290D4C7EBE0FC7466 /* BFAppLink.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFAppLink.h; path = Bolts/iOS/BFAppLink.h; sourceTree = "<group>"; };
 		44ED60EC2B9A0C32B5D437D008D89479 /* MidtransPaymentBCAKlikpay.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentBCAKlikpay.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentBCAKlikpay.h; sourceTree = "<group>"; };
-		450AF18B9886D77939BDF3A64733F9E7 /* table_cache.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = table_cache.cc; path = db/table_cache.cc; sourceTree = "<group>"; };
+		450AF18B9886D77939BDF3A64733F9E7 /* table_cache.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = table_cache.cc; path = db/table_cache.cc; sourceTree = "<group>"; };
 		453B565E674082417CD6E71F8E2ABA60 /* Entry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = Source/Shared/Library/Entry.swift; sourceTree = "<group>"; };
 		453B5C99D15EE227EF3E292752E71467 /* MidtransTokenizeRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransTokenizeRequest.m; path = MidtransCoreKit/MidtransCoreKit/MidtransTokenizeRequest.m; sourceTree = "<group>"; };
 		455A105F7768869C43E9043A93DD6664 /* MidtransItemDetail.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransItemDetail.h; path = MidtransCoreKit/MidtransCoreKit/MidtransItemDetail.h; sourceTree = "<group>"; };
@@ -2402,7 +2400,7 @@
 		45E069587E249D3CC747E0559BADAFF2 /* GTMOAuth2-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GTMOAuth2-dummy.m"; sourceTree = "<group>"; };
 		45F341CCE9377A5D86F34D3988E0B10B /* VTIndomaretSuccessController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTIndomaretSuccessController.m; path = MidtransKit/MidtransKit/classes/VTIndomaretSuccessController.m; sourceTree = "<group>"; };
 		4619C59BE79D89F80B3A80F8A3DFA159 /* Hue-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Hue-umbrella.h"; sourceTree = "<group>"; };
-		4624EBBF69C021E095335CD4488E9070 /* pb_decode.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_decode.c; sourceTree = "<group>"; };
+		4624EBBF69C021E095335CD4488E9070 /* pb_decode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_decode.c; sourceTree = "<group>"; };
 		4633CA3EDAD953822676B1E787714FFE /* FBSDKShareMessengerURLActionButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareMessengerURLActionButton.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareMessengerURLActionButton.m; sourceTree = "<group>"; };
 		4633E5C4041FDC888FF3298E3485DD14 /* MidtransPaymentListModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentListModel.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentListModel.m; sourceTree = "<group>"; };
 		46A990DC56C28846372C26378D445770 /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
@@ -2461,7 +2459,7 @@
 		4EB10DEBAA396F1862FD30B01060BC41 /* MidtransPaymentGOPAY.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentGOPAY.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentGOPAY.m; sourceTree = "<group>"; };
 		4EB414155798843E9E775F8EC02176A0 /* memtable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = memtable.h; path = db/memtable.h; sourceTree = "<group>"; };
 		4EC9769073E16306AC5E88E07A823CE9 /* MidtransPaymentListDataModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentListDataModel.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentListDataModel.h; sourceTree = "<group>"; };
-		4F5B6EA200A57CBBEC060FBEA56433EF /* id_lang.json */ = {isa = PBXFileReference; includeInIndex = 1; name = id_lang.json; path = MidtransKit/MidtransKit/resources/id_lang.json; sourceTree = "<group>"; };
+		4F5B6EA200A57CBBEC060FBEA56433EF /* id_lang.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = id_lang.json; path = MidtransKit/MidtransKit/resources/id_lang.json; sourceTree = "<group>"; };
 		4FC076847E396309A0B77B6CC966A790 /* FBSDKMessengerIcon.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKMessengerIcon.m; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKMessengerIcon.m; sourceTree = "<group>"; };
 		4FE9457DE1D8D8BC8CFE6C29AC1A9482 /* va@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "va@2x.png"; path = "MidtransKit/MidtransKit/resources/va@2x.png"; sourceTree = "<group>"; };
 		50159F79FA3EC5E95912D621A7D4A746 /* FBSDKAppEventsDeviceInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppEventsDeviceInfo.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsDeviceInfo.m; sourceTree = "<group>"; };
@@ -2483,7 +2481,7 @@
 		533C56AAF99200B98D08DC1943A4F131 /* FBSDKTooltipView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKTooltipView.m; path = FBSDKLoginKit/FBSDKLoginKit/FBSDKTooltipView.m; sourceTree = "<group>"; };
 		533E66CC5A2B043485D1BC1A8C1C4F07 /* SNPPostPaymentFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SNPPostPaymentFooter.h; path = MidtransKit/MidtransKit/classes/SNPPostPaymentFooter.h; sourceTree = "<group>"; };
 		534F24A14DF609B219345E04807568EB /* Imaginary-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Imaginary-dummy.m"; sourceTree = "<group>"; };
-		53677F9ADD5105A4DF146A9EEBC9FB5B /* GTMSessionFetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GTMSessionFetcher.framework; path = GTMSessionFetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		53677F9ADD5105A4DF146A9EEBC9FB5B /* GTMSessionFetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GTMSessionFetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5370F1FC3C50145874B2C503B55F869F /* MidtransCommonTSCViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransCommonTSCViewController.m; path = MidtransKit/MidtransKit/MidtransCommonTSCViewController.m; sourceTree = "<group>"; };
 		5373D92DA463DC020CDE687310AB07C9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53A60487234B7A3559D1377EB0937905 /* posix_logger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = posix_logger.h; path = util/posix_logger.h; sourceTree = "<group>"; };
@@ -2491,8 +2489,8 @@
 		53CC91D566D588A33AC7BE117ABBB114 /* MidtransUIListCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransUIListCell.xib; path = MidtransKit/MidtransKit/resources/MidtransUIListCell.xib; sourceTree = "<group>"; };
 		53CF21C61D2D96527278F4E52E9825D6 /* FBSDKCloseIcon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKCloseIcon.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKCloseIcon.h; sourceTree = "<group>"; };
 		5417AE1591512E48AD6A06148EF7A291 /* FBSDKURLOpening.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKURLOpening.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/FBSDKURLOpening.h; sourceTree = "<group>"; };
-		5457EAE1483E838414CD324D941811D6 /* log_reader.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = log_reader.cc; path = db/log_reader.cc; sourceTree = "<group>"; };
-		5483423BF9977638B82622A9A7828341 /* two_level_iterator.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = two_level_iterator.cc; path = table/two_level_iterator.cc; sourceTree = "<group>"; };
+		5457EAE1483E838414CD324D941811D6 /* log_reader.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = log_reader.cc; path = db/log_reader.cc; sourceTree = "<group>"; };
+		5483423BF9977638B82622A9A7828341 /* two_level_iterator.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = two_level_iterator.cc; path = table/two_level_iterator.cc; sourceTree = "<group>"; };
 		549838CF2EBEC76BFA9065FFCA8A5D29 /* GTMSessionFetcherLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMSessionFetcherLogging.h; path = Source/GTMSessionFetcherLogging.h; sourceTree = "<group>"; };
 		54A81F246CA013E14F8C7DEFB9C06C70 /* ic_chevron_down.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = ic_chevron_down.png; path = MidtransKit/MidtransKit/resources/ic_chevron_down.png; sourceTree = "<group>"; };
 		54B93D9B50B17FD9B55FF3B32B9AEAE8 /* FBSDKGraphRequestBody.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKGraphRequestBody.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/Network/FBSDKGraphRequestBody.h; sourceTree = "<group>"; };
@@ -2517,7 +2515,7 @@
 		570D56444FE9F973267579A85EA3C271 /* LoginResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginResult.swift; path = Sources/Login/LoginResult.swift; sourceTree = "<group>"; };
 		572F4A2BFC03F8FD148EFC49A905FDFC /* MidtransPaymentGCIView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentGCIView.h; path = MidtransKit/MidtransKit/classes/MidtransPaymentGCIView.h; sourceTree = "<group>"; };
 		57327F360FAE6A1E54FFC8BBF7F80A87 /* other_atm_3@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "other_atm_3@2x.png"; path = "MidtransKit/MidtransKit/resources/other_atm_3@2x.png"; sourceTree = "<group>"; };
-		57362677626FAAA84AE8891CE0DBE687 /* arena.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = arena.cc; path = util/arena.cc; sourceTree = "<group>"; };
+		57362677626FAAA84AE8891CE0DBE687 /* arena.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = arena.cc; path = util/arena.cc; sourceTree = "<group>"; };
 		576B912D953D89E9E89B6F426E6D9870 /* AlamofireImage-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AlamofireImage-dummy.m"; sourceTree = "<group>"; };
 		583FCAC7185F7CF607489E09C7137A5C /* GPBProtocolBuffers_RuntimeSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBProtocolBuffers_RuntimeSupport.h; path = objectivec/GPBProtocolBuffers_RuntimeSupport.h; sourceTree = "<group>"; };
 		584A5F26A80544BB2D42A45B21EA029F /* IHKeyboardAvoiding_vt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IHKeyboardAvoiding_vt.h; path = MidtransKit/MidtransKit/classes/IHKeyboardAvoiding_vt.h; sourceTree = "<group>"; };
@@ -2549,14 +2547,14 @@
 		5D046930A175A998A8E54C9047BCBC75 /* AppInvite.PromoCode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppInvite.PromoCode.swift; path = Sources/Share/Dialogs/AppInvite/AppInvite.PromoCode.swift; sourceTree = "<group>"; };
 		5D25D162FC11B1B9AC0E2099D509CF95 /* FBSDKAccessTokenExpirer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAccessTokenExpirer.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenExpirer.m; sourceTree = "<group>"; };
 		5D80D6D78D89CD0AE423858CF51E3915 /* MidtransLineView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransLineView.h; path = MidtransKit/MidtransKit/classes/MidtransLineView.h; sourceTree = "<group>"; };
-		5DB4C89CFCE71B7A9120B6B18C956770 /* SKActivityIndicatorView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SKActivityIndicatorView.framework; path = SKActivityIndicatorView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DB4C89CFCE71B7A9120B6B18C956770 /* SKActivityIndicatorView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKActivityIndicatorView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DB56F71D3DCE4E375AB9F55EE8CB846 /* FBSDKShareMessengerGenericTemplateElement.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareMessengerGenericTemplateElement.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareMessengerGenericTemplateElement.m; sourceTree = "<group>"; };
 		5DEE41C43B7662CB27D4959E624586C7 /* other_prima_5@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "other_prima_5@2x.png"; path = "MidtransKit/MidtransKit/resources/other_prima_5@2x.png"; sourceTree = "<group>"; };
 		5E292FD48ADADEC2AFDA749D5771F42D /* Video.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Video.swift; path = Sources/Share/Content/Video/Video.swift; sourceTree = "<group>"; };
 		5E8340D3A0D108D920D28F4E94BBAD52 /* ShareDialog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShareDialog.swift; path = Sources/Share/Dialogs/ShareDialog/ShareDialog.swift; sourceTree = "<group>"; };
-		5EB6D45094D3525005041929A81F79E9 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = MidtransKit/MidtransKit/resources/en.lproj; sourceTree = "<group>"; };
+		5EB6D45094D3525005041929A81F79E9 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = MidtransKit/MidtransKit/resources/en.lproj; sourceTree = "<group>"; };
 		5EE3A562BA1BA0916D86C2649F2CD600 /* gopay_scan_1.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = gopay_scan_1.png; path = MidtransKit/MidtransKit/resources/gopay_scan_1.png; sourceTree = "<group>"; };
-		5EE55F7042A2C377EB16CAFD8EE258CE /* en_lang.json */ = {isa = PBXFileReference; includeInIndex = 1; name = en_lang.json; path = MidtransKit/MidtransKit/resources/en_lang.json; sourceTree = "<group>"; };
+		5EE55F7042A2C377EB16CAFD8EE258CE /* en_lang.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = en_lang.json; path = MidtransKit/MidtransKit/resources/en_lang.json; sourceTree = "<group>"; };
 		5F16350FAF29AF36B9B9C7AE0CD3EA78 /* Lightbox-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Lightbox-umbrella.h"; sourceTree = "<group>"; };
 		5F20C1DE0552203088645FC6AF2F4B59 /* MidtransConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransConfig.m; path = MidtransCoreKit/MidtransCoreKit/MidtransConfig.m; sourceTree = "<group>"; };
 		5F4BF41D57E97FAC9E01C50EB4947974 /* MidtransSavedCardCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransSavedCardCell.h; path = MidtransKit/MidtransKit/classes/MidtransSavedCardCell.h; sourceTree = "<group>"; };
@@ -2577,7 +2575,7 @@
 		621277C5E6E8EB29D210C94C0249BE19 /* MidtransSavedCardFooter.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransSavedCardFooter.xib; path = MidtransKit/MidtransKit/resources/MidtransSavedCardFooter.xib; sourceTree = "<group>"; };
 		6243010890D7F2E1FDDE61D1E1058AA8 /* visa-mastercard@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "visa-mastercard@2x.png"; path = "MidtransKit/MidtransKit/resources/visa-mastercard@2x.png"; sourceTree = "<group>"; };
 		62845902DE259A8CD023AD10C76FFC73 /* FBSDKShareOpenGraphValueContainer+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKShareOpenGraphValueContainer+Internal.h"; path = "FBSDKShareKit/FBSDKShareKit/Internal/FBSDKShareOpenGraphValueContainer+Internal.h"; sourceTree = "<group>"; };
-		62C571AAA287CCC11D313A8BFA432007 /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Lightbox.framework; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		62C571AAA287CCC11D313A8BFA432007 /* Lightbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lightbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62F156ED213C75A190DB77E2A4C1BC6D /* GTMOAuth2Authentication.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMOAuth2Authentication.m; path = Source/GTMOAuth2Authentication.m; sourceTree = "<group>"; };
 		637458F7F044C9456DC051E276EB9473 /* iterator_wrapper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = iterator_wrapper.h; path = table/iterator_wrapper.h; sourceTree = "<group>"; };
 		63F47ABD2F4B183D5CDAB36FF8235906 /* FBSDKServerConfigurationManager+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKServerConfigurationManager+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKServerConfigurationManager+Internal.h"; sourceTree = "<group>"; };
@@ -2608,16 +2606,16 @@
 		679DCA23DDB51ABCD6A8349E231DAAFB /* MidtransPromoView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransPromoView.xib; path = MidtransKit/MidtransKit/resources/MidtransPromoView.xib; sourceTree = "<group>"; };
 		67A6E74918C935B7B16D34647B65E8D9 /* FBSDKShareOpenGraphObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareOpenGraphObject.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphObject.m; sourceTree = "<group>"; };
 		67AE4875DA12DF474917138B5E07187F /* FBSDKBoltsMeasurementEventListener.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKBoltsMeasurementEventListener.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppLink/FBSDKBoltsMeasurementEventListener.m; sourceTree = "<group>"; };
-		67B5EDA1B2A08FD727DD3841EC5B700F /* SwiftyPickerPopover.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyPickerPopover.framework; path = SwiftyPickerPopover.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		67B5EDA1B2A08FD727DD3841EC5B700F /* SwiftyPickerPopover.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyPickerPopover.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67DA3442696BBDEF4BD7AA5F226E308B /* FBSDKAppEventsUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppEventsUtility.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsUtility.h; sourceTree = "<group>"; };
 		67DF63BC4E47ACE20585693905A65877 /* visa-mastercard-amex@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "visa-mastercard-amex@2x.png"; path = "MidtransKit/MidtransKit/resources/visa-mastercard-amex@2x.png"; sourceTree = "<group>"; };
 		67F11F9428BFDE265CC45EA3C917C817 /* SwiftyPickerPopover.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftyPickerPopover.modulemap; sourceTree = "<group>"; };
 		6832D840A0EF78ACCF11FE8D503F132B /* FBSDKLikeObjectType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLikeObjectType.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKLikeObjectType.m; sourceTree = "<group>"; };
 		687921749DBA896CCB02C000CF52E923 /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
-		6897CB291A20E0B3F497107890987D03 /* OCRAEXT.TTF */ = {isa = PBXFileReference; includeInIndex = 1; name = OCRAEXT.TTF; path = MidtransKit/MidtransKit/resources/OCRAEXT.TTF; sourceTree = "<group>"; };
+		6897CB291A20E0B3F497107890987D03 /* OCRAEXT.TTF */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = OCRAEXT.TTF; path = MidtransKit/MidtransKit/resources/OCRAEXT.TTF; sourceTree = "<group>"; };
 		68C1C684EC2C88FB7F1C615D89A66DAD /* block.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = block.h; path = table/block.h; sourceTree = "<group>"; };
 		68E8C74264784974917A3305CD361C71 /* MidtransUIButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransUIButton.m; path = MidtransKit/MidtransKit/classes/MidtransUIButton.m; sourceTree = "<group>"; };
-		68EE15C2DD8181E32146ED40C2BF6C88 /* dbformat.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = dbformat.cc; path = db/dbformat.cc; sourceTree = "<group>"; };
+		68EE15C2DD8181E32146ED40C2BF6C88 /* dbformat.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = dbformat.cc; path = db/dbformat.cc; sourceTree = "<group>"; };
 		6970949086C4F77349512BE3768F02C8 /* VTIndomaretSuccessController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTIndomaretSuccessController.h; path = MidtransKit/MidtransKit/classes/VTIndomaretSuccessController.h; sourceTree = "<group>"; };
 		69920B552D962D052CB12FE506262EB3 /* VTPaymentHeader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTPaymentHeader.m; path = MidtransKit/MidtransKit/classes/VTPaymentHeader.m; sourceTree = "<group>"; };
 		699FE6BAC2680B9F0227F6AA77C01656 /* MidtransPaymentRequestV2DataModels.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentRequestV2DataModels.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentRequestV2DataModels.h; sourceTree = "<group>"; };
@@ -2625,7 +2623,7 @@
 		69F4C058E8764DDAEACD1829592D0240 /* VTBillpaySuccessController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTBillpaySuccessController.h; path = MidtransKit/MidtransKit/classes/VTBillpaySuccessController.h; sourceTree = "<group>"; };
 		69F5EF4DC6D3CE467626EB75FF1EA0AD /* SNPPostPaymentIndomaretHeader.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = SNPPostPaymentIndomaretHeader.xib; path = MidtransKit/MidtransKit/resources/SNPPostPaymentIndomaretHeader.xib; sourceTree = "<group>"; };
 		6A15BE7490C1F7727B5CDE929CBA6D2C /* FBSDKEventBinding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKEventBinding.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/Codeless/FBSDKEventBinding.h; sourceTree = "<group>"; };
-		6A4AF9F283D9F550A36836C81B63838F /* nanopb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = nanopb.framework; path = nanopb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A4AF9F283D9F550A36836C81B63838F /* nanopb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nanopb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A51BA7E76CB0F10988B78D20CBC7E40 /* FBSDKCloseIcon.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKCloseIcon.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKCloseIcon.m; sourceTree = "<group>"; };
 		6A6827F113D53E94C24E17AACA78EB52 /* MidtransInstallmentCollectionViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransInstallmentCollectionViewCell.xib; path = MidtransKit/MidtransKit/resources/MidtransInstallmentCollectionViewCell.xib; sourceTree = "<group>"; };
 		6A9ABD26448954CED53AF413EC05CE9C /* FBSDKAppEventsState.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppEventsState.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsState.m; sourceTree = "<group>"; };
@@ -2661,7 +2659,7 @@
 		6F7ECC01C2785A4672AB140486B7744D /* Hue.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Hue.xcconfig; sourceTree = "<group>"; };
 		6F9C58E12B5D6C5AEE0BD08E0512BE0D /* UIColor+Hue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIColor+Hue.swift"; path = "Source/iOS/UIColor+Hue.swift"; sourceTree = "<group>"; };
 		6FABC58B34507B9E89CD7AFA0FC33321 /* MidtransPaymentBankTransfer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentBankTransfer.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentBankTransfer.h; sourceTree = "<group>"; };
-		6FE5B09298D049151A99BB18569EA02F /* gopay */ = {isa = PBXFileReference; includeInIndex = 1; name = gopay; path = MidtransKit/MidtransKit/resources/gopay; sourceTree = "<group>"; };
+		6FE5B09298D049151A99BB18569EA02F /* gopay */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = gopay; path = MidtransKit/MidtransKit/resources/gopay; sourceTree = "<group>"; };
 		701E8F2B8BCCF8F963CD8C2B69DECD83 /* MidtransPromo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPromo.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPromo.m; sourceTree = "<group>"; };
 		704BC63978D1917D366F2784DCB75E97 /* Dictionary+KeyValueMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Dictionary+KeyValueMap.swift"; path = "Sources/Core/Internal/Extensions/Dictionary+KeyValueMap.swift"; sourceTree = "<group>"; };
 		7057C37FF35DD8CDC29366451B25ABDC /* FBSDKAppLinkUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppLinkUtility.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKAppLinkUtility.h; sourceTree = "<group>"; };
@@ -2679,12 +2677,12 @@
 		7252CD2F8FC370BC99CAD9F47D31CE92 /* MasterCard@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "MasterCard@2x.png"; path = "MidtransKit/MidtransKit/resources/MasterCard@2x.png"; sourceTree = "<group>"; };
 		727A4479844C1ADF97A312939A1F1EEB /* id_mandiri_ecash.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = id_mandiri_ecash.plist; path = MidtransKit/MidtransKit/resources/id_mandiri_ecash.plist; sourceTree = "<group>"; };
 		72AF85A8DA09306321067525D0FCB9E7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		72D8BC13C1A4F745C2B61257D075830A /* FacebookShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FacebookShare.framework; path = FacebookShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		72D8BC13C1A4F745C2B61257D075830A /* FacebookShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FacebookShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		72E8BDAC36B2728E521A9255C0592B18 /* MidtransVAViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransVAViewController.m; path = MidtransKit/MidtransKit/classes/MidtransVAViewController.m; sourceTree = "<group>"; };
 		7305199A01D08EB115C1D6F38BC72A7C /* VTPaymentStatusViewModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTPaymentStatusViewModel.h; path = MidtransKit/MidtransKit/classes/VTPaymentStatusViewModel.h; sourceTree = "<group>"; };
 		73109D0A2F9E1D7BFD809B5368BB630C /* VTPaymentStatusController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = VTPaymentStatusController.xib; path = MidtransKit/MidtransKit/resources/VTPaymentStatusController.xib; sourceTree = "<group>"; };
 		7339B85FF80D6D407D9EAF29638C78D8 /* AmexDark@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "AmexDark@2x.png"; path = "MidtransKit/MidtransKit/resources/AmexDark@2x.png"; sourceTree = "<group>"; };
-		7350B92393324E1F287EC89512573F30 /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Protobuf.framework; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7350B92393324E1F287EC89512573F30 /* Protobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Protobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7392BF8A9124FA495792D1DEBBE6ECFB /* FBSDKBoltsMeasurementEventListener.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKBoltsMeasurementEventListener.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppLink/FBSDKBoltsMeasurementEventListener.h; sourceTree = "<group>"; };
 		73A3A60FF59A87B83AA4B7620AD22A95 /* OpenGraphShareContent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OpenGraphShareContent.swift; path = Sources/Share/Content/OpenGraph/OpenGraphShareContent.swift; sourceTree = "<group>"; };
 		73AAA5AA1A724050398BCF38F0E24856 /* Midtrans3DSController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Midtrans3DSController.m; path = MidtransCoreKit/MidtransCoreKit/Midtrans3DSController.m; sourceTree = "<group>"; };
@@ -2695,7 +2693,7 @@
 		74B5C671F3465034EADA03D577C06DCC /* MidtransPaymentTelkomselCash.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentTelkomselCash.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentTelkomselCash.m; sourceTree = "<group>"; };
 		74F214B32923150FF4BA8EE14D409178 /* MidtransPromoDataModels.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPromoDataModels.h; path = MidtransCoreKit/MidtransCoreKit/Promo/MidtransPromoDataModels.h; sourceTree = "<group>"; };
 		752016EEE36D9FAA1CAC66A539FB2643 /* GTMMIMEDocument.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMMIMEDocument.h; path = Source/GTMMIMEDocument.h; sourceTree = "<group>"; };
-		75518488344868344ED20399D7A0A163 /* env.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = env.cc; path = util/env.cc; sourceTree = "<group>"; };
+		75518488344868344ED20399D7A0A163 /* env.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = env.cc; path = util/env.cc; sourceTree = "<group>"; };
 		7594A473B559604BBCF6DC3121BE61DB /* PopAnimator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PopAnimator.h; path = MidtransKit/MidtransKit/classes/PopAnimator.h; sourceTree = "<group>"; };
 		75BE0ED1A3FEEF9F964ABF7CD96282F1 /* SKActivityIndicatorView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SKActivityIndicatorView-prefix.pch"; sourceTree = "<group>"; };
 		75D1C3B1855800F6B169AF460C2504BC /* MidtransPaymentRequestV2EnabledPayments.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentRequestV2EnabledPayments.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentRequestV2EnabledPayments.h; sourceTree = "<group>"; };
@@ -2720,7 +2718,7 @@
 		78C86262E83C45B4B26DF0EE8AB55994 /* GPBArray_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBArray_PackagePrivate.h; path = objectivec/GPBArray_PackagePrivate.h; sourceTree = "<group>"; };
 		78F0476C92EFB20E0C46669F371C5424 /* BFExecutor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFExecutor.m; path = Bolts/Common/BFExecutor.m; sourceTree = "<group>"; };
 		792E719E39C2F11C1D5DE4EF66B698E6 /* FBSDKGraphRequestPiggybackManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKGraphRequestPiggybackManager.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/Network/FBSDKGraphRequestPiggybackManager.m; sourceTree = "<group>"; };
-		797FF1A44A47DF19A0EED3E196326CFE /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FBSDKLoginKit.framework; path = FBSDKLoginKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		797FF1A44A47DF19A0EED3E196326CFE /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FBSDKLoginKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A33B6D0D15903554987135452735696 /* LoginManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginManager.swift; path = Sources/Login/LoginManager.swift; sourceTree = "<group>"; };
 		7A5543CA115BAE3FA7F3A3776D294D50 /* FBSDKShareDialog.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareDialog.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareDialog.m; sourceTree = "<group>"; };
 		7A593EAEA3BCE78B2C0E52E942A25BA5 /* FBSDKAppEvents.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppEvents.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKAppEvents.h; sourceTree = "<group>"; };
@@ -2751,6 +2749,7 @@
 		7DCC6E93DCA591A38EEB5D0ED825DA30 /* Types.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Types.swift; path = Sources/Shared/Library/Types.swift; sourceTree = "<group>"; };
 		7DDC9964D8BE6A7F6744C2D94CC008D6 /* FBSDKSharePhoto.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKSharePhoto.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKSharePhoto.m; sourceTree = "<group>"; };
 		7E1EFCA429C15AB2E0629B05FCC79183 /* FBSDKLikeControl.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLikeControl.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKLikeControl.m; sourceTree = "<group>"; };
+		7E339A9C2168965A00F55E79 /* StringPickerPopover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = StringPickerPopover.storyboard; path = ../titipanku/SwiftyPickerPopover/Base.lproj/StringPickerPopover.storyboard; sourceTree = "<group>"; };
 		7E3D2F928DFD4EF0F1C8DD7084E1FB66 /* other_atm_7@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "other_atm_7@2x.png"; path = "MidtransKit/MidtransKit/resources/other_atm_7@2x.png"; sourceTree = "<group>"; };
 		7E50C65A50559FECD1491AC2469D99D9 /* MidtransUIPaymentViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransUIPaymentViewController.m; path = MidtransKit/MidtransKit/classes/MidtransUIPaymentViewController.m; sourceTree = "<group>"; };
 		7E6E7AF25DA7A4B57E38C51827A0349F /* MidtransCustomerDetails.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransCustomerDetails.h; path = MidtransCoreKit/MidtransCoreKit/MidtransCustomerDetails.h; sourceTree = "<group>"; };
@@ -2773,7 +2772,7 @@
 		80E040FF380E11624720AD37C7F67D50 /* MidtransVAHeader.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransVAHeader.xib; path = MidtransKit/MidtransKit/resources/MidtransVAHeader.xib; sourceTree = "<group>"; };
 		80F05DD0DAA2E814DD8AC8BFF6D12DBF /* FBSDKShareOpenGraphAction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareOpenGraphAction.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphAction.m; sourceTree = "<group>"; };
 		810661AD1F18971E3DF1922E2A68798A /* bni_va4@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "bni_va4@2x.png"; path = "MidtransKit/MidtransKit/resources/bni_va4@2x.png"; sourceTree = "<group>"; };
-		811FCFA65E354EFB618EA07DCC989533 /* histogram.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = histogram.cc; path = util/histogram.cc; sourceTree = "<group>"; };
+		811FCFA65E354EFB618EA07DCC989533 /* histogram.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = histogram.cc; path = util/histogram.cc; sourceTree = "<group>"; };
 		813A56C5FB09F934335A6A58EF18B630 /* VTKeyboardAccessoryView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTKeyboardAccessoryView.h; path = MidtransKit/MidtransKit/classes/VTKeyboardAccessoryView.h; sourceTree = "<group>"; };
 		8170C5F020326545103DA161246283FB /* MidtransPaymentCIMBClicks.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentCIMBClicks.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentCIMBClicks.h; sourceTree = "<group>"; };
 		8196674508C6F483D8EA6A065ABEF962 /* id_echannel.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = id_echannel.plist; path = MidtransKit/MidtransKit/resources/id_echannel.plist; sourceTree = "<group>"; };
@@ -2812,10 +2811,10 @@
 		8756D13559B6AF7D57A548827FA9F7B4 /* MidtransPromoEngine.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPromoEngine.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPromoEngine.m; sourceTree = "<group>"; };
 		879163FDD27D2DFD67CE32F4B3A78961 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
 		87A588FCBFD222F8FC2477D62496B63D /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		87ECAF5714B79D78FE8086790C778647 /* FacebookCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FacebookCore.framework; path = FacebookCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		87ECAF5714B79D78FE8086790C778647 /* FacebookCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FacebookCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F21834C297327D80CF44624B70FA4C /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Alamofire.modulemap; sourceTree = "<group>"; };
 		88048034106285B1BE87045FEFFE8E4F /* FBSDKCoreKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FBSDKCoreKit-dummy.m"; sourceTree = "<group>"; };
-		8807C1B63E0F9BB4CB9B4BDE7ABA60FE /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GoogleToolboxForMac.framework; path = GoogleToolboxForMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8807C1B63E0F9BB4CB9B4BDE7ABA60FE /* GoogleToolboxForMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleToolboxForMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8837EE146C89412B90F640E6E78AE49F /* Date+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Date+Extensions.swift"; path = "Source/Shared/Extensions/Date+Extensions.swift"; sourceTree = "<group>"; };
 		883B880186E7443A65539AF04296238A /* MidtransUIPaymentDirectViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUIPaymentDirectViewController.h; path = MidtransKit/MidtransKit/classes/MidtransUIPaymentDirectViewController.h; sourceTree = "<group>"; };
 		883FDC72882C56CDF467E08636E93CD9 /* GPBUnknownField.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBUnknownField.m; path = objectivec/GPBUnknownField.m; sourceTree = "<group>"; };
@@ -2864,13 +2863,13 @@
 		8EE794005C3D5B13E4C24D1CA3A713EB /* FBSDKPaymentObserver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKPaymentObserver.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKPaymentObserver.h; sourceTree = "<group>"; };
 		8F01AFE84E7DA1B4A9D02925EA30EAA1 /* FBSDKAppInviteContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppInviteContent.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKAppInviteContent.h; sourceTree = "<group>"; };
 		8F34712E93AE00A0AA158A63F3FD5CE7 /* en_bni_point_tsc.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = en_bni_point_tsc.plist; path = MidtransKit/MidtransKit/resources/en_bni_point_tsc.plist; sourceTree = "<group>"; };
-		8F6C782B6B17FDD72F90B1CDE3B47207 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FBSDKShareKit.framework; path = FBSDKShareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F6C782B6B17FDD72F90B1CDE3B47207 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FBSDKShareKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F94677257C23D8A0D181435D657E5BF /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F98487B22DA1D5870C717BA68262F43 /* ImageFetcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageFetcher.swift; path = Sources/Shared/Fetcher/ImageFetcher.swift; sourceTree = "<group>"; };
 		8F9BC3CE6EA6FF240EE0DD7D0E81112B /* VTGuideCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTGuideCell.m; path = MidtransKit/MidtransKit/classes/VTGuideCell.m; sourceTree = "<group>"; };
 		8FD22B0EF8623DED1BDD8701CEC38CA1 /* SNPPostPaymentFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SNPPostPaymentFooter.m; path = MidtransKit/MidtransKit/classes/SNPPostPaymentFooter.m; sourceTree = "<group>"; };
 		8FEFFF3F1C60D06454B93E49CFEA62F2 /* MidtransLoadingView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransLoadingView.xib; path = MidtransKit/MidtransKit/resources/MidtransLoadingView.xib; sourceTree = "<group>"; };
-		9018381FDE15B25C0D7CB00862485B18 /* block_builder.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = block_builder.cc; path = table/block_builder.cc; sourceTree = "<group>"; };
+		9018381FDE15B25C0D7CB00862485B18 /* block_builder.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = block_builder.cc; path = table/block_builder.cc; sourceTree = "<group>"; };
 		90441CAF4969B9CCACA2071C075D53F1 /* FBSDKViewImpressionTracker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKViewImpressionTracker.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKViewImpressionTracker.h; sourceTree = "<group>"; };
 		9050690D07B81C30A3B0A33017D3B7D0 /* plus-icon@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "plus-icon@2x.png"; path = "MidtransKit/MidtransKit/resources/plus-icon@2x.png"; sourceTree = "<group>"; };
 		905C4FE42CCD55042A11711B6D16B783 /* MidtransUIXibView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUIXibView.h; path = MidtransKit/MidtransKit/classes/MidtransUIXibView.h; sourceTree = "<group>"; };
@@ -2898,9 +2897,9 @@
 		92FF7030887CEAB1697B4E4C10FB963D /* UIImage+Scale.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Scale.h"; path = "MidtransKit/MidtransKit/UIImage+Scale.h"; sourceTree = "<group>"; };
 		9354EACCF4097FE0DD490E1C76F2E01D /* FBSDKSharingButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKSharingButton.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKSharingButton.h; sourceTree = "<group>"; };
 		936CB0FC6BE68A1D633D2AFEE35D8FAB /* SNPPostPaymentGeneralHeader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SNPPostPaymentGeneralHeader.h; path = MidtransKit/MidtransKit/SNPPostPaymentGeneralHeader.h; sourceTree = "<group>"; };
-		939B42794E49A47F04A3AC2DE6912600 /* Alamofire_SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire_SwiftyJSON.framework; path = "Alamofire-SwiftyJSON.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		93C3D27E192794F249C8767B0190AC74 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyJSON.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		939B42794E49A47F04A3AC2DE6912600 /* Alamofire_SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire_SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93C3D27E192794F249C8767B0190AC74 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F2B5FED6F689FA26BAE09D1EE31594 /* permata_atm_4@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "permata_atm_4@2x.png"; path = "MidtransKit/MidtransKit/resources/permata_atm_4@2x.png"; sourceTree = "<group>"; };
 		9409FB2440D50992A5556227D040C80D /* ColumnStringPickerPopover.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = ColumnStringPickerPopover.storyboard; path = SwiftyPickerPopover/ColumnStringPickerPopover.storyboard; sourceTree = "<group>"; };
 		94192D2D897B28FC186536EB74E6AFFA /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2910,10 +2909,10 @@
 		9446786005AE0E000E498B84770A9A68 /* sms.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = sms.png; path = MidtransKit/MidtransKit/resources/sms.png; sourceTree = "<group>"; };
 		948AF2E103F846760D8C39D72D6A5ABE /* MidtransUIPaymentViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUIPaymentViewController.h; path = MidtransKit/MidtransKit/classes/MidtransUIPaymentViewController.h; sourceTree = "<group>"; };
 		9498D66FEF026965E8D62C0F9C7D37BE /* MidtransPaymentEpayBRI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentEpayBRI.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentEpayBRI.m; sourceTree = "<group>"; };
-		94D3951C8E68C03516105EBE6D5A4F1E /* filter_policy.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = filter_policy.cc; path = util/filter_policy.cc; sourceTree = "<group>"; };
+		94D3951C8E68C03516105EBE6D5A4F1E /* filter_policy.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = filter_policy.cc; path = util/filter_policy.cc; sourceTree = "<group>"; };
 		94E921A55AAD6D2B9A22E4E6A026533A /* GTMSessionFetcher.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = GTMSessionFetcher.modulemap; sourceTree = "<group>"; };
 		9504F2014947371D15474F02850EC3CD /* GPBMessage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBMessage.h; path = objectivec/GPBMessage.h; sourceTree = "<group>"; };
-		9507B5141082B81A03F357763247555B /* MidtransCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MidtransCoreKit.framework; path = MidtransCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9507B5141082B81A03F357763247555B /* MidtransCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MidtransCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		952182ACD911E9CB0CB53F2112F41965 /* FBSDKTriStateBOOL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKTriStateBOOL.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKTriStateBOOL.h; sourceTree = "<group>"; };
 		9524D65C8C2E2CD89097DA8BE7CFEC80 /* visa-mastercard-amex.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "visa-mastercard-amex.png"; path = "MidtransKit/MidtransKit/resources/visa-mastercard-amex.png"; sourceTree = "<group>"; };
 		95448DE91212AF29F35218E3B6FAB6B5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2924,12 +2923,12 @@
 		95DEE5DBE03FEF79A2A5FD34890B8C89 /* Empty.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Empty.pbobjc.h; path = objectivec/google/protobuf/Empty.pbobjc.h; sourceTree = "<group>"; };
 		961332E4D5D9CBA86B7E2A342C773E98 /* VTVASuccessStatusController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTVASuccessStatusController.h; path = MidtransKit/MidtransKit/classes/VTVASuccessStatusController.h; sourceTree = "<group>"; };
 		962B179C2CC2528BD28A7502D5B925A9 /* Alamofire-SwiftyJSON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Alamofire-SwiftyJSON-dummy.m"; sourceTree = "<group>"; };
-		964156FBBD45F254DF75C64451153700 /* port_posix.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = port_posix.cc; path = port/port_posix.cc; sourceTree = "<group>"; };
+		964156FBBD45F254DF75C64451153700 /* port_posix.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = port_posix.cc; path = port/port_posix.cc; sourceTree = "<group>"; };
 		965ED662C4E2DEA3CC1BB01106C72E10 /* FBSDKLogo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKLogo.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKLogo.m; sourceTree = "<group>"; };
 		9697DD1120C1CC2364133F0BA7C8BC6E /* FBSDKShareMessengerContentUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKShareMessengerContentUtility.m; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKShareMessengerContentUtility.m; sourceTree = "<group>"; };
 		96B9081723181CA7A97CE4F5B12373CF /* SwiftyJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Source/SwiftyJSON.swift; sourceTree = "<group>"; };
 		96C58B4ACD1FD286D0A3887694AC15EE /* Firebase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = Core/Sources/Firebase.h; sourceTree = "<group>"; };
-		96D202FBA3F2F90BBBC30A8DE57ECD3C /* SourceSansPro-Light.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = "SourceSansPro-Light.ttf"; path = "MidtransKit/MidtransKit/resources/SourceSansPro-Light.ttf"; sourceTree = "<group>"; };
+		96D202FBA3F2F90BBBC30A8DE57ECD3C /* SourceSansPro-Light.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "SourceSansPro-Light.ttf"; path = "MidtransKit/MidtransKit/resources/SourceSansPro-Light.ttf"; sourceTree = "<group>"; };
 		9724869615F545FF4828C8CB150B0412 /* MemoryStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MemoryStorage.swift; path = Source/Shared/Storage/MemoryStorage.swift; sourceTree = "<group>"; };
 		9727A37653B4C324F5E9D119DE9C3F4B /* comparator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = comparator.h; path = include/leveldb/comparator.h; sourceTree = "<group>"; };
 		9731A82A3EF0117D996C36B9C019AD11 /* FBSDKAppEventsState.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppEventsState.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKAppEventsState.h; sourceTree = "<group>"; };
@@ -2952,7 +2951,7 @@
 		9A91D89CA17D50F02151569970D4C6A3 /* Hue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA1C260D93EE0740215EE691FEBB7C5 /* FieldMask.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FieldMask.pbobjc.m; path = objectivec/google/protobuf/FieldMask.pbobjc.m; sourceTree = "<group>"; };
 		9AB85FA25FB940882D2E6C2C8705CA1B /* alto_preview@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "alto_preview@3x.png"; path = "MidtransKit/MidtransKit/resources/alto_preview@3x.png"; sourceTree = "<group>"; };
-		9ACE236A13C3F979DB127C397A073240 /* format.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = format.cc; path = table/format.cc; sourceTree = "<group>"; };
+		9ACE236A13C3F979DB127C397A073240 /* format.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = format.cc; path = table/format.cc; sourceTree = "<group>"; };
 		9ACF7E290E536F5C4E0354A1F60B9A1C /* Any.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Any.pbobjc.m; path = objectivec/google/protobuf/Any.pbobjc.m; sourceTree = "<group>"; };
 		9AD637F412D864C6E338C8E629409C00 /* FBSDKLikeButtonPopWAV.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeButtonPopWAV.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeButtonPopWAV.h; sourceTree = "<group>"; };
 		9B0157CF72E57058772B6EA739C7D7B6 /* SNPFreeTextPayment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SNPFreeTextPayment.h; path = "MidtransCoreKit/MidtransCoreKit/Free Text/SNPFreeTextPayment.h"; sourceTree = "<group>"; };
@@ -2960,7 +2959,7 @@
 		9B16990C9F3C594366A79A08E87050F3 /* FBSDKUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKUtility.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKUtility.h; sourceTree = "<group>"; };
 		9B20C6C384CAF6F2729CE9C90416D4B8 /* MidtransTransaction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransTransaction.m; path = MidtransCoreKit/MidtransCoreKit/MidtransTransaction.m; sourceTree = "<group>"; };
 		9B5860CEA7D6DABC68F0FE98BEAEEA8A /* arena.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = arena.h; path = util/arena.h; sourceTree = "<group>"; };
-		9BCB0748EC2AEC86E2CD6C6B95D58A31 /* testutil.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = testutil.cc; path = util/testutil.cc; sourceTree = "<group>"; };
+		9BCB0748EC2AEC86E2CD6C6B95D58A31 /* testutil.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = testutil.cc; path = util/testutil.cc; sourceTree = "<group>"; };
 		9BF608192D264EEAAE0BEF5C22F71573 /* MidtransLuhn.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransLuhn.m; path = MidtransCoreKit/MidtransCoreKit/MidtransLuhn.m; sourceTree = "<group>"; };
 		9C1CB6BC6E108B16807E9C6EDEB4C3AC /* Api.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Api.pbobjc.m; path = objectivec/google/protobuf/Api.pbobjc.m; sourceTree = "<group>"; };
 		9C3AD8EFA13747DDBF005D26238B4C6C /* MIDGOPAYDataModels.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MIDGOPAYDataModels.h; path = MidtransCoreKit/MidtransCoreKit/Gopay/MIDGOPAYDataModels.h; sourceTree = "<group>"; };
@@ -2971,7 +2970,7 @@
 		9C973B4120FFB5F40B56528C88EF95E6 /* kioson@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "kioson@2x.png"; path = "MidtransKit/MidtransKit/resources/kioson@2x.png"; sourceTree = "<group>"; };
 		9CA80B2DF0FDC5711A66B8C0ED9C46E2 /* FBSDKCoreKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FBSDKCoreKit.xcconfig; sourceTree = "<group>"; };
 		9CD1C14327E92528638340F5E6B07D4E /* FBSDKShareOpenGraphValueContainer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareOpenGraphValueContainer.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphValueContainer.h; sourceTree = "<group>"; };
-		9CD924FC52BFE28B0F2F1EA2DB7E2481 /* token_key_icon */ = {isa = PBXFileReference; includeInIndex = 1; name = token_key_icon; path = MidtransKit/MidtransKit/resources/token_key_icon; sourceTree = "<group>"; };
+		9CD924FC52BFE28B0F2F1EA2DB7E2481 /* token_key_icon */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = token_key_icon; path = MidtransKit/MidtransKit/resources/token_key_icon; sourceTree = "<group>"; };
 		9CFD539514C6B4E793E6ACF2CB459C91 /* GTMSessionFetcherService.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GTMSessionFetcherService.m; path = Source/GTMSessionFetcherService.m; sourceTree = "<group>"; };
 		9D2342C3D86171ABA85235D031638E45 /* GoogleToolboxForMac.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = GoogleToolboxForMac.modulemap; sourceTree = "<group>"; };
 		9D66B553A80959F86C5C8EFE25D6726D /* FBSDKLikeBoxView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeBoxView.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeBoxView.h; sourceTree = "<group>"; };
@@ -2992,7 +2991,7 @@
 		9F7FAAA1B8A51465A5DDDC1EA2AD6824 /* FBSDKSharePhoto.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKSharePhoto.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKSharePhoto.h; sourceTree = "<group>"; };
 		9F898B9409E2F3D1E423DBF1B0EF60AC /* Cache-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Cache-prefix.pch"; sourceTree = "<group>"; };
 		9FA4F70912BB82F13784CA669439740D /* FBSDKShareMessengerURLActionButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareMessengerURLActionButton.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareMessengerURLActionButton.h; sourceTree = "<group>"; };
-		9FAFB169828C974166DC19FF590DFB01 /* comparator.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = comparator.cc; path = util/comparator.cc; sourceTree = "<group>"; };
+		9FAFB169828C974166DC19FF590DFB01 /* comparator.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = comparator.cc; path = util/comparator.cc; sourceTree = "<group>"; };
 		9FB88EFDDA1878C2A788B0C3EFEC8D04 /* SNPErrorLogManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SNPErrorLogManager.m; path = MidtransCoreKit/MidtransCoreKit/SNPErrorLogManager.m; sourceTree = "<group>"; };
 		A00E1BFB54619ECDFB536DBECE2CD133 /* MidtransUIToast.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransUIToast.xib; path = MidtransKit/MidtransKit/resources/MidtransUIToast.xib; sourceTree = "<group>"; };
 		A016A54B4F1CD74BFC8FB09FFAB161E0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -3000,7 +2999,7 @@
 		A04AB79E76E16E8A8B667A2A1FEAC99A /* LayoutConfigurable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConfigurable.swift; path = Source/Library/LayoutConfigurable.swift; sourceTree = "<group>"; };
 		A05669398C36F7C0DA5A7992845D8DB6 /* MidtransPromoResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPromoResponse.m; path = MidtransCoreKit/MidtransCoreKit/Promo/MidtransPromoResponse.m; sourceTree = "<group>"; };
 		A07C5AF9C2B308CDDF72CB32E01C022F /* FBSDKGraphRequestMetadata.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKGraphRequestMetadata.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/Network/FBSDKGraphRequestMetadata.h; sourceTree = "<group>"; };
-		A081D76BF5F2228F97EF6C7F1CE44313 /* Hue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Hue.framework; path = Hue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A081D76BF5F2228F97EF6C7F1CE44313 /* Hue.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Hue.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A083A11F88AC5ECB7E6323BA44A035CE /* MidtransMerchantClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransMerchantClient.m; path = MidtransCoreKit/MidtransCoreKit/MidtransMerchantClient.m; sourceTree = "<group>"; };
 		A095DC0E6BDC2BCFFC70E0A29D98DE43 /* FBSDKDeviceLoginManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKDeviceLoginManager.m; path = FBSDKLoginKit/FBSDKLoginKit/FBSDKDeviceLoginManager.m; sourceTree = "<group>"; };
 		A0A883C1DFEC6C3273F4B00F07A4E594 /* Pods-titipanku-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-titipanku-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -3010,9 +3009,9 @@
 		A17B9CA038856A1D4BAC74ED7D3A1902 /* FBSDKGraphRequestConnection+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKGraphRequestConnection+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/Network/FBSDKGraphRequestConnection+Internal.h"; sourceTree = "<group>"; };
 		A1967C6C1063ED053CB072FD90F2C326 /* VTPaymentListController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTPaymentListController.h; path = MidtransKit/MidtransKit/classes/VTPaymentListController.h; sourceTree = "<group>"; };
 		A1FB3A0C8E715A9D14A2EA10BE629F89 /* FBSDKLikeActionController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeActionController.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeActionController.h; sourceTree = "<group>"; };
-		A2232F6825401A51CDD0309EB05DFA09 /* table_builder.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = table_builder.cc; path = table/table_builder.cc; sourceTree = "<group>"; };
+		A2232F6825401A51CDD0309EB05DFA09 /* table_builder.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = table_builder.cc; path = table/table_builder.cc; sourceTree = "<group>"; };
 		A26124152D26E9C24533994EB2BC22F2 /* SNPPostPaymentHeaderBillPay.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SNPPostPaymentHeaderBillPay.m; path = MidtransKit/MidtransKit/classes/SNPPostPaymentHeaderBillPay.m; sourceTree = "<group>"; };
-		A265E6D6A3328126A3DAD82E3F6E1BAB /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = "SourceSansPro-Regular.ttf"; path = "MidtransKit/MidtransKit/resources/SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
+		A265E6D6A3328126A3DAD82E3F6E1BAB /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "SourceSansPro-Regular.ttf"; path = "MidtransKit/MidtransKit/resources/SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		A2D7841DA5802AD01C63934955110C81 /* MidtransPaymentRequestV2SavedTokens.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentRequestV2SavedTokens.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentRequestV2SavedTokens.h; sourceTree = "<group>"; };
 		A317A4E1E3B1C97FADE62CED3057741B /* Request+AlamofireImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Request+AlamofireImage.swift"; path = "Source/Request+AlamofireImage.swift"; sourceTree = "<group>"; };
 		A31B892E49E2F24F2AC2B2BBDA1ABD5D /* FacebookShare-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FacebookShare-dummy.m"; sourceTree = "<group>"; };
@@ -3079,7 +3078,7 @@
 		ADB7511FE6E34957D6EFE9991B5EE8A0 /* FBSDKShareAPI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareAPI.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKShareAPI.h; sourceTree = "<group>"; };
 		ADC8908B1DC440748C34E9B3153008C2 /* MemoryConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MemoryConfig.swift; path = Source/Shared/Configuration/MemoryConfig.swift; sourceTree = "<group>"; };
 		ADD837209BEFE0D78D2F0321B15B9F4E /* FBSDKLoginKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FBSDKLoginKit.modulemap; sourceTree = "<group>"; };
-		ADE9B78666F83D9AD1BB67DE114C3024 /* Other VA */ = {isa = PBXFileReference; includeInIndex = 1; name = "Other VA"; path = "MidtransKit/MidtransKit/resources/Other VA"; sourceTree = "<group>"; };
+		ADE9B78666F83D9AD1BB67DE114C3024 /* Other VA */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "Other VA"; path = "MidtransKit/MidtransKit/resources/Other VA"; sourceTree = "<group>"; };
 		AE15BE0E4AD2F0FB74C0CFDDDBACE6FE /* _FBSDKLoginRecoveryAttempter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = _FBSDKLoginRecoveryAttempter.m; path = FBSDKLoginKit/FBSDKLoginKit/Internal/_FBSDKLoginRecoveryAttempter.m; sourceTree = "<group>"; };
 		AE48FE2F016C4D17AAAA0D070B8D1E7E /* FBSDKCheckmarkIcon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKCheckmarkIcon.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKCheckmarkIcon.h; sourceTree = "<group>"; };
 		AE798CECE1F93A5662BA3AE8CCD5833E /* errorIcon@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "errorIcon@2x.png"; path = "MidtransKit/MidtransKit/resources/errorIcon@2x.png"; sourceTree = "<group>"; };
@@ -3100,8 +3099,8 @@
 		B0EC93CB4511FE75EB6B5B93BBB13D3F /* FBSDKLoginKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FBSDKLoginKit-dummy.m"; sourceTree = "<group>"; };
 		B1088642BBDDE767580372DDA4FDCA47 /* FBSDKImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKImageDownloader.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKImageDownloader.h; sourceTree = "<group>"; };
 		B1458462A4D4D6D12D560A029186DB14 /* MidtransSavedCardController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = MidtransSavedCardController.xib; path = MidtransKit/MidtransKit/resources/MidtransSavedCardController.xib; sourceTree = "<group>"; };
-		B14E0C586E216C4BC83AEE39AF7B96E4 /* options.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = options.cc; path = util/options.cc; sourceTree = "<group>"; };
-		B15D8660F47D82C13EB4AC30C245D17C /* log_writer.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = log_writer.cc; path = db/log_writer.cc; sourceTree = "<group>"; };
+		B14E0C586E216C4BC83AEE39AF7B96E4 /* options.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = options.cc; path = util/options.cc; sourceTree = "<group>"; };
+		B15D8660F47D82C13EB4AC30C245D17C /* log_writer.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = log_writer.cc; path = db/log_writer.cc; sourceTree = "<group>"; };
 		B1ADD9F43332D2D844A522FF3C530685 /* FBSDKWebDialogView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKWebDialogView.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/WebDialog/FBSDKWebDialogView.h; sourceTree = "<group>"; };
 		B1BEFE36381C47FD149FD17A11FC83D0 /* ResourceBundle-MidtransKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-MidtransKit-Info.plist"; sourceTree = "<group>"; };
 		B1D9A45B7CF5194E2A18D9312CC22C9D /* FBSDKShareMessengerContentUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKShareMessengerContentUtility.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKShareMessengerContentUtility.h; sourceTree = "<group>"; };
@@ -3122,7 +3121,7 @@
 		B47D8D870256751E2014E0E8BC5AF48B /* mega@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "mega@2x.png"; path = "MidtransKit/MidtransKit/resources/mega@2x.png"; sourceTree = "<group>"; };
 		B48077379CCF16C80A12EC61CD3489BA /* FBSDKErrorConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKErrorConfiguration.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKErrorConfiguration.m; sourceTree = "<group>"; };
 		B4842D70262AC24A095FCA9351B13F53 /* FBSDKGraphRequest+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKGraphRequest+Internal.h"; path = "FBSDKCoreKit/FBSDKCoreKit/Internal/Network/FBSDKGraphRequest+Internal.h"; sourceTree = "<group>"; };
-		B49BFBC093163069135803E219B9DF38 /* memtable.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = memtable.cc; path = db/memtable.cc; sourceTree = "<group>"; };
+		B49BFBC093163069135803E219B9DF38 /* memtable.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = memtable.cc; path = db/memtable.cc; sourceTree = "<group>"; };
 		B4E2F053284B3B26220CD6BE7ADC5611 /* FBSDKMaleSilhouetteIcon.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKMaleSilhouetteIcon.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/UI/FBSDKMaleSilhouetteIcon.m; sourceTree = "<group>"; };
 		B4F7032C0B0B477E8FB32466E7C282FB /* FBSDKAccessTokenCacheV4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAccessTokenCacheV4.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKAccessTokenCacheV4.h; sourceTree = "<group>"; };
 		B4FC05D0E62F8072C3D819CDF8F6C1DD /* MidtransCoreKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MidtransCoreKit.xcconfig; sourceTree = "<group>"; };
@@ -3133,7 +3132,7 @@
 		B5B3EB47FDE900A9DCC6A59B05B3A0AB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FBSDKLoginKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B511C6A18C8D8E9975FC2C922E0EFB /* Cache-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Cache-umbrella.h"; sourceTree = "<group>"; };
 		B5D1ABF77C6C35CAA37C50BD0034F4BB /* SNPPointView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SNPPointView.m; path = MidtransKit/MidtransKit/classes/SNPPointView.m; sourceTree = "<group>"; };
-		B608AEE9F298DAAC515445FA77A65C40 /* bloom.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = bloom.cc; path = util/bloom.cc; sourceTree = "<group>"; };
+		B608AEE9F298DAAC515445FA77A65C40 /* bloom.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = bloom.cc; path = util/bloom.cc; sourceTree = "<group>"; };
 		B614F6F4E0525A29C318B0DA7D03A5CE /* GPBUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBUtilities.m; path = objectivec/GPBUtilities.m; sourceTree = "<group>"; };
 		B61B99F3A71B9EA7272F73271A380451 /* CreditCardBackSmall@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "CreditCardBackSmall@2x.png"; path = "MidtransKit/MidtransKit/resources/CreditCardBackSmall@2x.png"; sourceTree = "<group>"; };
 		B6220C22EEFDB385B67A58541D990063 /* FBSDKShareKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FBSDKShareKit.modulemap; sourceTree = "<group>"; };
@@ -3144,13 +3143,13 @@
 		B6FE6A2C089061F1F85BA1B7AB281677 /* Imaginary-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Imaginary-umbrella.h"; sourceTree = "<group>"; };
 		B7092CB8008A0D111D99291A4A3D2CAA /* en_bca_klikpay.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = en_bca_klikpay.plist; path = MidtransKit/MidtransKit/resources/en_bca_klikpay.plist; sourceTree = "<group>"; };
 		B7561E9A3966AE62FBA0997176F66749 /* FBSDKBridgeAPIProtocolWebV1.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKBridgeAPIProtocolWebV1.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/ProtocolVersions/FBSDKBridgeAPIProtocolWebV1.m; sourceTree = "<group>"; };
-		B76BADEFFD30239268665EA9F26F5EEE /* port_posix_sse.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = port_posix_sse.cc; path = port/port_posix_sse.cc; sourceTree = "<group>"; };
+		B76BADEFFD30239268665EA9F26F5EEE /* port_posix_sse.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = port_posix_sse.cc; path = port/port_posix_sse.cc; sourceTree = "<group>"; };
 		B775222676FC01EED61DFE7C8A216D4E /* db.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = db.h; path = include/leveldb/db.h; sourceTree = "<group>"; };
 		B7861C838FF8AEFE2EC20D538D9BA88E /* FBSDKShareKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FBSDKShareKit.xcconfig; sourceTree = "<group>"; };
 		B78C4C6924CD98E6F433ED23855A9755 /* MidtransNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransNetworking.h; path = MidtransCoreKit/MidtransCoreKit/MidtransNetworking.h; sourceTree = "<group>"; };
 		B7B2C42996134D7A5A6F842AE2031EC7 /* FBSDKCopying.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKCopying.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKCopying.h; sourceTree = "<group>"; };
 		B7CB91DAA4DCE7D6380B7DD5FCC55AF8 /* hash.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hash.h; path = util/hash.h; sourceTree = "<group>"; };
-		B85DF9482D7FF4D32DF56A8E6C4C6A3C /* hash.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = hash.cc; path = util/hash.cc; sourceTree = "<group>"; };
+		B85DF9482D7FF4D32DF56A8E6C4C6A3C /* hash.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = hash.cc; path = util/hash.cc; sourceTree = "<group>"; };
 		B88921263B1DA0C62CA0C8B9D2CC5736 /* FBSDKLoginManagerLoginResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLoginManagerLoginResult.h; path = FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginManagerLoginResult.h; sourceTree = "<group>"; };
 		B890D16B04164227B06D9EDD5D8F03C4 /* OpenGraphPropertyValue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OpenGraphPropertyValue.swift; path = Sources/Share/Content/OpenGraph/OpenGraphPropertyValue.swift; sourceTree = "<group>"; };
 		B8EB4B00056F7FEFE3727A811F96461A /* MidtransUIBaseViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransUIBaseViewController.m; path = MidtransKit/MidtransKit/classes/MidtransUIBaseViewController.m; sourceTree = "<group>"; };
@@ -3165,13 +3164,13 @@
 		BA37B662D750FB7004A37EB36713090A /* MidtransUITextField.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransUITextField.m; path = MidtransKit/MidtransKit/classes/MidtransUITextField.m; sourceTree = "<group>"; };
 		BA43E0506B683F8DFF5065BD2A903FA2 /* other_atm_6@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "other_atm_6@2x.png"; path = "MidtransKit/MidtransKit/resources/other_atm_6@2x.png"; sourceTree = "<group>"; };
 		BA509BD2AE3693F94174894584A97347 /* FBSDKLikeBoxBorderView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeBoxBorderView.h; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeBoxBorderView.h; sourceTree = "<group>"; };
-		BA6328FA8F910F468C4D66F6571D1795 /* merger.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = merger.cc; path = table/merger.cc; sourceTree = "<group>"; };
+		BA6328FA8F910F468C4D66F6571D1795 /* merger.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = merger.cc; path = table/merger.cc; sourceTree = "<group>"; };
 		BA83CDBB738C618090DFC135362811CF /* GameRequest.SDKDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GameRequest.SDKDelegate.swift; path = Sources/Share/Dialogs/GameRequest/GameRequest.SDKDelegate.swift; sourceTree = "<group>"; };
 		BAAF5B5CF6A5C6E75723D46C8AE3B17E /* MidtransUIStringHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUIStringHelper.h; path = MidtransKit/MidtransKit/classes/MidtransUIStringHelper.h; sourceTree = "<group>"; };
 		BB1F670219479CC9F4D9C8F60FBF832C /* MidtransUIToast.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUIToast.h; path = MidtransKit/MidtransKit/classes/MidtransUIToast.h; sourceTree = "<group>"; };
 		BB1FF55E5BFEF937C6CC7A41A499FE93 /* InfoLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InfoLabel.swift; path = Source/Views/InfoLabel.swift; sourceTree = "<group>"; };
 		BB26F439D8FC84EB365BE1E4370D3D43 /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Source/Shared/Library/Result.swift; sourceTree = "<group>"; };
-		BB6D02728A0CE0888B31BA30024554B4 /* repair.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = repair.cc; path = db/repair.cc; sourceTree = "<group>"; };
+		BB6D02728A0CE0888B31BA30024554B4 /* repair.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = repair.cc; path = db/repair.cc; sourceTree = "<group>"; };
 		BB84AB6452EF31B369F627877085E801 /* VTMultiGuideController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTMultiGuideController.m; path = MidtransKit/MidtransKit/classes/VTMultiGuideController.m; sourceTree = "<group>"; };
 		BC13F869C97148048F52D4335E8A437F /* MidtransPaymentGCIViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentGCIViewController.m; path = MidtransKit/MidtransKit/classes/MidtransPaymentGCIViewController.m; sourceTree = "<group>"; };
 		BC24B66ADCA3477E8B5F4C5DC726ADB8 /* id_virtualAccount.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = id_virtualAccount.plist; path = MidtransKit/MidtransKit/resources/id_virtualAccount.plist; sourceTree = "<group>"; };
@@ -3200,7 +3199,7 @@
 		C084D76BF022016C2CC9BFF526ECC43F /* FBSDKSystemAccountStoreAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKSystemAccountStoreAdapter.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKSystemAccountStoreAdapter.h; sourceTree = "<group>"; };
 		C0C5FB901ED385B489BED1C17730C16E /* ContentSharingResultProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentSharingResultProtocol.swift; path = Sources/Share/Content/Common/ContentSharingResultProtocol.swift; sourceTree = "<group>"; };
 		C0C664092C14B81B7C40089DCFB77435 /* testutil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = testutil.h; path = util/testutil.h; sourceTree = "<group>"; };
-		C0CFDBE6B591A8103D0FB80C61A397FA /* bin.json */ = {isa = PBXFileReference; includeInIndex = 1; name = bin.json; path = MidtransKit/MidtransKit/resources/bin.json; sourceTree = "<group>"; };
+		C0CFDBE6B591A8103D0FB80C61A397FA /* bin.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = bin.json; path = MidtransKit/MidtransKit/resources/bin.json; sourceTree = "<group>"; };
 		C0E38D39EC7B3A45A54A8587500F2312 /* Api.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Api.pbobjc.h; path = objectivec/google/protobuf/Api.pbobjc.h; sourceTree = "<group>"; };
 		C10E6D542044A91F36DD85F807DD77C6 /* MidtransUIButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUIButton.h; path = MidtransKit/MidtransKit/classes/MidtransUIButton.h; sourceTree = "<group>"; };
 		C1303FA58EEABCCC8B68C70748974684 /* GTMOAuth2.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = GTMOAuth2.modulemap; sourceTree = "<group>"; };
@@ -3228,7 +3227,7 @@
 		C4E5B87AAF2A59E81991A90889C5D659 /* en_mandiri_ecash.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = en_mandiri_ecash.plist; path = MidtransKit/MidtransKit/resources/en_mandiri_ecash.plist; sourceTree = "<group>"; };
 		C4ED6960BEEA3419FC0FED562FBA818C /* MidtransLoadingView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransLoadingView.h; path = MidtransKit/MidtransKit/classes/MidtransLoadingView.h; sourceTree = "<group>"; };
 		C513D5D2E3A2E516C792DE510F71B11B /* NSString+MidtransValidation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+MidtransValidation.h"; path = "MidtransCoreKit/MidtransCoreKit/NSString+MidtransValidation.h"; sourceTree = "<group>"; };
-		C525B1DCEFDA1243C9998E66D42A5D33 /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = "SourceSansPro-Bold.ttf"; path = "MidtransKit/MidtransKit/resources/SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
+		C525B1DCEFDA1243C9998E66D42A5D33 /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "SourceSansPro-Bold.ttf"; path = "MidtransKit/MidtransKit/resources/SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
 		C53F6596EB35BDF5634570D2AEE92240 /* maintain@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "maintain@3x.png"; path = "MidtransKit/MidtransKit/resources/maintain@3x.png"; sourceTree = "<group>"; };
 		C54F879EC65EDF9E956B75D308C0390A /* CountdownPickerPopover.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = CountdownPickerPopover.storyboard; path = Base.lproj/CountdownPickerPopover.storyboard; sourceTree = "<group>"; };
 		C55B896651CB879D133B6D6B5BB86F09 /* VTInstruction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTInstruction.m; path = MidtransKit/MidtransKit/classes/VTInstruction.m; sourceTree = "<group>"; };
@@ -3262,7 +3261,7 @@
 		C92031D97128BDA118F9DE3A8F4C3D21 /* GPBWellKnownTypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBWellKnownTypes.m; path = objectivec/GPBWellKnownTypes.m; sourceTree = "<group>"; };
 		C9943AFB198EAB275AA4C823431EEDFA /* MidtransPaymentRequestV2CreditCard.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentRequestV2CreditCard.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentRequestV2CreditCard.m; sourceTree = "<group>"; };
 		C9BF5F23B6FE10886AF844932ADE5481 /* MidtransPaymentTelkomselCash.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPaymentTelkomselCash.h; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentTelkomselCash.h; sourceTree = "<group>"; };
-		C9C1B53D637827CEC7D276929ACBCF4B /* id.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = id.lproj; path = MidtransKit/MidtransKit/resources/id.lproj; sourceTree = "<group>"; };
+		C9C1B53D637827CEC7D276929ACBCF4B /* id.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = id.lproj; path = MidtransKit/MidtransKit/resources/id.lproj; sourceTree = "<group>"; };
 		C9DB3304D50FE0A99A37B1D9219BA12E /* ExpirationMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpirationMode.swift; path = Source/Shared/Library/ExpirationMode.swift; sourceTree = "<group>"; };
 		C9E2E090D85F39571D6BDEE78DB28FBB /* bni_va5@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "bni_va5@2x.png"; path = "MidtransKit/MidtransKit/resources/bni_va5@2x.png"; sourceTree = "<group>"; };
 		CA2ACA05A8371A218818CD6EA38AE2C2 /* FBSDKGraphRequestConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKGraphRequestConnection.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKGraphRequestConnection.h; sourceTree = "<group>"; };
@@ -3277,7 +3276,7 @@
 		CBC24BC162B451D2867319CE674DC3F0 /* UIButton+AlamofireImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIButton+AlamofireImage.swift"; path = "Source/UIButton+AlamofireImage.swift"; sourceTree = "<group>"; };
 		CBEF626C562CEFBBCB40410F188DA20E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBF275FD47D6EC2DC95A38BB95D4A216 /* FBSDKCheckmarkIcon.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKCheckmarkIcon.m; path = FBSDKShareKit/FBSDKShareKit/Internal/FBSDKCheckmarkIcon.m; sourceTree = "<group>"; };
-		CC482C2386C130E765EEDE08E436B0DE /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC482C2386C130E765EEDE08E436B0DE /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC99CEE502E75024102E9316BD00DE31 /* UILabel+Boldify.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UILabel+Boldify.h"; path = "MidtransKit/MidtransKit/classes/UILabel+Boldify.h"; sourceTree = "<group>"; };
 		CC9B10B11EA78948B44E8EF5E89D68A1 /* GameRequest.Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GameRequest.Result.swift; path = Sources/Share/Dialogs/GameRequest/GameRequest.Result.swift; sourceTree = "<group>"; };
 		CCBED79DCA19573C4E54DF4440E22C20 /* MidtransTransactionTokenResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransTransactionTokenResponse.h; path = MidtransCoreKit/MidtransCoreKit/MidtransTransactionTokenResponse.h; sourceTree = "<group>"; };
@@ -3295,7 +3294,7 @@
 		CDD8BC6C73F66AD26652EAC12BAFBF08 /* SwiftyPickerPopover-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyPickerPopover-prefix.pch"; sourceTree = "<group>"; };
 		CDE178BB681DEDE17AEEF361700C48F2 /* MidtransPaymentKiosOn.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentKiosOn.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentKiosOn.m; sourceTree = "<group>"; };
 		CE12E14AD050C4910710DFE15738A575 /* SKActivityIndicatorViewStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SKActivityIndicatorViewStyle.swift; path = SKActivityIndicatorView/Classes/SKActivityIndicatorViewStyle.swift; sourceTree = "<group>"; };
-		CE31544BE5E570DC1C16B792594E6C30 /* Pods_titipanku.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_titipanku.framework; path = "Pods-titipanku.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE31544BE5E570DC1C16B792594E6C30 /* Pods_titipanku.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_titipanku.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE605F7BB58BB8A598B7839DE4C4A7E9 /* FBSDKBridgeAPIProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKBridgeAPIProtocol.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/FBSDKBridgeAPIProtocol.h; sourceTree = "<group>"; };
 		CEA9E304F3CB89D4F14036371B3971D9 /* OpenGraphPropertyName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OpenGraphPropertyName.swift; path = Sources/Share/Content/OpenGraph/OpenGraphPropertyName.swift; sourceTree = "<group>"; };
 		CED38448CFA2F16DEC7ABEB791C0BF8E /* VTPaymentStatusXLTunaiViewModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTPaymentStatusXLTunaiViewModel.m; path = MidtransKit/MidtransKit/classes/VTPaymentStatusXLTunaiViewModel.m; sourceTree = "<group>"; };
@@ -3322,9 +3321,9 @@
 		D338C3BD40A156B0BE348BF04E54DB35 /* LoginDefaultAudience.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginDefaultAudience.swift; path = Sources/Login/LoginDefaultAudience.swift; sourceTree = "<group>"; };
 		D34919D5C0A4505213E694E6E1E53FA6 /* anz@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "anz@2x.png"; path = "MidtransKit/MidtransKit/resources/anz@2x.png"; sourceTree = "<group>"; };
 		D38A2EC02FFF82E03C270FCFD39D8EE6 /* FBSDKEventBindingManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKEventBindingManager.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/Codeless/FBSDKEventBindingManager.h; sourceTree = "<group>"; };
-		D3D317438DCE97F943A395161E321847 /* env_posix.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = env_posix.cc; path = util/env_posix.cc; sourceTree = "<group>"; };
+		D3D317438DCE97F943A395161E321847 /* env_posix.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = env_posix.cc; path = util/env_posix.cc; sourceTree = "<group>"; };
 		D3D60F0C24928BD2961C67C60A8B9947 /* MidtransPromoPromos.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransPromoPromos.h; path = MidtransCoreKit/MidtransCoreKit/Promo/MidtransPromoPromos.h; sourceTree = "<group>"; };
-		D3FDFD5D9B5287DCF9E66A791943259C /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FBSDKCoreKit.framework; path = FBSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3FDFD5D9B5287DCF9E66A791943259C /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FBSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D44B59946340C3041B723DE15C9A9AFC /* db_iter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = db_iter.h; path = db/db_iter.h; sourceTree = "<group>"; };
 		D498E68B90AE96D35A72A108AABA615D /* LoginBehavior.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginBehavior.swift; path = Sources/Login/LoginBehavior.swift; sourceTree = "<group>"; };
 		D4E854E9C73C2F0FC6DDEB1F0EAF17D0 /* VTItemViewModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTItemViewModel.m; path = MidtransKit/MidtransKit/classes/VTItemViewModel.m; sourceTree = "<group>"; };
@@ -3379,7 +3378,7 @@
 		DB851DEE8B3105558BFCCC08FC65FEC2 /* FirebaseNanoPB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseNanoPB.framework; path = Frameworks/FirebaseNanoPB.framework; sourceTree = "<group>"; };
 		DBA60EF28266979DC45201408D93FB9A /* Timestamp.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Timestamp.pbobjc.m; path = objectivec/google/protobuf/Timestamp.pbobjc.m; sourceTree = "<group>"; };
 		DBBD22D67C526D7C7A30E9FCDF251627 /* GPBUnknownFieldSet_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBUnknownFieldSet_PackagePrivate.h; path = objectivec/GPBUnknownFieldSet_PackagePrivate.h; sourceTree = "<group>"; };
-		DBDDA074BFEAEC5576C9DE2E84BA0223 /* filename.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = filename.cc; path = db/filename.cc; sourceTree = "<group>"; };
+		DBDDA074BFEAEC5576C9DE2E84BA0223 /* filename.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = filename.cc; path = db/filename.cc; sourceTree = "<group>"; };
 		DBE0F74540D041895ABF5D0BBF13E76F /* Protobuf.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Protobuf.xcconfig; sourceTree = "<group>"; };
 		DC44524A52D69F93D3E2EDDDD2728EF5 /* FBSDKError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKError.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKError.h; sourceTree = "<group>"; };
 		DC4DDB210216FD4B7C3AC60EDD10791A /* ShareButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShareButton.swift; path = Sources/Share/Views/ShareButton.swift; sourceTree = "<group>"; };
@@ -3418,9 +3417,9 @@
 		E262304EAD3EBDB2DC4C9D4CA1653427 /* SKActivityIndicatorView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SKActivityIndicatorView-dummy.m"; sourceTree = "<group>"; };
 		E29CF6870F8249736A1BB78464942149 /* MidtransUINextStepButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUINextStepButton.h; path = MidtransKit/MidtransKit/classes/MidtransUINextStepButton.h; sourceTree = "<group>"; };
 		E29D16B6215A3EA2D52EBA351556ADD0 /* MidtransClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransClient.m; path = MidtransCoreKit/MidtransCoreKit/MidtransClient.m; sourceTree = "<group>"; };
-		E2D300C2C91B5E58FCA959E7FFC8DFE6 /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_common.c; sourceTree = "<group>"; };
+		E2D300C2C91B5E58FCA959E7FFC8DFE6 /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_common.c; sourceTree = "<group>"; };
 		E2DAD0B448905F7C277D2A7C599B2B67 /* Pods-titipanku.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-titipanku.release.xcconfig"; sourceTree = "<group>"; };
-		E3013B0BA3F38CE1C7DA2503E4069959 /* builder.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = builder.cc; path = db/builder.cc; sourceTree = "<group>"; };
+		E3013B0BA3F38CE1C7DA2503E4069959 /* builder.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = builder.cc; path = db/builder.cc; sourceTree = "<group>"; };
 		E37CA14CEB84456DA2B57BE180823BF6 /* _FBSDKLoginRecoveryAttempter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = _FBSDKLoginRecoveryAttempter.h; path = FBSDKLoginKit/FBSDKLoginKit/Internal/_FBSDKLoginRecoveryAttempter.h; sourceTree = "<group>"; };
 		E3B77AB267F47DDEE4EC85B2E948BD90 /* en_telkomsel_cash.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = en_telkomsel_cash.plist; path = MidtransKit/MidtransKit/resources/en_telkomsel_cash.plist; sourceTree = "<group>"; };
 		E3BF4082A0C9299AD2C13B1C2303ED95 /* LightboxController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LightboxController.swift; path = Source/LightboxController.swift; sourceTree = "<group>"; };
@@ -3448,7 +3447,7 @@
 		E67C6259029EBBCFCF83CC796C26CAC3 /* GPBRootObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GPBRootObject.m; path = objectivec/GPBRootObject.m; sourceTree = "<group>"; };
 		E68A76435B4BBA2A28BC09C5DC28A946 /* BFAppLinkNavigation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = BFAppLinkNavigation.m; path = Bolts/iOS/BFAppLinkNavigation.m; sourceTree = "<group>"; };
 		E6FF8617FC910A82069821B2FBB9D538 /* VTBackBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTBackBarButtonItem.m; path = MidtransKit/MidtransKit/classes/VTBackBarButtonItem.m; sourceTree = "<group>"; };
-		E735891B762353E9700C1A8598799C15 /* Cache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Cache.framework; path = Cache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E735891B762353E9700C1A8598799C15 /* Cache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Cache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E74485C49DB40BE068F65AE6F26E2309 /* nanopb-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-umbrella.h"; sourceTree = "<group>"; };
 		E797F4103FEDD5852DE5F3AC69722915 /* MidtransPaymentRequestV2SavedTokens.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentRequestV2SavedTokens.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentRequestV2SavedTokens.m; sourceTree = "<group>"; };
 		E7B66D2FB53F76B372AE085BB0FB26F4 /* VTSingleGuideController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTSingleGuideController.m; path = MidtransKit/MidtransKit/classes/VTSingleGuideController.m; sourceTree = "<group>"; };
@@ -3512,14 +3511,14 @@
 		F15BE6C35614177F248DAC09549789F9 /* FBSDKLikeButton+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBSDKLikeButton+Internal.h"; path = "FBSDKShareKit/FBSDKShareKit/Internal/FBSDKLikeButton+Internal.h"; sourceTree = "<group>"; };
 		F167BE0CFCA632DE4A957DAC4C0632A5 /* Imaginary.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Imaginary.xcconfig; sourceTree = "<group>"; };
 		F185FEF9FA1AB7E2AC9F4131E175BBA9 /* leveldb-library.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "leveldb-library.xcconfig"; sourceTree = "<group>"; };
-		F1AEF404B23EEBC8A91A5C507B5F7757 /* MidtransKit.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MidtransKit.bundle; path = "MidtransKit-MidtransKit.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1AEF404B23EEBC8A91A5C507B5F7757 /* MidtransKit.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MidtransKit.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		F218077291C21EEBD42B533590AA5FF8 /* VTTapableLabel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTTapableLabel.m; path = MidtransKit/MidtransKit/classes/VTTapableLabel.m; sourceTree = "<group>"; };
 		F2314841E27C02CE3297EEFE701F1A01 /* MidtransUIPaymentGeneralView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUIPaymentGeneralView.h; path = MidtransKit/MidtransKit/classes/MidtransUIPaymentGeneralView.h; sourceTree = "<group>"; };
 		F2411ECDB52983F112C27925327DDE01 /* FBSDKPaymentObserver.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKPaymentObserver.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/AppEvents/FBSDKPaymentObserver.m; sourceTree = "<group>"; };
 		F2607E37EB3CBB53C0BF2B45793FA54A /* MidtransPaymentDanamonOnline.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentDanamonOnline.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentDanamonOnline.m; sourceTree = "<group>"; };
 		F268515C65C4629A55CF8564B6D74A34 /* AddOnConstructor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AddOnConstructor.m; path = MidtransKit/MidtransKit/classes/AddOnConstructor.m; sourceTree = "<group>"; };
 		F29805E799DE474D99228F25E1429859 /* MidtransPaymentGCIView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentGCIView.m; path = MidtransKit/MidtransKit/classes/MidtransPaymentGCIView.m; sourceTree = "<group>"; };
-		F2C5047A6B3AC89743371B591B9323B3 /* Secured Seal */ = {isa = PBXFileReference; includeInIndex = 1; name = "Secured Seal"; path = "MidtransKit/MidtransKit/resources/Secured Seal"; sourceTree = "<group>"; };
+		F2C5047A6B3AC89743371B591B9323B3 /* Secured Seal */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "Secured Seal"; path = "MidtransKit/MidtransKit/resources/Secured Seal"; sourceTree = "<group>"; };
 		F30A66D16878E950D7F1B0C4F8A3BD83 /* MidtransTransaction.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransTransaction.h; path = MidtransCoreKit/MidtransCoreKit/MidtransTransaction.h; sourceTree = "<group>"; };
 		F3380BFCE97A0FFD8A79989C4D08714C /* test_badge@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "test_badge@2x.png"; path = "MidtransKit/MidtransKit/resources/test_badge@2x.png"; sourceTree = "<group>"; };
 		F39CE5E2B61E4DA1AD483D3F6605A245 /* MidtransPromoPromos.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPromoPromos.m; path = MidtransCoreKit/MidtransCoreKit/Promo/MidtransPromoPromos.m; sourceTree = "<group>"; };
@@ -3538,7 +3537,7 @@
 		F52AEFB41BFD008730DB55DF9B420B9C /* FBSDKCameraEffectTextures.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKCameraEffectTextures.m; path = FBSDKShareKit/FBSDKShareKit/FBSDKCameraEffectTextures.m; sourceTree = "<group>"; };
 		F569F421C192257FA7DCA2871542E9FE /* MidtransInstallmentView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransInstallmentView.h; path = MidtransKit/MidtransKit/classes/MidtransInstallmentView.h; sourceTree = "<group>"; };
 		F57492649CBB7997C5D55F979D7B5253 /* MidtransPaymentCreditCard.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransPaymentCreditCard.m; path = MidtransCoreKit/MidtransCoreKit/MidtransPaymentCreditCard.m; sourceTree = "<group>"; };
-		F57592735E3324BE26F8B6E390FD599D /* version_set.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = version_set.cc; path = db/version_set.cc; sourceTree = "<group>"; };
+		F57592735E3324BE26F8B6E390FD599D /* version_set.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = version_set.cc; path = db/version_set.cc; sourceTree = "<group>"; };
 		F59465FE8C7834E550AF3D80E5A86BEC /* GPBMessage_PackagePrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBMessage_PackagePrivate.h; path = objectivec/GPBMessage_PackagePrivate.h; sourceTree = "<group>"; };
 		F5A59239DE6A71ED0061DD0702B72C4E /* MidtransAddress.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MidtransAddress.m; path = MidtransCoreKit/MidtransCoreKit/MidtransAddress.m; sourceTree = "<group>"; };
 		F5DAB44A0BDAC5FEA3BB0A3E3018EE37 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Extensions.swift"; path = "Source/iOS/UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -3551,7 +3550,7 @@
 		F6F9D9F6CD7D930A87A82CC4CE2AE888 /* AddOnConstructor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AddOnConstructor.h; path = MidtransKit/MidtransKit/classes/AddOnConstructor.h; sourceTree = "<group>"; };
 		F726BAF6273460B1F5D17BD8A0374D4F /* Bolts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Bolts.h; path = Bolts/Common/Bolts.h; sourceTree = "<group>"; };
 		F73505C961C5D614971CB055A36EB0F1 /* bca_atm_5@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "bca_atm_5@2x.png"; path = "MidtransKit/MidtransKit/resources/bca_atm_5@2x.png"; sourceTree = "<group>"; };
-		F7632643191105DFDCDDB1C461A5C50F /* c.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = c.cc; path = db/c.cc; sourceTree = "<group>"; };
+		F7632643191105DFDCDDB1C461A5C50F /* c.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = c.cc; path = db/c.cc; sourceTree = "<group>"; };
 		F76600AA39ACE4EF1B1DF8B2280332EA /* GPBExtensionInternals.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GPBExtensionInternals.h; path = objectivec/GPBExtensionInternals.h; sourceTree = "<group>"; };
 		F76A6A631CF09BC6B5F6659BF5735137 /* BFAppLinkReturnToRefererController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFAppLinkReturnToRefererController.h; path = Bolts/iOS/BFAppLinkReturnToRefererController.h; sourceTree = "<group>"; };
 		F7708E91FC7B8B63AD967FEB1CFC1339 /* MidtransEnvironment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransEnvironment.h; path = MidtransCoreKit/MidtransCoreKit/MidtransEnvironment.h; sourceTree = "<group>"; };
@@ -3566,7 +3565,7 @@
 		F94A0B1BD3B743B9DE35A52384E4958E /* prima_preview@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "prima_preview@2x.png"; path = "MidtransKit/MidtransKit/resources/prima_preview@2x.png"; sourceTree = "<group>"; };
 		F9626F953295D8DE689328155F6FF164 /* Hue.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Hue.modulemap; sourceTree = "<group>"; };
 		F9960DC1BED7DADDAC666DD3A149814F /* other_prima_3@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "other_prima_3@2x.png"; path = "MidtransKit/MidtransKit/resources/other_prima_3@2x.png"; sourceTree = "<group>"; };
-		F9B7E2900206F36044DDE4937D374660 /* block.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = block.cc; path = table/block.cc; sourceTree = "<group>"; };
+		F9B7E2900206F36044DDE4937D374660 /* block.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = block.cc; path = table/block.cc; sourceTree = "<group>"; };
 		F9CEB7C7F758BF0A0378E10E86C6F105 /* MidtransKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MidtransKit-dummy.m"; sourceTree = "<group>"; };
 		F9E537C6558B0A238341BB32C0D771B0 /* GTMSessionFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GTMSessionFetcher.h; path = Source/GTMSessionFetcher.h; sourceTree = "<group>"; };
 		FA0250BDDB53004D657470964A930954 /* MidtransUICustomAlertViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransUICustomAlertViewController.h; path = MidtransKit/MidtransKit/classes/MidtransUICustomAlertViewController.h; sourceTree = "<group>"; };
@@ -3577,11 +3576,11 @@
 		FA593B64A4AAD63548A0448FECB51608 /* Wrappers.pbobjc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Wrappers.pbobjc.m; path = objectivec/google/protobuf/Wrappers.pbobjc.m; sourceTree = "<group>"; };
 		FA66992EFB4DE825A6F430A218472A7A /* MidtransMerchantClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MidtransMerchantClient.h; path = MidtransCoreKit/MidtransCoreKit/MidtransMerchantClient.h; sourceTree = "<group>"; };
 		FA66EFF13A422339762CB3796A75EF7D /* FBSDKBridgeAPIProtocolNativeV1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKBridgeAPIProtocolNativeV1.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/BridgeAPI/ProtocolVersions/FBSDKBridgeAPIProtocolNativeV1.h; sourceTree = "<group>"; };
-		FA68108F2EA926E6F11F6045BA327E68 /* write_batch.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = write_batch.cc; path = db/write_batch.cc; sourceTree = "<group>"; };
+		FA68108F2EA926E6F11F6045BA327E68 /* write_batch.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = write_batch.cc; path = db/write_batch.cc; sourceTree = "<group>"; };
 		FA8908E3945BB2961A98C732339FB54A /* FBSDKTypeUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKTypeUtility.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/FBSDKTypeUtility.m; sourceTree = "<group>"; };
 		FAA231840ED03CDD22EB98F73DEAA3DE /* Pods-titipanku-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-titipanku-resources.sh"; sourceTree = "<group>"; };
 		FAA77CE7E76162F37DF20FD334EB0D5B /* Alamofire-SwiftyJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Alamofire-SwiftyJSON.swift"; path = "Source/Alamofire-SwiftyJSON.swift"; sourceTree = "<group>"; };
-		FAC146B6C6AA20483FD111A0F3AAB02D /* db_impl.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = db_impl.cc; path = db/db_impl.cc; sourceTree = "<group>"; };
+		FAC146B6C6AA20483FD111A0F3AAB02D /* db_impl.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = db_impl.cc; path = db/db_impl.cc; sourceTree = "<group>"; };
 		FACFC49D959DB6A38F3112DB456C7B57 /* FBSDKErrorRecoveryAttempter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKErrorRecoveryAttempter.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ErrorRecovery/FBSDKErrorRecoveryAttempter.h; sourceTree = "<group>"; };
 		FAE978D5EEA03EBD6DBEDBC037DAFF6C /* bersama_preview@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "bersama_preview@2x.png"; path = "MidtransKit/MidtransKit/resources/bersama_preview@2x.png"; sourceTree = "<group>"; };
 		FAFAA3B6A30FAC216D33A9A95C428B9D /* MidtransKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MidtransKit-prefix.pch"; sourceTree = "<group>"; };
@@ -3912,7 +3911,6 @@
 				7AAC041343D57C042732D5EBBB6A9E85 /* Validation.swift */,
 				9DE604594226FFF1CC2F9A8DBFE7867C /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -3957,7 +3955,6 @@
 				42F392D43370EC0DFF7AE028B0D8E78E /* UserProfile.PictureView.swift */,
 				1AD4F13BD9EB05EE9061CC7239DBA03E /* Support Files */,
 			);
-			name = FacebookCore;
 			path = FacebookCore;
 			sourceTree = "<group>";
 		};
@@ -4032,7 +4029,6 @@
 				B39850CBBDBCE286251190B1D7C40C40 /* VideoShareContent.swift */,
 				52EEDF81D3AB073C96DC390FCE194104 /* Support Files */,
 			);
-			name = FacebookShare;
 			path = FacebookShare;
 			sourceTree = "<group>";
 		};
@@ -4094,7 +4090,7 @@
 				A3DC53710C98D1E5522A4948CD9688B6 /* CountdownPickerPopover.storyboard */,
 				F4E1E140105B6B4C55ED46756898F2C0 /* DatePickerPopover.storyboard */,
 				C01A439D388575D34E92E3B1AE14354C /* Localizable.strings */,
-				1C02CCD0C948180C2D8F025AF72D3FD2 /* StringPickerPopover.storyboard */,
+				7E339A9D2168965A00F55E79 /* StringPickerPopover.storyboard */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -4265,7 +4261,6 @@
 				59807771A9D06FD87A391FC018E0AE66 /* SNPUITrackingManager.m */,
 				C8D023B0B2563BFD99090C9730A5CC7C /* Support Files */,
 			);
-			name = MidtransCoreKit;
 			path = MidtransCoreKit;
 			sourceTree = "<group>";
 		};
@@ -4299,7 +4294,6 @@
 				F5DAB44A0BDAC5FEA3BB0A3E3018EE37 /* UIImage+Extensions.swift */,
 				F69C20ECEE19CD69AD46DD79092A3595 /* Support Files */,
 			);
-			name = Cache;
 			path = Cache;
 			sourceTree = "<group>";
 		};
@@ -4321,7 +4315,6 @@
 				A715420DDF19BF1B84B9BD16CB6510AE /* Resources */,
 				63EDA2CD660ACDEEE8E764F1695551B1 /* Support Files */,
 			);
-			name = Lightbox;
 			path = Lightbox;
 			sourceTree = "<group>";
 		};
@@ -4392,7 +4385,6 @@
 				FA593B64A4AAD63548A0448FECB51608 /* Wrappers.pbobjc.m */,
 				36ABF7AAAA65B276A3D787655AA8A634 /* Support Files */,
 			);
-			name = Protobuf;
 			path = Protobuf;
 			sourceTree = "<group>";
 		};
@@ -4409,7 +4401,6 @@
 			children = (
 				48F77E3DB3C20D3FAF539E10AA390D3C /* Frameworks */,
 			);
-			name = FirebaseAuth;
 			path = FirebaseAuth;
 			sourceTree = "<group>";
 		};
@@ -4418,7 +4409,6 @@
 			children = (
 				E851044AC98DCC564062D3309705D6DD /* Frameworks */,
 			);
-			name = FirebaseCore;
 			path = FirebaseCore;
 			sourceTree = "<group>";
 		};
@@ -4435,7 +4425,6 @@
 			children = (
 				B646740AF4F13120AD7AB92DD3C9985C /* Frameworks */,
 			);
-			name = FirebaseInstanceID;
 			path = FirebaseInstanceID;
 			sourceTree = "<group>";
 		};
@@ -4467,7 +4456,6 @@
 				31A1BFA5573D5EFCE773D2A0D96FD118 /* UIImageView+AlamofireImage.swift */,
 				A49AF5947EED92AE21FEB4787EDF4422 /* Support Files */,
 			);
-			name = AlamofireImage;
 			path = AlamofireImage;
 			sourceTree = "<group>";
 		};
@@ -4528,7 +4516,6 @@
 			children = (
 				55BCA05FD32D29FEAF34FB5EFDD1709F /* Frameworks */,
 			);
-			name = FirebaseMessaging;
 			path = FirebaseMessaging;
 			sourceTree = "<group>";
 		};
@@ -4537,7 +4524,6 @@
 			children = (
 				D664C1CC65F29D25DDC6C2A2DBA4E9CF /* Frameworks */,
 			);
-			name = FirebaseAnalytics;
 			path = FirebaseAnalytics;
 			sourceTree = "<group>";
 		};
@@ -4641,7 +4627,6 @@
 				11EF9C69CB4DAC89B4FC052198DF92A2 /* write_batch_internal.h */,
 				C04421F226BFB023CA61AAADB2FA1823 /* Support Files */,
 			);
-			name = "leveldb-library";
 			path = "leveldb-library";
 			sourceTree = "<group>";
 		};
@@ -4702,7 +4687,6 @@
 				9F6672965CA29E40FCE39C7283DA87B3 /* View+Imaginary.swift */,
 				BA9C13915FCE44B40D6FC297A12E8CA6 /* Support Files */,
 			);
-			name = Imaginary;
 			path = Imaginary;
 			sourceTree = "<group>";
 		};
@@ -4726,7 +4710,6 @@
 				6F6066F1662ACAAF7D56736ADDFE7B3C /* Frameworks */,
 				26B91597D4FD53A9B38CADF0860D2A62 /* Resources */,
 			);
-			name = GoogleSignIn;
 			path = GoogleSignIn;
 			sourceTree = "<group>";
 		};
@@ -4737,7 +4720,6 @@
 				25AADC2746684D67FABFE4E7BB1F4439 /* UIImage+Hue.swift */,
 				FCDBE0E448319D68EF70BBF1F2ED3200 /* Support Files */,
 			);
-			name = Hue;
 			path = Hue;
 			sourceTree = "<group>";
 		};
@@ -4799,7 +4781,6 @@
 				2C26BD513C8CEDC583CB4C3A33C9AB64 /* Support Files */,
 				54A9772D138DEA79C747886FCABF5977 /* Tasks */,
 			);
-			name = Bolts;
 			path = Bolts;
 			sourceTree = "<group>";
 		};
@@ -4808,7 +4789,6 @@
 			children = (
 				E8648AC0D3592E97EACC40FD5B0F61DC /* Core */,
 			);
-			name = Firebase;
 			path = Firebase;
 			sourceTree = "<group>";
 		};
@@ -4855,7 +4835,6 @@
 				96B9081723181CA7A97CE4F5B12373CF /* SwiftyJSON.swift */,
 				B9B5AB9B3185CF95B56E37F90262F3B3 /* Support Files */,
 			);
-			name = SwiftyJSON;
 			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
@@ -5108,7 +5087,6 @@
 				E20F996F5BD5AED91C20FB53B7EEA01B /* Resources */,
 				D726D59B636992A3AD7D12E17F8E4070 /* Support Files */,
 			);
-			name = MidtransKit;
 			path = MidtransKit;
 			sourceTree = "<group>";
 		};
@@ -5181,7 +5159,6 @@
 				FFD8313106F0183017619FE0433B63BC /* NSString+URLArguments */,
 				4F1E69C134AC1E01C70F878A7115BCE2 /* Support Files */,
 			);
-			name = GoogleToolboxForMac;
 			path = GoogleToolboxForMac;
 			sourceTree = "<group>";
 		};
@@ -5215,7 +5192,6 @@
 				FAA77CE7E76162F37DF20FD334EB0D5B /* Alamofire-SwiftyJSON.swift */,
 				71B147942825D52C4B34CB16778B0F10 /* Support Files */,
 			);
-			name = "Alamofire-SwiftyJSON";
 			path = "Alamofire-SwiftyJSON";
 			sourceTree = "<group>";
 		};
@@ -5242,7 +5218,6 @@
 			children = (
 				051E4725CF746FBC9470AE9F0165E9F3 /* Frameworks */,
 			);
-			name = FirebaseDatabase;
 			path = FirebaseDatabase;
 			sourceTree = "<group>";
 		};
@@ -5281,7 +5256,6 @@
 				C096470A26C792D67D598A8088F60818 /* encode */,
 				2F3E2A3859CAE2950BF3B359F7948275 /* Support Files */,
 			);
-			name = nanopb;
 			path = nanopb;
 			sourceTree = "<group>";
 		};
@@ -5406,7 +5380,6 @@
 				533C56AAF99200B98D08DC1943A4F131 /* FBSDKTooltipView.m */,
 				66AFC76479FC29090C82C0334F90F4D7 /* Support Files */,
 			);
-			name = FBSDKLoginKit;
 			path = FBSDKLoginKit;
 			sourceTree = "<group>";
 		};
@@ -5442,7 +5415,6 @@
 				370FD27D199D448CA2A6286F52A43B2A /* Resources */,
 				F6BA65BC10E0474567F6311C591E7855 /* Support Files */,
 			);
-			name = SwiftyPickerPopover;
 			path = SwiftyPickerPopover;
 			sourceTree = "<group>";
 		};
@@ -5563,7 +5535,6 @@
 				DFE8060FA071620E55B16D23AAD9F0CD /* FBSDKVideoUploader.m */,
 				C47D425EE42CF51197DD1055038C9499 /* Support Files */,
 			);
-			name = FBSDKShareKit;
 			path = FBSDKShareKit;
 			sourceTree = "<group>";
 		};
@@ -5799,7 +5770,6 @@
 				12A8092C1016FB111D7D4F438B074705 /* Resources */,
 				F54108E2DFA7D06AFD6AF153CC14DBBB /* Support Files */,
 			);
-			name = FBSDKCoreKit;
 			path = FBSDKCoreKit;
 			sourceTree = "<group>";
 		};
@@ -5819,7 +5789,6 @@
 				CE12E14AD050C4910710DFE15738A575 /* SKActivityIndicatorViewStyle.swift */,
 				E176CF90614D1A5D7C7748829D0E8BF0 /* Support Files */,
 			);
-			name = SKActivityIndicatorView;
 			path = SKActivityIndicatorView;
 			sourceTree = "<group>";
 		};
@@ -5835,7 +5804,6 @@
 				A630726435107CCCE706BC0CCE57352E /* Resources */,
 				E43D89F0934956D64FA8DACE1FDE9B70 /* Support Files */,
 			);
-			name = GTMOAuth2;
 			path = GTMOAuth2;
 			sourceTree = "<group>";
 		};
@@ -5846,7 +5814,6 @@
 				B45C387A05B55C7AB1685C5B6FCDEB9D /* Full */,
 				E8132D9ADEEE823CD66C65A6DFCE3A2B /* Support Files */,
 			);
-			name = GTMSessionFetcher;
 			path = GTMSessionFetcher;
 			sourceTree = "<group>";
 		};
@@ -5887,7 +5854,6 @@
 				570D56444FE9F973267579A85EA3C271 /* LoginResult.swift */,
 				A307EB58750DF68BDAF3890A47EC4C64 /* Support Files */,
 			);
-			name = FacebookLogin;
 			path = FacebookLogin;
 			sourceTree = "<group>";
 		};
@@ -8003,7 +7969,6 @@
 				943D3E423097B642031916B16D15B961 /* CountdownPickerPopover.storyboard in Resources */,
 				345552E804B6DCF3A08E54099580F9B5 /* DatePickerPopover.storyboard in Resources */,
 				AA216F1F43D861AA7DD4BA22D959F423 /* Localizable.strings in Resources */,
-				35B57F3D00CE0CD7882AEE5E59D89B00 /* StringPickerPopover.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9145,10 +9110,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1C02CCD0C948180C2D8F025AF72D3FD2 /* StringPickerPopover.storyboard */ = {
+		7E339A9D2168965A00F55E79 /* StringPickerPopover.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2F61E3F2DB32CB71F5B608D4ECE436D0 /* StringPickerPopover.storyboard */,
+				7E339A9C2168965A00F55E79 /* StringPickerPopover.storyboard */,
 			);
 			name = StringPickerPopover.storyboard;
 			path = SwiftyPickerPopover;

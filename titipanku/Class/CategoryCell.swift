@@ -208,6 +208,12 @@ class AppCell: UICollectionViewCell {
                 let hours = Int(time) / 3600
                 let minutes = Int(time) / 60 % 60
                 let seconds = Int(time) % 60
+                if time < 0 {
+                    time = 0
+                    
+                    categoryLabel.text = "0:0:0"
+                    timer.invalidate()
+                }
                 categoryLabel.text = String(format:"%02i:%02i:%02i", hours, minutes, seconds)
             }else{
                 
@@ -241,13 +247,18 @@ class AppCell: UICollectionViewCell {
     
     
     @objc func updateCounter() {
+        
         //you code, this is an example
         time = time - 1
         let hours = Int(time) / 3600
         let minutes = Int(time) / 60 % 60
         let seconds = Int(time) % 60
+
         //print(String(format:"%02i:%02i:%02i", hours, minutes, seconds))
         categoryLabel.text = String(format:"%02i:%02i:%02i", hours, minutes, seconds)
+        if time <= 0 {
+            categoryLabel.text = "0:0:0"
+        }
     }
     override init(frame: CGRect) {
         super.init(frame: frame)

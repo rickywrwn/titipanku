@@ -235,8 +235,8 @@ class AddNegaraBarang :  UIViewController, UITableViewDelegate, UITableViewDataS
                             self.kota = try decoder.decode(rajaKota.self, from: json)
                             self.cities = (self.kota?.rajaongkir.results)!
                             self.kotaTableView.reloadData()
-                            //print(self.cities)
-                            print(self.cities.count)
+                            print(self.cities)
+                            //print(self.cities.count)
                         } catch let jsonErr {
                             print("Failed to decode:", jsonErr)
                         }

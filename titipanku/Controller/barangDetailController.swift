@@ -28,7 +28,7 @@ struct VarOffer: Decodable {
     let hargaOngkir: String
     let jenisOngkir: String
     let status: String
-    
+    let qty: String
 }
 
 var adaNawar = false
@@ -218,6 +218,9 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let email = app?.email{
             if email != emailNow{
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
+            }else{
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ubah", style: .plain, target: self, action: #selector(handleUbah))
+                
             }
         }
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
@@ -297,6 +300,29 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         })
         print(statusOffer)
     }
+    
+    @objc func handleUbah(){
+        if let idRequest : String = app?.id, let status = app?.status {
+            if status != "1"{
+                let alert = UIAlertController(title: "Peringatan", message: "Permintaan tidak dapat diubah karena sudah ada penawaran", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                }))
+                
+                self.present(alert, animated: true)
+            }else{
+                let layout = UICollectionViewFlowLayout()
+                let tambahCont = PostTitipJuga(collectionViewLayout:layout)
+                tambahCont.app = self.app
+                tambahCont.sizeDesc = tinggiDesc
+                print(tinggiDesc)
+                present(tambahCont, animated: true, completion: {
+                })
+                print(statusOffer)
+            }
+        }
+    }
+    
     @objc func handleOfferCancel(){
         if let idOffer : String = idOfferNow {
             

@@ -109,15 +109,15 @@ class UserEdit :  UIViewController,UIImagePickerControllerDelegate,UINavigationC
     @objc func imgTapped(_ imageView: UIImageView) {
         print("tapped gambar")
         
-        let alert = UIAlertController(title: "Choose one of the following:", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
+        let alert = UIAlertController(title: "Ambil gambar dari", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Galeri", style: .default, handler: { action in
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.allowsEditing = true
             self.present(picker, animated: true, completion: nil)
             
         }))
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Kamera", style: .default, handler: { action in
             self.openCamera()
         }))
         self.present(alert, animated: true, completion: nil)

@@ -170,7 +170,7 @@ class WalletController :  UIViewController {
     
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Topup Wallet", for: .normal)
+        button.setTitle("Pengisian Wallet", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor(hex: "#4373D8")
@@ -183,7 +183,7 @@ class WalletController :  UIViewController {
     
     let declineButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Withdraw", for: .normal)
+        button.setTitle("Penarikan", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor.red

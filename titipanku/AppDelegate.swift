@@ -193,6 +193,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                     if cekSukses != 1 {
                        
                     }else{
+                        UserDefaults.standard.set(true, forKey:"logged")
+                        UserDefaults.standard.set(emails, forKey:"loggedEmail")
+                        UserDefaults.standard.synchronize()
+                        let cont = loginController()
+                        cont.handleToHome()
                     }
                 }
             }

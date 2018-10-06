@@ -59,7 +59,7 @@ class HasilSearch: UIViewController {
         containerView.addSubview(childVC.view)
         childVC.view.frame = self.view.frame
         childVC.didMove(toParentViewController: self)
-    }
+    } 
     
     private func removeAsChildVC(childVC: UIViewController) {
         childVC.willMove(toParentViewController: nil)

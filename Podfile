@@ -14,9 +14,9 @@ target 'titipanku' do
   pod 'Firebase/Database'
   pod 'Firebase/Messaging'
  
- pod 'FacebookCore'
-pod 'FacebookLogin'
-pod 'FacebookShare'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
 
   pod 'SwiftyJSON'
   pod 'Alamofire-SwiftyJSON'

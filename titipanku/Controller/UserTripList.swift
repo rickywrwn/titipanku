@@ -39,28 +39,46 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
     }
     
     private func setupView(){
-        let backButton : UIButton = {
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
-            button.setTitle("Cancel", for: .normal)
-            button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
-            button.addTarget(self, action: #selector(handleBack), for: UIControlEvents.touchUpInside)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            return button
-        }()
+        
+        //supaya navbar full
+        // Create the navigation bar
+        let screenSize: CGRect = UIScreen.main.bounds
+        let navbar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 0))
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navbar)
+        navbar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        navbar.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        
+        // Offset by 20 pixels vertically to take the status bar into account
+        navbar.backgroundColor = UIColor(hex: "#3867d6")
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Daftar Trip"
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "kembali", style: .done, target: self, action: #selector(handleBack))
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
+        // Assign the navigation item to the navigation bar
+        
+        navbar.setItems([navigationItem], animated: false)
+        
+        // Make the navigation bar a subview of the current view controller
+        
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor(hex: "#4373D8")
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
+        
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView!)
         
         //collectionView?.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: screenWidth/4).isActive = true
         collectionView?.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        collectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: navbar.bottomAnchor, constant: 0).isActive = true
         collectionView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 5).isActive = true
         collectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15).isActive = true
         
-        //backButton
-        view.addSubview(backButton)
-        backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
     }
     
     @objc public func handleBack(){
@@ -71,13 +89,13 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: tripCellId, for: indexPath) as! TripsCell
-
+        
         cell.labelCountry.text = trips[indexPath.row].country
         cell.LabelTgl.text = trips[indexPath.row].tanggalPulang
         if trips[indexPath.row].status == "1"{
             cell.LabelStatus.text = "Belum Pulang"
         }else{
-             cell.LabelStatus.text = "Sudah Pulang"
+            cell.LabelStatus.text = "Sudah Pulang"
         }
         return cell
     }
@@ -135,6 +153,11 @@ class UserTripList: UICollectionViewController, UICollectionViewDelegateFlowLayo
                         self.trips = try decoder.decode([trip].self, from: data)
                         self.collectionView?.reloadData()
                         print(self.trips)
+                        if self.trips.count <= 0 {
+                            let alert = UIAlertController(title: "Message", message: "Tidak ada Trip untuk ditampilkan", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                        }
                     } catch let jsonErr {
                         print("Failed to decode:", jsonErr)
                     }

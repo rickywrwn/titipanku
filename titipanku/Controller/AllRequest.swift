@@ -65,7 +65,7 @@ class AllRequest: UICollectionViewController, UICollectionViewDelegateFlowLayout
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = "Request"
+        navigationItem.title = "Permintaan"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
@@ -87,7 +87,7 @@ class AllRequest: UICollectionViewController, UICollectionViewDelegateFlowLayout
             SKActivityIndicator.dismiss()
         }
         collectionView?.backgroundColor = UIColor.white
-        navigationItem.title = "Request"
+        navigationItem.title = "Permintaan"
         collectionView?.register(RequestCell.self, forCellWithReuseIdentifier: RequestCellId)
     }
     

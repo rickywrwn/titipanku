@@ -39,6 +39,7 @@ class UserPenjualanPreorder: UIViewController, UICollectionViewDataSource, UICol
                     let decoder = JSONDecoder()
                     self.requests = try decoder.decode([VarOfferPreorder].self, from: data)
                     print(self.requests)
+                    
                     DispatchQueue.main.async(execute: { () -> Void in
                         completionHandler(self.requests)
                     })
@@ -46,6 +47,11 @@ class UserPenjualanPreorder: UIViewController, UICollectionViewDataSource, UICol
                     print(err)
                     
                     SKActivityIndicator.dismiss()
+                    if self.requests.count <= 0 {
+                        let alert = UIAlertController(title: "Message", message: "Tidak ada data untuk ditampilkan", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
                 }
                 
             }) .resume()
@@ -61,6 +67,11 @@ class UserPenjualanPreorder: UIViewController, UICollectionViewDataSource, UICol
             print("count request" + String(self.requests.count))
             self.collectionview.reloadData()
             SKActivityIndicator.dismiss()
+            if self.requests.count <= 0 {
+                let alert = UIAlertController(title: "Message", message: "Tidak ada Data untuk ditampilkan", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                self.present(alert, animated: true)
+            }
         }
         setupView()
     }

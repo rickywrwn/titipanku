@@ -31,6 +31,10 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         present(tambahCont, animated: true, completion: {
         })
     }
+    
+    @objc func handleRefresh() {
+        self.collectionView?.reloadData()
+    }
     override func viewWillAppear(_ animated: Bool) {
         //collectionView?.reloadData()
     }
@@ -49,7 +53,9 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         }
         navigationItem.title = "Home"
         let rightButton = UIBarButtonItem(title: "Tambah", style: .plain, target: self, action: #selector(self.tambahBtn))
+        let leftButton = UIBarButtonItem(title: "Muat Ulang", style: .plain, target: self, action: #selector(self.handleRefresh))
         self.navigationItem.rightBarButtonItem = rightButton
+        self.navigationItem.leftBarButtonItem = leftButton
        
         SKActivityIndicator.show("Loading...", userInteractionStatus: false)
         AppCategory.fetchFeaturedApps { (featuredApps) -> () in
@@ -167,7 +173,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryCell
             cell.appCategory = appCategories?[indexPath.item]
-            cell.btnMore.setTitle(String("More"), for: .normal)
+            cell.btnMore.setTitle(String("Lainnya"), for: .normal)
             cell.btnMore.addTarget(self, action: #selector(showMoreRequest), for: UIControlEvents.touchDown)
             cell.homeController = self
             
@@ -177,7 +183,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: preorderCellId, for: indexPath) as! CategoryCell
             cell.appCategory = appCategories?[indexPath.item]
-            cell.btnMore.setTitle(String("More"), for: .normal)
+            cell.btnMore.setTitle(String("Lainnya"), for: .normal)
             cell.btnMore.addTarget(self, action: #selector(showMorePreorder), for: UIControlEvents.touchDown)
             cell.homeController = self
             
@@ -188,7 +194,7 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: flashCellId, for: indexPath) as! CategoryCell
             cell.appCategory = appCategories?[indexPath.item]
             cell.homeController = self
-            cell.btnMore.setTitle(String("More"), for: .normal)
+            cell.btnMore.setTitle(String("Lainnya"), for: .normal)
             cell.btnMore.addTarget(self, action: #selector(showMorePreorderBerdurasi), for: UIControlEvents.touchDown)
             return cell
         }

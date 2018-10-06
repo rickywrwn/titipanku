@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import GoogleSignIn
+import FacebookLogin
+import FacebookCore
 
 class MoreController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
@@ -89,6 +92,10 @@ class MoreController: UIViewController, UICollectionViewDataSource, UICollection
     
     //logout
     @objc func handleLogout(){
+        let loginManager = LoginManager()
+        
+        loginManager.logOut()
+        GIDSignIn.sharedInstance().signOut()
         UserDefaults.standard.set(false, forKey:"logged")
         UserDefaults.standard.synchronize()
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)

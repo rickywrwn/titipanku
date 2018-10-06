@@ -119,33 +119,60 @@ class registerController: UIViewController {
     //klik register
     @objc private func handleRegister(){
         
-        let parameters: Parameters = ["email": emailTextField.text!,"password": passwordTextField.text!, "name" : fullNameTextField.text! ,"action" : "register"]
-        Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
-            response in
-            //mencetak JSON response
-            if let json = response.result.value {
-                print("JSON: \(json)")
-            }
-            //mengambil json
-            let json = JSON(response.result.value)
-            print(json)
-            let cekSukses = json["success"].intValue
-            let pesan = json["message"].stringValue
-            print(pesan)
-            if cekSukses != 1 {
-                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+        if emailTextField.text == "" || passwordTextField.text == "" || confPasswordTextField.text == "" || fullNameTextField.text == "" {
+            let alert = UIAlertController(title: "Message", message: "Data belum lengkap", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        }else if passwordTextField.text != confPasswordTextField.text{
+            let alert = UIAlertController(title: "Message", message: "Konfirmasi password berbeda", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        }else{
+            
+            if isValidEmail(testStr: emailTextField.text!){
+                let parameters: Parameters = ["email": emailTextField.text!,"password": passwordTextField.text!, "name" : fullNameTextField.text! ,"action" : "register"]
+                Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
+                    response in
+                    //mencetak JSON response
+                    if let json = response.result.value {
+                        print("JSON: \(json)")
+                    }
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    print(pesan)
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }else{
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            self.handleBack()
+                        }))
+                        self.present(alert, animated: true)
+                    }
+                }
+            }else{
+                let alert = UIAlertController(title: "Message", message: "Email tidak Valid", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
                 self.present(alert, animated: true)
-            }else{
-                let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                    self.handleBack()
-                }))
-                self.present(alert, animated: true)
             }
+            
         }
+        
+        
     }
     
+    func isValidEmail(testStr:String) -> Bool {
+        print("validate emilId: \(testStr)")
+        let emailRegEx = "^(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?(?:(?:(?:[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+(?:\\.[-A-Za-z0-9!#$%&’*+/=?^_'{|}~]+)*)|(?:\"(?:(?:(?:(?: )*(?:(?:[!#-Z^-~]|\\[|\\])|(?:\\\\(?:\\t|[ -~]))))+(?: )*)|(?: )+)\"))(?:@)(?:(?:(?:[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)(?:\\.[A-Za-z0-9](?:[-A-Za-z0-9]{0,61}[A-Za-z0-9])?)*)|(?:\\[(?:(?:(?:(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))\\.){3}(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))))|(?:(?:(?: )*[!-Z^-~])*(?: )*)|(?:[Vv][0-9A-Fa-f]+\\.[-A-Za-z0-9._~!$&'()*+,;=:]+))\\])))(?:(?:(?:(?: )*(?:(?:(?:\\t| )*\\r\\n)?(?:\\t| )+))+(?: )*)|(?: )+)?$"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        let result = emailTest.evaluate(with: testStr)
+        return result
+    }
     @objc private func handleBack(){
         navigationController?.popViewController(animated: true)
       self.dismiss(animated: true, completion: nil)

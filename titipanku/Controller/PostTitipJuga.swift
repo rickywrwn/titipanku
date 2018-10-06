@@ -90,7 +90,7 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
         PostTitipJuga.varNegara.provinsi = (app?.provinsi)!
         PostTitipJuga.varNegara.status = 1
         
-        PostTitipJuga.varHarga.harga = (app?.price)!
+        PostTitipJuga.varHarga.harga = (app?.valueHarga)!
         PostTitipJuga.varHarga.status = 1
         
         print("Post Barang")
@@ -260,81 +260,165 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
     }()
     
     @objc func handlePostBarang(){
-        if(varDetail.status != 1 && varKarateristik.status != 1 && varNegara.status != 1 && varHarga.status != 1){
-            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
-        }else{
-            
-            SKActivityIndicator.show("Loading...")
-            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
-                print(emailNow)
-                
-                let parameter: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "url": varDetail.url,"qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota , "idKota": varNegara.idKota ,"provinsi":varNegara.provinsi ,"action" : "insert","action2" : "tidak"]
-                print(parameter)
-                Alamofire.request("http://titipanku.xyz/api/PostBarang.php",method: .post, parameters: parameter).responseSwiftyJSON { dataResponse in
+        
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let email = app?.email, let id = app?.id{
+            if email == emailNow{
+                if(varDetail.status != 1 && varKarateristik.status != 1 && varNegara.status != 1 && varHarga.status != 1){
+                    let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
                     
-                    //mencetak JON response
-                    if let json = dataResponse.value {
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    
+                    self.present(alert, animated: true)
+                }else{
+                    
+                    SKActivityIndicator.show("Loading...")
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+                        print(emailNow)
                         
-                        //mengambil json
-                        print(json)
-                        let cekSukses = json["success"].intValue
-                        let pesan = json["message"].stringValue
-                        print(cekSukses)
-                        print(pesan)
-                        if cekSukses != 1 {
-                            let alert = UIAlertController(title: "gagal", message: pesan, preferredStyle: .alert)
+                        let parameter: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "desc":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "url": varDetail.url,"qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota , "idKota": varNegara.idKota ,"provinsi":varNegara.provinsi,"idRequest":id ,"action" : "insert","action2" : "tidak"]
+                        print(parameter)
+                        Alamofire.request("http://titipanku.xyz/api/PostUpdate.php",method: .post, parameters: parameter).responseSwiftyJSON { dataResponse in
                             
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                            
-                            self.present(alert, animated: true)
-                        }else{
-                            print("masuk")
-                            let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
-                            
-                            let parameters = ["name": "Frank","action" : "insert","action2" : "upload"]
-                            print(parameters)
-                            //userfile adalah parameter post untuk file yg ingin di upload
-                            Alamofire.upload(multipartFormData: { multipartFormData in
-                                multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
-                                for (key, value) in parameters {
-                                    multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
-                                }
-                            },
-                                             to:"http://titipanku.xyz/api/PostBarang.php")
-                            { (result) in
-                                switch result {
-                                case .success(let upload, _, _):
+                            //mencetak JON response
+                            if let json = dataResponse.value {
+                                
+                                //mengambil json
+                                print(json)
+                                let cekSukses = json["success"].intValue
+                                let pesan = json["message"].stringValue
+                                print(cekSukses)
+                                print(pesan)
+                                if cekSukses != 1 {
+                                    let alert = UIAlertController(title: "gagal", message: pesan, preferredStyle: .alert)
                                     
-                                    upload.uploadProgress(closure: { (progress) in
-                                        print("Upload Progress: \(progress.fractionCompleted)")
-                                    })
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                                     
-                                    upload.responseJSON { response in
-                                        print(response.result.value)
+                                    self.present(alert, animated: true)
+                                }else{
+                                    print("masuk")
+                                    let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
+                                    
+                                    let parameters = ["name": "Frank","action" : "insert","idRequest": id,"action2" : "upload"]
+                                    print(parameters)
+                                    //userfile adalah parameter post untuk file yg ingin di upload
+                                    Alamofire.upload(multipartFormData: { multipartFormData in
+                                        multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
+                                        for (key, value) in parameters {
+                                            multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                                        }
+                                    },
+                                                     to:"http://titipanku.xyz/api/PostUpdate.php")
+                                    { (result) in
+                                        switch result {
+                                        case .success(let upload, _, _):
+                                            
+                                            upload.uploadProgress(closure: { (progress) in
+                                                print("Upload Progress: \(progress.fractionCompleted)")
+                                            })
+                                            
+                                            upload.responseJSON { response in
+                                                print(response.result.value)
+                                            }
+                                            
+                                        case .failure(let encodingError):
+                                            print(encodingError)
+                                        }
                                     }
                                     
-                                case .failure(let encodingError):
-                                    print(encodingError)
+                                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                                    
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                        SKActivityIndicator.dismiss()
+                                        self.handleBack()
+                                    }))
+                                    
+                                    self.present(alert, animated: true)
                                 }
                             }
+                        }
+                    }
+                }
+            }else{
+                
+                if(varDetail.status != 1 || varKarateristik.status != 1 || varNegara.status != 1 || varHarga.status != 1){
+                    let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    
+                    self.present(alert, animated: true)
+                }else{
+                    
+                    SKActivityIndicator.show("Loading...")
+                    if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+                        print(emailNow)
+                        
+                        let parameter: Parameters = ["email": emailNow,"name": varDetail.namaBarang, "description":varDetail.desc, "category":varDetail.kategori, "country": varNegara.negara, "price":varHarga.harga, "url": varDetail.url,"qty": varDetail.qty, "ukuran": varKarateristik.ukuran, "berat":varKarateristik.berat, "kotaKirim":varNegara.kota , "idKota": varNegara.idKota ,"provinsi":varNegara.provinsi ,"action" : "insert","action2" : "tidak"]
+                        print(parameter)
+                        Alamofire.request("http://titipanku.xyz/api/PostBarang.php",method: .post, parameters: parameter).responseSwiftyJSON { dataResponse in
                             
-                            let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                                SKActivityIndicator.dismiss()
-                                self.handleBack()
-                            }))
-                            
-                            self.present(alert, animated: true)
+                            //mencetak JON response
+                            if let json = dataResponse.value {
+                                
+                                //mengambil json
+                                print(json)
+                                let cekSukses = json["success"].intValue
+                                let pesan = json["message"].stringValue
+                                print(cekSukses)
+                                print(pesan)
+                                if cekSukses != 1 {
+                                    let alert = UIAlertController(title: "gagal", message: pesan, preferredStyle: .alert)
+                                    
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                                    
+                                    self.present(alert, animated: true)
+                                }else{
+                                    print("masuk")
+                                    let imgData = UIImageJPEGRepresentation(varDetail.gambarBarang!, 0.1)!
+                                    
+                                    let parameters = ["name": "Frank","action" : "insert","action2" : "upload"]
+                                    print(parameters)
+                                    //userfile adalah parameter post untuk file yg ingin di upload
+                                    Alamofire.upload(multipartFormData: { multipartFormData in
+                                        multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
+                                        for (key, value) in parameters {
+                                            multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
+                                        }
+                                    },
+                                                     to:"http://titipanku.xyz/api/PostBarang.php")
+                                    { (result) in
+                                        switch result {
+                                        case .success(let upload, _, _):
+                                            
+                                            upload.uploadProgress(closure: { (progress) in
+                                                print("Upload Progress: \(progress.fractionCompleted)")
+                                            })
+                                            
+                                            upload.responseJSON { response in
+                                                print(response.result.value)
+                                            }
+                                            
+                                        case .failure(let encodingError):
+                                            print(encodingError)
+                                        }
+                                    }
+                                    
+                                    let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                                    
+                                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                                        SKActivityIndicator.dismiss()
+                                        self.handleBack()
+                                    }))
+                                    
+                                    self.present(alert, animated: true)
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+        
+        
         
         PostTitipJuga.varDetail.namaBarang = ""
         PostTitipJuga.varDetail.desc = ""
@@ -380,8 +464,18 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = "Titip Juga"
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let email = app?.email{
+            if email != emailNow{
+                navigationItem.title = "Titip Juga"
+                postButton.setTitle("Post Titipan", for: .normal)
+            }else{
+                
+                navigationItem.title = "Ubah Titipan"
+                postButton.setTitle("Ubah Titipan", for: .normal)
+            }
+        }
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(handleCancle))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Batalkan", style: .done, target: self, action: #selector(handleBatal))
         // Assign the navigation item to the navigation bar
         
         navbar.setItems([navigationItem], animated: false)
@@ -413,6 +507,47 @@ class PostTitipJuga: UICollectionViewController, UICollectionViewDelegateFlowLay
         
         postButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         
+    }
+    @objc func handleBatal(){
+        if let idRequest : String = app?.id, let status = app?.status {
+            if status != "1"{
+                let alert = UIAlertController(title: "Peringatan", message: "Permintaan tidak dapat dibatalkan karena sudah ada penawaran", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                }))
+                
+                self.present(alert, animated: true)
+            }else{
+                let parameter: Parameters = ["idRequest": idRequest ,"action":"cancel"]
+                print (parameter)
+                Alamofire.request("http://titipanku.xyz/api/hapusRequest.php",method: .get, parameters: parameter).responseJSON {
+                    response in
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            SKActivityIndicator.dismiss()
+                            self.handleBack()
+                        }))
+                        
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        }
     }
     
     @objc func showAddDetail(){

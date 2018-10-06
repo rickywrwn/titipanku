@@ -282,7 +282,7 @@ class PostPreorder: UICollectionViewController, UICollectionViewDelegateFlowLayo
     
     @objc func handlePostBarang(){
         
-        if(varDetail.status != 1 && varKarateristik.status != 1 && varNegara.status != 1 && varHarga.status != 1){
+        if(varDetail.status != 1 || varKarateristik.status != 1 || varNegara.status != 1 || varHarga.status != 1 || varDurasi.status != 1){
             let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))

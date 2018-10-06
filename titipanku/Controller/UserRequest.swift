@@ -34,6 +34,7 @@ class UserRequest: UIViewController, UICollectionViewDataSource, UICollectionVie
                     let decoder = JSONDecoder()
                     self.requests = try decoder.decode([App].self, from: data)
                     print(self.requests)
+                  
                     DispatchQueue.main.async(execute: { () -> Void in
                         completionHandler(self.requests)
                     })
@@ -42,6 +43,11 @@ class UserRequest: UIViewController, UICollectionViewDataSource, UICollectionVie
                     
                     self.collectionview.reloadData()
                     SKActivityIndicator.dismiss()
+                    if self.requests.count <= 0 {
+                        let alert = UIAlertController(title: "Message", message: "Tidak ada data untuk ditampilkan", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
                 }
                 
             }) .resume()
@@ -60,6 +66,11 @@ class UserRequest: UIViewController, UICollectionViewDataSource, UICollectionVie
             print("count request" + String(self.requests.count))
             self.collectionview.reloadData()
             SKActivityIndicator.dismiss()
+            if self.requests.count <= 0 {
+                let alert = UIAlertController(title: "Message", message: "Tidak ada data untuk ditampilkan", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                self.present(alert, animated: true)
+            }
         }
         navigationItem.title = "Request"
         
@@ -108,7 +119,7 @@ class UserRequest: UIViewController, UICollectionViewDataSource, UICollectionVie
         cell.labelCountry.text = requests[indexPath.row].name
         cell.LabelTgl.text = requests[indexPath.row].tglPost
         if requests[indexPath.row].status == "0"{
-            cell.LabelStatus.text = "Ditolak"
+            cell.LabelStatus.text = "Dibatalkan"
         }else if requests[indexPath.row].status == "1"{
             cell.LabelStatus.text = "Belum Diterima"
         }else if requests[indexPath.row].status == "2"{

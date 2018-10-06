@@ -22,7 +22,6 @@ struct VarOfferPreorder: Decodable {
     let kota: String
     let idKota : String
     let hargaOngkir: String
-    let jenisOngkir: String
     let pengiriman : String
     let nomorResi : String
     let valueHarga : String

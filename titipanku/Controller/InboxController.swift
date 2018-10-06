@@ -39,8 +39,6 @@ class InboxController: UIViewController {
         view.backgroundColor = .white
         setupView()
         
-        navigationItem.title = "Home"
-        
         NotifVC.view.isHidden = false
     }
     

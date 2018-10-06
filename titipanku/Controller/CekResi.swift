@@ -14,7 +14,7 @@ import Hue
 class CekResi: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     fileprivate let RequestCellId = "RequestCellId"
     var collectionview: UICollectionView!
-    var nomor = "030520034450018"
+    var nomor = ""
     var resi : Welcome?
     var detailsResi : details?
     
@@ -250,27 +250,3 @@ class ManifestCell: BaseCell {
     }
     
 }
-
-
-let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
-guard let url = URL(string: urlString) else { return }
-URLSession.shared.dataTask(with: url) { (data, _, err) in
-    DispatchQueue.main.async {
-        if let err = err {
-            print("Failed to get data from url:", err)
-            return
-        }
-        guard let data = data else { return }
-        print(data)
-        do {
-            let decoder = JSONDecoder()
-            self.isiUser = try decoder.decode(userDetail.self, from: data)
-            print(self.isiUser)
-            self.userCollectionView.reloadData()
-        } catch let jsonErr {
-            print("Failed to decode:", jsonErr)}}
-    }.resume()
-
-
-
-
