@@ -111,9 +111,9 @@ class UserPreorder: UIViewController, UICollectionViewDataSource, UICollectionVi
         cell.labelCountry.text = requests[indexPath.row].name
         cell.LabelTgl.text = requests[indexPath.row].tglPost
         if requests[indexPath.row].status == "1"{
-            cell.LabelStatus.text = "Dibuka"
+            cell.LabelStatus.text = "Buka"
         }else if requests[indexPath.row].status == "5"{
-            cell.LabelStatus.text = "Ditutup"
+            cell.LabelStatus.text = "Tutup"
         }else{
             cell.LabelStatus.text = requests[indexPath.row].status
         }

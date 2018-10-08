@@ -171,7 +171,7 @@ class WithdrawController :  UIViewController {
         }
         
         let saldoTotal = Int((self.isiUser?.valueSaldo)!)! - Int(self.hargaText.text!)!
-        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let jumlah = hargaText.text, let saldo : String = String(saldoTotal), let status : String = "sukses", let rekening = rekeningText.text,let nama = namaText.text{
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let jumlah = hargaText.text, let saldo : String = String(saldoTotal), let status : String = "pending", let rekening = rekeningText.text,let nama = namaText.text{
             
             let parameter: Parameters = ["jumlah": jumlah,"email":emailNow, "saldo" : saldo ,"status":status,"namaRekening":nama,"rekening":rekening ,"action":"insert"]
             print (parameter)
@@ -191,7 +191,7 @@ class WithdrawController :  UIViewController {
                     
                     self.present(alert, animated: true)
                 }else{
-                    let alert = UIAlertController(title: "Message", message: "Withdraw Berhasil", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Message", message: "Permintaan Withdraw Berhasil", preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                         self.handleBack()
@@ -267,7 +267,6 @@ class WithdrawController :  UIViewController {
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
         textField.borderStyle = .roundedRect
-        textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()

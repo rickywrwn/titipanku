@@ -11,6 +11,7 @@ import SwiftyPickerPopover
 import SwiftyJSON
 import Alamofire_SwiftyJSON
 import MidtransKit
+import SKActivityIndicatorView
 
 class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -166,6 +167,7 @@ class AcceptedOffer :  UIViewController, UITableViewDelegate, UITableViewDataSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = UIColor.white
         print("Bantu belikan Barang Loaded")
         ongkirText.isHidden = false

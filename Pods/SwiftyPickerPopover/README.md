@@ -72,6 +72,9 @@ All popovers have the following APIs.
 * setArrowColor()
 * setSize(width:,height:)
 * setCornerRadius()
+* setValueChange(action:)
+* setOutsideTapDismissing(allowed:)
+* setDimmedBackgroundView(enabled:)
 
 * appear(originView:, baseViewWhenOriginViewHasNoSuperview:, baseViewController:, completion:)
 * appear(barButtonItem:, baseViewWhenOriginViewHasNoSuperview:, baseViewController:, completion:)
@@ -90,13 +93,17 @@ All popovers have the following APIs.
 * setSelectedRow()
 * setRowHeight()
 * setDisplayStringFor()
-* setDoneButton(title:, color:, action:)
-* setCancelButton(title:, color:, action:)
+* setDoneButton(title:, font:, color:, action:)
+* setCancelButton(title:, font:,  color:, action:)
+* setClearButton(title:, font:,  color:, action:)
 
 ##### You can use StringPickerPopover like this:
 ```swift
 StringPickerPopover(title: "StringPicker", choices: ["value 1","value 2","value 3"])
         .setSelectedRow(0)
+        .setValueChange(action: { _, selectedDate in
+            print("current date \(selectedDate)")
+        })
         .setDoneButton(action: { (popover, selectedRow, selectedString) in
             print("done row \(selectedRow) \(selectedString)")
         })
@@ -192,8 +199,9 @@ p.appear(originView: originView, baseViewController: self)
 * setFontColors()
 * setSelectedRows()
 * setDisplayStringFor()
-* setDoneButton(title:, color:, action:)
-* setCancelButton(title:, color:, action:)
+* setDoneButton(title:, font:, color:, action:)
+* setCancelButton(title:, font:, color:, action:)
+* setClearButton(title:, font:,  color:, action:)
 
 ##### ColumnStringPickerPopover can have multiple String values:
 ```swift
@@ -216,9 +224,9 @@ ColumnStringPickerPopover(title: "Columns Strings",
 * setMaximumDate()
 * setMinuteInterval()
 * setLocale()
-* setDoneButton(title:, color:, action:)
-* setCancelButton(title:, color:, action:)
-* setClearButton(title:, color:, action:)
+* setDoneButton(title:, font:, color:, action:)
+* setCancelButton(title:, font:, color:, action:)
+* setClearButton(title:, font:, color:, action:)
 
 ##### DatePickerPopover can be used like this:
 ```swift
@@ -261,9 +269,9 @@ DatePickerPopover(title: "DatePicker .time 5minInt.")
 * init(title:)
 
 * setSelectedTimeInterval
-* setDoneButton(title:, color:, action:)
-* setCancelButton(title:, color:, action:)
-* setClearButton(title:, color:, action:)
+* setDoneButton(title:, font:, color:, action:)
+* setCancelButton(title:, font:, color:, action:)
+* setClearButton(title:, font:, color:, action:)
 
 ##### CountdownPickerPopover can be used like this:
 ```swift
@@ -294,6 +302,7 @@ When you prepare your customized Storyboard, it will be applied automatically.
 - coybit [GitHub](https://github.com/coybit) for adding setImages() to StringPickerPopover.
 - Mihael Isaev [GitHub](https://github.com/MihaelIsaev) for adding appear() from barButtonItem.
 - iosMaher [GitHub](https://github.com/iosMaher) for idea of setFont() and setFontColor().
+- gbuela [GitHub](https://github.com/gbuela) for setValueChange(action:) API for all popover types.
 
 ## Author
 - Yuta Hoshino [Twitter](https://twitter.com/hsylife) [Facebook](https://www.facebook.com/yuta.hoshino)

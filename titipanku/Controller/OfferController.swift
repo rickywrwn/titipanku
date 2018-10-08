@@ -359,7 +359,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
             .setDateMode(.date)
             .setSelectedDate(Date())
             .setMinimumDate(date)
-            .setDoneButton(title: "Done", color: UIColor.white,action: { popover, selectedDate in
+            .setDoneButton(action: { popover, selectedDate in
                 let formatter = DateFormatter()
                 let formatterValue = DateFormatter()
                 // initially set the format based on your datepicker date / server String
@@ -373,7 +373,7 @@ class OfferController :  UIViewController, UITableViewDelegate, UITableViewDataS
                 self.dateTextField.text = stringDate
                 print(self.dateBack)
                 print("selectedDate \(stringDate)")})
-            .setCancelButton(title: "Cancel", color: UIColor.white,action: { _, _ in print("cancel")})
+            .setCancelButton(action: { _, _ in print("cancel")})
             .appear(originView: textField, baseViewController: self)
         
     }

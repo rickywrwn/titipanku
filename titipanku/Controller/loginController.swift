@@ -14,6 +14,7 @@ import Alamofire
 import SwiftyJSON
 import FacebookLogin
 import FacebookCore
+import SKActivityIndicatorView
 
 //, FBSDKLoginButtonDelegate
 class loginController: UIViewController ,GIDSignInUIDelegate {
@@ -173,6 +174,7 @@ class loginController: UIViewController ,GIDSignInUIDelegate {
             self.present(alert, animated: true)
         }else{
             
+            SKActivityIndicator.show("Loading...")
             if isValidEmail(testStr: usernameTextField.text!){
                 let parameters: Parameters = ["email": usernameTextField.text!,"password": passwordTextField.text!, "action" : "login"]
                 Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
@@ -187,7 +189,7 @@ class loginController: UIViewController ,GIDSignInUIDelegate {
                     let json = JSON(response.result.value)
                     let cekSukses = json["success"].intValue
                     let pesan = json["message"].stringValue
-                    
+                    SKActivityIndicator.dismiss()
                     if cekSukses != 1 {
                         let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
                         

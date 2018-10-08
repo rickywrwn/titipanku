@@ -109,11 +109,11 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         print("tapped")
         StringPickerPopover(title: "Kategori Barang", choices: daftarKategori)
             .setSelectedRow(0)
-            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.categoryText.text = selectedString
             })
-            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         
@@ -124,11 +124,11 @@ class AddDetailBarang :  UIViewController, UIImagePickerControllerDelegate, UINa
         print("tapped")
         StringPickerPopover(title: "Jumlah Barang", choices: ["1","2","3","4","5","6","7","8","9","10"])
             .setSelectedRow(0)
-            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.qtyText.text = selectedString
             })
-            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         

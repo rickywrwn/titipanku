@@ -337,6 +337,7 @@ class countryCollectionView: BaseCell,UICollectionViewDataSource, UICollectionVi
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: couId, for: indexPath) as! countryCollect
         cell.nameLabel.text = dataExplore?.isi[indexPath.row].nama
+        cell.imageView.image = UIImage.init(named: (dataExplore?.isi[indexPath.row].nama)!)
         return cell
     }
     

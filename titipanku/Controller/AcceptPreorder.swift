@@ -418,7 +418,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
         print("tapped")
         StringPickerPopover(title: "Jumlah Barang", choices: ["1","2","3","4","5"])
             .setSelectedRow(0)
-            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.qtyText.text = selectedString
                 
@@ -440,7 +440,7 @@ class AcceptPreorder :  UIViewController, UITableViewDelegate, UITableViewDataSo
                     self.labelTotal.text = "Rp " + s2!
                 }
             })
-            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         

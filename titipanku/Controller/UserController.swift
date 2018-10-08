@@ -457,7 +457,7 @@ class UserDetailCell: BaseCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 16
-        iv.backgroundColor = UIColor.green
+        iv.image = UIImage(named: "coba")
         iv.layer.masksToBounds = true
         return iv
     }()

@@ -111,7 +111,7 @@ PODS:
   - Protobuf (3.6.1)
   - SKActivityIndicatorView (0.1.0)
   - SwiftyJSON (4.0.0)
-  - SwiftyPickerPopover (6.1.0)
+  - SwiftyPickerPopover (6.6.3)
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
@@ -201,7 +201,7 @@ SPEC CHECKSUMS:
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SKActivityIndicatorView: f46936f760d33eb8235333242269bf01cc9248ae
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
-  SwiftyPickerPopover: f1bb928efd60e4c754aa957c1bb67372465e9ccb
+  SwiftyPickerPopover: 3765c2cd5debf50aaf33be791dd74ba7f27e4260
 
 PODFILE CHECKSUM: f02b07bb741e41881669a1d62366b6f186b19ef4
 

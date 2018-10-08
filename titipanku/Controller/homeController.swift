@@ -33,7 +33,13 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     
     @objc func handleRefresh() {
-        self.collectionView?.reloadData()
+        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
+        AppCategory.fetchFeaturedApps { (featuredApps) -> () in
+            self.featuredApps = featuredApps
+            self.appCategories = featuredApps.categories
+            SKActivityIndicator.dismiss()
+            self.collectionView?.reloadData()
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         //collectionView?.reloadData()
@@ -42,8 +48,9 @@ class homeController: UICollectionViewController,UICollectionViewDelegateFlowLay
 
     
     override func viewDidLoad() {
-        print("hello world")
         super.viewDidLoad()
+        
+        
         UserController.emailUser.status = "sendiri"
         if  cekLogged == true{
             print("masuk home")

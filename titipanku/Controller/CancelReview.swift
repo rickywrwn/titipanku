@@ -311,11 +311,11 @@ class CancelReview :  UIViewController {
         print("tapped")
         StringPickerPopover(title: "Rating Anda", choices: ["1", "2","3","4","5"])
             .setSelectedRow(0)
-            .setDoneButton(title: "Done", color: UIColor.white,action: { (popover, selectedRow, selectedString) in
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
                 self.ratingText.text = selectedString
             })
-            .setCancelButton(title: "Cancel", color: UIColor.white,action: { (_, _, _) in print("cancel")}
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
             )
             .appear(originView: textField, baseViewController: self)
         

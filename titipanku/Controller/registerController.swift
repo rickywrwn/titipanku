@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SKActivityIndicatorView
 
 class registerController: UIViewController {
     
@@ -118,7 +119,6 @@ class registerController: UIViewController {
     
     //klik register
     @objc private func handleRegister(){
-        
         if emailTextField.text == "" || passwordTextField.text == "" || confPasswordTextField.text == "" || fullNameTextField.text == "" {
             let alert = UIAlertController(title: "Message", message: "Data belum lengkap", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
@@ -129,6 +129,7 @@ class registerController: UIViewController {
             self.present(alert, animated: true)
         }else{
             
+            SKActivityIndicator.show("Loading...")
             if isValidEmail(testStr: emailTextField.text!){
                 let parameters: Parameters = ["email": emailTextField.text!,"password": passwordTextField.text!, "name" : fullNameTextField.text! ,"action" : "register"]
                 Alamofire.request("http://titipanku.xyz/api/Login.php",method: .get, parameters: parameters).responseJSON {
@@ -142,6 +143,7 @@ class registerController: UIViewController {
                     print(json)
                     let cekSukses = json["success"].intValue
                     let pesan = json["message"].stringValue
+                    SKActivityIndicator.dismiss()
                     print(pesan)
                     if cekSukses != 1 {
                         let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
