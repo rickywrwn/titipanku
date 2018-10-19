@@ -62,6 +62,8 @@
 		7E977E0E2119E16B00D65F76 /* PengirimanPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */; };
 		7E977E102119EB3700D65F76 /* PenerimaanPembelian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */; };
 		7E977E12211A7A5400D65F76 /* LihatResiPreorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */; };
+		7EA2A8A62173D9AC00B9BBAB /* PerubahanHarga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA2A8A52173D9AB00B9BBAB /* PerubahanHarga.swift */; };
+		7EA2A8A82173EBA900B9BBAB /* PerubahanOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA2A8A72173EBA900B9BBAB /* PerubahanOffer.swift */; };
 		7EA9CCCB20F3422A003C8D8D /* Pods_titipanku.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F96600AC5CB3A2E28D630F8B /* Pods_titipanku.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7EC0373521484CF800476982 /* UserEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC0373421484CF800476982 /* UserEdit.swift */; };
 		7EC55F9E2138BE31002C0FD8 /* UserTripDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC55F9D2138BE31002C0FD8 /* UserTripDetail.swift */; };
@@ -174,6 +176,8 @@
 		7E977E0D2119E16B00D65F76 /* PengirimanPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PengirimanPembelian.swift; sourceTree = "<group>"; };
 		7E977E0F2119EB3700D65F76 /* PenerimaanPembelian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenerimaanPembelian.swift; sourceTree = "<group>"; };
 		7E977E11211A7A5400D65F76 /* LihatResiPreorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LihatResiPreorder.swift; sourceTree = "<group>"; };
+		7EA2A8A52173D9AB00B9BBAB /* PerubahanHarga.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerubahanHarga.swift; sourceTree = "<group>"; };
+		7EA2A8A72173EBA900B9BBAB /* PerubahanOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerubahanOffer.swift; sourceTree = "<group>"; };
 		7EC0373421484CF800476982 /* UserEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEdit.swift; sourceTree = "<group>"; };
 		7EC55F9D2138BE31002C0FD8 /* UserTripDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTripDetail.swift; sourceTree = "<group>"; };
 		7ECA1D33212B7EF100D26A77 /* LihatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LihatUser.swift; sourceTree = "<group>"; };
@@ -299,6 +303,8 @@
 				7E72A4722116E8E500391FA7 /* AcceptedOffer.swift */,
 				7E977E05211846A000D65F76 /* CompletedOffer.swift */,
 				7E72A474211731DE00391FA7 /* ConfirmAcceptedOffer.swift */,
+				7EA2A8A72173EBA900B9BBAB /* PerubahanOffer.swift */,
+				7EA2A8A52173D9AB00B9BBAB /* PerubahanHarga.swift */,
 				7E72A4762117EBAD00391FA7 /* PengirimanOffer.swift */,
 				7E7B60C7216139A100106EE6 /* CekResi.swift */,
 				7E977E03211841FE00D65F76 /* PenerimaanOffer.swift */,
@@ -497,6 +503,7 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
+				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -523,6 +530,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -637,6 +645,8 @@
 				7E41129221206FC9008BBF89 /* PostTitipJuga.swift in Sources */,
 				7E4D3FE62120D6E0000DE02C /* UserPenjualan.swift in Sources */,
 				7E977E082119DB2B00D65F76 /* LihatPreorder.swift in Sources */,
+				7EA2A8A82173EBA900B9BBAB /* PerubahanOffer.swift in Sources */,
+				7EA2A8A62173D9AC00B9BBAB /* PerubahanHarga.swift in Sources */,
 				7E5D9859210590F4006690B0 /* PesanController.swift in Sources */,
 				7E58EA892113F86B00BF7A2E /* ExploreKategoriPreorder.swift in Sources */,
 				7ECA1D34212B7EF100D26A77 /* LihatUser.swift in Sources */,
@@ -810,7 +820,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MKC78YHYAW;
 				INFOPLIST_FILE = titipanku/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stts.titipanku;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -830,7 +840,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MKC78YHYAW;
 				INFOPLIST_FILE = titipanku/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.stts.titipanku;
 				PRODUCT_NAME = "$(TARGET_NAME)";

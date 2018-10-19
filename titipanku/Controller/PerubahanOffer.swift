@@ -1,8 +1,8 @@
 //
-//  ConfirmAcceptedOffer.swift
+//  PerubahanOffer.swift
 //  titipanku
 //
-//  Created by Ricky Wirawan on 05/08/18.
+//  Created by Ricky Wirawan on 15/10/18.
 //  Copyright © 2018 Ricky Wirawan. All rights reserved.
 //
 
@@ -11,19 +11,23 @@ import Alamofire
 import SwiftyPickerPopover
 import SwiftyJSON
 import Alamofire_SwiftyJSON
+import MidtransKit
+import SKActivityIndicatorView
 
-class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePickerControllerDelegate, UITableViewDataSource,UINavigationControllerDelegate {
+class PerubahanOffer :  UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var selectedHarga : String = ""
+    var selectedJenis : String = ""
     var idOffer : String = ""
+    
     var arrNama = [String]()
     var arrHarga = [String]()
+    var arrEtd = [String]()
     var statusTable : Int = 0
     var prvv : raja?
     var kota : rajaKota?
     var midtrans : Midtrans?
     var orderId : String = ""
-    var cekGambar = false
     struct Midtrans: Decodable {
         let orderId: String
     }
@@ -36,8 +40,9 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
     var isiUser  : userDetail?
     
     fileprivate func fetchJSON() {
-        if let email = self.app?.email {
-            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: email))"
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            print(emailNow)
+            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
             guard let url = URL(string: urlString) else { return }
             URLSession.shared.dataTask(with: url) { (data, _, err) in
                 DispatchQueue.main.async {
@@ -55,7 +60,7 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
                         self.isiUser = try decoder.decode(userDetail.self, from: data)
                         print(self.isiUser)
                         //self.labelB.text = "Rp " + (self.isiUser?.saldo)!
-                        
+                        SKActivityIndicator.dismiss()
                     } catch let jsonErr {
                         print("Failed to decode:", jsonErr)
                     }
@@ -98,33 +103,6 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         
     }
     
-    //    var detailOffer : VarOffer?
-    //
-    //    func fetchOffer() {
-    //
-    //        DispatchQueue.main.async {
-    //        let urlString = "http://titipanku.xyz/api/ShowOfferDetail.php?idOffer=\(self.idOffer)"
-    //        guard let url = URL(string: urlString) else { return }
-    //        URLSession.shared.dataTask(with: url) { (data, _, err) in
-    //            DispatchQueue.main.async {
-    //                if let err = err {
-    //                    print("Failed to get data from url:", err)
-    //                    return
-    //                }
-    //
-    //                guard let data = data else { return }
-    //                do {
-    //                    let decoder = JSONDecoder()
-    //                    self.detailOffer = try decoder.decode(VarOffer.self, from: data)
-    //                    print(self.detailOffer)
-    //                } catch let jsonErr {
-    //                    print("Failed to decode:", jsonErr)
-    //                }
-    //            }
-    //            }.resume()
-    //        }
-    //    }
-    
     var app: App? {
         didSet {
             
@@ -165,27 +143,20 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SKActivityIndicator.show("Loading...")
         view.backgroundColor = UIColor.white
         print("Bantu belikan Barang Loaded")
-        ongkirText.isHidden = false
-        labelOngkir.isHidden = false
+        ongkirText.isHidden = true
+        labelOngkir.isHidden = true
         //print(app)
         //fetchOffer()
         //fetchOrderId()
         fetchJSON()
         labelTgl.text = self.varOffer?.tglPulang
-        labelHarga.text = self.varOffer?.hargaPenawaran
-        labelKota.text = self.app?.qty
-        //labelOngkir.text = (self.varOffer?.jenisOngkir)! + "+" + (self.varOffer?.hargaOngkir)!
-        ongkirText.text =  (self.varOffer?.jenisOngkir)! + " - " + (self.varOffer?.hargaOngkir)!
-        let total = Int((self.varOffer?.valueHarga)!)! + Int((self.varOffer?.hargaOngkir)!)!
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.minimumFractionDigits = 0
-        let s2 = formatter.string(from:total  as NSNumber)
-        labelTotal.text = "Rp " + s2!
-        label4.isHidden = false
-        print(varOffer)
+        labelHarga.text = "Rp " + (self.varOffer?.hargaPenawaran)!
+        labelKota.text = self.varOffer?.kota
+        label4.isHidden = true
+        
         setupView()
         //supaya navbar full
         // Create the navigation bar
@@ -203,7 +174,7 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         let navigationItem = UINavigationItem()
         navigationItem.title = "Penawaran"
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Titip Juga", style: .plain, target: self, action: #selector(handleTitip))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Kembali", style: .done, target: self, action: #selector(btnCancel))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batal", style: .done, target: self, action: #selector(btnCancel))
         //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(handleSubmit))
         // Assign the navigation item to the navigation bar
         
@@ -218,9 +189,8 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         //print(detailOffer)
     }
     
-    @objc private func btnCancel(){
-        
-        self.dismiss(animated: true, completion: nil)
+    @objc func handleCancle(){
+        self.dismiss(animated: true)
     }
     
     func fetchOrderId(){
@@ -254,12 +224,17 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.tag == 3{
             print("Num: \(indexPath.row)")
-            ongkirText.text = "JNE " + arrNama[indexPath.row] + " - Rp. " + arrHarga[indexPath.row]
+            ongkirText.text = "JNE " + arrNama[indexPath.row] + " - Rp " + arrHarga[indexPath.row] + " (" + arrEtd[indexPath.row] + " Hari)"
             ongkirTableView.isHidden = true
             selectedHarga = arrHarga[indexPath.row]
+            selectedJenis = arrNama[indexPath.row]
             label4.isHidden = false
             let total = Int(selectedHarga)! + Int((varOffer?.valueHarga)!)!
-            labelTotal.text = String(total)
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.minimumFractionDigits = 0
+            let s2 = formatter.string(from:total  as NSNumber)
+            labelTotal.text = "Rp " + s2!
         }
         
     }
@@ -273,7 +248,7 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "MyCell")
         let paket = arrNama[indexPath.row]
         let harga = arrHarga[indexPath.row]
-        cell.textLabel?.text = paket + " - " + harga
+        cell.textLabel?.text = paket  + "(" + arrEtd[indexPath.row] + " Hari) " + " - " + harga
         
         return cell
     }
@@ -302,13 +277,21 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
                         for i in 0 ..< hasil.count {
                             let servis = hasil[i]["service"]
                             let harga = hasil[i]["cost"][0]["value"]
+                            let etd = hasil[i]["cost"][0]["etd"]
                             print(servis.stringValue)
                             print(harga.stringValue)
                             self.arrNama.append(servis.stringValue)
                             self.arrHarga.append(harga.stringValue)
+                            self.arrEtd.append(etd.stringValue)
                             print(self.arrNama)
                             print(self.arrHarga)
+                            print(self.arrEtd)
                             self.ongkirTableView.reloadData()
+                        }
+                        if hasil.count == 0{
+                            self.arrNama.append("Tidak Ada")
+                            self.arrHarga.append("0")
+                            self.arrEtd.append("-")
                         }
                         self.ongkirTableView.reloadData()
                         print(hasil.count)
@@ -336,73 +319,9 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         ongkirTableView.isHidden = false
     }
     
-    @objc func imgTapped(_ imageView: UIImageView) {
-        print("tapped gambar")
-        
-        let alert = UIAlertController(title: "Choose one of the following:", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
-            let picker = UIImagePickerController()
-            picker.delegate = self
-            picker.allowsEditing = true
-            self.present(picker, animated: true, completion: nil)
-            
-        }))
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
-            self.openCamera()
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func openCamera()
-    {
-        let imagePicker =  UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
-        {
-            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
-            imagePicker.allowsEditing = true
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-        else
-        {
-            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        //print(info)
-        
-        var selectedImageFromPicker: UIImage?
-        
-        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage{
-            
-            selectedImageFromPicker = editedImage
-            
-        }else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage{
-            
-            selectedImageFromPicker = originalImage
-        }
-        
-        if let selectedImage = selectedImageFromPicker{
-            imageView.image = selectedImage
-            cekGambar = true
-        }
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("cancel")
-        dismiss(animated: true, completion: nil)
-    }
-    
     func sendNotif(){
-        if let idTujuan = self.app?.email{
-            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Traveler Sudah Membelikan Barangmu"]
+        if let idTujuan = self.varOffer?.idPenawar{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Requester Menerima Perubahan Harga"]
             print(parameters)
             Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
                 response in
@@ -414,33 +333,49 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         }
     }
     
+    func sendNotifTolak(){
+        if let idTujuan = self.varOffer?.idPenawar{
+            let parameters: Parameters = ["idTujuan": idTujuan,"pesan": "Requester Menolak Perubahan Harga"]
+            print(parameters)
+            Alamofire.request("http://titipanku.xyz/api/notif.php",method: .get, parameters: parameters).responseJSON {
+                response in
+                
+                //mengambil json
+                let json = JSON(response.result.value)
+                print(json)
+            }
+        }
+    }
     @objc func handleTerimaOffer(){
         
-        if(cekGambar == false){
-            let alert = UIAlertController(title: "Message", message: "Data Harus Terisi Semua", preferredStyle: .alert)
+        
+        
+        // create the alert
+        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menerima Perubahan Harga?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // add the actions (buttons)
+        alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
             
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            let saldo = Int((self.isiUser?.valueSaldo)!)
+            let harga = Int((self.varOffer?.valueHarga)!)
+            let ongkir = Int(self.selectedHarga)
             
-            self.present(alert, animated: true)
-        }else if(ongkirText.text == "JNE Tidak Ada - Rp 0"){
-            let alert = UIAlertController(title: "Message", message: "JNE Tidak Mendukung Daerah Anda", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            
-            self.present(alert, animated: true)
-        } else{
-            
-            // create the alert
-            let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin ?", preferredStyle: UIAlertControllerStyle.alert)
-            
-            // add the actions (buttons)
-            alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
-            
-            alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
-               
-                if let emailNow = self.app?.email, let idOffer = self.varOffer?.id, let idRequest = self.app?.id , let idPenawar = self.varOffer?.idPenawar{
+            let hargaTotal = harga!
+            if saldo! < hargaTotal {
+                let alert = UIAlertController(title: "Message", message: "Saldo Anda Kurang, Saldo Saat ini adalah Rp " + (self.isiUser?.saldo)!, preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
+            }else{
+                
+                let saldoNow : Int = saldo! - hargaTotal
+                print(saldoNow)
+                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let ongkir : String = self.selectedHarga, let idOffer = self.varOffer?.id, let saldo : String = String(saldoNow), let idRequest = self.app?.id , let jne : String = self.selectedJenis, let idPenawar = self.varOffer?.idPenawar,let jumlah : String = String(hargaTotal){
                     
-                    let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"idPenawar":idPenawar,"action":"confirm","action2" : "tidak"]
+                    let parameter: Parameters = ["idOffer": idOffer,"idRequest": idRequest,"hargaOngkir":ongkir,"jenisOngkir":jne,"idPenawar":idPenawar,"saldo":saldoNow,"email":emailNow,"jumlah":jumlah,"action":"accept"]
                     print (parameter)
                     Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
                         response in
@@ -458,38 +393,8 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
                             
                             self.present(alert, animated: true)
                         }else{
-                            
-                            let imgData = UIImageJPEGRepresentation(self.imageView.image!, 0.1)!
-                            
-                            let parameters = ["name": "Frank","idOffer": idOffer,"action" : "confirm","action2" : "upload"]
-                            print(parameters)
-                            //userfile adalah parameter post untuk file yg ingin di upload
-                            Alamofire.upload(multipartFormData: { multipartFormData in
-                                multipartFormData.append(imgData, withName: "userfile",fileName: "file.jpg", mimeType: "image/jpg")
-                                for (key, value) in parameters {
-                                    multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
-                                }
-                            },
-                                             to:"http://titipanku.xyz/api/testing.php")
-                            { (result) in
-                                switch result {
-                                case .success(let upload, _, _):
-                                    
-                                    upload.uploadProgress(closure: { (progress) in
-                                        print("Upload Progress: \(progress.fractionCompleted)")
-                                    })
-                                    
-                                    upload.responseJSON { response in
-                                        print(response.result.value)
-                                    }
-                                    
-                                case .failure(let encodingError):
-                                    print(encodingError)
-                                }
-                            }
-                            
                             self.sendNotif()
-                            let alert = UIAlertController(title: "Message", message: "Belikan Barang Berhasil", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "Message", message: "Accept Offer Berhasil", preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                                 
@@ -501,34 +406,71 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
                         }
                     }
                 }
+            }
+            
+        }))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func handleTolak(){
+        // create the alert
+        let alert = UIAlertController(title: "Message", message: "Apakah Anda Yakin untuk Menolak Perubahan Harga?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        // add the actions (buttons)
+        alert.addAction(UIAlertAction(title: "Batal", style: UIAlertActionStyle.cancel, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+            if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String , let idOffer = self.varOffer?.id, let idPenawar = self.varOffer?.idPenawar, let idRequest = self.varOffer?.idRequest{
                 
-            }))
-            
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
-            
-        }
+                let parameter: Parameters = ["idOffer":idOffer,"idPenawar":idPenawar,"idRequest":idRequest,"action":"decline"]
+                print (parameter)
+                Alamofire.request("http://titipanku.xyz/api/SetOffer.php",method: .get, parameters: parameter).responseJSON {
+                    response in
+                    
+                    //mengambil json
+                    let json = JSON(response.result.value)
+                    print(json)
+                    let cekSukses = json["success"].intValue
+                    let pesan = json["message"].stringValue
+                    
+                    if cekSukses != 1 {
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }else{
+                        self.sendNotifTolak()
+                        let alert = UIAlertController(title: "Message", message: pesan, preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                            self.handleBack()
+                        }))
+                        
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        }))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
+        print("tolak")
+        
     }
     
-    @objc private func handleTolak(){
-        let appDetailController = PerubahanHarga()
-        appDetailController.app = self.app
-        appDetailController.varOffer = self.varOffer
-        if let saldo = self.isiUser?.valueSaldo {
-            appDetailController.saldoUser = Int(saldo)!
-        }
-        present(appDetailController, animated: true, completion: {
-        })
+    @objc private func btnCancel(){
+        
+        self.dismiss(animated: true, completion: nil)
     }
-    
     @objc private func handleBack(){
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadBarangDetail"), object: nil)
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
-        
     }
-    
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     //tampilan
@@ -559,7 +501,7 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
     let labelB : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Harga Barang "
+        label.text = "Harga Penawaran Baru (Belum Termasuk Ongkir) "
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -576,7 +518,7 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
     let labelC : UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.text = "Jumlah Barang "
+        label.text = "Dikirim Dari "
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -592,17 +534,20 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
     
     let labelOngkir : UILabel = {
         let label = UILabel()
-        label.text = "Metode Pengiriman"
+        label.text = "Metode Pengiriman (JNE)"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let ongkirText : UILabel = {
-        let label = UILabel()
-        label.sizeToFit()
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    let ongkirText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .left
+        textField.borderStyle = .line
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(ongkirTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
+        return textField
     }()
     
     let label4 : UILabel = {
@@ -620,37 +565,11 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         return label
     }()
     
-    let backButton : UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
-        //backButton.setImage(UIImage(named: "BackButton.png"), for: .normal) // Image can be downloaded from here below link
-        button.setTitle("Cancel", for: .normal)
-        button.setTitleColor(button.tintColor, for: .normal) // You can change the TitleColor
-        button.addTarget(self, action: #selector(handleBack), for: UIControlEvents.touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    let labelImage : UILabel = {
-        let label = UILabel()
-        label.text = "Nota Pembelian"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    lazy var imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 16
-        iv.image = UIImage(named: "coba")
-        iv.layer.masksToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        
-        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imgTapped(_:))))
-        iv.isUserInteractionEnabled = true
-        return iv
-    }()
+    
     
     let postButton : UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Barang Sudah Dibelikan", for: .normal)
+        button.setTitle("Terima", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.cyan, for: .selected)
         button.backgroundColor = UIColor(hex: "#4373D8")
@@ -658,21 +577,21 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         button.addTarget(self, action: #selector(handleTerimaOffer), for: UIControlEvents.touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-
+        
     }()
-
-        let declineButton : UIButton = {
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-            button.setTitle("Perubahan Harga", for: .normal)
-            button.setTitleColor(.white, for: .normal)
-            button.setTitleColor(.cyan, for: .selected)
-            button.backgroundColor = UIColor.red
-            button.clipsToBounds = true
-            button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            return button
     
-        }()
+    let declineButton : UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Tolak", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.cyan, for: .selected)
+        button.backgroundColor = UIColor.red
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(handleTolak), for: UIControlEvents.touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+        
+    }()
     
     let dividerLineView1: UIView = {
         let view = UIView()
@@ -756,22 +675,9 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         labelTotal.topAnchor.constraint(equalTo: label4.bottomAnchor, constant: 10).isActive = true
         labelTotal.heightAnchor.constraint(equalToConstant: 50).isActive = true
         labelTotal.font = UIFont.systemFont(ofSize: 25)
-        labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-        
-        scrollView.addSubview(labelImage)
-        labelImage.topAnchor.constraint(equalTo: labelTotal.bottomAnchor, constant: 30).isActive = true
-        labelImage.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-        
-        scrollView.addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: labelImage.bottomAnchor, constant: 10).isActive = true //anchor ke scrollview
-        imageView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        
-        //backButton
-        view.addSubview(backButton)
-        backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
+        labelTotal.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        labelTotal.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        labelTotal.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
         
         scrollView.addSubview(postButton)
         postButton.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0).isActive = true
@@ -785,10 +691,10 @@ class ConfirmAcceptedOffer :  UIViewController, UITableViewDelegate,UIImagePicke
         declineButton.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80).isActive = true
         declineButton.widthAnchor.constraint(equalToConstant: screenWidth/2).isActive = true
         declineButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
-
         declineButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-
+        
         
     }
     
 }
+

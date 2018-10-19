@@ -13,10 +13,12 @@ import SwiftyJSON
 import Alamofire_SwiftyJSON
 import MidtransKit
 import SKActivityIndicatorView
+import Cosmos
 
 class PenerimaanOffer :  UIViewController {
     
     var selectedHarga : String = ""
+    var selectedRating : String = ""
     var idOffer : String = ""
     var arrNama = [String]()
     var arrHarga = [String]()
@@ -257,7 +259,7 @@ class PenerimaanOffer :  UIViewController {
     }
     
     @objc func handleTerimaOffer(){
-        if ongkirText.text == "" || ratingText.text != "" {
+        if ongkirText.text != "" {
         let saldo = Int((self.isiUser?.valueSaldo)!)
         let harga = Int((self.varOffer?.valueHarga)!)
         let hargaTotal = harga! + Int((self.varOffer?.hargaOngkir)!)!
@@ -269,7 +271,7 @@ class PenerimaanOffer :  UIViewController {
             
             alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
                 let saldoNow : Int = saldo! + hargaTotal
-                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id, let review = self.ongkirText.text , let rating = self.ratingText.text , let email = self.varOffer?.idPenawar, let saldo : Int = saldoNow, let jumlah  : Int = hargaTotal,let idPenawar = self.varOffer?.idPenawar{
+                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let idOffer = self.varOffer?.id, let idRequest = self.app?.id, let review = self.ongkirText.text , let rating : String = String(self.ratingControl.rating) , let email = self.varOffer?.idPenawar, let saldo : Int = saldoNow, let jumlah  : Int = hargaTotal,let idPenawar = self.varOffer?.idPenawar{
                     
                     let parameter: Parameters = ["idOffer": idOffer,"email":emailNow,"idRequest": idRequest,"jumlah":jumlah,"saldo":saldo,"idPenawar":idPenawar,"action":"terima"]
                     print (parameter)
@@ -329,8 +331,8 @@ class PenerimaanOffer :  UIViewController {
             // show the alert
             self.present(alert, animated: true, completion: nil)
          }else{
-            let alert = UIAlertController(title: "Message", message: "Data Tidak Lengkap", preferredStyle: .alert)
-            
+            let alert = UIAlertController(title: "Message", message: self.ongkirText.text, preferredStyle: .alert)
+            print(ratingControl.rating)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
             
             self.present(alert, animated: true)
@@ -397,10 +399,21 @@ class PenerimaanOffer :  UIViewController {
     @objc func qtyTapped(_ textField: UITextField) {
         
         print("tapped")
-        StringPickerPopover(title: "Rating Anda", choices: ["1", "2","3","4","5"])
+        StringPickerPopover(title: "Rating Anda", choices: ["⭐️", "⭐️⭐️","⭐️⭐️⭐️","⭐️⭐️⭐️⭐️","⭐️⭐️⭐️⭐️⭐️"])
             .setSelectedRow(0)
             .setDoneButton(action: { (popover, selectedRow, selectedString) in
                 print("done row \(selectedRow) \(selectedString)")
+                if selectedRow == 0{
+                    self.selectedRating = "1"
+                }else if selectedRow == 1{
+                    self.selectedRating = "2"
+                }else if selectedRow == 2{
+                    self.selectedRating = "3"
+                }else if selectedRow == 3{
+                    self.selectedRating = "4"
+                }else if selectedRow == 4{
+                    self.selectedRating = "5"
+                }
                 self.ratingText.text = selectedString
             })
             .setCancelButton(action: { (_, _, _) in print("cancel")}
@@ -502,7 +515,11 @@ class PenerimaanOffer :  UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+    let ratingControl : CosmosView = {
+        let starControl = CosmosView()
+        starControl.translatesAutoresizingMaskIntoConstraints = false
+        return starControl
+    }()
     let ratingText : UITextField = {
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.textAlignment = .center
@@ -641,12 +658,11 @@ class PenerimaanOffer :  UIViewController {
         label4.topAnchor.constraint(equalTo: ongkirText.bottomAnchor, constant: 30).isActive = true
         label4.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
         
-        scrollView.addSubview(ratingText)
-        ratingText.topAnchor.constraint(equalTo: label4.bottomAnchor, constant: 10).isActive = true
-        ratingText.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        ratingText.font = UIFont.systemFont(ofSize: 25)
-        ratingText.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-        ratingText.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
+        scrollView.addSubview(ratingControl)
+        ratingControl.topAnchor.constraint(equalTo: label4.bottomAnchor, constant: 10).isActive = true
+        ratingControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        ratingControl.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+        ratingControl.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -150).isActive = true
         
         scrollView.addSubview(labelImage)
         labelImage.topAnchor.constraint(equalTo: cekResi.bottomAnchor, constant: 0).isActive = true

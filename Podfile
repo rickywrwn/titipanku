@@ -26,4 +26,5 @@ target 'titipanku' do
   pod 'SKActivityIndicatorView', '~> 0.1.0'
   pod 'Hue'
   pod 'Lightbox'
+  pod 'Cosmos', '~> 16.0'
 end

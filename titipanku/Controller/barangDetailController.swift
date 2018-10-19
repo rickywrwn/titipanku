@@ -175,6 +175,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showAcceptedOffer(_:)), name: NSNotification.Name(rawValue: "toAcceptedOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showConfirmAcceptedOffer(_:)), name: NSNotification.Name(rawValue: "toConfirmAcceptedOffer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPerubahanOffer(_:)), name: NSNotification.Name(rawValue: "toPerubahanOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPengirimanOffer(_:)), name: NSNotification.Name(rawValue: "toPengirimanOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPenerimaanOffer(_:)), name: NSNotification.Name(rawValue: "toPenerimaanOffer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showCompletedOffer(_:)), name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil)
@@ -398,6 +399,18 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
     }
     @objc func showConfirmAcceptedOffer(_ notification: NSNotification) {
         let appDetailController = ConfirmAcceptedOffer()
+        appDetailController.app = app
+        print("show confirm accepted")
+        if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
+            appDetailController.varOffer = varOffer
+        }
+        present(appDetailController, animated: true, completion: {
+        })
+        //navigationController?.pushViewController(appDetailController, animated: true)
+    }
+    
+    @objc func showPerubahanOffer(_ notification: NSNotification) {
+        let appDetailController = PerubahanOffer()
         appDetailController.app = app
         print("show confirm accepted")
         if let varOffer = notification.userInfo?["varOffer"] as? VarOffer {
@@ -1603,6 +1616,17 @@ class AppOfferListDalam: BaseCell , UICollectionViewDataSource, UICollectionView
                             print(statusOffer)
 //                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
 //                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toCompletedOffer"), object: nil, userInfo: dataIdOffer)
+                        }
+                    }else if varOffer?.status == "7"{
+                        if emailNow != varOffer?.idPenawar{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toPerubahanOffer"), object: nil, userInfo: dataIdOffer)
+                            print("sudah Sampai")
+                        }else{
+                            print(statusOffer)
+                            let dataIdOffer:[String: VarOffer] = ["varOffer": varOffer!]
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "toConfirmAcceptedOffer"), object: nil, userInfo: dataIdOffer)
                         }
                     }
                     

@@ -116,7 +116,18 @@ class UserReview: UICollectionViewController, UICollectionViewDelegateFlowLayout
                 }
             }
         }
-        cell.labelCountry.text = reviews[indexPath.row].rating
+        if reviews[indexPath.row].rating == "1"{
+            cell.labelCountry.text = "⭐️"
+        }else if reviews[indexPath.row].rating == "2"{
+            cell.labelCountry.text = "⭐️⭐️"
+        }else if reviews[indexPath.row].rating == "3"{
+            cell.labelCountry.text = "⭐️⭐️⭐️"
+        }else if reviews[indexPath.row].rating == "4"{
+            cell.labelCountry.text = "⭐️⭐️⭐️⭐️"
+        }else if reviews[indexPath.row].rating == "5"{
+            cell.labelCountry.text = "⭐️⭐️⭐️⭐️⭐️"
+        }
+        
         cell.LabelTgl.text = reviews[indexPath.row].review
         return cell
     }
