@@ -17,33 +17,85 @@ class AllRequest: UICollectionViewController, UICollectionViewDelegateFlowLayout
     fileprivate let RequestCellId = "RequestCellId"
     var requests = [App]()
     
+    struct userDetail: Decodable {
+        let email: String
+        let name: String
+        let saldo: String
+        let valueSaldo: String
+        let berat: String
+        let ukuran: String
+    }
+    var isiUser  : userDetail?
+    
+    fileprivate func fetchJSON() {
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+            print(emailNow)
+            let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
+            guard let url = URL(string: urlString) else { return }
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    print(data)
+                    do {
+                        // link in description for video on JSONDecoder
+                        let decoder = JSONDecoder()
+                        // Swift 4.1
+                        self.isiUser = try decoder.decode(userDetail.self, from: data)
+                        print(self.isiUser)
+                        
+                        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
+                        self.fetchRequests{(requests) -> ()in
+                            self.requests = requests
+                            print("count request" + String(self.requests.count))
+                            self.collectionView?.reloadData()
+                            SKActivityIndicator.dismiss()
+                        }
+                   
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                        
+                        SKActivityIndicator.dismiss()
+                    }
+                }
+                }.resume()
+        }
+    }
+    
     func fetchRequests(_ completionHandler: @escaping ([App]) -> ()) {
-        let urlString = "http://titipanku.xyz/api/GetAllRequest.php"
-        
-        URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
+        if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             
-            guard let data = data else { return }
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                self.requests = try decoder.decode([App].self, from: data)
-                print(self.requests)
-                DispatchQueue.main.async(execute: { () -> Void in
-                    completionHandler(self.requests)
-                })
-            } catch let err {
-                print(err)
+            let urlString = "http://titipanku.xyz/api/GetAllRequest.php?email=\(String(describing: emailNow))"
+            print(urlString)
+            URLSession.shared.dataTask(with: URL(string: urlString)!, completionHandler: { (data, response, error) -> Void in
                 
-                SKActivityIndicator.dismiss()
-            }
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print(error)
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    self.requests = try decoder.decode([App].self, from: data)
+                    print(self.requests)
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        completionHandler(self.requests)
+                    })
+                } catch let err {
+                    print(err)
+                    
+                    SKActivityIndicator.dismiss()
+                }
+                
+            }) .resume()
             
-        }) .resume()
-        
+        }
     }
     @objc func handleCancle(){
         self.dismiss(animated: true)
@@ -51,6 +103,7 @@ class AllRequest: UICollectionViewController, UICollectionViewDelegateFlowLayout
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchJSON()
         //supaya navbar full
         // Create the navigation bar
         let screenSize: CGRect = UIScreen.main.bounds
@@ -79,13 +132,7 @@ class AllRequest: UICollectionViewController, UICollectionViewDelegateFlowLayout
         let statusBarColor = UIColor(hex: "#4373D8")
         statusBarView.backgroundColor = statusBarColor
         view.addSubview(statusBarView)
-        SKActivityIndicator.show("Loading...", userInteractionStatus: false)
-        self.fetchRequests{(requests) -> ()in
-            self.requests = requests
-            print("count request" + String(self.requests.count))
-            self.collectionView?.reloadData()
-            SKActivityIndicator.dismiss()
-        }
+        
         collectionView?.backgroundColor = UIColor.white
         navigationItem.title = "Permintaan"
         collectionView?.register(RequestCell.self, forCellWithReuseIdentifier: RequestCellId)

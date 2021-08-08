@@ -374,7 +374,7 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
         
         let layout = UICollectionViewFlowLayout()
         let appDetailController = UserController()
-        if let varOffer = notification.userInfo?["email"] as? String,let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
+        if let varOffer = notification.userInfo?["email"] as? String, let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String {
             UserController.emailUser.email = varOffer
             if emailNow == varOffer{
                 
@@ -476,11 +476,12 @@ class barangDetailController: UICollectionViewController, UICollectionViewDelega
             cell.qtyLabel.text = app?.qty
             cell.countryLabel.text = app?.country
             cell.kotaLabel.text = app?.kotaKirim
-            if app?.url == ""{
-                 cell.UrlLabel.text = "Tidak Ada"
-            }else {
-                cell.UrlLabel.text = app?.url
-            }
+//            if app?.url == ""{
+//                 cell.UrlLabel.text = "Tidak Ada"
+//            }else {
+//                cell.UrlLabel.text = app?.url
+//            }
+            cell.UrlLabel.text = app?.ukuran
             return cell
             
         }else if indexPath.item == 1 {
@@ -958,7 +959,7 @@ class AppDetailDescriptionCell: BaseCell {
     }()
     let UrlLabelKiri: UILabel = {
         let label = UILabel()
-        label.text = "URL Referensi:"
+        label.text = "Ukuran Barang:"
         label.textColor = UIColor.gray
         label.font = UIFont.systemFont(ofSize: 15)
         return label
@@ -1111,7 +1112,6 @@ class AppDetailUser: BaseCell, UICollectionViewDataSource, UICollectionViewDeleg
         
         addConstraintsWithFormat("H:|[v0]|", views: dividerLineView)
         addConstraintsWithFormat("H:|-10-[v0]|", views: userCollectionView)
-        
         addConstraintsWithFormat("V:|[v0][v1(1)]|", views: userCollectionView,dividerLineView )
         
     }

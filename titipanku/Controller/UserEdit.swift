@@ -22,6 +22,8 @@ class UserEdit :  UIViewController,UIImagePickerControllerDelegate,UINavigationC
         let name: String
         let saldo: String
         let valueSaldo: String
+        let berat: String
+        let ukuran: String
     }
     
     var isiUser  : userDetail?
@@ -48,6 +50,8 @@ class UserEdit :  UIViewController,UIImagePickerControllerDelegate,UINavigationC
                         print(self.isiUser)
                         
                         self.ongkirText.text = self.isiUser?.name
+                        self.beratText.text = self.isiUser?.berat
+                        self.ukuranText.text = self.isiUser?.ukuran
                         DispatchQueue.main.async{
                             Alamofire.request("http://titipanku.xyz/uploads/"+(self.isiUser?.email)!+".jpg").responseImage { response in
                                 if let image = response.result.value {
@@ -189,9 +193,9 @@ class UserEdit :  UIViewController,UIImagePickerControllerDelegate,UINavigationC
             
             alert.addAction(UIAlertAction(title: "Ya", style: UIAlertActionStyle.default, handler: { action in
                 
-                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let nama = self.ongkirText.text{
+                if let emailNow = UserDefaults.standard.value(forKey: "loggedEmail") as? String, let nama = self.ongkirText.text,let berat = self.beratText.text, let ukuran = self.ukuranText.text{
                     
-                    let parameter: Parameters = ["email":emailNow,"nama":nama,"action":"edit","action2" : "tidak"]
+                    let parameter: Parameters = ["email":emailNow,"nama":nama,"action":"edit","action2" : "tidak","berat":berat,"ukuran":ukuran]
                     print (parameter)
                     Alamofire.request("http://titipanku.xyz/api/EditProfile.php",method: .get, parameters: parameter).responseJSON {
                         response in
@@ -259,6 +263,34 @@ class UserEdit :  UIViewController,UIImagePickerControllerDelegate,UINavigationC
         }
     }
     
+    @objc func beratTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        StringPickerPopover(title: "Berat Maks", choices: ["1","2","3","4","5"])
+            .setSelectedRow(0)
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+                print("done row \(selectedRow) \(selectedString)")
+                self.beratText.text = selectedString
+            })
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            )
+            .appear(originView: textField, baseViewController: self)
+        
+    }
+    @objc func ukuranTapped(_ textField: UITextField) {
+        
+        print("tapped")
+        StringPickerPopover(title: "Ukuran Barang", choices: ["Kecil (20x20x20 CM)", "Sedang ( 30x25x20 CM)","Besar (35x22x55 CM)"])
+            .setSelectedRow(0)
+            .setDoneButton(action: { (popover, selectedRow, selectedString) in
+                print("done row \(selectedRow) \(selectedString)")
+                self.ukuranText.text = selectedString
+            })
+            .setCancelButton(action: { (_, _, _) in print("cancel")}
+            )
+            .appear(originView: textField, baseViewController: self)
+        
+    }
     
     let TEXTFIELD_HEIGHT = CGFloat(integerLiteral: 30)
     //tampilan
@@ -297,6 +329,46 @@ class UserEdit :  UIViewController,UIImagePickerControllerDelegate,UINavigationC
         return iv
     }()
     
+    let label1 : UILabel = {
+        let label = UILabel()
+        label.text = "Ukuran Barang Maksimal"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let ukuranText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(ukuranTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
+        return textField
+    }()
+    
+    let label2 : UILabel = {
+        let label = UILabel()
+        label.text = "Berat Barang Maksimal (Kg)"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let beratText : UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.textAlignment = .center
+        textField.borderStyle = .roundedRect
+        textField.textAlignment = .center
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(beratTapped(_:)),
+                            for: UIControlEvents.touchDown)
+        textField.inputView = UIView();
+        return textField
+    }()
+    
     func setupView(){
         
         
@@ -321,6 +393,29 @@ class UserEdit :  UIViewController,UIImagePickerControllerDelegate,UINavigationC
         imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 300).isActive = true
     
+        view.addSubview(label1)
+        label1.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20).isActive = true //anchor ke scrollview
+        label1.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        view.addSubview(ukuranText)
+        ukuranText.topAnchor.constraint(equalTo: label1.bottomAnchor, constant: 10).isActive = true
+        ukuranText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        ukuranText.font = UIFont.systemFont(ofSize: 25)
+        ukuranText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        ukuranText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        ukuranText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
+        
+        view.addSubview(label2)
+        label2.topAnchor.constraint(equalTo: ukuranText.bottomAnchor, constant: 30).isActive = true
+        label2.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        view.addSubview(beratText)
+        beratText.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 10).isActive = true
+        beratText.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        beratText.font = UIFont.systemFont(ofSize: 25)
+        beratText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        beratText.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 60).isActive = true
+        beratText.rightAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.rightAnchor, constant: 60).isActive = true
     }
     
 }

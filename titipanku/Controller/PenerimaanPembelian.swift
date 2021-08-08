@@ -523,6 +523,7 @@ class PenerimaanPembelian :  UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     let ratingControl : CosmosView = {
         let starControl = CosmosView()
         starControl.translatesAutoresizingMaskIntoConstraints = false

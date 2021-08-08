@@ -45,6 +45,7 @@ class AcceptOffer :  UIViewController, UITableViewDelegate, UITableViewDataSourc
             print(emailNow)
             let urlString = "http://titipanku.xyz/api/DetailUser.php?email=\(String(describing: emailNow))"
             guard let url = URL(string: urlString) else { return }
+            
             URLSession.shared.dataTask(with: url) { (data, _, err) in
                 DispatchQueue.main.async {
                     if let err = err {
